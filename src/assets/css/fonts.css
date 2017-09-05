@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'bureaueaglebookregular';
+    src: url('../fonts/bureaueaglebook-webfont/bureaueaglebook-webfont.woff2') format('woff2'),
+         url('../fonts/bureaueaglebook-webfont/bureaueaglebook-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proxima_nova_rgregular';
+    src: url('../fonts/proxima-nova-regular/proxima-nova-regular-webfont.woff2') format('woff2'),
+         url('../fonts/proxima-nova-regular/proxima-nova-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'proxima_nova_rgbold';
+    src: url('../fonts/proximanova-bold-webfont/proximanova-bold-webfont.woff2') format('woff2'),
+         url('../fonts/proximanova-bold-webfont/proximanova-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'proxima_nova_ltlight';
+    src: url('../fonts/proximanova-light-webfont/proximanova-light-webfont.woff2') format('woff2'),
+         url('../fonts/proximanova-light-webfont/proximanova-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'proxima_nova_ltsemibold';
+    src: url('../fonts/proximanova-sbold-webfont/proximanova-sbold-webfont.woff2') format('woff2'),
+         url('../fonts/proximanova-sbold-webfont/proximanova-sbold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -1,0 +1,89 @@
+<!--Banner-->
+<div class="banner-wrapper">
+<div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
+  <h1><span>Choose Payment Method</span></h1>
+  <!--<div class="leftButtons buttons hidden-md hidden-lg"><a href="#" class="whiteBtn cta-btn">Quick View</a><span class="cost">84 {{currencyCode}}</span><a href="#" class="greenBtn cta-btn hidden-xs">Checkout</a><a href="#" class="greenBtn cta-btn visible-xs btn-sm">Checkout</a> </div>-->
+  <!--<div class="leftButtons searchBox">
+    <input type="text" class="form-control" placeholder="">
+    <button class="icon-search"></button>
+  </div>-->
+  </div>
+</div>
+ <div class="clearfix"></div>
+
+<ng-container *ngIf="showLoading">
+  <div class="spinner">
+      <div class="cube1 icon icon-pizza-icon"></div>
+      <div class="cube2 icon icon-pizza-icon"></div>
+  </div>
+</ng-container>
+
+<!--Inside Sections-->
+<div class="container-fluid">
+  <div class="col-md-12 steprow text-center">
+      <ul>
+        <li><small>1</small> Order Review</li>  
+        <li class="active"><small>2</small> Checkout</li>  
+        <li><small>3</small> Order Complete</li>  
+      </ul>  
+  </div>
+
+ <div class="col-md-12 stepboxes">
+  <div class="row" >
+      <div class="col-md-4 col-sm-4">
+         <h3 class="green-title">payment summary</h3>
+         <div class="dottedlist_box">
+            <ul class="dotted-list">
+                <li>Coupon Discount<span>{{couponDiscount}}</span></li>
+                <li>Sub Total<span>{{netCost}}</span></li> 
+                <li>Taxes<span>00.00</span></li> 
+                <li *ngIf="orderData.order_type=='delivery'">Delivery Charge<span>6.00</span></li> 
+            </ul>
+             <div class="grand-total">
+                Grand Total <span>{{currencyCode}} {{totalCost}}</span>
+             </div>
+             <address class="delivery_addrs" *ngIf="orderData.order_type == 'delivery'">
+                <h4>delivery address</h4>
+                <p><strong>{{orderData.user.first_name}} {{orderData.user.last_name}}<br></strong>
+                {{orderData.address.apartment}}, {{orderData.address.street_no}}<br>
+                {{orderData.address.street}} {{orderData.address.city}}<br>
+                {{orderData.address.state}} - {{orderData.address.postal_code}}<br>
+                Phone: {{orderData.user.phone}}</p>
+             </address>
+         </div>
+      </div>
+      <div class="col-md-8 col-sm-8">
+        <h3 class="green-title">choose a payment method</h3>
+        <div class="payment_method">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay on Delivery Cash or Credit</a> </li> 
+                <li role="presentation"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Online Payment</a> </li> 
+            </ul>
+            <div class="tab-content three-column-wrapper">
+                <div role="tabpanel" class="tab-pane fade in active inside-column-container" id="cod">
+                    <div class="content-wrapper">
+                        <div class="content-container">
+                            <div class="control-group payment">
+                                <label class="control radio" [ngClass]="{'checked': orderData.payment_type == 'Cash'}" (click)="updatePaymentType('Cash')">
+                                    <h4>Cash</h4>
+                                    <div class="control__indicator"></div>    
+                                </label>
+                                <label class="control radio" [ngClass]="{'checked': orderData.payment_type == 'Credit'}" (click)="updatePaymentType('Credit')">
+                                    <h4>Credit</h4>
+                                    <div class="control__indicator"></div>    
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">continue</a>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="cd-cards" style="text-align: center;">
+                    <img src="assets/images/cs.png" alt="Coming Soon" style="max-width: 50%;">
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
+ </div> 
+</div>

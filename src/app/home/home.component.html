@@ -1,0 +1,145 @@
+<div class="slider-wrapper">
+  <div class="slides" id="home-slider" *ngIf="slideArr.length != 0">
+    <ng-container *ngFor="let slide of slideArr">
+    <div class="slide" [ngStyle]="{ 'background-image': 'url(' + slide.Slide.image + ')'}">
+        <ng-container *ngIf="slide.Slide.coupon_code!=''">
+            <a (click)="goToOrderNow()">
+              <div class="container">
+                <div class="fade-bg visible-xs"></div>
+                <div class="slide-content fadeIn animated"> 
+                  <ng-container *ngIf="slide.Slide.textImage!=''">
+                    <img src="{{slide.Slide.textImage}}" class="img-responsive" alt="slide content"/>
+                  </ng-container>
+                </div>
+              </div>
+            </a>
+        </ng-container>
+        <ng-container *ngIf="slide.Slide.coupon_code ==''">
+          <div class="container">
+            <div class="fade-bg visible-xs"></div>
+            <div class="slide-content fadeIn animated"> 
+              <ng-container *ngIf="slide.Slide.textImage!=''">
+                <img src="{{slide.Slide.textImage}}" class="img-responsive" alt="slide content"/>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+    </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="how-are-we-different-wrapper">
+  <div class="container">
+    <h3 class="text-center">why we’re <span>different</span></h3>
+    <p>Pizza we feel good about serving. Pizza you feel good about eating. Pizza that puts itself out there in all of its naked glory.</p>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="section-wrapper">
+          <div class="section-container">
+            <h4>fresh</h4>
+            <p>fresh ingredients, prepared daily</p>
+            <div class="img-box">
+            <div class="overlap-text">We do our best to ensure our cheese and vegetables are carefully sourced, and that our meats have no bad stuff hiding in them. We slice many ingredients from fresh for our pizzas— ranging from tomatoes to jalapeños.</div>
+            <img src="assets/images/how-are-we-different/1.jpg" class="img-responsive center-block" alt="image-fresh"/>
+            </div>
+            <a href class="arrow-button icon-keyboard_arrow_up"></a> </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="section-wrapper">
+          <div class="section-container">
+            <h4>ancestral blend crust</h4>
+            <p>our crust is made from an Ancestral Blend® of 10 grains</p>
+            <div class="img-box">
+            <div class="overlap-text">Our crust is made from an Ancestral Blend® of 10 grains plus prebiotic agave fiber and probiotics, bound by water and made by hand. Eating NKD Pizza can leave you feeling really satisfied. We believe it’s the diversity of grains, fiber and probiotics that can help provide a slow, sustained release of energy avoiding the crash some people experience after eating single grain, highly processed pizzas.</div>
+            <img src="assets/images/how-are-we-different/2.jpg" class="img-responsive center-block" alt="image-fresh"/>
+            </div>
+            <a href class="arrow-button icon-keyboard_arrow_up"></a> </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="section-wrapper">
+          <div class="section-container no-border">
+            <h4>nkd tomato sauce</h4>
+            <p>our very own house-made tomato sauce</p>
+            <div class="img-box">
+            <div class="overlap-text">Our tomato sauce is deliciously spiced and herbed, with no added sugar or citric acid. We do our very best to avoid anything processed, modified or tinkered with. Our simple aim is to use fresh ingredients and combine them to make really tasty sauce for our pizza.</div>
+            <img src="assets/images/how-are-we-different/3.jpg" class="img-responsive center-block" alt="image-fresh"/>
+
+</div>
+            <a href class="arrow-button icon-keyboard_arrow_up"></a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blog-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <div class="blog-content red">
+          <div class="media">
+            <div class="media-left media-middle"> <i class="icon-twitter"></i> </div>
+            <div class="media-body media-middle">
+              <h4 class="media-heading">@NKDPizzaUSA </h4>
+            </div>
+          </div>
+          <p>{{latestTweet}}</p>
+        </div>
+      </div>
+      <ng-container *ngFor=" let Fbfeed of latestFbFeeds;  let j=index">
+       <ng-container *ngIf="Fbfeed != null && j<2">
+      <div class="col-md-4 col-sm-6" >
+        <div class="blog-content" [ngStyle]="{ 'background-image': 'url(' + Fbfeed.image + ')'}">
+          <div class="media">
+            <div class="media-left media-middle"> <i class="icon-facebook"></i> </div>
+            <div class="media-body">
+              <ng-container *ngIf="Fbfeed.title">
+              <h4 class="media-heading">{{Fbfeed.title}}</h4>
+              </ng-container>
+              <p>{{Fbfeed.message}}</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+       </ng-container>
+        </ng-container>
+      <!-- <div class="col-md-4 col-sm-6">
+      <div class="blog-media" style="background-image:url(assets/images/our-journey.jpg);">
+         <div class="media">
+         <span class="video-icon">
+         <a class="video-btn icon-play" data-fancybox href="https://player.vimeo.com/video/157487447?autoplay=1"></a>
+         </span>
+         <img class="title-img img-responsive" src="assets/images/our-journey-text.png" alt="Our Journey" style="margin-top:60px;"/>
+            </div>
+          
+       </div>
+        
+      </div> -->
+      <ng-container *ngFor=" let feed of latestIgFeeds;  let i=index">
+      <ng-container *ngIf="feed != null && i<3">
+      <div class="col-md-4 col-sm-6">
+        <div class="blog-content" [ngStyle]="{ 'background-image': 'url(' + feed.image + ')'}">
+          <div class="media">
+            <div class="media-left media-middle"> <i class="icon-instagram"></i> </div>
+            <div class="media-body">
+              <h4 class="media-heading" *ngIf="feed.title">{{feed.title}}</h4>
+              <p>{{feed.message}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="map-wrapper">
+  <div id="mapCanvas" class="map-canvas">
+  </div>
+  <div id="mapText" class="title-image img-responsive"></div>
+</div>

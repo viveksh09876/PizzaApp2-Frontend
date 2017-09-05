@@ -1,0 +1,246 @@
+<!--Banner-->
+<div class="banner-wrapper">
+<div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
+  <h1><span>choose your order</span></h1>
+  <div class="leftButtons buttons"><a [routerLink]="['/menu']" class="whiteBtn cta-btn">Back To Menu</a></div>
+  <!--<div class="leftButtons searchBox">
+    <input type="text" class="form-control" placeholder="">
+    <button class="icon-search"></button>
+  </div>-->
+  </div>
+</div>
+ <div class="clearfix"></div>
+
+<ng-container *ngIf="showLoading">
+  <div class="spinner">
+      <div class="cube1 icon icon-pizza-icon"></div>
+      <div class="cube2 icon icon-pizza-icon"></div>
+  </div>
+</ng-container>
+
+<!--Inside Sections-->
+<div class="container-fluid">
+  <div class="col-md-12 steprow text-center">
+      <ul>
+        <li class="active"><small>1</small> Order Review</li>  
+        <li><small>2</small> Checkout</li>  
+        <li><small>3</small> Order Complete</li>  
+      </ul>  
+  </div>
+  <div class="col-md-12 stepboxes">
+  <div class="row step1" *ngIf="showStep == 'step1'">
+     <div class="col-md-4 col-sm-4">
+          <h3 class="green-title">order summary</h3>
+          <div class="gray_box">
+            <div class="scroller">
+                <div class="cartbox" *ngFor="let item of items; let i=index;">
+                    <div class="item_info">
+                        <h4>{{item.Product.title}}</h4>
+                        <ng-container *ngFor="let mod of item.ProductModifier">
+                            <!--<h5 class="space">{{mod.Modifier.title}}</h5>-->
+                            <ul>                            
+                                <ng-container *ngFor="let option of mod.Modifier.ModifierOption">
+                                        
+                                    <ng-container *ngIf="(option.Option.plu_code == 91 || option.Option.plu_code == 'I100' || option.Option.plu_code == 'I101') && option.Option.is_checked">
+                                    <li><strong>Crust:</strong> {{option.Option.name}}</li>
+                                  </ng-container>  
+                                  <ng-container *ngIf="(option.Option.plu_code == 999991 || option.Option.plu_code == 999992 || option.Option.plu_code == 999993) && option.Option.is_checked">
+                                    <li><strong>Size:</strong> {{option.Option.name}}</li>
+                                  </ng-container>  
+
+                                  <ng-container *ngIf="option.Option.is_checked && option.Option.is_included_mod && option.Option.add_extra && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                    <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                  </ng-container>
+                                  <ng-container *ngIf="!option.Option.is_checked && option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                    <li>- {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                  </ng-container> 
+                                  <ng-container *ngIf="option.Option.is_checked && !option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                    <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{ option.Option.subop_name}})</ng-container></li>
+                                  </ng-container> 
+                                  <!--<li *ngIf="option.Option.is_checked">Add {{option.Option.name}}</li>-->
+                                </ng-container>                    
+                            </ul>   
+                          </ng-container>                         
+                    </div>
+                    <div class="item_pic">
+                        <div class="img-control">
+                            <a (click)="deleteItem(i, item)"><span class="icon icon-close"></span></a>
+                            <a *ngIf="item.ProductModifier.length > 0" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a>
+                        </div>
+                        <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
+                        <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
+                        <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="save_orderbox text-center">
+            <h5>save as favorite order</h5>
+            <input type="text" [(ngModel)]="favTitle" placeholder="Order Name" autocomplete="off">
+            <ng-container *ngIf="!showSavingFav">
+            <input type="submit" (click)="addToFav()" value="Save Favorite">
+            </ng-container>
+            <p class="loading-msg" *ngIf="showSavingFav">Saving order as favorite...</p>
+         </div>
+     </div>  
+     <div class="col-md-4 col-sm-4">
+         <h3 class="green-title gray">enter details</h3>
+         <div name="addressForm" class="order_reviewform" ngForm #newRuleForm="ngForm">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" placeholder="First Name*" name="firstName" type="text" [(ngModel)]="order.user.first_name" id="firstName" #firstName="ngModel" required autocomplete="off">
+                    <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                        <div [hidden]="!firstName.errors.required">First Name is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Last Name*" type="text" name="lastName" [(ngModel)]="order.user.last_name" id="lastName" #lastName="ngModel" required autocomplete="off">
+                    <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                        <div [hidden]="!lastName.errors.required">Last Name is required.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Email address*" name="email" type="email" [(ngModel)]="order.user.email" id="email" #email="ngModel" required email autocomplete="off">
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div [hidden]="!email.errors.required">Email is required.</div>
+                        <div [hidden]="!email.errors.email">Invalid email.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" placeholder="Mobile number*" name="phone" type="text" [(ngModel)]="order.user.phone" id="phone" #phone="ngModel" maxlength="15" required number autocomplete="off">
+                    <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="alert alert-danger">
+                        <div [hidden]="!phone.errors.required">Valid mobile number is required.</div>
+                        <div [hidden]="!phone.errors.number">Invalid phone number.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <h3 class="green-title gray">confirm pickup or delivery?</h3>
+         <ul class="radio_tabs">
+            <li><label><input type="radio" name="pick" [(ngModel)]="order.order_type" value="pickup" (change)="addDeliveryCost($event,'pickup')" checked="{{order.order_type == 'pickup'? 'checked': ''}}"><small></small> pick up </label></li>
+            <li><label><input type="radio" name="pick" [(ngModel)]="order.order_type" value="delivery" checked="{{order.order_type == 'delivery'? 'checked': ''}}" (change)="addDeliveryCost($event,'delivery')"><small></small> delivery </label></li>
+         </ul>
+         <ng-container *ngIf="order.order_type == 'delivery'">
+            <form class="order_reviewform" name="orderReviewForm">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Appt#" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment" ng-required="!isDubai">
+                        <div *ngIf="apartment.errors && (apartment.dirty || apartment.touched)" class="alert alert-danger">
+                            <div [hidden]="!apartment.errors.required">Apartment is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Street#" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
+                        <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
+                            <div [hidden]="!streetNo.errors.required">Street No is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Street / Building name" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
+                        <div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
+                            <div [hidden]="!street.errors.required">Street is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="City" type="text" name="city" id="city" #city="ngModel" [(ngModel)]="order.address.city" required>
+                        <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
+                            <div [hidden]="!city.errors.required">City is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="State" type="text" name="state" id="state" #state="ngModel" [(ngModel)]="order.address.state" required>
+                        <div *ngIf="state.errors && (state.dirty || state.touched)" class="alert alert-danger">
+                            <div [hidden]="!state.errors.required">State is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Postal Code" type="text" name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="order.address.postal_code">
+                        
+                    </div>
+                </div>
+            </form>
+         </ng-container>
+     </div>  
+     <div class="col-md-4 col-sm-4">
+        <h3 class="green-title">order details</h3>
+         <div class="dottedlist_box">
+            <form class="coupan_box">
+                <p class="danger" *ngIf="couponMsg != ''">{{couponMsg}}</p>
+                <ng-container *ngIf="order.coupon == ''">                    
+                    <input type="text" [(ngModel)]="couponCode" name="coupnCode" placeholder="Coupon Code" autocomplete="off">
+                    <ng-container *ngIf="!showCouponWait">
+                    <input type="submit" value="Apply" (click)="applyCoupon()">
+                    </ng-container>
+                    <ng-container *ngIf="showCouponWait">
+                        <p>Please wait...</p>
+                    </ng-container>
+                </ng-container>
+            </form>
+            <ul class="dotted-list">
+                <li>Coupon Discount 
+                    <ng-container *ngIf="order.coupon != ''">
+                        <strong>({{order.coupon}})</strong>
+                        <a (click)="removeCoupon()">Remove</a>
+                    </ng-container><span>{{couponDiscount}}</span></li> 
+                <li>Sub Total<span>{{netCost}}</span></li> 
+                <li>Taxes<span>0.00</span></li> 
+                <li *ngIf="order.order_type=='delivery'">Delivery Charges <span>6.0</span></li> 
+            </ul>
+             <div class="grand-total">
+                Grand Total <span>{{currencyCode}} {{totalCost}}</span>
+             </div>
+             <div class="choosetime_box">
+                 <ng-container>
+                <h4>choose time</h4>
+                 <ul class="radio_tabs">
+                    <li><label><input type="radio" name="time" [checked]="order.delivery_time_type == 'asap'" (click)="updateDeliveryTimeType('asap');"><small></small> asap </label></li>
+                    <li><label><input type="radio" name="time" [checked]="order.delivery_time_type == 'defer'" (click)="updateDeliveryTimeType('defer');"><small></small> later </label></li>
+                 </ul>
+                 <form class="order_reviewform">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group calendar">
+                             <input appDateRangePick
+                                        *ngIf="order.delivery_time_type == 'defer'"
+                                        name="dateTime"
+                                        [(ngModel)]="order.delivery_time"
+                                        [options]="pickerOptions" type="text"
+                                        class="form-control" readonly/>
+                            <input *ngIf="order.delivery_time_type == 'asap'" 
+                                        name="dateTime"
+                                        [(ngModel)]="order.delivery_time"
+                                         type="text"
+                                        class="form-control" readonly />                                     
+                        </div>
+                    </div>
+                    
+                 </form>
+                 </ng-container>
+                 <button (click)="confirmOrder()" [disabled]="!newRuleForm.valid" class="fullred-btn placeorder-btn">Place Order</button>
+                </div>
+         </div>
+     </div>  
+  </div>
+
+ 
+</div>
+
+
+

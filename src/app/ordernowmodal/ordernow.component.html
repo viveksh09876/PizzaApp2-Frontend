@@ -1,0 +1,202 @@
+<div id="pickupdeliveryModal">
+  <div class="modal-dialog fancypopup" [ngClass]="{'modal-lg': showContent == 'pickup-delivery'}" id="pickupdeliveryModal" role="document">
+    <div class="modal-content">
+    <button type="button" class="close" (click)="close()"><span class="icon icon-close" ></span></button>
+      <div class="modal-body white" *ngIf="showContent == 'pickup-delivery'">
+          <div class="row added-exclass" [ngClass]="{'delry': selectedStore.val == ''}">
+              <div class="col-md-8 col-sm-8 ">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h4>pick up or delivery?</h4>
+                    <h5>How would you like to get your pizza</h5>
+                  </div>
+                  <div class="col-md-3"><img src="assets/images/pickup-delivery.png" alt="" class="img-responsive"/></div>
+                </div>
+                <form>
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.orderType == 'pickup'}"><a (click)="updateOrderType('pickup')">pick up <input type="radio" name="orderType" [checked]="order.orderType=='pickup'">
+                  <div class="control__indicator"></div></a></li>
+                    <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.orderType == 'delivery'}"><a (click)="updateOrderType('delivery')">delivery <input type="radio" name="orderType" [checked]="order.orderType=='delivery'">
+                  <div class="control__indicator"></div></a></li>
+                  </ul>
+                </form>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" [ngClass]="{'active': order.orderType == 'pickup'}" id="pickup">
+                        <div class="row form_sec">
+                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
+                                <input class="form-control" list="cityListId" placeholder="City" (keyup)="getCities($event.target.value);" [(ngModel)]="cityVal" (change)="getStores($event.target.value)" name="cityVal">
+                                <datalist id="cityListId">                    
+                                    <select name="cityVal">            
+                                        <option *ngFor="let city of cityList" value="{{city}}">{{city}}
+                                    </select>
+                                </datalist>
+                                <small>or</small>  
+                            </div>
+                            <div class="col-md-12 col-sm-12" *ngIf="useStreetDb">
+                                <input class="form-control" list="areaListId" placeholder="Enter Area Name" (keyup)="getStreetArea($event.target.value);" [(ngModel)]="areaVal" (change)="getAreaStreets($event.target.value)" name="areaVal"> <br/>
+                                <datalist id="areaListId">
+                                    <select name="areaVal">                                
+                                        <option *ngFor="let area of areaList.areas" value="{{area.city}}">{{area.city}}
+                                    </select>        
+                                </datalist>
+                            </div>
+                            
+                            <div class="col-md-12 col-sm-12" *ngIf="useStreetDb">
+                                <select class="form-control full" [(ngModel)]="delivery_street" (change)="getAreaStores($event.target.value)">
+                                    <option value="">Select Street/Building</option>
+                                    <option *ngFor="let street of streetArr" value="{{street.street_name}}">{{street.street_name}}</option>
+                                </select>
+                                <br/>
+                            </div>
+                                
+                            
+                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
+                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
+                                <small>or</small>  
+                            </div>
+                            <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
+                                <a (click)="getUserLocation()" class="use-location"><i class="fa fa-map-marker"></i> Use my Location</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <p class="text-danger" *ngIf="showOutletError">Please select store / outlet</p>
+                                <select class="form-control full" [(ngModel)]="selectedStore.val" (change)="setSelectedStore($event.target.value)">
+                                    <option value="">Select Store / Outlet</option>
+                                    <option *ngFor="let store of storeList" value="{{store.Store.id}}">{{store.Store.store_name}} ({{store.Store.store_address}})</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-danger btn-block continue-btn" (click)="goTotimeModal()">Continue</button>  
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" [ngClass]="{'active': order.orderType == 'delivery'}" id="delivery">
+                        <div class="row form_sec">
+                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
+                                <input class="form-control" list="cityListId" placeholder="City" (keyup)="getCities($event.target.value);" [(ngModel)]="cityVal" (change)="getStores($event.target.value)" name="cityVal">
+                                <datalist id="cityListId">                    
+                                    <select name="cityVal">            
+                                        <option *ngFor="let city of cityList" value="{{city}}">{{city}}
+                                    </select>        
+                                </datalist>
+                            </div>
+                            <div class="col-md-4 col-sm-4" *ngIf="useStreetDb">
+                                <input class="form-control" list="areaListId" placeholder="Enter Area Name" (keyup)="getStreetArea($event.target.value);" [(ngModel)]="areaVal" (change)="getAreaStreets($event.target.value)" name="areaVal"> <br/>
+                                <datalist id="areaListId">  
+                                    <select name="areaVal">                              
+                                        <option *ngFor="let area of areaList.areas" value="{{area.city}}">{{area.city}}
+                                    </select>        
+                                </datalist>
+                            </div>
+                            
+                            <div class="col-md-4 col-sm-4" *ngIf="useStreetDb">
+                                <select class="form-control full" [(ngModel)]="delivery_street" (change)="getAreaStores($event.target.value)">
+                                    <option value="">Select Street/Building</option>
+                                    <option *ngFor="let street of streetArr" value="{{street.street_name}}">{{street.street_name}}</option>
+                                </select>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+                                <input class="form-control" type="text" placeholder="Street#" [(ngModel)]="delivery_streetno">
+                            </div>
+                        </div>
+                        
+                        <p *ngIf="!useStreetDb" class="use-location">or <a (click)="getUserLocation()"><i class="fa fa-map-marker"></i> Use my Location</a></p>
+                        
+                        <div class="row form_sec">
+                            <div class="col-md-4 col-sm-4 optional">
+                                <input class="form-control" type="text" placeholder="Appt#" [(ngModel)]="delivery_apartment">
+                            </div>
+                            
+                            <div class="col-md-4 col-sm-4 optional">
+                                <input class="form-control" type="text" placeholder="State" [(ngModel)]="order.delivery_state">
+                            </div>
+                            
+                            <div class="col-md-4 col-sm-4">
+                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode">
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <p class="text-danger" *ngIf="showOutletError">Please select store / outlet</p>
+                                <select class="form-control full" [(ngModel)]="selectedStore.val" (change)="setSelectedStore($event.target.value)">
+                                    <option value="">Select Store / Outlet</option>
+                                    <option *ngFor="let store of storeList" value="{{store.Store.id}}">{{store.Store.store_name}} ({{store.Store.store_address}})</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-danger btn-block continue-btn" (click)="goTotimeModal()">Continue</button>  
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+              
+              <div class="col-md-4 col-sm-4" *ngIf="selectedStore.val != ''">
+                <div class="location-wrapper">
+                  <div class="img-wrapper" style="background-image:url(assets/images/pickup-delivery/img-1.jpg);"></div>
+                  <h4>{{selectedStore.info.Store.store_name}}</h4>
+                  <p>{{selectedStore.info.Store.store_address}}</p>
+                  <p>Open now:  11:00am-3:00am</p>
+                  <p>{{selectedStore.info.Store.store_phone}}</p>
+                  <p><a href="tel:{{selectedStore.info.Store.store_phone}}"><span class="icon icon-phone"></span></a>
+                    <a href=""><span class="icon icon-directions"></span></a></p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-body white" *ngIf="showContent == 'delivery-time'">
+          <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>choose time</h4>
+                    <h5>{{timeModalText}}</h5>
+                  </div>
+                </div>
+                <form>
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.delivery_time_type == 'asap'}"><a (click)="updateDeliveryTimeType('asap');">asap <input type="radio" name="delivery_time_type" [checked]="order.delivery_time_type == 'asap'">
+                  <div class="control__indicator"></div></a></li>
+                    <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.delivery_time_type == 'defer'}"><a (click)="updateDeliveryTimeType('defer');">later <input type="radio" name="delivery_time_type" [checked]="order.delivery_time_type == 'defer'">
+                  <div class="control__indicator"></div></a></li>
+                  </ul>
+                </form>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="asap">
+                        <div class="row form_sec">
+                            <div class="col-md-8 col-sm-8">
+                                <p class="text-danger"></p>
+                                <input class="form-control" placeholder="Date / Time of Delivery" 
+                                        [(ngModel)]="delivery_time" 
+                                            ngui-datetime-picker 
+                                            date-format="MM/DD/YYYY HH:mm"
+                                            min-date="{{curDate}}">                              
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-danger btn-block continue-btn" (click)="goToMenu()">Start Ordering</button>  
+                            </div>
+                        </div>
+                    </div>                    
+                  </div>
+              </div>
+            </div>
+        </div>
+    
+    
+    </div>
+
+ 
+  </div>
+</div>
+ 

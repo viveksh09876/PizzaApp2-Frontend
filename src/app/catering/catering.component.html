@@ -1,0 +1,104 @@
+<!--Banner-->
+<div class="banner-wrapper twolines thin">
+<div class="container text-right right-text" style="background-image:url(assets/images/cater-banner.jpg)">
+  <h1>{{pageTitle}} <span>{{pageSubtitle}}</span></h1>
+  </div>
+</div>
+ <div class="clearfix"></div>
+<!--Inside Sections-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 text-center">
+            <div class="left-caterbox">
+                <img src="assets/images/truck.png" alt="" class="truck">
+                <div  [innerHTML]="pageContent"></div>
+                <img src="assets/images/cater-img.jpg" alt="" class="food">
+                <!-- <small>With NKD we care about the fine print, but even more so about delivering fine pizza.</small> -->
+                <a [routerLink]="['/menu']" class="check"><img src="assets/images/mini-pizza.png" alt=""> Check our Menu</a>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-6 form_design">
+            <h3>ask about our nkd pizza mobile truck</h3>
+            <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
+            <form  #cateringForm="ngForm" ngForm (ngSubmit)="CateringApi()">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)]="catering.username" id="username" #username="ngModel" name="catering.username" placeholder="Name" required>
+                        <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
+                                <div [hidden]="!username.errors.required">User Name is required.</div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="email" class="form-control" [(ngModel)]="catering.email" id="email" #email="ngModel" name="catering.email" placeholder="Email" required email>
+                            <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                                <div [hidden]="!email.errors.required">Email is required.</div>
+                                <div [hidden]="!email.errors.email">Invalid email.</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="tel" class="form-control" [(ngModel)]="catering.tel" maxlength="15" id="tel" #tel="ngModel" name="catering.tel" placeholder="Phone Number" required>
+                            <div *ngIf="tel.errors && (tel.dirty || tel.touched)" class="alert alert-danger">
+                                <div [hidden]="!tel.errors.required">Phone Number is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" [(ngModel)]="catering.location" id="location" #location="ngModel" name="catering.location" placeholder="Location" required>
+                            <div *ngIf="location.errors && (location.dirty || location.touched)" class="alert alert-danger">
+                                <div [hidden]="!location.errors.required">Location is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" [(ngModel)]="catering.date" placeholder="Event Date i.e. 28-06-2017" name="date" ngui-datetime-picker date-format="DD-MM-YYYY" date-only="true" min-date="{startDate}">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" [(ngModel)]="catering.noofuser" placeholder="Number of people" name="noofuser">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control" [(ngModel)]="catering.social" placeholder="Special requirements" name="social"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col-md-12 col-sm-12">
+                         <button type="submit" [disabled]="showLoading" class="btn btn-danger btn-block submit"
+             [disabled]="!cateringForm.form.valid">Submit</button>
+                    <ng-container *ngIf="showLoading"><div class="loader">Please wait...</div></ng-container>
+                     </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    
+<div class="bottom_slidebanners caterslide">
+    <div class="container-fluid">
+        <ul>
+            <li><img src="assets/images/bottom-banner/slide7.jpg" alt=""></li>
+            <li><img src="assets/images/bottom-banner/slide8.jpg" alt=""></li>
+            <li><img src="assets/images/bottom-banner/slide9.jpg" alt=""></li>
+            <li><img src="assets/images/bottom-banner/slide10.jpg" alt=""></li>
+        </ul>
+    </div>
+</div>

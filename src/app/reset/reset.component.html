@@ -1,0 +1,38 @@
+<div id="resetModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span class="icon icon-close"></span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 signin forgotfeild text-center">
+                <h4>reset password</h4>
+                <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
+                  <form #resetForm="ngForm" ngForm (ngSubmit)="resetPassword()">
+                    <div class="form-group">
+                    <p>Remember that it is not recommended that you reuse usernames and passwords.</p>
+                    <input type="password" class="form-control" [(ngModel)]="user.password" id="password" #password="ngModel" required name="user.password" placeholder="New Password">
+                    <div *ngIf="password.errors && (password.dirty || password.touched)">                      
+                      <p class="text-danger" [hidden]="!password.errors.required">
+                        password is required
+                      </p>
+                    </div>
+                    <input type="password" class="form-control" [(ngModel)]="user.cpassword" id="cpassword" #cpassword="ngModel" required name="user.cpassword" placeholder="Confirm New Password">
+                    <div *ngIf="cpassword.errors && (cpassword.dirty || cpassword.touched)">                      
+                      <p class="text-danger" [hidden]="!cpassword.errors.required">
+                        confirm password is required
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group submit-btn">
+                    <button type="submit" [disabled]="!resetForm.form.valid" [disabled]="showLoading" class="btn btn-default btn-block">Reset Password</button>
+                    <ng-container *ngIf="showLoading"><div class="loader"><p>Please wait...</p></div></ng-container>
+                  </div>
+                </form>
+            </div>    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

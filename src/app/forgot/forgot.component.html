@@ -1,0 +1,37 @@
+<div id="forgotModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span class="icon icon-close"></span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6 signin forgotfeild text-center">
+                <h4 style="color: #911c28;">forgot your password?</h4>
+                <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
+                  <form #forgotForm="ngForm" ngForm (ngSubmit)="forgotPassword()">
+                    <div class="form-group">
+                    <p>Enter your email addres below and we'll send you a link to reset your password.</p>
+                    <input type="email" class="form-control" [(ngModel)]="user.useremail" id="useremail" #useremail="ngModel" required name="user.useremail" placeholder="Email Address" email>
+                    <div *ngIf="useremail.errors && (useremail.dirty || useremail.touched)">                      
+                      <p class="text-danger" [hidden]="!useremail.errors.required">
+                        email is required
+                      </p>
+                      <p class="text-danger" [hidden]="!useremail.errors.email">
+                        invalid email
+                      </p>
+                      
+                    </div>
+                  </div>
+                  <div class="form-group submit-btn">
+                    <button type="submit" [disabled]="!forgotForm.form.valid" [disabled]="showLoading" class="btn btn-default btn-block">Send Reset Link</button>
+                    <ng-container *ngIf="showLoading"><div class="loader"><p>Please wait...</p></div></ng-container>
+                  </div>
+                </form>
+            </div>    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 

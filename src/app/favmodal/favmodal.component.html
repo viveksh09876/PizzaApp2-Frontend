@@ -1,0 +1,30 @@
+<div id="favModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span aria-hidden="true">&times;</span></button>
+      </div>
+<div class="modal-body white">
+          <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>Save as Favorite</h4>
+                    <br>
+                    <br>
+                    <p class="text-danger" *ngIf="alertMsg!= ''">{{alertMsg}}</p>
+                    <input type="text" [(ngModel)]="favTitle" placeholder="Enter title" class="form-control" required/>
+                    <span *ngIf="!showSaving">
+                                <button class="btn btn-green continue-btn" (click)="saveFav()">Save</button>  
+                            </span>
+                    <div class="col-md-12" *ngIf="showSaving">
+                              <p>Please wait! Saving your Favorite item...</p>
+                            </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+            </div>
+        </div>
