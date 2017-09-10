@@ -574,7 +574,7 @@ export class AccountComponent implements OnInit {
 
   orderFavItem(itemData) {
     this.dataService.setLocalStorageData('favItemFetched', JSON.stringify(itemData));
-    this.router.navigate(['/item','favorite']);    
+    this.router.navigate(['/item','favourite']);    
   }
 
   orderFavOrder(itemData) {

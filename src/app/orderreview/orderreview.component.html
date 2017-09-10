@@ -1,8 +1,8 @@
 <!--Banner-->
 <div class="banner-wrapper">
 <div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
-  <h1><span>choose your order</span></h1>
-  <div class="leftButtons buttons"><a [routerLink]="['/menu']" class="whiteBtn cta-btn">Back To Menu</a></div>
+  <h1><span>confirm your details</span></h1>
+  <div class="leftButtons buttons"><a [routerLink]="['/menu']" class="whiteBtn cta-btn">Back to menu</a></div>
   <!--<div class="leftButtons searchBox">
     <input type="text" class="form-control" placeholder="">
     <button class="icon-search"></button>
@@ -22,9 +22,9 @@
 <div class="container-fluid">
   <div class="col-md-12 steprow text-center">
       <ul>
-        <li class="active"><small>1</small> Order Review</li>  
+        <li class="active"><small>1</small> Check your order</li>  
         <li><small>2</small> Checkout</li>  
-        <li><small>3</small> Order Complete</li>  
+        <li><small>3</small> Complete your order</li>  
       </ul>  
   </div>
   <div class="col-md-12 stepboxes">
@@ -75,12 +75,12 @@
             </div>
         </div>
          <div class="save_orderbox text-center">
-            <h5>save as favorite order</h5>
-            <input type="text" [(ngModel)]="favTitle" placeholder="Order Name" autocomplete="off">
+            <h5>save as favourite order</h5>
+            <input type="text" [(ngModel)]="favTitle" placeholder="Order name" autocomplete="off">
             <ng-container *ngIf="!showSavingFav">
-            <input type="submit" (click)="addToFav()" value="Save Favorite">
+            <input type="submit" (click)="addToFav()" value="Save">
             </ng-container>
-            <p class="loading-msg" *ngIf="showSavingFav">Saving order as favorite...</p>
+            <p class="loading-msg" *ngIf="showSavingFav">Saving order as favourite...</p>
          </div>
      </div>  
      <div class="col-md-4 col-sm-4">
@@ -88,7 +88,7 @@
          <div name="addressForm" class="order_reviewform" ngForm #newRuleForm="ngForm">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" placeholder="First Name*" name="firstName" type="text" [(ngModel)]="order.user.first_name" id="firstName" #firstName="ngModel" required autocomplete="off">
+                    <input class="form-control" placeholder="First name*" name="firstName" type="text" [(ngModel)]="order.user.first_name" id="firstName" #firstName="ngModel" required autocomplete="off">
                     <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
                         <div [hidden]="!firstName.errors.required">First Name is required.</div>
                     </div>
@@ -96,7 +96,7 @@
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <input class="form-control" placeholder="Last Name*" type="text" name="lastName" [(ngModel)]="order.user.last_name" id="lastName" #lastName="ngModel" required autocomplete="off">
+                    <input class="form-control" placeholder="Last name*" type="text" name="lastName" [(ngModel)]="order.user.last_name" id="lastName" #lastName="ngModel" required autocomplete="off">
                     <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
                         <div [hidden]="!lastName.errors.required">Last Name is required.</div>
                     </div>
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-         <h3 class="green-title gray">confirm pickup or delivery?</h3>
+         <h3 class="green-title gray">choose pickup or delivery</h3>
          <ul class="radio_tabs">
             <li><label><input type="radio" name="pick" [(ngModel)]="order.order_type" value="pickup" (change)="addDeliveryCost($event,'pickup')" checked="{{order.order_type == 'pickup'? 'checked': ''}}"><small></small> pick up </label></li>
             <li><label><input type="radio" name="pick" [(ngModel)]="order.order_type" value="delivery" checked="{{order.order_type == 'delivery'? 'checked': ''}}" (change)="addDeliveryCost($event,'delivery')"><small></small> delivery </label></li>
@@ -132,7 +132,7 @@
             <form class="order_reviewform" name="orderReviewForm">
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="Appt#" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment" ng-required="!isDubai">
+                        <input class="form-control" placeholder="Address line 1" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment" ng-required="!isDubai">
                         <div *ngIf="apartment.errors && (apartment.dirty || apartment.touched)" class="alert alert-danger">
                             <div [hidden]="!apartment.errors.required">Apartment is required.</div>
                         </div>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="Street#" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
+                        <input class="form-control" placeholder="Address line 2" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
                         <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
                             <div [hidden]="!streetNo.errors.required">Street No is required.</div>
                         </div>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="Street / Building name" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
+                        <input class="form-control" placeholder="Address line 3" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
                         <div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
                             <div [hidden]="!street.errors.required">Street is required.</div>
                         </div>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="City" type="text" name="city" id="city" #city="ngModel" [(ngModel)]="order.address.city" required>
+                        <input class="form-control" placeholder="City or town" type="text" name="city" id="city" #city="ngModel" [(ngModel)]="order.address.city" required>
                         <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
                             <div [hidden]="!city.errors.required">City is required.</div>
                         </div>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="State" type="text" name="state" id="state" #state="ngModel" [(ngModel)]="order.address.state" required>
+                        <input class="form-control" placeholder="County" type="text" name="state" id="state" #state="ngModel" [(ngModel)]="order.address.state" required>
                         <div *ngIf="state.errors && (state.dirty || state.touched)" class="alert alert-danger">
                             <div [hidden]="!state.errors.required">State is required.</div>
                         </div>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="form-group">
-                        <input class="form-control" placeholder="Postal Code" type="text" name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="order.address.postal_code">
+                        <input class="form-control" placeholder="Postcode" type="text" name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="order.address.postal_code">
                         
                     </div>
                 </div>
@@ -185,7 +185,7 @@
             <form class="coupan_box">
                 <p class="danger" *ngIf="couponMsg != ''">{{couponMsg}}</p>
                 <ng-container *ngIf="order.coupon == ''">                    
-                    <input type="text" [(ngModel)]="couponCode" name="coupnCode" placeholder="Coupon Code" autocomplete="off">
+                    <input type="text" [(ngModel)]="couponCode" name="coupnCode" placeholder="Coupon code" autocomplete="off">
                     <ng-container *ngIf="!showCouponWait">
                     <input type="submit" value="Apply" (click)="applyCoupon()">
                     </ng-container>
@@ -195,17 +195,17 @@
                 </ng-container>
             </form>
             <ul class="dotted-list">
-                <li>Coupon Discount 
+                <li>Coupon discount 
                     <ng-container *ngIf="order.coupon != ''">
                         <strong>({{order.coupon}})</strong>
                         <a (click)="removeCoupon()">Remove</a>
                     </ng-container><span>{{couponDiscount}}</span></li> 
-                <li>Sub Total<span>{{netCost}}</span></li> 
+                <li>Sub total<span>{{netCost}}</span></li> 
                 <li>Taxes<span>0.00</span></li> 
-                <li *ngIf="order.order_type=='delivery'">Delivery Charges <span>6.0</span></li> 
+                <li *ngIf="order.order_type=='delivery'">Delivery charges <span>6.0</span></li> 
             </ul>
              <div class="grand-total">
-                Grand Total <span>{{currencyCode}} {{totalCost}}</span>
+                Grand total <span>{{currencyCode}} {{totalCost}}</span>
              </div>
              <div class="choosetime_box">
                  <ng-container>
@@ -233,7 +233,7 @@
                     
                  </form>
                  </ng-container>
-                 <button (click)="confirmOrder()" [disabled]="!newRuleForm.valid" class="fullred-btn placeorder-btn">Place Order</button>
+                 <button (click)="confirmOrder()" [disabled]="!newRuleForm.valid" class="fullred-btn placeorder-btn">Place order</button>
                 </div>
          </div>
      </div>  

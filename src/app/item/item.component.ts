@@ -50,7 +50,7 @@ export class ItemComponent implements OnInit {
         
         if(params['slug'] && params['slug']!= '') {
 
-          if(params['slug'] != 'favorite') {
+          if(params['slug'] != 'favourite') {
             this.getItemData(params['slug']);
             if(this.dataService.getLocalStorageData('allItems') != null
                   && this.dataService.getLocalStorageData('allItems') != 'null') {

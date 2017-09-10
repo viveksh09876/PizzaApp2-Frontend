@@ -8,7 +8,7 @@
                 <div class="row">
                   <div class="col-md-9">
                     <h4>pick up or delivery?</h4>
-                    <h5>How would you like to get your pizza</h5>
+                    <h5>How would you like to get your pizza?</h5>
                   </div>
                   <div class="col-md-3"><img src="assets/images/pickup-delivery.png" alt="" class="img-responsive"/></div>
                 </div>
@@ -51,7 +51,7 @@
                                 
                             
                             <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
-                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
+                                <input class="form-control" type="text" placeholder="Postcode" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
                                 <small>or</small>  
                             </div>
                             <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
@@ -62,7 +62,7 @@
                             <div class="col-md-12 col-sm-12">
                                 <p class="text-danger" *ngIf="showOutletError">Please select store / outlet</p>
                                 <select class="form-control full" [(ngModel)]="selectedStore.val" (change)="setSelectedStore($event.target.value)">
-                                    <option value="">Select Store / Outlet</option>
+                                    <option value="">Choose your NKD Pizza store</option>
                                     <option *ngFor="let store of storeList" value="{{store.Store.id}}">{{store.Store.store_name}} ({{store.Store.store_address}})</option>
                                 </select>
                             </div>
@@ -124,7 +124,7 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
-                                <p class="text-danger" *ngIf="showOutletError">Please select store / outlet</p>
+                                <p class="text-danger" *ngIf="showOutletError">Choose your NKD Pizza store</p>
                                 <select class="form-control full" [(ngModel)]="selectedStore.val" (change)="setSelectedStore($event.target.value)">
                                     <option value="">Select Store / Outlet</option>
                                     <option *ngFor="let store of storeList" value="{{store.Store.id}}">{{store.Store.store_name}} ({{store.Store.store_address}})</option>
@@ -184,7 +184,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-danger btn-block continue-btn" (click)="goToMenu()">Start Ordering</button>  
+                                <button class="btn btn-danger btn-block continue-btn" (click)="goToMenu()">Start order</button>  
                             </div>
                         </div>
                     </div>                    

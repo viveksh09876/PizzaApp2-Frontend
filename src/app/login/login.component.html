@@ -8,7 +8,7 @@
       <div class="modal-body">
         <div class="row">
             <div class="col-md-6 signin">
-                <h3>sign into mynkd pizza</h3>
+                <h3>sign in to mynkd pizza</h3>
                 <p class="text-danger" *ngIf="error.show == true">{{error.message}}<p>
                 <form  #heroForm="ngForm">
                   <div class="form-group">
@@ -34,11 +34,11 @@
                 </form>
             </div>    
             <div class="col-md-6 guest">
-                <h3>continue as guest</h3>
+                <h3>continue as our guest</h3>
                 <button type="submit" (click)="openModal('ordernow')" class="btn btn-default btn-block">Order without signing in</button>
                 <span class="seprator"><small>OR</small></span>
                 <button type="submit" class="btn btn-default btn-block signup" (click)="openModal('register')">Register for myNKD pizza</button>
-                <div class="text-center offer-text">receive offers, discounts and other benefits</div>
+                <div class="text-center offer-text">get offers, discounts and other benefits</div>
             </div>    
         </div>
       </div>

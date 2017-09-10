@@ -1,9 +1,9 @@
 <!--Banner-->
 <div class="banner-wrapper myaccount">
 <div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
-  <h1>{{name}}</h1>
-  <div *ngIf="orderUrl == '' && !hideForUK" class="leftButtons buttons"><a (click)="openModal('ordernow')" class="whiteBtn cta-btn">Start a new Order</a></div>
-  <div *ngIf="orderUrl != '' && !hideForUK" class="leftButtons buttons"><a href="{{orderUrl}}" class="whiteBtn cta-btn">Start a new Order</a></div>
+  <h1>Hey {{name}}</h1>
+  <div *ngIf="orderUrl == '' && !hideForUK" class="leftButtons buttons"><a (click)="openModal('ordernow')" class="whiteBtn cta-btn">Start a new order</a></div>
+  <div *ngIf="orderUrl != '' && !hideForUK" class="leftButtons buttons"><a href="{{orderUrl}}" class="whiteBtn cta-btn">Start a new order</a></div>
   <!--<div class="leftButtons searchBox">
     <input type="text" class="form-control" placeholder="">
     <button class="icon-search"></button>
@@ -25,20 +25,20 @@
   <div class="row">
       <div class="col-md-3 col-sm-3 account-sidebar">
         <div class="box">
-          <h4>Profile</h4>
+          <h4>My profile</h4>
           <ul>
-            <li [ngClass]="{'active': currentTab == 'personalInfo'}"><a (click)="goToTab('personalInfo')">Personal Info</a></li>
-            <li [ngClass]="{'active': currentTab == 'accountInfo'}"><a (click)="goToTab('accountInfo')">Account Info</a></li>
-            <li [ngClass]="{'active': currentTab == 'preference'}"><a (click)="goToTab('preference')">Preferences</a></li>
+            <li [ngClass]="{'active': currentTab == 'personalInfo'}"><a (click)="goToTab('personalInfo')">My details</a></li>
+            <li [ngClass]="{'active': currentTab == 'accountInfo'}"><a (click)="goToTab('accountInfo')">Account info</a></li>
+            <li [ngClass]="{'active': currentTab == 'preference'}"><a (click)="goToTab('preference')">preferences</a></li>
           </ul>
         </div>
         <div class="box" *ngIf="orderUrl == '' && !hideForUK">
-          <h4>Ordering</h4>
+          <h4>My previous orders</h4>
           <ul>
-            <li [ngClass]="{'active': currentTab == 'favOrders'}"><a (click)="goToTab('favOrders')">Favorite Orders</a></li>
-            <li [ngClass]="{'active': currentTab == 'favItems'}"><a (click)="goToTab('favItems')">Favorite Items</a></li>
-            <li [ngClass]="{'active': currentTab == 'orderHistory'}"><a (click)="goToTab('orderHistory')">Order History</a></li>
-            <li [ngClass]="{'active': currentTab == 'address'}"><a (click)="goToTab('address')">My Addresses</a></li>
+            <li [ngClass]="{'active': currentTab == 'favOrders'}"><a (click)="goToTab('favOrders')">Favourite orders</a></li>
+            <li [ngClass]="{'active': currentTab == 'favItems'}"><a (click)="goToTab('favItems')">Favourite items</a></li>
+            <li [ngClass]="{'active': currentTab == 'orderHistory'}"><a (click)="goToTab('orderHistory')">Order history</a></li>
+            <li [ngClass]="{'active': currentTab == 'address'}"><a (click)="goToTab('address')">My addresses</a></li>
           </ul>
         </div>
       </div>
@@ -46,20 +46,20 @@
       <div class="col-md-9 col-sm-9">
         
         <div class="account_container" *ngIf="currentTab == 'favOrders'">
-          <h4 class="title">My Favorite Orders</h4>
+          <h4 class="title">My favourite orders</h4>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
             <ng-container *ngIf="favOrders != null">
                <div class="panel panel-default" *ngFor="let fi of favOrders; let i=index">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">{{fi.FName}}: <ng-container *ngFor="let fd of fi.FDetail">{{fd.data.itemName}}, </ng-container><strong><a (click)="orderFavOrder(fi)" class="ordernow">Order Now</a></strong></a>
+                    <a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">{{fi.FName}}: <ng-container *ngFor="let fd of fi.FDetail">{{fd.data.itemName}}, </ng-container><strong><a (click)="orderFavOrder(fi)" class="ordernow">Order now</a></strong></a>
                     </h4>
                 </div>                
                 </div>
             </ng-container>
             <ng-container *ngIf="favOrders == null">
-              <p *ngIf="showLoading">Please wait...</p>
+              <p *ngIf="showLoading">Please wait...nearly there</p>
               <p *ngIf="!showLoading">No data found</p>
             </ng-container>  
 
@@ -68,20 +68,20 @@
 
 
         <div class="account_container" *ngIf="currentTab == 'favItems'">
-          <h4 class="title">My Favorite Items</h4>
+          <h4 class="title">My favourite items</h4>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
             <ng-container *ngIf="favItems != null">
                <div class="panel panel-default" *ngFor="let fi of favItems">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">{{fi.FName}}: {{fi.FDetail.data.itemName}}<strong><a class="ordernow" (click)="orderFavItem(fi)">Order Now</a></strong></a>
+                    <a role="button" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">{{fi.FName}}: {{fi.FDetail.data.itemName}}<strong><a class="ordernow" (click)="orderFavItem(fi)">Order now</a></strong></a>
                     </h4>
                 </div>                
                 </div>
             </ng-container>
             <ng-container *ngIf="favItems == null">
-              <p *ngIf="showLoading">Please wait...</p>
+              <p *ngIf="showLoading">Please wait...nearly there</p>
               <p *ngIf="!showLoading">No data found</p>
             </ng-container>  
 
@@ -90,13 +90,13 @@
 
 
         <div class="account_container" *ngIf="currentTab == 'orderHistory'">
-          <h4 class="title">My Orders</h4>
+          <h4 class="title">My previous orders</h4>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <!-- {{orderData[0].OrderId}} -->
             <div *ngFor = "let ord of orderData; let i = index;" class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{i}}" aria-expanded="true" aria-controls="collapseOne">Order # {{ord.OrderId}} <span><i class="fa fa-check"></i>Order Date: {{ord.CreatedAt}}</span> <strong>Order Value : {{currencyCode}} {{ord.OrderDetail.total_price}}</strong><i class="fa fa-angle-down"></i></a>
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{i}}" aria-expanded="true" aria-controls="collapseOne">Order  {{ord.OrderId}} <span><i class="fa fa-check"></i>Order date: {{ord.CreatedAt}}</span> <strong>Order value : {{currencyCode}} {{ord.OrderDetail.total_price}}</strong><i class="fa fa-angle-down"></i></a>
                   
                 </h4>
               </div>
@@ -110,7 +110,7 @@
                                   <tr>
                                       <th class="main">Item</th>
                                       <th>Qty</th>
-                                      <th>price</th>
+                                      <th>Price</th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -152,24 +152,24 @@
                           </table>
                       </div>
                       <div class="blackbox" *ngIf="ord.OrderDetail.coupon != ''">
-                          <div class="grand-total" style="background-color: #999;" >Coupon Discount [{{ord.OrderDetail.coupon}}]<span>{{currencyCode}} {{ord.OrderDetail.couponDiscount}}</span></div>
+                          <div class="grand-total" style="background-color: #999;" >Coupon discount [{{ord.OrderDetail.coupon}}]<span>{{currencyCode}} {{ord.OrderDetail.couponDiscount}}</span></div>
                       </div>
                       <div class="blackbox">
-                          <div class="grand-total">Grand Total <span>{{currencyCode}} {{ord.OrderDetail.total_price}}</span></div>
+                          <div class="grand-total">Grand total <span>{{currencyCode}} {{ord.OrderDetail.total_price}}</span></div>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-12 details">
                       <h4>Order details</h4>
                       <ul>
-                        <li><span>Order Mode :</span> {{ord.OrderDetail.order_type}}</li>
-                        <li><span>Payment Mode :</span> Pay at store</li>
-                        <li><span>From Restaurant:</span><br/>
+                        <li><span>Order mode :</span> {{ord.OrderDetail.order_type}}</li>
+                        <li><span>Payment mode :</span> Pay at store</li>
+                        <li><span>From restaurant:</span><br/>
                           {{ord.OrderDetail.store.store_name}}<br/>
                           {{ord.OrderDetail.store.store_address}}<br/>
                           {{ord.OrderDetail.store.store_phone}}</li>
                       </ul>
                         <h4 class="panel-title">
-                        <a class="ordernow" *ngIf="ord.OrderDetail.customData != undefined" (click)="orderReOrder(ord)">Re-Order</a>
+                        <a class="ordernow" *ngIf="ord.OrderDetail.customData != undefined" (click)="orderReOrder(ord)">Re-order</a>
                         </h4>
                     </div>
                   </div>
@@ -180,36 +180,36 @@
         </div>
 
         <div class="account_box" *ngIf="currentTab == 'personalInfo'">
-            <h4 class="title">Personal Info</h4>
+            <h4 class="title">My details</h4>
             <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
             <div class="accountmain_sec space">
                 <form class="form-horizontal" #udpateProfile="ngForm" ngForm (ngSubmit)="updateProfile()">
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">First Name</label>
+                    <label class="col-sm-4 col-md-3 control-label">First name</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="text" class="form-control" [(ngModel)]="user.firstname" id="firstname" #firstname="ngModel" name="user.firstname" placeholder="Enter First Name" required>
+                      <input type="text" class="form-control" [(ngModel)]="user.firstname" id="firstname" #firstname="ngModel" name="user.firstname" placeholder="Enter first name" required>
                       <div *ngIf="firstname.errors && (firstname.dirty || firstname.touched)" class="alert alert-danger">
-                          <div [hidden]="!firstname.errors.required">First Name is required.</div>
+                          <div [hidden]="!firstname.errors.required">We need your full name please</div>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Last Name</label>
+                    <label class="col-sm-4 col-md-3 control-label">Last name</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="text" class="form-control"  [(ngModel)]="user.lastname" id="lastname" #lastname="ngModel" name="user.lastname" placeholder="Last Name" required>
+                      <input type="text" class="form-control"  [(ngModel)]="user.lastname" id="lastname" #lastname="ngModel" name="user.lastname" placeholder="Last name" required>
                       <div *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" class="alert alert-danger">
-                          <div [hidden]="!lastname.errors.required">Last Name is required.</div>
+                          <div [hidden]="!lastname.errors.required">We need your full name please </div>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Email ID</label>
+                    <label class="col-sm-4 col-md-3 control-label">Email iD</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="text" class="form-control" disabled [(ngModel)]="user.email" id="email" #email="ngModel" name="user.email" placeholder="Enter Email">
+                      <input type="text" class="form-control" disabled [(ngModel)]="user.email" id="email" #email="ngModel" name="user.email" placeholder="Enter email">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Date of Birth</label>
+                    <label class="col-sm-4 col-md-3 control-label">Date of birth</label>
                     <div class="col-sm-7 col-md-7">
                       
                       <input appDateRangePick
@@ -222,27 +222,27 @@
                                         class="form-control" required autocomplete="off" readonly/>
 
                       <div *ngIf="dob.errors && (dob.dirty || dob.touched)" class="alert alert-danger">
-                          <div [hidden]="!dob.errors.required">Date of Birth is required.</div>
+                          <div [hidden]="!dob.errors.required">We need your date of birth please </div>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Postal Code</label>
+                    <label class="col-sm-4 col-md-3 control-label">Postcode</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="text" class="form-control" [(ngModel)]="user.postal" name="postal" placeholder="Postal Code">
+                      <input type="text" class="form-control" [(ngModel)]="user.postal" name="postal" placeholder="Postcode">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Phone Number</label>
+                    <label class="col-sm-4 col-md-3 control-label">Phone number</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="text" class="form-control" [(ngModel)]="user.phone" id="phone" #phone="ngModel" name="user.phone" placeholder="Enter Mobile" maxlength="15">
+                      <input type="text" class="form-control" [(ngModel)]="user.phone" id="phone" #phone="ngModel" name="user.phone" placeholder="Enter phone number" maxlength="15">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-4 col-md-3 control-label">Favorite Location</label>
+                    <label class="col-sm-4 col-md-3 control-label">Favourite NKD Pizza store</label>
                     <div class="col-sm-7 col-md-7">
                       <select class="form-control" [(ngModel)]="user.favloc" name="favloc">
-                        <option value="">Select Favorite Location</option>
+                        <option value="">Choose your favourite NKD Pizza store</option>
                         <option *ngFor="let store of storeList" value="{{store.Store.id}}">{{store.Store.store_name}} ({{store.Store.store_address}})</option>
                     </select>
                     </div>
@@ -256,14 +256,14 @@
             </div>
         </div>
         <div class="account_box" *ngIf="currentTab == 'accountInfo'">
-            <h4 class="title">Account Info</h4>
+            <h4 class="title">Account info</h4>
             <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
             <div class="accountmain_sec space">
                 <form class="form-horizontal" #udpateAccount="ngForm" ngForm (ngSubmit)="updateAccount()">
                    <div class="form-group">
                     <label class="col-sm-4 col-md-3 control-label">Password</label>
                     <div class="col-sm-7 col-md-7">
-                      <input type="password" class="form-control" [(ngModel)]="account.password" id="password" #password="ngModel" name="account.password" placeholder="Enter Password">
+                      <input type="password" class="form-control" [(ngModel)]="account.password" id="password" #password="ngModel" name="account.password" placeholder="Enter password">
                     </div>
                   </div>
                   <!-- <div class="form-group">
@@ -286,14 +286,14 @@
                   </div> -->
                   <div class="form-group buttons">
                     <div class="col-sm-12">
-                      <button type="submit" class="btn btn-default" [disabled]="!udpateAccount.form.valid">Update Account Info</button>
+                      <button type="submit" class="btn btn-default" [disabled]="!udpateAccount.form.valid">Update account info</button>
                     </div>
                   </div>
                 </form>
             </div>
         </div>
         <div class="account_box" *ngIf="currentTab == 'preference'">
-            <h4 class="title">Prefrences Info</h4>
+            <h4 class="title">My Prefrences</h4>
             <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
             <div class="accountmain_sec space">
                 <form class="form-horizontal" #udpatePrefrences="ngForm" ngForm (ngSubmit)="updatePrefrence()">
@@ -330,7 +330,7 @@
                   </div>
                   <div class="form-group buttons">
                     <div class="col-sm-12">
-                      <button type="submit" class="btn btn-default" [disabled]="!udpatePrefrences.form.valid">Update Prefrences</button>
+                      <button type="submit" class="btn btn-default" [disabled]="!udpatePrefrences.form.valid">Update prefrences</button>
                     </div>
                   </div>
                 </form>
@@ -338,7 +338,7 @@
         </div>
           
         <div class="account_box" *ngIf="currentTab == 'address'">
-            <h4 class="title">My Addresses</h4>
+            <h4 class="title">My delivery addresses</h4>
             <div class="accountmain_sec">
               <div class="row">
                 <ng-container *ngIf="showAddressForm">
@@ -359,7 +359,7 @@
                           <div class="form-group">
                               <input type="text" class="form-control" placeholder="First Name" id="firstname" #firstname="ngModel" name="address.firstname" [(ngModel)]="address.firstname" required>
                               <div *ngIf="firstname.errors && (firstname.dirty || firstname.touched)" class="alert alert-danger">
-                                  <div [hidden]="!firstname.errors.required">First Name is required.</div>
+                                  <div [hidden]="!firstname.errors.required">we need your full name please</div>
                               </div>
                           </div>
                       </div>
@@ -367,21 +367,21 @@
                           <div class="form-group">
                               <input type="text" class="form-control" placeholder="Last Name" id="lastname" #lastname="ngModel" name="address.lastname" [(ngModel)]="address.lastname" required>
                               <div *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" class="alert alert-danger">
-                                  <div [hidden]="!lastname.errors.required">Last Name is required.</div>
+                                  <div [hidden]="!lastname.errors.required">we need your full name please</div>
                               </div>
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Appt#" type="text" id="apartment" #apartment="ngModel" name="address.apartment" [(ngModel)]="address.apartment" required>
+                              <input class="form-control" placeholder="Address line 1" type="text" id="apartment" #apartment="ngModel" name="address.apartment" [(ngModel)]="address.apartment" required>
                               <div *ngIf="apartment.errors && (apartment.dirty || apartment.touched)" class="alert alert-danger">
-                                  <div [hidden]="!apartment.errors.required">Apartment Number Name is required.</div>
+                                  <div [hidden]="!apartment.errors.required">we need your full address please</div>
                               </div>
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Street#" type="text" id="streetNo" #streetNo="ngModel" name="address.streetNo" [(ngModel)]="address.streetNo">
+                              <input class="form-control" placeholder="Address line 2" type="text" id="streetNo" #streetNo="ngModel" name="address.streetNo" [(ngModel)]="address.streetNo">
                               <!-- <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
                                   <div [hidden]="!streetNo.errors.required">Street Number is required.</div>
                               </div> -->
@@ -389,32 +389,32 @@
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Street / Building name" id="street" #street="ngModel" name="address.street" type="text" [(ngModel)]="address.street">
+                              <input class="form-control" placeholder="Address line 3" id="street" #street="ngModel" name="address.street" type="text" [(ngModel)]="address.street">
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="City" type="text" id="city" #city="ngModel" name="address.city" [(ngModel)]="address.city">
+                              <input class="form-control" placeholder="City or town" type="text" id="city" #city="ngModel" name="address.city" [(ngModel)]="address.city">
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="State" type="text" id="state" #state="ngModel" name="address.state" [(ngModel)]="address.state">
+                              <input class="form-control" placeholder="country" type="text" id="state" #state="ngModel" name="address.state" [(ngModel)]="address.state">
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Postal Code" type="text" id="postal_code" #postal_code="ngModel" name="address.postal_code" [(ngModel)]="address.postal_code">
+                              <input class="form-control" placeholder="Postcode" type="text" id="postal_code" #postal_code="ngModel" name="address.postal_code" [(ngModel)]="address.postal_code">
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" maxlength="15" placeholder="Phone" type="text" id="phone" #phone="ngModel" name="address.phone" [(ngModel)]="address.phone">
+                              <input class="form-control" maxlength="15" placeholder="Phone number" type="text" id="phone" #phone="ngModel" name="address.phone" [(ngModel)]="address.phone">
                           </div>
                       </div>
                       <div class="form-group buttons">
                         <div class="col-sm-12">
-                          <button type="submit" class="btn btn-default" [disabled]="!profileAddress.form.valid">Add Address</button>
+                          <button type="submit" class="btn btn-default" [disabled]="!profileAddress.form.valid">Add address</button>
                         </div>
                       </div>
                   </form>
@@ -434,7 +434,7 @@
                                 {{addressArr.address1.street}} {{addressArr.address1.city}}<br>
                                 {{addressArr.address1.state}} {{addressArr.address1.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address1.phone}}</p>
-                                <p><a (click)="editAddress('Address1')">Edit</a> | <a (click)="deleteAddress('Address1')">Delete</a> <ng-container *ngIf="addressArr.address1 != undefined && !addressArr.address1.is_default"> | <a (click)="setAsDefault('Address1')">Set As Default</a></ng-container></p>
+                                <p><a (click)="editAddress('Address1')">Edit</a> | <a (click)="deleteAddress('Address1')">Delete</a> <ng-container *ngIf="addressArr.address1 != undefined && !addressArr.address1.is_default"> | <a (click)="setAsDefault('Address1')">Set as default</a></ng-container></p>
                             </div>
                         </div>
                     </div>    
@@ -448,7 +448,7 @@
                                 {{addressArr.address2.street}} {{addressArr.address2.city}}<br>
                                 {{addressArr.address2.state}} {{addressArr.address2.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address2.phone}}</p>
-                                <p><a (click)="editAddress('Address2')">Edit</a> | <a (click)="deleteAddress('Address2')">Delete</a> <ng-container *ngIf="!addressArr.address2.is_default"> | <a (click)="setAsDefault('Address2')">Set As Default</a></ng-container></p>
+                                <p><a (click)="editAddress('Address2')">Edit</a> | <a (click)="deleteAddress('Address2')">Delete</a> <ng-container *ngIf="!addressArr.address2.is_default"> | <a (click)="setAsDefault('Address2')">Set as default</a></ng-container></p>
                             </div>
                         </div>
                     </div> 
@@ -462,13 +462,13 @@
                                 {{addressArr.address3.street}} {{addressArr.address3.city}}<br>
                                 {{addressArr.address3.state}} {{addressArr.address3.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address3.phone}}</p>
-                                <p><a (click)="editAddress('Address3')">Edit</a> | <a (click)="deleteAddress('Address3')">Delete</a> <ng-container *ngIf="!addressArr.address3.is_default"> | <a (click)="setAsDefault('Address3')">Set As Default</a></ng-container></p>
+                                <p><a (click)="editAddress('Address3')">Edit</a> | <a (click)="deleteAddress('Address3')">Delete</a> <ng-container *ngIf="!addressArr.address3.is_default"> | <a (click)="setAsDefault('Address3')">Set as default</a></ng-container></p>
                             </div>
                         </div>
                     </div> 
                     <div *ngIf="totalNoOfAddress!=3" class="col-md-4 col-sm-6">
                         <div class="address_box addaddress">
-                            <a (click)="showAddAddressForm()"><i class="fa fa-plus"></i> Add Address</a>
+                            <a (click)="showAddAddressForm()"><i class="fa fa-plus"></i> Add address</a>
                         </div>
                     </div>
                     

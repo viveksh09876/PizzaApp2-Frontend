@@ -2805,7 +2805,7 @@ color:#fff
 	font: 15px "proxima_nova_rgbold";
 	padding: 1.5em 0;
 }
-.three-column-wrapper .inside-column-container h3 a.fav-icon span.icon-favorite {
+.three-column-wrapper .inside-column-container h3 a.fav-icon span.icon-favourite {
 	margin: auto;
 	font-size: 20px;
 	line-height: 32px;
@@ -2966,7 +2966,7 @@ color:#fff
 .reviewbox .form-control.last{ margin: 0;}
 .reviewbox .form-control:-moz-placeholder{color: #789C48;}
 .reviewbox p{ margin: 0 0 10px; font-weight: 300;}
-.reviewbox.favorite .form-control{ border: 1px solid #ccc; border-radius: 4px;}
+.reviewbox.favourite .form-control{ border: 1px solid #ccc; border-radius: 4px;}
 .reviewbox input[type="submit"]{ background: #911c27; color: #fff; padding: 10px 20px; font-family: "proxima_nova_rgregular"; border: none; font-size: 16px; border-radius: 4px;}
 
 .stepboxes{ margin-bottom: 20px;}

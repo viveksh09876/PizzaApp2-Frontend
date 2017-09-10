@@ -15,12 +15,12 @@
                 <div  [innerHTML]="pageContent"></div>
                 <img src="assets/images/cater-img.jpg" alt="" class="food">
                 <!-- <small>With NKD we care about the fine print, but even more so about delivering fine pizza.</small> -->
-                <a [routerLink]="['/menu']" class="check"><img src="assets/images/mini-pizza.png" alt=""> Check our Menu</a>
+                <a [routerLink]="['/menu']" class="check"><img src="assets/images/mini-pizza.png" alt=""> Check out our menu</a>
             </div>
         </div>
 
         <div class="col-md-8 col-sm-6 form_design">
-            <h3>ask about our nkd pizza mobile truck</h3>
+            <h3>get the low-down on going nkd at your event </h3>
             <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
             <form  #cateringForm="ngForm" ngForm (ngSubmit)="CateringApi()">
                 <div class="row">
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="tel" class="form-control" [(ngModel)]="catering.tel" maxlength="15" id="tel" #tel="ngModel" name="catering.tel" placeholder="Phone Number" required>
+                            <input type="tel" class="form-control" [(ngModel)]="catering.tel" maxlength="15" id="tel" #tel="ngModel" name="catering.tel" placeholder="Phone number" required>
                             <div *ngIf="tel.errors && (tel.dirty || tel.touched)" class="alert alert-danger">
                                 <div [hidden]="!tel.errors.required">Phone Number is required.</div>
                             </div>
@@ -64,7 +64,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" [(ngModel)]="catering.date" placeholder="Event Date i.e. 28-06-2017" name="date" ngui-datetime-picker date-format="DD-MM-YYYY" date-only="true" min-date="{startDate}">
+                            <input type="text" class="form-control" [(ngModel)]="catering.date" placeholder="Event date i.e. 28-06-2017" name="date" ngui-datetime-picker date-format="DD-MM-YYYY" date-only="true" min-date="{startDate}">
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -76,7 +76,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <textarea class="form-control" [(ngModel)]="catering.social" placeholder="Special requirements" name="social"></textarea>
+                            <textarea class="form-control" [(ngModel)]="catering.social" placeholder="Anything special you need or other things to mention?" name="social"></textarea>
                         </div>
                     </div>
                 </div>

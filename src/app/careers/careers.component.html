@@ -10,20 +10,20 @@
             <div class="career_points">
                 <div class="green_box">
                     <img src="assets/images/white_logo.png">
-                    <p>What we look for in our employees</p>
+                    <p>You’re likely to be our kind of person if you:</p>
                 </div>
                 <div [innerHTML]="pageContent"></div>
             </div>
         </div>
 
         <div class="col-md-8 col-sm-6 form_design">
-            <h3>if you want to join our team then we want to hear from you</h3>
+            <h3>fancy joining us? we’d love to hear from you.</h3>
             <p class="alert" [ngClass]="{'alert-success': error.isSuccess, 'alert-danger': !error.isSuccess}" *ngIf="error.show == true">{{error.message}}<p>
             <form  #careerForm="ngForm" ngForm (ngSubmit)="Submit()">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" [(ngModel)]="career.fname" id="fname" #fname="ngModel" name="career.fname" placeholder="First Name" required>
+                            <input type="text" class="form-control" [(ngModel)]="career.fname" id="fname" #fname="ngModel" name="career.fname" placeholder="First name" required>
                             <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
                                 <div [hidden]="!fname.errors.required">First Name is required.</div>
                             </div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" [(ngModel)]="career.lname" id="lname" #lname="ngModel" name="career.lname" placeholder="Last Name" required>
+                            <input type="text" class="form-control" [(ngModel)]="career.lname" id="lname" #lname="ngModel" name="career.lname" placeholder="Last name" required>
                             <div *ngIf="lname.errors && (lname.dirty || lname.touched)" class="alert alert-danger">
                                 <div [hidden]="!lname.errors.required">Last Name is required.</div>
                             </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="tel" class="form-control" [(ngModel)]="career.tel" id="tel" #tel="ngModel" name="career.tel" placeholder="Phone Number" maxlength="15" required>
+                            <input type="tel" class="form-control" [(ngModel)]="career.tel" id="tel" #tel="ngModel" name="career.tel" placeholder="Phone number" maxlength="15" required>
                             <div *ngIf="tel.errors && (tel.dirty || tel.touched)" class="alert alert-danger">
                                 <div [hidden]="!tel.errors.required">Phone number is required.</div>
                             </div>
@@ -80,7 +80,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group attachment">
                             <div class="file-attach">
-                                <input type="file" [(ngModel)]="career.resume" id="resume" #resume="ngModel" name="career.resume" ngFileSelect [options]="options" (onUpload)="handleUpload($event)" (beforeUpload)="beforeUpload($event)"><span>Attach Resume</span>
+                                <input type="file" [(ngModel)]="career.resume" id="resume" #resume="ngModel" name="career.resume" ngFileSelect [options]="options" (onUpload)="handleUpload($event)" (beforeUpload)="beforeUpload($event)"><span>Attach CV</span>
                             </div>
                             <input type="text" [(ngModel)]="career.attachment" id="attachment" #attachment="ngModel" name="career.attachment" class="form-control">
                         </div>

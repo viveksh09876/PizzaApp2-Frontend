@@ -547,7 +547,7 @@ export class OrderreviewComponent implements OnInit {
       this.dataService.saveFavItem(userId, this.favTitle, favData, 'order')
         .subscribe(data => {
             this.showSavingFav = false;
-            this.openMessageModal('Your favorite item has been saved successfully!');
+            this.openMessageModal('Your favourite item has been saved successfully!');
             //console.log('fav resp', data);
         });  
 

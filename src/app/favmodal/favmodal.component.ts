@@ -44,7 +44,7 @@ export class FavmodalComponent extends DialogComponent<FavModal, null> {
         this.dataService.saveFavItem(userId, this.favTitle, favData, this.type)
           .subscribe(data => {
               this.showSaving = true;
-              this.openMessageModal('Your favorite item has been saved successfully!');
+              this.openMessageModal('Your favourite item has been saved successfully!');
               //console.log('fav resp', data);
           });
 
