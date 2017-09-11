@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
   storeList = [];
   store = null;
   showLogin = true;
+  twitterScreenName = '';
 
   constructor(private dataService: DataService,private utilService: UtilService, private dialogService: DialogService) {
        
@@ -62,14 +63,17 @@ export class HomeComponent implements OnInit, AfterContentInit {
       this.getFbFeeds('nkdpizzabh');
       this.getIgFeeds('nkdpizzabh');
       this.getTwitterFeeds('NKDPizzabh');
+      this.twitterScreenName = 'NKDPizzabh';
     } else if (countryName.toLowerCase() == 'united kingdom') {
       this.getFbFeeds('NKDPizzaScotland');
       this.getIgFeeds('nkdpizzascotland');
       this.getTwitterFeeds('nkdscotland');
+      this.twitterScreenName = 'nkdscotland';
     } else{
       this.getFbFeeds('nkdpizza');
       this.getIgFeeds('nkdpizzauae');
       this.getTwitterFeeds('NKDPizzaUSA');
+      this.twitterScreenName = 'NKDPizzaUSA';
     }
     
     this.dataService.setLocalStorageData('confirmationItems', null);

@@ -3294,6 +3294,11 @@ color:#fff
 .accountmain_sec .form-horizontal .buttons{ position: absolute; bottom: 0; left: 0; width: 100%; margin: 0; background: #f4f4f4; border-top: 1px solid #e1e1e1; padding: 15px 20px;}
 .accountmain_sec .form-horizontal .buttons button{ font-size: 16px; color: #fff; font-family: 'proxima_nova_ltlight'; background: #911c27; border: 0; border-radius: 2px; border-bottom: 2px solid #4f050c; line-height: 34px; padding: 0 25px;}
 
+.accountmain_sec .checkbox input[type="radio"]{
+    margin-left: -20px;
+    position: absolute;
+}
+
 .address_box{ border: 1px solid #e1e1e1; min-height: 215px; margin-bottom: 30px;}
 .address_box h5{ font-size: 15px; color: #5b5a56; line-height: 22px; padding: 5px 10px; background: #fafafa; border-bottom: 1px solid #e1e1e1; margin: 0; font-family: 'proxima_nova_ltlight';}
 .address_box h5 span{ color: #789c48; float: right}

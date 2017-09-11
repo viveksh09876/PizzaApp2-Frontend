@@ -76,7 +76,7 @@ export class AccountComponent implements OnInit {
       this.currencyCode = this.utilService.currencyCode;
       let user = JSON.parse(this.dataService.getLocalStorageData('user-details'));
       this.user = user;
-      this.name = user.firstName + ' ' + user.lastName; 
+      this.name = user.firstName; 
       this.getUserIp();
     } 
   }
