@@ -101,7 +101,7 @@ export class AppComponent implements OnInit {
         .subscribe(data => {
             let countryName = data.geoplugin_countryName;
             let userCountryCode = data.geoplugin_countryCode;
-
+			countryName = 'united kingdom';
             if(countryName.toLowerCase() == 'bahrain'){
               this.orderUrl = 'http://www.nkdpizza.com/order-bh.html';
               this.followUsLinks = {

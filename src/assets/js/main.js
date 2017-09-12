@@ -5,6 +5,7 @@ var lng = '55.197286';
 var map, places = [], cordinates, pos, contentString, coordinates;
 var zoom=3;
 cmsurl = "https://"+ window.location.hostname+"/uk/dev";
+//cmsurl = "https://nkdpizza.com/uk/dev";
 //cmsurl = "https://mavin360.com/demo/nkd/dev";
 var directionUrl = 'http://maps.google.com/';
 
@@ -74,7 +75,11 @@ $(document).ready(function(){
         if(country=='United States'){
           country = 'usa';
         }
-        // country = 'UAE';
+		
+		if(country.toLowerCase()=='united kingdom'){
+          country = 'UK';
+        }
+        //country = 'UK';
           
         var mapText = 'coming soon to a location near you';
         var zoomLabel = 5;
@@ -194,7 +199,12 @@ $(document).ready(function(){
                         var locText = ' location';
                       }
                       mapCanvas.setCenter([longitude, latitude]);
-                      mapText = 'currently open at <span>'+stData.length + locText + '</span> <strong>' + country + '</strong>';
+					  
+					  if (country != 'UK') {
+						  
+						  mapText = 'currently open at <span>'+stData.length + locText + '</span> <strong>' + country + '</strong>';
+					  }
+                      
 
                       
                   } 
