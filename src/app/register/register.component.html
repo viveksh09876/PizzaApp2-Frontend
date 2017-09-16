@@ -71,7 +71,7 @@ s<!-- Sign up Modal -->
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <label>Phone number</label>
-                                <input type="number" maxlength="15" class="form-control" [(ngModel)]="user.phone" name="phone" placeholder="Mobile number i.e. +12XXXXXXXX">
+                                <input type="number" onKeyPress="if(this.value.length==15) return false;" maxlength="15" class="form-control" [(ngModel)]="user.phone" name="phone" placeholder="Mobile number i.e. +12XXXXXXXX">
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label>Favourite NKD Pizza store</label>

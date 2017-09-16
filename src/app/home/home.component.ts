@@ -32,15 +32,22 @@ export class HomeComponent implements OnInit, AfterContentInit {
   twitterScreenName = '';
 
   constructor(private dataService: DataService,private utilService: UtilService, private dialogService: DialogService) {
-       
+    this.dataService.getIp()
+    .subscribe(data => {
+        this.countryName = data.geoplugin_countryName;
+    });
   }
 
   openModal(type) {
-    
+
      this.dialogService.addDialog(RegisterComponent, {  }, { closeByClickingOutside:true });   
   }
 
   ngOnInit() {
+    this.getSlideImages();
+    this.getFeeds();
+    this.setStore();
+    
     //check if user logged In
     let user = this.dataService.getLocalStorageData('isLoggedIn');
     this.dataService.setLocalStorageData('order-now', null);
@@ -54,31 +61,9 @@ export class HomeComponent implements OnInit, AfterContentInit {
     this.dataService.setLocalStorageData('favOrdersFetched', null); 
     this.dataService.setLocalStorageData('confirmationItems', null); 
     this.dataService.setLocalStorageData('confirmationFinalOrder', null);
-
-    let countryName = this.dataService.getLocalStorageData('userCountry');
-    this.countryName = countryName;
-
-    this.setStore();
-    if(countryName.toLocaleLowerCase() == 'bahrain'){
-      this.getFbFeeds('nkdpizzabh');
-      this.getIgFeeds('nkdpizzabh');
-      this.getTwitterFeeds('NKDPizzabh');
-      this.twitterScreenName = 'NKDPizzabh';
-    } else if (countryName.toLowerCase() == 'united kingdom') {
-      this.getFbFeeds('NKDPizzaScotland');
-      this.getIgFeeds('nkdpizzascotland');
-      this.getTwitterFeeds('nkdscotland');
-      this.twitterScreenName = 'nkdscotland';
-    } else{
-      this.getFbFeeds('nkdpizza');
-      this.getIgFeeds('nkdpizzauae');
-      this.getTwitterFeeds('NKDPizzaUSA');
-      this.twitterScreenName = 'NKDPizzaUSA';
-    }
     
     this.dataService.setLocalStorageData('confirmationItems', null);
     this.dataService.setLocalStorageData('confirmationFinalOrder', null);    
-    this.getSlideImages();
     
     //loadScript();
 
@@ -108,6 +93,25 @@ export class HomeComponent implements OnInit, AfterContentInit {
 
   }
 
+  getFeeds(){
+    let countryName = this.countryName;
+    if(countryName.toLocaleLowerCase() == 'bahrain'){
+      this.getFbFeeds('nkdpizzabh');
+      this.getIgFeeds('nkdpizzabh');
+      this.getTwitterFeeds('NKDPizzabh');
+      this.twitterScreenName = 'NKDPizzabh';
+    } else if (countryName.toLowerCase() == 'united kingdom') {
+      this.getFbFeeds('NKDPizzaScotland');
+      this.getIgFeeds('nkdpizzascotland');
+      this.getTwitterFeeds('nkdscotland');
+      this.twitterScreenName = 'nkdscotland';
+    } else{
+      this.getFbFeeds('nkdpizza');
+      this.getIgFeeds('nkdpizzauae');
+      this.getTwitterFeeds('NKDPizzaUSA');
+      this.twitterScreenName = 'NKDPizzaUSA';
+    }
+  }
   setStore() {
     
     if (navigator.geolocation) {
