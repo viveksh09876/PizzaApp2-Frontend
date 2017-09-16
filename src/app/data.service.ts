@@ -44,7 +44,7 @@ export class DataService {
 
   getItemData(slug, menuCountry): Observable<any>{
     if(menuCountry == null) {
-      menuCountry = 'UAE';
+      menuCountry = 'UK';
     }
     return this.http.get( this.domain + '/webservice/getItemData/'+slug+'/'+menuCountry)
                     .map( (res: Response) => res.json() )
@@ -253,7 +253,7 @@ export class DataService {
 
   getformattedFavData(favData, menuCountry): Observable<any>{
   if(menuCountry == null) {
-      menuCountry = 'UAE';
+      menuCountry = 'UK';
     }
       var data = { menuCountry: menuCountry, favData: favData };
       return this.http.post( this.domain + '/webservice/getFavItemData', data)
@@ -269,7 +269,7 @@ export class DataService {
 
   getFavOrderData(orderData, menuCountry): Observable<any>{
   if(menuCountry == null) {
-      menuCountry = 'UAE';
+      menuCountry = 'UK';
     }
         var data = { menuCountry: menuCountry, orderData: orderData };
         return this.http.post( this.domain + '/webservice/getFavOrderData', data)
@@ -279,7 +279,7 @@ export class DataService {
                 
   getReOrderData(orderData, menuCountry): Observable<any>{
   if(menuCountry == null) {
-      menuCountry = 'UAE';
+      menuCountry = 'UK';
     }
         var data = { menuCountry: menuCountry, orderData: orderData };
         return this.http.post( this.domain + '/webservice/getReOrderData', data)

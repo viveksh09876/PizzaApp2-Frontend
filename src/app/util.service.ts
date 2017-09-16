@@ -6,7 +6,7 @@ export class UtilService {
   constructor() { }
 
   showFooter = true;
-  currencyCode = 'DHS';
+  currencyCode = '£';
 
   calculateOverAllCost(items) {
     let overAllPrice = 0;

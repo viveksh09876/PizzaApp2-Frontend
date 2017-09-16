@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit {
   getAllCategories(){
 
       let storeId = 1;
-      let menuCountry = 'UAE';
+      let menuCountry = 'UK';
       if(this.dataService.getLocalStorageData('nearByStore') != undefined && 
             this.dataService.getLocalStorageData('nearByStore') != '') { 
 
