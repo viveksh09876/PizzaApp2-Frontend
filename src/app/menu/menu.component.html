@@ -46,6 +46,11 @@
                                 <h4 class="media-heading">{{prod.title}}</h4>
                                 
                                 <h5>{{prod.price_title}}</h5>
+                                <div class="nutrition-icons">
+                                  <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" />
+                                  <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" />
+                                  <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" />
+                                </div>
                                 <p>{{prod.short_description}}</p>
                               </div>
                               <div class="rightSection bottom"> <a (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
@@ -78,7 +83,12 @@
                                           <div class="leftSection">
                                             <h4 class="media-heading">{{subProd.title}}</h4>
                                             
-                                            <!-- <h5>{{subProd.price_title}}</h5> -->
+                                            <h5>{{subProd.price_title}}</h5>
+                                            <div class="nutrition-icons">
+                                              <img src="assets/images/nutrition-icon-vegan.png" *ngIf="subProd.groupv == 1" />
+                                              <img src="assets/images/nutrition-icon-hot.png" *ngIf="subProd.grouph == 1" />
+                                              <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="subProd.groupvh == 1" />
+                                            </div>
                                             <p>{{subProd.short_description}}</p>
                                           </div>
                                           <div class="rightSection bottom"> <a (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
@@ -110,6 +120,11 @@
                                           <h4 class="media-heading">{{prod.title}}</h4>
                                           
                                            <h5>{{prod.price_title}} </h5> 
+                                           <div class="nutrition-icons">
+                                            <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" />
+                                            <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" />
+                                            <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" />
+                                          </div>
                                           <p>{{prod.short_description}}</p>
                                         </div>
                                         <div class="rightSection bottom"> <a (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
@@ -192,7 +207,7 @@
           <div class="sumarry-box">
           <div class="total">
           <label>Sub total</label>
-          <span>{{currencyCode}} {{netCost}}</span>
+          <span>{{currencyCode}}{{netCost}}</span>
           </div>
           <a (click)="checkout()">Checkout</a>
           </div>

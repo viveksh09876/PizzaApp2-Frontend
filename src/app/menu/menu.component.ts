@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit {
   getAllCategories(){
 
       let storeId = 1;
-      let menuCountry = 'UAE';
+      let menuCountry = 'UK';
       if(this.dataService.getLocalStorageData('nearByStore') != undefined && 
             this.dataService.getLocalStorageData('nearByStore') != '') { 
 
@@ -167,16 +167,17 @@ export class MenuComponent implements OnInit {
             }
           }
 
-          total =  parseInt(this.items[i].originalItemCost)*this.items[i].Product.qty;
+          let getOICost = Number(parseFloat(this.items[i].originalItemCost).toFixed(2));
+          total =  getOICost*this.items[i].Product.qty;
           this.items[i].totalItemCost = total;
 
           break;
       }
     }
 
-    this.totalCost =  this.utilService.calculateOverAllCost(this.items);
+    let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
+    this.totalCost =  getTCost;
     this.netCost = this.totalCost;
-   // console.log(type, this.totalCost, this.items.Product.qty);
   }
 
 

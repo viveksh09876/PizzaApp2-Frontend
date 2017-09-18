@@ -6,8 +6,8 @@ class WebserviceController extends AppController {
 
     function beforeFilter(){
         parent::beforeFilter();
-		//Configure::write('debug', 2);
-        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data','getItemData','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData'));
+		// Configure::write('debug', 2);
+        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data','getItemData','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData','sendAckEmail','uploadAttachment'));
     }
 
 	public function get_countries(){
@@ -178,7 +178,7 @@ class WebserviceController extends AppController {
     }
 	
 	
-	public function get_all_categories_data($storeId = 1, $menuCountry = 'UAE'){
+	public function get_all_categories_data($storeId = 1, $menuCountry = 'UK'){
 		
 		//Configure::write('debug', 2);
         $this->layout = FALSE;
@@ -230,7 +230,7 @@ class WebserviceController extends AppController {
 		//echo '<pre>'; print_r($data); die;
 		//$plu_json = $this->curlGetRequest('https://nkdpizza.com/beta/pos/index.php/menu/'.$menuCountry);
 		
-		$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UAE');
+		$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UK');
 		$plu_json = json_decode($plu_json, true);
 		$plu_json = $plu_json['item'];
 		$resp = array();
@@ -342,7 +342,7 @@ class WebserviceController extends AppController {
     }
 	
 	
-	public function getItemData($slug = '', $menuCountry = 'UAE') {
+	public function getItemData($slug = '', $menuCountry = 'UK') {
 		//Configure::write('debug', 2);
 		if($slug != '') {
 			
@@ -353,7 +353,7 @@ class WebserviceController extends AppController {
 	}
     
 	
-	public function getFormattedItemData($slug, $menuCountry = 'UAE') {
+	public function getFormattedItemData($slug, $menuCountry = 'UK') {
 		$this->Product->recursive = 6;
 			
 			$this->OptionSuboption->bindModel(array(
@@ -442,7 +442,7 @@ class WebserviceController extends AppController {
 										));
 			
 			//$plu_json = $this->curlGetRequest('https://nkdpizza.com/beta/pos/index.php/menu/'.$menuCountry);
-			$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UAE');
+			$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UK');
 			$plu_json = json_decode($plu_json, true);
 			
 			
@@ -1281,6 +1281,7 @@ class WebserviceController extends AppController {
     }
 
     if($this->sendPhpEmail(CATERING_EMAIL,$from,$subject,$content)){
+    	$this->sendAckEmail($email,$username);
 		echo json_encode(array('show'=>true, 'isSuccess'=>true, 'message'=>'Thank you for your enquiry about your event - we’ll be in touch really soon to talk about how we can help!'));
 	}else{
 		echo json_encode(array('show'=>true, 'isSuccess'=>false, 'message'=>'Sorry ! mail not send, please try again.'));
@@ -1322,6 +1323,7 @@ class WebserviceController extends AppController {
     }
   
     if($this->sendPhpEmail(CONTACT_EMAIL,$from,$subject,$content)){
+    	$this->sendAckEmail($email,$name);
 		echo json_encode(array('show'=>true, 'isSuccess'=>true, 'message'=>'Thank You ! information has been sent successfully will contact you soon.'));
 	}else{
 		echo json_encode(array('show'=>true, 'isSuccess'=>false, 'message'=>'Sorry ! mail not send, please try again.'));
@@ -1361,6 +1363,7 @@ class WebserviceController extends AppController {
         $content=str_replace($arrFind, $arrReplace,$template['EmailTemplate']['email_body']);
     }
     if($this->sendPhpEmail(ENQUIRY_EMAIL,$from,$subject,$content)){
+    	$this->sendAckEmail($email,$name);
 			echo json_encode(array('show'=>true, 'isSuccess'=>true, 'message'=>'Thank You ! you information has been sent successfully will contact you soon.'));
 		}else{
     	echo json_encode(array('show'=>true, 'isSuccess'=>false, 'message'=>'Sorry ! mail not send, please try again.'));
@@ -1402,6 +1405,7 @@ function sendCareerInfo(){
     }
 
     if($this->sendPhpEmail(CAREER_EMAIL,$from,$subject,$content)){
+    	$this->sendAckEmail($email,$name);
 			echo json_encode(array('show'=>true, 'isSuccess'=>true, 'message'=>'Thank You ! information has been sent successfully, will contact you soon.'));
 		}else{
     	echo json_encode(array('show'=>true, 'isSuccess'=>false, 'message'=>'Sorry ! mail not send, please try again.'));
@@ -1603,7 +1607,7 @@ function sendCareerInfo(){
 	}
 	
 	
-	public function prepareFavResponse($favData, $itemSlug, $menuCountry = 'UAE') {
+	public function prepareFavResponse($favData, $itemSlug, $menuCountry = 'UK') {
 		//if(!empty($favData)) {
 			$favDataObj = $favData;
 			$favData = $favData['modifiers'];
@@ -1628,9 +1632,19 @@ function sendCareerInfo(){
 								foreach($fpm['option'] as $fop) {
 									
 									if($fop['plu_code'] == $mo['Option']['plu_code']) {
-										//echo '<pre>'; print_r($fop); 
-										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = $fop['is_checked'];
+																				
+										if ($mo['Option']['plu_code'] == 'I101' || $mo['Option']['plu_code'] == 'I100' || $mo['Option']['plu_code'] == '91') {
+											//echo $fop['plu_code'].'<>';
+											if ($fop['send_code'] == 1 && $fop['is_checked'] == true) {
+												$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = true;
+											} else {
+												$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = false;
+											}
+										} else {
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = $fop['is_checked'];
+										}
 										
+																				
 										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['default_checked'] = $fop['default_checked'];
 										
 										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['send_code'] = $fop['send_code'];
@@ -1661,7 +1675,11 @@ function sendCareerInfo(){
 										}
 									
 									} else {
-										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = false;
+										
+										if($mo['Option']['plu_code'] == 'I101' || $mo['Option']['plu_code'] == 'I100' || $mo['Option']['plu_code'] == '91') {
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = false;
+										}
+										
 									}
 									
 								}	
@@ -1878,6 +1896,7 @@ function sendCareerInfo(){
 	public function addAddress(){
 		$this->layout = 'false';
 		$this->autoRender = false;
+		// Configure::write('debug', 2);
 		$addressNo = '';
 		$userData = $this->request->input ( 'json_decode', true) ;	
 
@@ -1885,14 +1904,14 @@ function sendCareerInfo(){
 		$resp = $this->curlGetRequest(APIURL.'/index.php/getProfile/'.$userData['id']);
 		$profileData = json_decode($resp, true);
 		
-		if($profileData['Address1']=='""' || empty($profileData['Address1'])){
+		if($profileData['Address1']=='null' || $profileData['Address1']=='""' || empty($profileData['Address1'])){
 			$addressNo = 'address1';
-		}else if($profileData['Address2']=='""' || empty($profileData['Address2'])){
+		}else if($profileData['Address2']=='null' || $profileData['Address2']=='""' || empty($profileData['Address2'])){
 			$addressNo = 'address2';
-		}else if($profileData['Address3']=='""' || empty($profileData['Address3'])){
+		}else if($profileData['Address3']=='null' || $profileData['Address3']=='""' || empty($profileData['Address3'])){
 			$addressNo = 'address3';
 		}
-		
+
 		$upatedData = array(
 			'form'=>4,
 			$addressNo=>$userData
@@ -2209,4 +2228,63 @@ function sendCareerInfo(){
 		echo $result;
 	}
 	
+	function sendAckEmail($emailId,$username){
+		$ackTemplate = $this->EmailTemplate->find('first',array(
+	            'conditions' => array(
+	                'template_key'=> 'user_acknowledgement',
+	                'template_status' =>'Active'
+	            )
+	        )
+	    );
+	    if($ackTemplate){ 
+	    	$arrFind=array('{name}');
+	    	$arrReplace=array($username);
+	    	$from=$ackTemplate['EmailTemplate']['from_email'];
+	        $subject=$ackTemplate['EmailTemplate']['email_subject'];
+	        $content=str_replace($arrFind, $arrReplace,$ackTemplate['EmailTemplate']['email_body']);
+	        $this->sendPhpEmail($emailId,$from,$subject,$content);
+	    }
+	}
+
+	function uploadAttachment(){
+		$this->layout = FALSE;
+		$this->autoRender = FALSE;
+		header("Access-Control-Allow-Origin: *");
+		 
+		if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		  echo json_encode(array('status' => false));
+		  exit;
+		}
+		 
+		$path = 'attachments/';
+		 
+		if (isset($_FILES['file'])) {
+		  $originalName = $_FILES['file']['name'];
+		  $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
+		  $generatedName = md5($_FILES['file']['tmp_name']).$ext;
+		  $filePath = $path.$generatedName;
+		 
+		  if (!is_writable($path)) {
+		    echo json_encode(array(
+		      'status' => false,
+		      'msg'    => 'Destination directory not writable.'
+		    ));
+		    exit;
+		  }
+		 
+		  if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+		    echo json_encode(array(
+		      'status'        => true,
+		      'originalName'  => $originalName,
+		      'generatedName' => $generatedName
+		    ));
+		  }
+		}
+		else {
+		  echo json_encode(
+		    array('status' => false, 'msg' => 'No file uploaded.')
+		  );
+		  exit;
+		}
+	}
 }
