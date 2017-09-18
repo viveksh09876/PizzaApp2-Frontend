@@ -5,7 +5,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
   <h1><span>customize your order</span></h1>
   <div class="leftButtons buttons">
     <a [routerLink]="['/menu']" class="whiteBtn cta-btn">Back To Menu</a>
-    <span class="cost">{{netCost}} {{currencyCode}}</span><a (click)="checkout()" class="greenBtn cta-btn">Checkout</a> </div>
+    <span class="cost">{{currencyCode}}{{netCost}}</span><a (click)="checkout()" class="greenBtn cta-btn">Checkout</a> </div>
     </div>
     </div>
     <div class="banner-wrapper customize-mob hidden-md hidden-lg">
@@ -50,7 +50,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
                   <label class="control radio" [ngClass]="{'checked': option.Option.is_checked == true}" (click)="updateModifier(option.Option.id, 'radio', mod.modifier_id)">
                     <h4>{{option.Option.name}}</h4>
                     <p></p>                  
-                    <a class="grayBtn cta-btn active" *ngIf="mod.display_price == 1">{{option.Option.price}} {{currencyCode}}</a>
+                    <a class="grayBtn cta-btn active" *ngIf="mod.display_price == 1">{{currencyCode}}{{option.Option.price}}</a>
                     <!--<input type="radio" name="radio" checked="{{mod.default_option_id == option.Option.id? 'checked': ''}}"/>-->
                     <div class="control__indicator"></div>    
                   </label>
@@ -88,7 +88,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
                   <a (click)="updateQuantity(0)">-</a>
                   <span class="num">{{item.Product.qty}}</span>
                   <a (click)="updateQuantity(1)">+</a>
-                  <span class="cost">{{item.totalItemCost}} {{currencyCode}}</span>
+                  <span class="cost">{{currencyCode}}{{item.totalItemCost}}</span>
               </div>
             </div>
           <div class="img-wrapper" *ngIf="item.Product.image == null" style="background-image:url(assets/images/pizza-img-lg.jpg)"></div>
