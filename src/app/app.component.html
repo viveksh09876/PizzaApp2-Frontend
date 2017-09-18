@@ -73,13 +73,16 @@
               <li> <a [routerLink]="['/franchising']">franchising </a> </li>
               <li *ngIf="!hideForUK"> <a [routerLink]="['/catering']">catering</a> </li>
               <li> <a [routerLink]="['/terms']">terms of use</a> </li>
+              <li> <a [routerLink]="['/privacy']">privacy policy</a> </li>
             </ul>
           </div>
           <div class="col-sm-3">
             <ul class="nav-links border-right">
               <li> <a (click)="openModal('contact')">contact us</a> </li>
               <li> <a [routerLink]="['/careers']">join our team</a> </li>
-              <li> <a [routerLink]="['/privacy']">privacy policy</a> </li>
+              
+              <li> <a [routerLink]="['/terms']" target="_blank">nutritions</a> </li>
+              
             </ul>
           </div>
         </div>

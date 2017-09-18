@@ -36,7 +36,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
       
       
       <!--Second Col-->
-      <div class="inside-column-container thirdCol">
+      <div class="inside-column-container thirdCol customize-uk">
         <div class="col-md-6" *ngFor="let mod of item.ProductModifier; let q = index;">
         <h3 class="bgGrey">{{mod.Modifier.title}}
         <span>{{mod.Modifier.short_description}}</span>
@@ -99,6 +99,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
               <a href="">Know More</a>
           </div> -->
           <div class="content-container">
+            <a class="down-nutri" [routerLink]="['/terms']" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
             <div class="ins">
               <h5>{{item.Product.title}} CONTAINS</h5>
               <p>{{item.Product.short_description}}</p>

@@ -175,6 +175,14 @@ body {
 	width: 1480px
 }
 }
+@media (min-width: 992px) {
+.inside-column-container.thirdCol.customize-uk .col-md-6{
+	min-height: 330px;
+}
+.three-column-wrapper .inside-column-container.thirdCol .content-wrapper {
+    min-height: 216px;
+}
+}
 h3 {
 	font-family: "bureaueaglebookregular";
 	font-size: 3.125em;
@@ -2070,6 +2078,18 @@ button.close:hover,button.close:focus{opacity: 1;}
 	text-transform: lowercase;
 	padding: 0.95rem 1em
 }
+.two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .down-nutri{background: #ffffff none repeat scroll 0 0;
+    border-radius: 100%;
+    cursor: pointer;
+    font-size: 0;
+    height: 32px;
+    padding: 8px 0;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: 10px;
+    width: 32px;}
+.two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .down-nutri i{font-size: 16px; color: #333;}
 
 @media (max-width: 1199px) {
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns {
@@ -2688,6 +2708,8 @@ color:#fff
     left: 0px;
     background-color: #5b5a56;
 }
+.three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri{height: 50px; width: 50px; cursor: pointer; background: #fff; border-radius: 100%; text-align: center; padding: 13px 0; position: absolute; top: 144px; right: 16px;}
+.three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri i{color: #333; font-size: 24px;}
 /*.three-column-wrapper .inside-column-container .content-wrapper .content-container .ins p{    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -2820,7 +2842,7 @@ color:#fff
 	color: #fff;
 	display: block;
 	height: 100%;
-	width: 25%;
+	width: 20%;
 	text-decoration: none;
 	text-align: center;
 	font: 15px "proxima_nova_rgbold";
@@ -2906,6 +2928,7 @@ color:#fff
 	width: 70%;
 	background: transparent;
 }
+
 .three-column-wrapper .inside-column-container.thirdCol .content-wrapper{
 	background: #f4f4f4;
 	max-height: 370px;
@@ -3020,7 +3043,7 @@ color:#fff
 .stepboxes .green-title.gray{ color: #5b5a56; background: #f4f4f4;}
 
 .stepboxes .gray_box{ background: #f4f4f4; padding: 10px 20px;}
-.stepboxes .gray_box .scroller{height: 200px; overflow: auto;}
+.stepboxes .gray_box .scroller{height: 304px; overflow: auto;}
 .stepboxes .gray_box .item_info { float: left; font-family: "proxima_nova_rgregular"; width: 60%;}
 .cartbox .item_pic img{display: none;}
 .cartbox .item_pic .img-control{width:100%; text-align:center;}
@@ -3088,6 +3111,13 @@ color:#fff
 .payment_method .tab-content h5{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_rgbold'; margin: 0 0 15px;}
 .payment_method .tab-content p{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_ltlight'; margin: 0 0 20px;}
 .payment_method .tab-content .btn-red{ padding: 10px; background: #911c27; color: #fff; font-size: 20px; line-height: 27px; text-align: center;  font-family: 'proxima_nova_rgbold'; border-bottom: 2px solid #4f050c; border-radius: 3px;}
+
+.payment_method .tab-content.three-column-wrapper .fade.active {
+    display: block;
+}
+.payment_method .tab-content.three-column-wrapper .fade {
+    display: none;
+}
 
 .thankyou_box{ color: #5b5a56; background: #f4f4f4; padding: 30px 0 60px; display: inline-block; width: 100%;}
 .thankyou_box h4{ font-size: 30px; line-height: 40px; font-family: 'proxima_nova_rgbold'; margin: 0;}
