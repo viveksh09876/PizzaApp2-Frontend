@@ -2221,6 +2221,9 @@ button.close:hover,button.close:focus{opacity: 1;}
 	color: #fff;
 	padding: 1.563rem 0.938rem 0
 }
+.footer-wrapper p.add-info {padding-top: 0px; padding-bottom: 10px; border: none;}
+.footer-wrapper p.add-info a{color: #7a994a}
+.footer-wrapper p.add-info a:hover{color: #fff;}
 .footer-wrapper ul.nav-links {
 	list-style: none;
 	margin: 0;
@@ -2276,7 +2279,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 @media (min-width: 992px) {
 .footer-wrapper ul.social-links {
 	margin: 0 0 1.875rem;
-	text-align: left
+	/*text-align: left*/
 }
 }
 .footer-wrapper ul.social-links li {
@@ -2287,9 +2290,9 @@ button.close:hover,button.close:focus{opacity: 1;}
 }
 
 @media (min-width: 992px) {
-.footer-wrapper ul.social-links li {
+/*.footer-wrapper ul.social-links li {
 	line-height: 114px
-}
+}*/
 }
 .footer-wrapper ul.social-links li a {
 	font-size: 1.5em;
@@ -3110,7 +3113,7 @@ color:#fff
 .payment_method .tab-content:after{ position: absolute; left: -4px; top: 0; width: 4px; height: 100%; content: ''; background: #cfcfcf;}
 .payment_method .tab-content h5{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_rgbold'; margin: 0 0 15px;}
 .payment_method .tab-content p{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_ltlight'; margin: 0 0 20px;}
-.payment_method .tab-content .btn-red{ padding: 10px; background: #911c27; color: #fff; font-size: 20px; line-height: 27px; text-align: center;  font-family: 'proxima_nova_rgbold'; border-bottom: 2px solid #4f050c; border-radius: 3px;}
+.payment_method .tab-content .btn-red{ padding: 10px 0; background: #911c27; color: #fff; font-size: 20px; line-height: 27px; text-align: center;  font-family: 'proxima_nova_rgbold'; border-bottom: 2px solid #4f050c; border-radius: 3px; display: inline-block; width: 100%;}
 
 .payment_method .tab-content.three-column-wrapper .fade.active {
     display: block;
@@ -3118,6 +3121,19 @@ color:#fff
 .payment_method .tab-content.three-column-wrapper .fade {
     display: none;
 }
+
+.payment_method .tab-content form{padding: 10px 0; display: inline-block; width: 100%}
+.payment_method .tab-content form .row{margin:0 0 15px; padding: 0px;}
+.payment_method .tab-content form .row label{color: #5b5a56; font-family: "proxima_nova_ltlight";
+    font-size: 14px;    line-height: 20px; font-weight: normal;}
+ .payment_method .tab-content form .row label img{margin: -5px 0 0 5px; height: 15px; width: 15px;} 
+ .payment_method .tab-content form .row.card-no span{position: relative;}
+.payment_method .tab-content form .row.card-no span:after{content: "";  position: absolute;
+    right: 10px;  top: -2px; background:  url(../images/lock-icon.png) no-repeat 0 0; height: 19px; width: 14px;}
+.payment_method .tab-content form .row input{background: #fff; border: 1px solid #acacac; border-radius: 3px; display: inline-block; padding: 10px; font-size: 20px; line-height: 24px; color: #5b5a56; width: 100%;}
+.payment_method .tab-content form .row.col-md-8{margin-right: 10px;  width: 62.5%;}
+.payment_method .tab-content form .row.col-md-4{margin-left: 10px;}
+.payment_method .tab-content form .row.submit{margin-top: 15px;}
 
 .thankyou_box{ color: #5b5a56; background: #f4f4f4; padding: 30px 0 60px; display: inline-block; width: 100%;}
 .thankyou_box h4{ font-size: 30px; line-height: 40px; font-family: 'proxima_nova_rgbold'; margin: 0;}

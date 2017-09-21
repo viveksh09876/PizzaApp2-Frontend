@@ -56,30 +56,42 @@
         <h3 class="green-title">choose how to pay</h3>
         <div class="payment_method">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay on Delivery Cash or Credit</a> </li> 
-                <li role="presentation"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Online Payment</a> </li> 
+                <li role="presentation" class="active"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Online Payment</a> </li> 
+                <li role="presentation"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay on Delivery</a> </li> 
+                
             </ul>
             <div class="tab-content three-column-wrapper">
-                <div role="tabpanel" class="tab-pane fade in active inside-column-container" id="cod">
-                    <div class="content-wrapper">
-                        <div class="content-container">
-                            <div class="control-group payment">
-                                <label class="control radio" [ngClass]="{'checked': orderData.payment_type == 'Cash'}" (click)="updatePaymentType('Cash')">
-                                    <h4>Cash</h4>
-                                    <div class="control__indicator"></div>    
-                                </label>
-                                <label class="control radio" [ngClass]="{'checked': orderData.payment_type == 'Credit'}" (click)="updatePaymentType('Credit')">
-                                    <h4>Credit</h4>
-                                    <div class="control__indicator"></div>    
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">Continue</a>
+                <div role="tabpanel" class="tab-pane fade inside-column-container" id="cod">
+                <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">Continue</a>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="cd-cards" style="text-align: center;">
-                    <img src="assets/images/cs.png" alt="Coming Soon" style="max-width: 50%;">
+                <div role="tabpanel" class="tab-pane fade in active" id="cd-cards">
+                    <h5>
+                      Credit/debit card details
+                      <img src="assets/images/payment-icon.png" style="margin-left:10px; " />
+                    </h5>
+                    <form>
+                    <fieldset>
+                    <div class="row col-md-12 card-no">
+                      <label>Card number</label>
+                      <span><input type="text"></span>
+                      </div>
+                      <div class="row col-md-8">
+                      <label>Expiration date</label>
+                      <span><input type="text"></span>
+                      </div>
+                      <div class="row col-md-4">
+                      <label>CVV Code <img src="assets/images/info-icon.png" /></label>
+                      <span><input type="text"></span>
+                      </div>
+                      <div class="row col-md-12">
+                      <label>Postal Code</label>
+                      <span><input type="text"></span>
+                      </div>
+                      <div class="row col-md-12 submit">
+                        <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">Submit</a>
+                      </div>
+                      </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
