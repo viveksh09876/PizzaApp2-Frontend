@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
     this.dataService.getIp()
     .subscribe(data => {
         this.countryName = data.geoplugin_countryName;
+        this.getFeeds();
     });
   }
 
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.getSlideImages();
-    this.getFeeds();
+    
     this.setStore();
     
     //check if user logged In
