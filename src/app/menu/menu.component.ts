@@ -58,7 +58,10 @@ export class MenuComponent implements OnInit {
       
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
-        this.totalCost = this.utilService.calculateOverAllCost(this.items);
+        
+        let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
+        this.totalCost =  getTCost;
+        
         this.netCost = this.totalCost;
       }      
       this.showViewCart = true;
@@ -194,7 +197,9 @@ export class MenuComponent implements OnInit {
             
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-            this.totalCost = this.utilService.calculateOverAllCost(allItems);
+            
+            let getTCost = Number(this.utilService.calculateOverAllCost(allItems).toFixed(2));
+            this.totalCost =  getTCost;
             this.netCost = this.totalCost; 
 
           }else{

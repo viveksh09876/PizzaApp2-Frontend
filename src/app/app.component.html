@@ -41,7 +41,7 @@
     </li>
   </ul>
 <ul class="list-inline links hidden-xs hidden-sm">
-     <li *ngIf="orderUrl == '' && !hideForUK"> <a [routerLink]="['/menu']"> <span class="icon icon-pizza"></span><span>Menu</span> </a> </li>
+     <li *ngIf="orderUrl == ''"> <a [routerLink]="['/menu']"> <span class="icon icon-pizza"></span><span>Menu</span> </a> </li>
     <li *ngIf="orderUrl != ''"> <a href="{{this.orderUrl}}" target="_blank"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
     <li *ngIf="orderUrl == '' && !hideForUK"> <a (click)="goToOrderNow()"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
     <li *ngIf="orderUrl == '' && !hideForUK"> <a (click)="goToFav()"><span class="icon icon-favourite"></span><span>Favourites</span></a></li>
