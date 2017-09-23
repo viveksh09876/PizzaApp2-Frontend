@@ -568,7 +568,7 @@ header.navigation ul.links li.eclub-btn ul li{display: block; float: none;}
 header.navigation ul.links li.eclub-btn ul li a{padding: 10px; line-height: normal;}
 header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 .slider-wrapper {
-	height: 50%;
+	height: 75%;
 	width: 100%;
 	background: #fff;
 	min-height: 380px
@@ -580,7 +580,8 @@ header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 .slider-wrapper .slides .slide {
 	width: 100%;
 	height: 100%;
-	background-position: center center;
+	background-position: center top;
+	background-size: cover;
 	outline: 0
 }
 .slider-wrapper .slides .slide .container {
@@ -610,8 +611,8 @@ header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 	transform: translateY(-50%)
 }
 .slider-wrapper .slides .slide .container .slide-content img {
-	width: 80%;
-	margin-left: 40px;
+	/*width: 80%;
+	margin-left: 40px;*/
 }
 .slider-wrapper .slides .slide .container .slide-content a.custom-button {
 	margin-top: 3.125rem
