@@ -48,7 +48,7 @@
   </ul>
   
   <ul class="list-inline mobile links hidden-md hidden-lg">
-      <li *ngIf="orderUrl == '' && !hideForUK"><a (click)="goToOrderNow()"><span class="icon icon-pizza"></span></a></li>
+      <li *ngIf="orderUrl == ''"><a (click)="goToOrderNow()"><span class="icon icon-pizza"></span></a></li>
       <li *ngIf="orderUrl == ''"><a (click)="goToFav()"><span class="icon icon-favourite"></span></a> </li>
       <li *ngIf="showLogin"><a (click)="openModal('login')"><span class="icon icon-eclub"></span></a> </li>
       <li *ngIf="!showLogin"> <a [routerLink]="['/account']"> <span class="fa fa-user-circle-o"></span> <!-- <span class="myNKDText">My NKD</span>  --></a> </li>
