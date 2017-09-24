@@ -73,19 +73,23 @@
                     <fieldset>
                     <div class="row col-md-12 card-no">
                       <label>Card number</label>
-                      <span><input type="text"></span>
+                      <span><input type="text" placeholder="Enter card number"></span>
                       </div>
                       <div class="row col-md-8">
                       <label>Expiration date</label>
-                      <span><input type="text"></span>
+                      <span><input type="text" class="half" placeholder="Month"><input type="text" class="half" placeholder="Year"></span>
                       </div>
                       <div class="row col-md-4">
-                      <label>CVV Code <img src="assets/images/info-icon.png" /></label>
-                      <span><input type="text"></span>
+                      <label>CVV code <img src="assets/images/info-icon.png" /></label>
+                      <span><input type="text" placeholder="CVV/CVC"></span>
                       </div>
                       <div class="row col-md-12">
-                      <label>Postal Code</label>
-                      <span><input type="text"></span>
+                      <label>Card holder name</label>
+                      <span><input type="text" placeholder="Enter card holder name"></span>
+                      </div>
+                      <div class="row col-md-12">
+                      <label>Postal code</label>
+                      <span><input type="text" placeholder="Enter postal code"></span>
                       </div>
                       <div class="row col-md-12 submit">
                         <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">Submit</a>
