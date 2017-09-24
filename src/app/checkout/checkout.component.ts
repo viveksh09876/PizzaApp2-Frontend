@@ -95,7 +95,7 @@ export class CheckoutComponent implements OnInit {
         }
 
         this.card.customerId = userId;
-        this.card.customerEmail = userDetails.email;
+        this.card.customerEmail = this.orderData.user.email;
         this.card.amount = this.totalCost;
         
         let favData = null;
