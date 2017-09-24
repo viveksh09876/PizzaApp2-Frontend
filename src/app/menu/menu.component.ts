@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogService } from "ng2-bootstrap-modal";
 import { OrdernowmodalComponent } from '../ordernowmodal/ordernowmodal.component';
+import { SuggestionmodalComponent } from '../suggestionmodal/suggestionmodal.component';
 import { DataService } from '../data.service';
 import { UtilService } from '../util.service';
 
@@ -35,6 +36,8 @@ export class MenuComponent implements OnInit {
   cmsApiPath = environment.cmsApiPath;
   currencyCode = null;
   selectedMenuCat = null;
+  addedCategories = [];
+  suggestionProducts = [];
 
 
   ngOnInit() {
@@ -63,10 +66,28 @@ export class MenuComponent implements OnInit {
         this.totalCost =  getTCost;
         
         this.netCost = this.totalCost;
+
+        this.loadAddedCategories();
       }      
-      this.showViewCart = true;
+      this.showViewCart = true;      
     }
   }
+
+
+  loadAddedCategories() {
+    let items = this.items;
+    let catsArr = [];
+    for (var i=0; i<items.length; i++) {
+      if (this.addedCategories.indexOf(items[i].Product.category_id) < 0) {
+        catsArr.push(items[i].Product.category_id);
+      }
+    }
+    
+    this.addedCategories = catsArr;
+    this.prepareSuggestions(this.addedCategories);
+  }
+
+
 
   getAllCategories(){
 
@@ -86,6 +107,7 @@ export class MenuComponent implements OnInit {
           //console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
 
+          this.loadAddedCategories();
 
           this.route.params.subscribe(params => { 
             if(params['slug'] && params['slug']!= '') {
@@ -185,7 +207,6 @@ export class MenuComponent implements OnInit {
 
 
   deleteItem(num, prod) {
-
     var y = confirm('Are you sure, you want to delete this item from order?');
       if(y) {
           let allItems = [];
@@ -208,9 +229,10 @@ export class MenuComponent implements OnInit {
             alert('No items remaining in your cart!');
           }
          
-      }      
-
+      }  
+      this.loadAddedCategories();
   }
+
 
   editItem(index, prod) {
       this.router.navigate(['/item/edit', index]);
@@ -222,11 +244,76 @@ export class MenuComponent implements OnInit {
 
   checkout() {    
     
-    this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));    
-    this.dataService.setLocalStorageData('totalCost', this.totalCost); 
-    this.router.navigate(['/order-review']);
+    //let goFlag = this.getSuggestions();
+    let goFlag = true;
+    if (goFlag) {
+      this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));    
+      this.dataService.setLocalStorageData('totalCost', this.totalCost); 
+      this.router.navigate(['/order-review']);
+    }     
   }
 
 
+  getSuggestions() {
+    this.dialogService.addDialog(SuggestionmodalComponent, { items: this.suggestionProducts }, { closeByClickingOutside:true });
+    console.log(this.suggestionProducts);
+  }
+
+
+  prepareSuggestions(addedCategories) {
+    let menuItems = this.menuData;
+    let products = this.suggestionProducts;
+    let myCats = [];
+
+    if (menuItems != null) {
+      //get categories which are not added
+      for (var i=0; i<menuItems.length; i++) {
+        if (addedCategories.indexOf(menuItems[i].id) < 0) {
+          myCats.push(menuItems[i].id);
+        }
+      }
+      
+      for (var i=0; i<myCats.length; i++) {
+        if (products.length < 4) {
+          let item = this.getProductFromCat(myCats[i]);
+          products.push(item);
+        }
+      }
+
+      this.suggestionProducts = products;
+
+      if (this.suggestionProducts.length < 4) {
+        this.prepareSuggestions(addedCategories);
+      }
+      
+      console.log(this.suggestionProducts);
+    }
+    
+  }
+
+
+  getProductFromCat(catId) {
+    let menuItems = this.menuData;
+    for (var i=0; i<menuItems.length; i++) {
+      if (menuItems[i].id ==  catId) {
+
+        //for pizza we get items from subcategories 
+        if (menuItems[i].subCatsName.length > 0) {
+          var tmpList = Object.keys(menuItems[i].subCats);
+          var randomPropertyName = tmpList[ Math.floor(Math.random()*tmpList.length) ];
+          var itemArr = menuItems[i].subCats[randomPropertyName];
+          let item = itemArr[Math.floor(Math.random()*itemArr.length)]; 
+          return item.products[0];
+
+        } else {
+
+          let itemArr = menuItems[i].products;
+          let item = itemArr[Math.floor(Math.random()*itemArr.length)]; 
+          return item;
+        
+        }
+      }
+    }
+  }
 
 }

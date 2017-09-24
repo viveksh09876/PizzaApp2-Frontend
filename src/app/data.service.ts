@@ -370,6 +370,15 @@ export class DataService {
               .map((res: Response) => res.json())
               .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }  
+
+  getItemSuggestions(addedCategories): Observable<any>{
+    var data = addedCategories;
+    return this.http.post( this.domain + '/temp/getItemSuggestions', data)
+              .map((res: Response) => res.json())
+              .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+  }
+
+
 }
 
 

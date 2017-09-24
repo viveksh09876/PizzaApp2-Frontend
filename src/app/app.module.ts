@@ -41,6 +41,7 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ForgotComponent } from './forgot/forgot.component';
 import { ResetComponent } from './reset/reset.component';
+import { SuggestionmodalComponent } from './suggestionmodal/suggestionmodal.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ResetComponent } from './reset/reset.component';
     TermsComponent,
     PrivacyComponent,
     ForgotComponent,
-    ResetComponent
+    ResetComponent,
+    SuggestionmodalComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,7 @@ import { ResetComponent } from './reset/reset.component';
     CustomFormsModule,
     Ng2UploaderModule
   ],
-  entryComponents: [LoginComponent, RegisterComponent, OrdernowmodalComponent, MessageComponent, FavmodalComponent, ContactUsComponent, RegisterConfirmationComponent, ApplynowComponent, ForgotComponent, ResetComponent],
+  entryComponents: [LoginComponent, RegisterComponent, OrdernowmodalComponent, MessageComponent, FavmodalComponent, ContactUsComponent, RegisterConfirmationComponent, ApplynowComponent, ForgotComponent, ResetComponent, SuggestionmodalComponent],
   schemas:  [CUSTOM_ELEMENTS_SCHEMA],
   providers: [DataService, UtilService],
   bootstrap: [AppComponent]
