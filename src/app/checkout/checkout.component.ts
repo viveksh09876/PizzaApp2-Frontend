@@ -38,6 +38,7 @@ export class CheckoutComponent implements OnInit {
     expirationMonth: null,
     expirationYear: null,
     card: null,
+    cvc: null,
     type: false 
   }
 
