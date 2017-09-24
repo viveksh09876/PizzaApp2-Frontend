@@ -69,30 +69,50 @@
                       Credit/debit card details
                       <img src="assets/images/payment-icon.png" style="margin-left:10px; " />
                     </h5>
-                    <form>
+                    <form #newRuleForm="ngForm" name="addressForm" novalidate (ngSubmit)="payOnline(newRuleForm.valid)">
                     <fieldset>
+                        <div class="alert alert-danger" *ngIf="payError != ''">{{payError}}</div>
                     <div class="row col-md-12 card-no">
                       <label>Card number</label>
-                      <span><input type="text" placeholder="Enter card number"></span>
+                      <span><input type="number" id="cardNumber" name="cardNumber" [(ngModel)]="card.card" placeholder="Enter card number" #cardNumber="ngModel" required autocomplete="off"></span>
+                      <div [hidden]="cardNumber.valid  || (cardNumber.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>Card Number is required.</div>
+                      </div>
                       </div>
                       <div class="row col-md-8">
                       <label>Expiration date</label>
-                      <span><input type="text" class="half" placeholder="Month"><input type="text" class="half" placeholder="Year"></span>
+                      <span><input type="number" class="half" id="cardMonth" placeholder="Month" name="cardMonth" [(ngModel)]="card.expirationMonth" #cardMonth="ngModel" required autocomplete="off"><input type="number" id="cardYear" class="half" placeholder="Year" name="cardYear" [(ngModel)]="card.expirationYear" #cardYear="ngModel" required autocomplete="off"></span>
                       </div>
                       <div class="row col-md-4">
                       <label>CVV code <img src="assets/images/info-icon.png" /></label>
-                      <span><input type="text" placeholder="CVV/CVC"></span>
+                      <span><input type="number" maxlength="3" id="cardCVC" name="cardCVC" [(ngModel)]="card.cvc" placeholder="CVV/CVC" #cardCVC="ngModel" required autocomplete="off"></span>
+                      </div>
+                      <div [hidden]="cardMonth.valid  || (cardMonth.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>Month is required.</div>
+                      </div>
+                      <div [hidden]="cardYear.valid  || (cardYear.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>Year is required.</div>
+                      </div>
+                      <div [hidden]="cardCVC.valid  || (cardCVC.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>CVC is required.</div>
                       </div>
                       <div class="row col-md-12">
                       <label>Card holder name</label>
-                      <span><input type="text" placeholder="Enter card holder name"></span>
+                      <span><input type="text" id="cardName" name="cardName" [(ngModel)]="card.name" placeholder="Enter card holder name" #cardName="ngModel" required autocomplete="off"></span>
+                      </div>
+                      <div [hidden]="cardName.valid  || (cardName.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>Card holder name is required.</div>
                       </div>
                       <div class="row col-md-12">
                       <label>Postal code</label>
-                      <span><input type="text" placeholder="Enter postal code"></span>
+                      <span><input type="text" id="cardPostalCode" name="cardPostalCode" [(ngModel)]="card.postalCode" placeholder="Enter postal code" #cardPostalCode="ngModel" required autocomplete="off"></span>
+                      </div>
+                      <div [hidden]="cardPostalCode.valid  || (cardPostalCode.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
+                          <div>Postal Code is required.</div>
                       </div>
                       <div class="row col-md-12 submit">
-                        <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="placeOrder()">Submit</a>
+                        <button *ngIf="showPlaceOrder" type="submit" class="btn btn-default">Submit</button>
+                        <!-- <a *ngIf="showPlaceOrder" class="btn-red btn-block" (click)="payOnline(newRuleForm.valid)">Submit</a> -->
                       </div>
                       </fieldset>
                     </form>

@@ -378,6 +378,13 @@ export class DataService {
               .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
 
+  sendPaymentData(cardDetails): Observable<any>{
+    var data = cardDetails;
+    return this.http.post( this.domain + '/webservice/sendPaymentData', data)
+              .map((res: Response) => res.json())
+              .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+  }
+
 
 }
 

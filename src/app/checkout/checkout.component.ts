@@ -28,6 +28,31 @@ export class CheckoutComponent implements OnInit {
   couponDiscount = 0; 
   currencyCode = null;      
   showLoading = true; 
+  payError = '';
+  card = {
+    name: null,
+    customerId: null,
+    customerEmail: null,
+    postalCode: null,
+    amount: null,
+    expirationMonth: null,
+    expirationYear: null,
+    card: null,
+    type: false 
+  }
+
+  // card = {
+  //   name: 'Random Guy',
+  //   customerId: "1",
+  //   customerEmail: "a@b.c",
+  //   postalCode: "11000",
+  //   amount: 10.45,
+  //   expirationMonth: 11,
+  //   expirationYear: 2018,
+  //   card: 4444333322221111,
+  //   cvc: 321,
+  //   type: false 
+  // }
 
 
   ngOnInit() {
@@ -67,6 +92,10 @@ export class CheckoutComponent implements OnInit {
           
           userId = userDetails.id;
         }
+
+        this.card.customerId = userId;
+        this.card.customerEmail = userDetails.email;
+        this.card.amount = this.totalCost;
         
         let favData = null;
         let favOrdArr = [];
@@ -119,6 +148,24 @@ export class CheckoutComponent implements OnInit {
               }
               this.showLoading = false;
             });
+  }
+
+
+  payOnline(isValid) {
+    if (isValid) {
+      this.showLoading = true;
+      this.dataService.sendPaymentData(this.card)
+      .subscribe(data => {
+        
+        if (data.Status == 'Error') {
+          this.showLoading = false;
+          this.payError = data.Message;
+        } else if (data.Status == 'OK') {
+          this.showLoading = false;
+          this.placeOrder();
+        }
+      });
+    }
   }
         
 
