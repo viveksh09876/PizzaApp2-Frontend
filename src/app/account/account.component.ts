@@ -580,7 +580,7 @@ export class AccountComponent implements OnInit {
   orderFavOrder(itemData) {
     this.showLoading = true;
     this.dataService.setLocalStorageData('favOrdersFetched', JSON.stringify(itemData));
-    let menuCountry = 'UAE';
+    let menuCountry = 'UK';
     if(this.dataService.getLocalStorageData('menuCountry') != null && 
             this.dataService.getLocalStorageData('menuCountry') != undefined) {
           menuCountry = this.dataService.getLocalStorageData('menuCountry');    
@@ -612,7 +612,7 @@ export class AccountComponent implements OnInit {
     }
     
     this.dataService.setLocalStorageData('favOrdersFetched', JSON.stringify(itemData));
-    let menuCountry = 'UAE';
+    let menuCountry = 'UK';
     if(this.dataService.getLocalStorageData('menuCountry') != null && 
             this.dataService.getLocalStorageData('menuCountry') != undefined) {
           menuCountry = this.dataService.getLocalStorageData('menuCountry');    

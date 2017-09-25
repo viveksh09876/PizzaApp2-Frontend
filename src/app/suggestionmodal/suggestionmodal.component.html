@@ -1,0 +1,47 @@
+<ng-container *ngIf="showLoading">
+    <div class="spinner">
+        <div class="cube1 icon icon-pizza-icon"></div>
+        <div class="cube2 icon icon-pizza-icon"></div>
+    </div>
+  </ng-container>
+
+<!-- Sign up Modal -->
+<div id="signupModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="content-wrapper">
+          <div class="content-container">
+              <div class="favSection">
+                  <div class="row">
+                      <div  class="col-md-3" *ngFor="let prod of items; let i=index">
+                          <div class="createWrapper">
+                              <div class="media">
+                                  <div class="media-body media-middle">
+                                    <h4 class="media-heading">{{prod.title}}</h4>
+                                   
+                                    <div class="img-Wrapper">
+                                      <img src="{{cmsApiPath + '/' + prod.thumb_image}}"/>
+                                    </div>
+                                    <div class="quantity"><a (click)="updateQuantity(0, prod.id, i)">-</a><span class="num">{{prod.qty}}</span><a (click)="updateQuantity(1, prod.id, i)">+</a></div>
+                                    <h5>{{prod.price_title}}</h5>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="actions">
+                        <a (click)="addToCart()">Add to Cart</a>
+                        <a (click)="moveToOrderReview()">Skip</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 

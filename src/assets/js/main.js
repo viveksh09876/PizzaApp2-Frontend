@@ -1,5 +1,5 @@
 
-var country = 'UAE';
+var country = 'UK';
 var lat = '25.040657';
 var lng = '55.197286';
 var map, places = [], cordinates, pos, contentString, coordinates;

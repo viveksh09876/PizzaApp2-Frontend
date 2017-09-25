@@ -244,8 +244,8 @@ export class MenuComponent implements OnInit {
 
   checkout() {    
     
-    //let goFlag = this.getSuggestions();
-    let goFlag = true;
+    let goFlag = this.getSuggestions();
+    //let goFlag = true;
     if (goFlag) {
       this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));    
       this.dataService.setLocalStorageData('totalCost', this.totalCost); 
@@ -255,8 +255,29 @@ export class MenuComponent implements OnInit {
 
 
   getSuggestions() {
-    this.dialogService.addDialog(SuggestionmodalComponent, { items: this.suggestionProducts }, { closeByClickingOutside:true });
-    console.log(this.suggestionProducts);
+    let orderNowDetails = this.dataService.getLocalStorageData('order-now'); 
+    if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
+      orderNowDetails = JSON.parse(orderNowDetails);
+
+      if (orderNowDetails['type'] == 'delivery' && this.totalCost < 12.99) {
+        let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
+                items: this.suggestionProducts }, { closeByClickingOutside:true 
+            }).subscribe((isSkipped)=>{
+              //We get dialog result
+              if(isSkipped) {
+                this.router.navigate(['/order-review']);
+              }
+          });
+       
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+
+   
+    
   }
 
 
@@ -286,7 +307,7 @@ export class MenuComponent implements OnInit {
         this.prepareSuggestions(addedCategories);
       }
       
-      console.log(this.suggestionProducts);
+     // console.log(this.suggestionProducts);
     }
     
   }
@@ -303,12 +324,14 @@ export class MenuComponent implements OnInit {
           var randomPropertyName = tmpList[ Math.floor(Math.random()*tmpList.length) ];
           var itemArr = menuItems[i].subCats[randomPropertyName];
           let item = itemArr[Math.floor(Math.random()*itemArr.length)]; 
+          item.products[0].qty = 0;
           return item.products[0];
 
         } else {
 
           let itemArr = menuItems[i].products;
           let item = itemArr[Math.floor(Math.random()*itemArr.length)]; 
+          item.qty = 0;
           return item;
         
         }
