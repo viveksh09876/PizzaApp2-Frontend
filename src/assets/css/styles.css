@@ -568,7 +568,7 @@ header.navigation ul.links li.eclub-btn ul li{display: block; float: none;}
 header.navigation ul.links li.eclub-btn ul li a{padding: 10px; line-height: normal;}
 header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 .slider-wrapper {
-	height: 75%;
+	height: 65%;
 	width: 100%;
 	background: #fff;
 	min-height: 380px
@@ -2279,7 +2279,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 
 @media (min-width: 992px) {
 .footer-wrapper ul.social-links {
-	margin: 0 0 1.875rem;
+	margin: -10px 0 0;
 	/*text-align: left*/
 }
 }
