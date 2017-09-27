@@ -147,7 +147,7 @@ export class AppComponent implements OnInit {
 
   logout(){
     this.dataService.clearLocalStorageData();
-    window.location.href = '/home';
+    window.location.href = '/uk';
     // window.location.reload();
   }
 
