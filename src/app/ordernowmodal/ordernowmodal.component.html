@@ -18,6 +18,8 @@
                   <div class="control__indicator"></div></a></li>
                     <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.orderType == 'delivery'}"><a (click)="updateOrderType('delivery')">delivery <input type="radio" name="orderType" [checked]="order.orderType=='delivery'">
                   <div class="control__indicator"></div></a></li>
+                  <li class="checkbox-inline control--checkbox" *ngIf="order.orderType=='delivery'"><p class="text-danger">*Minimium order of {{currencyCode}}12.99 is required</p></li>
+
                   </ul>
                 </form>
                 <div class="tab-content">

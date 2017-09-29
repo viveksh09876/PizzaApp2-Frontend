@@ -35,12 +35,15 @@ export class CheckoutComponent implements OnInit {
     customerEmail: null,
     postalCode: null,
     amount: null,
-    expirationMonth: null,
-    expirationYear: null,
+    expirationMonth: '',
+    expirationYear: new Date().getFullYear(),
     card: null,
     cvc: null,
     type: false 
   }
+
+  months = this.utilService.getMonths();
+  years = this.utilService.getYears(2037);
 
   // card = {
   //   name: 'Random Guy',
@@ -63,6 +66,7 @@ export class CheckoutComponent implements OnInit {
     this.dataService.setLocalStorageData('favOrdersFetched', null); 
     this.dataService.setLocalStorageData('confirmationItems', null); 
     this.dataService.setLocalStorageData('confirmationFinalOrder', null);
+    console.log(this.months);
   }
 
 
@@ -73,7 +77,7 @@ export class CheckoutComponent implements OnInit {
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('finalOrder'));
         let tCost = this.utilService.calculateOverAllCost(this.items);
-        this.totalCost = tCost
+        this.totalCost = Number(tCost.toFixed(2));
         this.netCost = tCost;  
         if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
           this.couponDiscount = this.orderData.couponDiscount;

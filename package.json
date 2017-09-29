@@ -27,6 +27,7 @@
     "mdn-polyfills": "^3.6.0",
     "ng2-uploader": "^2.0.0",
     "ng2-validation": "^4.2.0",
+    "ngx-popover": "0.0.16",
     "rxjs": "^5.1.0",
     "web-animations-js": "^2.2.5",
     "zone.js": "^0.8.4"

@@ -47,9 +47,9 @@
                                 
                                 <h5>{{prod.price_title}}</h5>
                                 <div class="nutrition-icons">
-                                  <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" />
-                                  <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" />
-                                  <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" />
+                                  <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true"  />
+                                  <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
+                                  <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
                                 </div>
                                 <p>{{prod.short_description}}</p>
                               </div>
@@ -85,9 +85,9 @@
                                             
                                             <h5>{{subProd.price_title}}</h5>
                                             <div class="nutrition-icons">
-                                              <img src="assets/images/nutrition-icon-vegan.png" *ngIf="subProd.groupv == 1" />
-                                              <img src="assets/images/nutrition-icon-hot.png" *ngIf="subProd.grouph == 1" />
-                                              <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="subProd.groupvh == 1" />
+                                              <img src="assets/images/nutrition-icon-vegan.png" *ngIf="subProd.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
+                                              <img src="assets/images/nutrition-icon-hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
+                                              <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
                                             </div>
                                             <p>{{subProd.short_description}}</p>
                                           </div>
@@ -121,9 +121,9 @@
                                           
                                            <h5>{{prod.price_title}} </h5> 
                                            <div class="nutrition-icons">
-                                            <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" />
-                                            <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" />
-                                            <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" />
+                                            <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
+                                            <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
+                                            <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
                                           </div>
                                           <p>{{prod.short_description}}</p>
                                         </div>

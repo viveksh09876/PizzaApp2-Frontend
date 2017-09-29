@@ -50,6 +50,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
   time = { hour: '01', minutes: '00' };
   showStoreTimeError = false;
   storeImg = null;
+  currencyCode = this.utilService.currencyCode;
 
   hours = [];
   minutes = this.utilService.getMinutes();

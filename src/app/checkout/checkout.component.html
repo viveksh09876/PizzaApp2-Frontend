@@ -81,7 +81,20 @@
                       </div>
                       <div class="row col-md-8">
                       <label>Expiration date</label>
-                      <span><input type="number" class="half" id="cardMonth" placeholder="Month" name="cardMonth" [(ngModel)]="card.expirationMonth" #cardMonth="ngModel" required autocomplete="off"><input type="number" id="cardYear" class="half" placeholder="Year" name="cardYear" [(ngModel)]="card.expirationYear" #cardYear="ngModel" required autocomplete="off"></span>
+                      <span>
+                        <select class="half" id="cardMonth" placeholder="Month" name="cardMonth" [(ngModel)]="card.expirationMonth" #cardMonth="ngModel" required>
+                            <option value="">Select Month</option>
+                            <option *ngFor="let month of months" value="{{month.value}}">{{month.text}}</option>   
+                            
+                        </select>
+
+                        <select class="half" id="cardYear" placeholder="Year" name="cardYear" [(ngModel)]="card.expirationYear" #cardYear="ngModel" required>
+                                
+                                <ng-container *ngFor="let year of years">
+                                    <option value="{{year}}">{{year}}</option>   
+                                </ng-container> 
+                            </select>
+                        </span>
                       </div>
                       <div class="row col-md-4">
                       <label>CVV code <img src="assets/images/info-icon.png" /></label>

@@ -18,6 +18,7 @@ export class UtilService {
       }
     }
     
+    overAllPrice = Number(overAllPrice.toFixed(2));
 
     return overAllPrice;
   }
@@ -217,6 +218,35 @@ export class UtilService {
 
   padValue(value) {
       return (value < 10) ? "0" + value : value;
+  }
+
+  getMonths() {
+    let monthsArr = [
+      { value: '1', text: 'January' },
+      { value: '2', text: 'February' },
+      { value: '3', text: 'March' },
+      { value: '4', text: 'April' },
+      { value: '5', text: 'May' },
+      { value: '6', text: 'June' },
+      { value: '7', text: 'July' },
+      { value: '8', text: 'August' },
+      { value: '9', text: 'September' },
+      { value: '10', text: 'October' },
+      { value: '11', text: 'November' },
+      { value: '12', text: 'December' }
+    ];
+
+    return monthsArr;
+  }
+
+  getYears(limit) {
+    let yearArr = [];
+    let year = (new Date()).getFullYear();
+    for (var i=year; i<=limit; i++) {
+      yearArr.push(i);
+    }
+
+    return yearArr;
   }
 
 }

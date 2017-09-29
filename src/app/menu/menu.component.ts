@@ -259,19 +259,17 @@ export class MenuComponent implements OnInit {
     if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
       orderNowDetails = JSON.parse(orderNowDetails);
 
-      if (orderNowDetails['type'] == 'delivery' && this.totalCost < 12.99) {
-        let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
-                items: this.suggestionProducts }, { closeByClickingOutside:true 
-            }).subscribe((isSkipped)=>{
-              //We get dialog result
-              if(isSkipped) {
-                this.router.navigate(['/order-review']);
-              }
-          });
+      
+    let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
+            items: this.suggestionProducts }, { closeByClickingOutside:true 
+        }).subscribe((isSkipped)=>{
+          //We get dialog result
+          if(isSkipped) {
+            this.router.navigate(['/order-review']);
+          }
+      });
        
-      } else {
-        return true;
-      }
+      
     } else {
       return true;
     }

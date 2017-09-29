@@ -744,7 +744,7 @@ export class ItemComponent implements OnInit {
         }
         total += parseFloat(this.item.Product.price);
     }
-
+    total = Number(total.toFixed(2));
       return total;
 
   }

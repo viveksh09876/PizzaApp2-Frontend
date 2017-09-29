@@ -7,6 +7,7 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { CustomFormsModule } from 'ng2-validation';
 import { Ng2UploaderModule } from 'ng2-uploader';
+import {PopoverModule} from "ngx-popover";
 
 import { DataService } from './data.service';
 import { UtilService } from './util.service';
@@ -86,7 +87,8 @@ import { SuggestionmodalComponent } from './suggestionmodal/suggestionmodal.comp
     JsonpModule,
     NguiDatetimePickerModule,
     CustomFormsModule,
-    Ng2UploaderModule
+    Ng2UploaderModule,
+    PopoverModule
   ],
   entryComponents: [LoginComponent, RegisterComponent, OrdernowmodalComponent, MessageComponent, FavmodalComponent, ContactUsComponent, RegisterConfirmationComponent, ApplynowComponent, ForgotComponent, ResetComponent, SuggestionmodalComponent],
   schemas:  [CUSTOM_ELEMENTS_SCHEMA],
