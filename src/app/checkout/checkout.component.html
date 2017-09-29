@@ -97,7 +97,7 @@
                         </span>
                       </div>
                       <div class="row col-md-4">
-                      <label>CVV code <img src="assets/images/info-icon.png" /></label>
+                      <label>CVV code <img src="assets/images/info-icon.png" popover="CVV" [popoverOnHover]="true"//></label>
                       <span><input type="number" maxlength="3" id="cardCVC" name="cardCVC" [(ngModel)]="card.cvc" placeholder="CVV/CVC" #cardCVC="ngModel" required autocomplete="off"></span>
                       </div>
                       <div [hidden]="cardMonth.valid  || (cardMonth.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
