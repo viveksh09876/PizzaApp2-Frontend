@@ -1,13 +1,19 @@
 # NkdWeb
 
-#Build Commands
-npm install angular-cli          
+## Build Commands
+npm install angular-cli  
+
 npm install ng2-bootstrap-modal
 
-npm install angular2-IE9-shims                        
+
+npm install angular2-IE9-shims
+
 npm i mdn-polyfills --save
+
 npm install classlist.js --save
+
 npm install web-animation-js --save
+
 npm install ngx-popover
 
 For local running
