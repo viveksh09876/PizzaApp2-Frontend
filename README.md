@@ -1,5 +1,27 @@
 # NkdWeb
 
+#Build Commands
+npm install angular-cli          
+npm install ng2-bootstrap-modal
+
+npm install angular2-IE9-shims                        
+npm i mdn-polyfills --save
+npm install classlist.js --save
+npm install web-animation-js --save
+npm install ngx-popover
+
+For local running
+=============
+ng serve
+
+For making new component
+===============
+ng g component terms
+
+for making build
+==============
+ng build --prod --base-href /uk/ --aot=false
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
 ## Development server
