@@ -1998,7 +1998,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 }
 
 @media (max-width: 767px) {
-	.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper{min-height: 0px;}
+	.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper{min-height: 0px !important;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection h5 {
 	font-size: 2em
 }
