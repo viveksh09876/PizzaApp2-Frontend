@@ -89,6 +89,8 @@ export class OrderreviewComponent implements OnInit {
             }
       };
 
+    isValidPostalFlag = true;  
+
   constructor(private dataService: DataService,
                private dialogService:DialogService,
                 private utilService: UtilService, 
@@ -349,11 +351,15 @@ export class OrderreviewComponent implements OnInit {
 
 
   placeFinalOrder() {
-
+    
     let goFlag = true;
     let tVal = null;
+
+    if (this.order.order_type == 'delilvery' && !this.isValidPostalFlag) {
+      goFlag = false;
+    }
      
-    tVal = this.order.delivery_time
+    tVal = this.order.delivery_time;
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
 
     if (goFlag) {
@@ -619,6 +625,15 @@ export class OrderreviewComponent implements OnInit {
 
     editItem(index, prod) {
       this.router.navigate(['/item/edit', index]);
+    }
+
+    validatePostalCode(val) {
+      if (val.length > 3) {
+        let code = val.trim().toUpperCase();
+        this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
+      } else {
+        this.isValidPostalFlag = true;
+      }
     }
 
 

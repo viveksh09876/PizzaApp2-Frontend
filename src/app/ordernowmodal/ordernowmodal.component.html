@@ -115,6 +115,9 @@
                         
                         <p *ngIf="!useStreetDb" class="use-location">or <a (click)="getUserLocation()"><i class="fa fa-map-marker"></i> Use my Location</a></p>
                         
+                        <div class="row form_sec" *ngIf="!isValidPostalFlag && postalCode.length > 3">
+                            <span class="text-danger pull-right">Sorry, we don't deliver at this location.</span>                            
+                        </div>
                         <div class="row form_sec">
                             <div class="col-md-4 col-sm-4 optional">
                                 <input class="form-control" type="text" placeholder="Appt#" [(ngModel)]="delivery_apartment">
@@ -125,7 +128,7 @@
                             </div>
                             
                             <div class="col-md-4 col-sm-4">
-                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (change)="validatePostalCode($event.target.value);">
+                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
                             </div>
                         </div>
                         <br/>

@@ -398,14 +398,28 @@ export class DataService {
       'EH139',
       'EH141'
     ];
+    let flag = false;
 
-    validCodes.forEach(function(a){
-      if (a.indexOf(code) > -1) {
-        return true;
-      } 
-    });
+    if (code.length > 3 && code.charAt(2) == '9') { 
 
-    return false;   
+      if (code.charAt(3) == '1' || code.charAt(3) == '2' || code.charAt(3) == '3') {
+        flag = true;
+      }
+      
+    } else {
+      
+      if (code.length > 4) {
+        code = code.slice(0,4);
+      }
+
+      validCodes.forEach(function(a){
+        if (a.indexOf(code) > -1) {
+          flag = true;
+        } 
+      });
+    }
+
+    return flag;   
   }
 
 

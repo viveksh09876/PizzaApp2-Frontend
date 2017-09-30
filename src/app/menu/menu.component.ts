@@ -128,6 +128,7 @@ export class MenuComponent implements OnInit {
     
 
     // let orderNow = this.dataService.getLocalStorageData('order-now');
+
     // if (orderNow == undefined || orderNow == null || orderNow == 'null') {
     //   //open order-now modal
     //   this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutside:true }); 
