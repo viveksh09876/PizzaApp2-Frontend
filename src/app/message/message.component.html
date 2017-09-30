@@ -9,7 +9,9 @@
               <div class="col-md-12 col-sm-12">
                 <div class="row">
                   <div class="col-md-12">
-                    <h4>{{message}}</h4>
+                    <h4 *ngIf="title != 'block'">{{message}}</h4>
+                    <h5 *ngIf="title=='block'">In Store pickup only<br/><br/>
+                        Online ordering will be active from October 2nd onwards.</h5>
                     <br>
                     <br>
                   </div>

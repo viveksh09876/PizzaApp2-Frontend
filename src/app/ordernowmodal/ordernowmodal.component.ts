@@ -61,6 +61,8 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
     selectedStore: this.selectedStore
   };
 
+  isValidPostalFlag = false;
+
    
   pickerOptions: Object = {
     'showDropdowns': true,
@@ -316,6 +318,13 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
   getCurrentDateTime() {
     let now = new Date();
     now.setMinutes(now.getMinutes() + 30);
+  }
+
+  validatePostalCode(val) {
+    if (val.length > 3) {
+      let code = val.trim().toUpperCase();
+      this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
+    }
   }
 
 }

@@ -385,6 +385,29 @@ export class DataService {
               .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
 
+  isValidPostalCode(code) {
+    let validCodes = [
+      'EH91',
+      'EH92',
+      'EH93',
+      'EH104',
+      'EH105',
+      'EH106',
+      'EH111',
+      'EH130',
+      'EH139',
+      'EH141'
+    ];
+
+    validCodes.forEach(function(a){
+      if (a.indexOf(code) > -1) {
+        return true;
+      } 
+    });
+
+    return false;   
+  }
+
 
 }
 
