@@ -1998,6 +1998,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 }
 
 @media (max-width: 767px) {
+	.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper{min-height: 0px;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection h5 {
 	font-size: 2em
 }
@@ -2006,6 +2007,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 }
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper {
 	margin: 0 0 1.5em;
+	min-height: 240px;
 }
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .leftSection {
 	padding-right: 1em
@@ -3585,8 +3587,8 @@ color:#fff
     margin-right: 10px;
 }
 
-
-
+.order-soon{font-family: "bureaueaglebookregular"; text-align: center; display: block;}
+.align-center{display: inline-block; float: none;}
 
 
 
