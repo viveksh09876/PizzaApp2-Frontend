@@ -3147,8 +3147,7 @@ color:#fff
     right: 10px;  top: -2px; background:  url(../images/lock-icon.png) no-repeat 0 0; height: 19px; width: 14px;}
 .payment_method .tab-content form .row select,.payment_method .tab-content form .row input{background: #fff; border: 1px solid #acacac; border-radius: 3px; display: inline-block; padding: 10px; font-size: 14px; line-height: 24px; color: #333; width: 100%;}
 .payment_method .tab-content form .row input.half,.payment_method .tab-content form .row select.half{    width: 44%;
-    margin-right: 5%;
-    padding: 13px 10px;}
+    margin-right: 5%; min-height: 46px; -webkit-appearance: none;}
 .payment_method .tab-content form .row.col-md-8{margin-right: 10px;  width: 62.5%;}
 .payment_method .tab-content form .row.col-md-4{margin-left: 10px;}
 .payment_method .tab-content form .row.submit{margin-top: 15px;}
