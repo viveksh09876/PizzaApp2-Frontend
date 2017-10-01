@@ -16,7 +16,7 @@ s<!-- Sign up Modal -->
                 <form #signUpStep1Form="ngForm" ngForm (ngSubmit)="secondStep(1)">
                   <div class="form-group">
                     <label>Email address</label>
-                    <input type="email" class="form-control" id="email" #email="ngModel" [(ngModel)]="user.email" name="email" placeholder="Email" required email>
+                    <input type="email" class="form-control" id="email" #email="ngModel" [(ngModel)]="user.email" name="email" placeholder="Email" required email autocomplete="false">
                     <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
                         <div [hidden]="!email.errors.required">We need your email please</div>
                         <div [hidden]="!email.errors.email">Invalid email.</div>
@@ -93,7 +93,7 @@ s<!-- Sign up Modal -->
                 <form #signUpStep2Form="ngForm" ngForm (ngSubmit)="thirdStep(1)">
                     <div class="form-group">
                         <label>*User name</label>
-                        <input type="text" class="form-control" [(ngModel)]="account.username" id="username" #username="ngModel" name="account.username" placeholder="Name" required>
+                        <input type="text" class="form-control" [(ngModel)]="account.username" id="username" #username="ngModel" name="account.username" placeholder="Name" required autocomplete="false">
                         <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
                                 <div [hidden]="!username.errors.required">We need you to create a user name please</div>
                         </div>
@@ -103,7 +103,7 @@ s<!-- Sign up Modal -->
                     </div>
                     <div class="form-group">
                         <label>*Password</label>
-                        <input type="password" class="form-control"  [(ngModel)]="account.password" id="password" #password="ngModel" name="account.password" placeholder="Password" required>
+                        <input type="password" class="form-control"  [(ngModel)]="account.password" id="password" #password="ngModel" name="account.password" placeholder="Password" required autocomplete="false">
                         <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
                                 <div [hidden]="!password.errors.required">We need you to create a password please</div>
                         </div>
