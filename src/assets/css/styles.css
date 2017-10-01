@@ -3145,8 +3145,10 @@ color:#fff
  .payment_method .tab-content form .row.card-no span{position: relative;}
 .payment_method .tab-content form .row.card-no span:after{content: "";  position: absolute;
     right: 10px;  top: -2px; background:  url(../images/lock-icon.png) no-repeat 0 0; height: 19px; width: 14px;}
-.payment_method .tab-content form .row input{background: #fff; border: 1px solid #acacac; border-radius: 3px; display: inline-block; padding: 10px; font-size: 14px; line-height: 24px; color: #333; width: 100%;}
-.payment_method .tab-content form .row input.half{width: 45%; margin-right: 5%;}
+.payment_method .tab-content form .row select,.payment_method .tab-content form .row input{background: #fff; border: 1px solid #acacac; border-radius: 3px; display: inline-block; padding: 10px; font-size: 14px; line-height: 24px; color: #333; width: 100%;}
+.payment_method .tab-content form .row input.half,.payment_method .tab-content form .row select.half{    width: 44%;
+    margin-right: 5%;
+    padding: 13px 10px;}
 .payment_method .tab-content form .row.col-md-8{margin-right: 10px;  width: 62.5%;}
 .payment_method .tab-content form .row.col-md-4{margin-left: 10px;}
 .payment_method .tab-content form .row.submit{margin-top: 15px;}
@@ -3430,6 +3432,10 @@ color:#fff
 }
 
 @media (max-width: 767px) {
+	.payment_method .tab-content form .row:before,.payment_method .tab-content form .row:after{display: inherit;}
+	.payment_method .tab-content form .row.col-md-8{width: 100%; margin-right: 0px;}
+	.payment_method .tab-content form .row input.half, .payment_method .tab-content form .row select.half{margin: 0px; width: 49%; }
+	.payment_method .tab-content form .row.col-md-4{margin-left: 0px;}
 	.fancypopup .nav-tabs {
     margin: 10px 0;
 }
