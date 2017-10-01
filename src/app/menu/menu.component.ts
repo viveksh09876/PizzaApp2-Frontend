@@ -261,11 +261,12 @@ export class MenuComponent implements OnInit {
 
 
   getSuggestions() {
+    this.loadAddedCategories();
     let orderNowDetails = this.dataService.getLocalStorageData('order-now'); 
     if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
       orderNowDetails = JSON.parse(orderNowDetails);
 
-      
+      //console.log('suggestions', this.suggestionProducts);
     let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
             items: this.suggestionProducts }, { closeByClickingOutside:true 
         }).subscribe((isSkipped)=>{
