@@ -628,7 +628,7 @@ export class OrderreviewComponent implements OnInit {
     }
 
     validatePostalCode(val) {
-      if (val.length > 3) {
+      if (val.length >= 3) {
         let code = val.trim().toUpperCase();
         this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
       } else {

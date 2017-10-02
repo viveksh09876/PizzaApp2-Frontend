@@ -43,8 +43,8 @@
 <ul class="list-inline links hidden-xs hidden-sm">
      <li *ngIf="orderUrl == ''"> <a [routerLink]="['/menu']"> <span class="icon icon-pizza"></span><span>Menu</span> </a> </li>
     <li *ngIf="orderUrl != ''"> <a href="{{this.orderUrl}}" target="_blank"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
-    <li *ngIf="orderUrl == '' && !hideForUK"> <a (click)="goToOrderNow()"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
-    <li *ngIf="orderUrl == '' && !hideForUK"> <a (click)="goToFav()"><span class="icon icon-favourite"></span><span>Favourites</span></a></li>
+    <li *ngIf="orderUrl == ''"> <a (click)="goToOrderNow()"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
+    <li *ngIf="orderUrl == ''"> <a (click)="goToFav()"><span class="icon icon-favourite"></span><span>Favourites</span></a></li>
   </ul>
   
   <ul class="list-inline mobile links hidden-md hidden-lg">
@@ -55,7 +55,7 @@
   </ul>
   <div class="mob-order hidden-md hidden-lg">
     <span *ngIf="orderUrl != ''"> <a href="{{this.orderUrl}}" target="_blank">Start Your Order Now </a> </span>
-    <span *ngIf="orderUrl == '' && !hideForUK"> <a (click)="goToOrderNow()">Start Your Order Now</a> </span>
+    <span *ngIf="orderUrl == ''"> <a (click)="goToOrderNow()">Start Your Order Now</a> </span>
   </div>
 </header>
 

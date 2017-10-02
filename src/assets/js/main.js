@@ -200,10 +200,10 @@ $(document).ready(function(){
                       }
                       mapCanvas.setCenter([longitude, latitude]);
 					  
-					  if (country != 'UK') {
+					//   if (country != 'UK') {
 						  
-						  mapText = 'currently open at <span>'+stData.length + locText + '</span> <strong>' + country + '</strong>';
-					  }
+					 	  mapText = 'currently open at <span>'+stData.length + locText + '</span> <strong>' + country + '</strong>';
+					//   }
                       
 
                       

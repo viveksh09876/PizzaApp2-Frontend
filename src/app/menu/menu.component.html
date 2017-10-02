@@ -108,7 +108,7 @@
                             <ng-container *ngIf="data.subCatsName.length == 0">
                             <div  class="col-md-6" *ngFor="let prod of data.products">
                             
-                              <div class="createWrapper" *ngIf="data.type == 'category'">
+                              <div class="createWrapper">
                                   <ng-container *ngIf="prod.is_price_mapped == 1">
                                   <div class="media">
                                     <div class="media-left">
@@ -136,7 +136,7 @@
                               </div>
                             
                               
-                                <div class="createWrapper" *ngIf="data.type == 'deal'">
+                                <!-- <div class="createWrapper" *ngIf="data.type == 'deal'">
                                   
                                   <div class="media">
                                     <div class="media-left">
@@ -153,7 +153,7 @@
                                         <div class="rightSection bottom"> <a (click)="goToDeal(prod.Deal.id)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div> -->
                                   
                                 </div>
                             

@@ -321,7 +321,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
   }
 
   validatePostalCode(val) {
-    if (val.length > 3) {
+    if (val.length >= 3) {
       let code = val.trim().toUpperCase();
       this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
     } else {

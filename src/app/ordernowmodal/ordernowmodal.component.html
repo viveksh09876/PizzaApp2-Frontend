@@ -115,7 +115,7 @@
                         
                         <p *ngIf="!useStreetDb" class="use-location">or <a (click)="getUserLocation()"><i class="fa fa-map-marker"></i> Use my Location</a></p>
                         
-                        <div class="row form_sec" *ngIf="!isValidPostalFlag && postalCode.length > 3">
+                        <div class="row form_sec" *ngIf="!isValidPostalFlag && postalCode.length >= 3">
                             <span class="text-danger pull-right">Sorry, we don't deliver at this location.</span>                            
                         </div>
                         <div class="row form_sec">
