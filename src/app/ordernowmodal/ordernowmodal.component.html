@@ -155,7 +155,7 @@
                   <div class="img-wrapper" [ngStyle]="{'background-image': 'url(' + storeImg + ')'}"></div>
                   <h4>{{selectedStore.info.Store.store_name}}</h4>
                   <p>{{selectedStore.info.Store.store_address}}</p>
-                  <p>Open now:  11:00am-3:00am</p>
+                  <p>Open now:  {{storeTime}}</p>
                   <p>{{selectedStore.info.Store.store_phone}}</p>
                   <p><a href="tel:{{selectedStore.info.Store.store_phone}}"><span class="icon icon-phone"></span></a>
                     <a href=""><span class="icon icon-directions"></span></a></p>
