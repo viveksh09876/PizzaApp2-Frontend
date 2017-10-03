@@ -68,7 +68,6 @@ export class MenuComponent implements OnInit {
         
         this.netCost = this.totalCost;
 
-        this.loadAddedCategories();
       }      
       this.showViewCart = true;      
     }
@@ -79,13 +78,14 @@ export class MenuComponent implements OnInit {
     let items = this.items;
     let catsArr = [];
     for (var i=0; i<items.length; i++) {
-      if (this.addedCategories.indexOf(items[i].Product.category_id) < 0) {
+      if (catsArr.indexOf(items[i].Product.category_id) < 0) {
         catsArr.push(items[i].Product.category_id);
       }
     }
     
     this.addedCategories = catsArr;
-    this.prepareSuggestions(this.addedCategories);
+    return catsArr;
+    //this.prepareSuggestions(this.addedCategories);
   }
 
 
@@ -107,8 +107,6 @@ export class MenuComponent implements OnInit {
           this.menuData = data;
           //console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
-
-          this.loadAddedCategories();
 
           this.route.params.subscribe(params => { 
             if(params['slug'] && params['slug']!= '') {
@@ -151,7 +149,7 @@ export class MenuComponent implements OnInit {
                   let allItems = [];  
                   allItems.push(data);
                   this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-                 
+
                 }else{
 
                   let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
@@ -170,6 +168,7 @@ export class MenuComponent implements OnInit {
                   }
                     
                   this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+
                 }
 
                 this.getCartItems();
@@ -236,7 +235,7 @@ export class MenuComponent implements OnInit {
           }
          
       }  
-      this.loadAddedCategories();
+      
   }
 
 
@@ -261,35 +260,24 @@ export class MenuComponent implements OnInit {
 
 
   getSuggestions() {
-    this.loadAddedCategories();
-    let orderNowDetails = this.dataService.getLocalStorageData('order-now'); 
-    if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
-      orderNowDetails = JSON.parse(orderNowDetails);
-
-      //console.log('suggestions', this.suggestionProducts);
-    let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
-            items: this.suggestionProducts }, { closeByClickingOutside:true 
-        }).subscribe((isSkipped)=>{
-          //We get dialog result
-          if(isSkipped) {
-            this.router.navigate(['/order-review']);
-          }
-      });
-       
-      
-    } else {
+    let addedCats = this.loadAddedCategories();
+    if (addedCats.length > 3) {
       return true;
+    } else {
+      let suggestionProducts = this.prepareSuggestions(addedCats, [], []);
+      
+        if (suggestionProducts == true) {
+          return true;
+        }
     }
-
-   
-    
   }
 
 
-  prepareSuggestions(addedCategories) {
+  prepareSuggestions(addedCategories, prodArr, addedProducts) {
     let menuItems = this.menuData;
-    let products = this.suggestionProducts;
+    let products = prodArr;
     let myCats = [];
+    
 
     if (menuItems != null) {
       //get categories which are not added
@@ -302,17 +290,38 @@ export class MenuComponent implements OnInit {
       for (var i=0; i<myCats.length; i++) {
         if (products.length < 4) {
           let item = this.getProductFromCat(myCats[i]);
-          products.push(item);
+          if (addedProducts.indexOf(item.id) < 0) {
+            products.push(item);
+            addedProducts.push(item.id);
+          }          
         }
       }
 
       this.suggestionProducts = products;
 
       if (this.suggestionProducts.length < 4) {
-        this.prepareSuggestions(addedCategories);
+        this.prepareSuggestions(addedCategories, products, addedProducts);
+      } else {
+        
+        let orderNowDetails = this.dataService.getLocalStorageData('order-now'); 
+        if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
+          orderNowDetails = JSON.parse(orderNowDetails);
+    
+          //console.log('suggestions', this.suggestionProducts);
+        let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
+                items: products }, { closeByClickingOutside:true 
+            }).subscribe((isSkipped)=>{
+              //We get dialog result
+              if(isSkipped) {
+                this.router.navigate(['/order-review']);
+              }
+          }); 
+        } else {
+          return true;
+        }
+
       }
       
-     // console.log(this.suggestionProducts);
     }
     
   }

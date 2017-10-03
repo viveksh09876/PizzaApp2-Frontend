@@ -51,9 +51,9 @@ export class ConfirmationComponent implements OnInit {
           this.couponDiscount = this.orderData.couponDiscount;
           this.totalCost = this.totalCost - this.orderData.couponDiscount;
         }
-        if(this.orderData.order_type == 'delivery') {
-            this.totalCost += 6;
-        } 
+        // if(this.orderData.order_type == 'delivery') {
+        //     this.totalCost += 6;
+        // } 
 
     } else {
       window.location.href = '/';

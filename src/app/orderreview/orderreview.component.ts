@@ -162,9 +162,9 @@ export class OrderreviewComponent implements OnInit {
         }
       }
       
-      if(this.order.order_type == 'delivery') {
-         this.totalCost += 6;
-      }
+      // if(this.order.order_type == 'delivery') {
+      //    this.totalCost += 6;
+      // }
     }
 
 
@@ -204,7 +204,7 @@ export class OrderreviewComponent implements OnInit {
 
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         //console.log(this.items);
-        let tCost = this.utilService.calculateOverAllCost(this.items);
+        let tCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
         this.totalCost = tCost
         this.netCost = tCost;
               
@@ -248,7 +248,7 @@ export class OrderreviewComponent implements OnInit {
       }
     }
 
-    let tCost = this.utilService.calculateOverAllCost(this.items);
+    let tCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
     this.totalCost = tCost 
     this.netCost = tCost;
    // console.log(type, this.totalCost, this.items.Product.qty);
@@ -258,10 +258,10 @@ export class OrderreviewComponent implements OnInit {
   addDeliveryCost(e, type) {
     
     if(type == 'delivery') {
-      this.totalCost = parseFloat(this.totalCost) + 6;
+      //this.totalCost = parseFloat(this.totalCost) + 6;
      
     }else{
-      this.totalCost = parseFloat(this.totalCost) - 6;
+      //this.totalCost = parseFloat(this.totalCost) - 6;
     }
      
   }
@@ -314,7 +314,7 @@ export class OrderreviewComponent implements OnInit {
             
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-            let tCost = this.utilService.calculateOverAllCost(allItems);
+            let tCost = Number(this.utilService.calculateOverAllCost(allItems).toFixed(2));
             this.totalCost = tCost
             this.netCost = tCost; 
 

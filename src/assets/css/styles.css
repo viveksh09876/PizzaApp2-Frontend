@@ -1278,7 +1278,7 @@ header.navigation{z-index: 9999;}
 	margin: 1.5em auto 0;
 	width: 60%
 }
-.mob-order{/*height: 60px;*/ clear: both; margin-top: -1px; background: #fff; border-top: 1px solid #ccc; /*padding: 10px 0;*/ width: 100%; text-align: center;}
+.mob-order{height: 60px; clear: both; margin-top: -1px; background: #fff; border-top: 1px solid #ccc; padding: 10px 0; width: 100%; text-align: center;}
 .mob-order a{font-size: 18px;
     border: none;
     line-height: 29px;
@@ -1291,7 +1291,7 @@ header.navigation{z-index: 9999;}
     border-bottom: 2px solid #4f050c;
     color: #fff;
     font-family: 'proxima_nova_ltsemibold';}
-.slider-wrapper{min-height: 320px; /*margin-top: 60px;*/ height: 50%;}
+.slider-wrapper{min-height: 320px; margin-top: 60px; height: 50%;}
 }
 
 @media (max-width: 2560px) {
