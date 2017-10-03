@@ -66,59 +66,66 @@ export class SuggestionmodalComponent extends DialogComponent<SuggestModal, bool
     } else {
       var p=0;
       for (var j=0; j<addedItems.length; j++) {
-          this.dataService.getItemData(addedItems[p].slug, this.menuCountry)
-          .subscribe(data => {
-              console.log(data.Product['qty']);
-              console.log(addedItems[p], addedItems[p].qty);
-              data.Product['qty'] = addedItems[p].qty;
-              if(data.ProductModifier.length == 0) {
-                  
-                  data.originalItemCost = data.Product.price;
-                  data.totalItemCost = data.Product.price*data.Product['qty'];
-                  data.totalItemCost = Number(data.totalItemCost.toFixed(2));
-                  let temp = this.dataService.getLocalStorageData('allItems');
-                  
-                  if(temp == null || temp == 'null') {
+        --counter;
+        this.addItemToCart(addedItems[j], this.menuCountry, counter);
+        p++;
+      } 
+    }
     
-                    let allItems = [];  
-                    allItems.push(data);
-                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-                  
-                  }else{
-    
-                    let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));                  
-                    allItems.splice(0,0,data);  
-                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-                  }
-    
-              }else{
-                  this.item = data;
-                  let total = 0;
-              
-                  //total = Math.round(total * 100) / 100;
-                  total = this.calculateTotalCost();
-                  let totalCost = +total.toFixed(2);
-                  this.item.originalItemCost = totalCost;
-                  this.item.totalItemCost = totalCost*data.Product['qty'];
-                  this.item.totalItemCost = Number(this.item.totalItemCost.toFixed(2));
-                  let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
-                  allItems.push(this.item);
-                  this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-              }
+  }
 
-              --counter;
+
+  addItemToCart(addedItem, country, counter) {
+    var self = this;
+    this.dataService.getItemData(addedItem.slug, this.menuCountry).subscribe(data => {
+
+          data.Product['qty'] = addedItem.qty;
+          if(data.ProductModifier.length == 0) {
               
+              data.originalItemCost = data.Product.price;
+              data.totalItemCost = data.Product.price*data.Product['qty'];
+              data.totalItemCost = Number(data.totalItemCost.toFixed(2));
+              let temp = this.dataService.getLocalStorageData('allItems');
+              
+              if(temp == null || temp == 'null') {
+
+                let allItems = [];  
+                allItems.push(data);
+                this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+              
+              }else{
+
+                let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));                  
+                allItems.splice(0,0,data);  
+                this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+              }
               if (counter == 0) {
                 this.showLoading = false;
                 self.moveToOrderReview();
               }
-              p++;
-          }); 
+
+          }else{
+              this.item = data;
+              let total = 0;
+          
+              //total = Math.round(total * 100) / 100;
+              total = this.calculateTotalCost();
+              let totalCost = +total.toFixed(2);
+              this.item.originalItemCost = totalCost;
+              this.item.totalItemCost = totalCost*data.Product['qty'];
+              this.item.totalItemCost = Number(this.item.totalItemCost.toFixed(2));
+              let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+              allItems.push(this.item);
+              this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+              if (counter == 0) {
+                this.showLoading = false;
+                self.moveToOrderReview();
+              }
+          }
 
           
-        } 
-    }
-    
+          
+      }); 
   }
 
 
