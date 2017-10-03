@@ -175,17 +175,16 @@ body {
 	padding-top: 52px
 }
 .sugg-popup .modal-header h3{font-size: 17px !important;}
-.sugg-popup .modal-body{max-height: 430px; overflow: auto; position: relative;}
-.sugg-popup .modal-body .actions{position: fixed; background: #fff; width: 100%; padding: 10px 0; bottom: 0px; left: 0px;}
-.sugg-popup .modal-body .actions .red-btn{ clear: both;
+.sugg-popup .modal-body{max-height: 400px; overflow: auto; position: relative;}
+.sugg-popup .actions{position: fixed; background: #fff; width: 100%; padding: 10px 0; bottom: 0px; left: 0px;}
+.sugg-popup .actions .red-btn{ clear: both;
     font-size: 16px;
-    margin: 0 0 5px;
+    margin: 0 0 0px;
     min-width: 114px;
     padding: 3px 10px; }
 .sugg-popup .modal-body .favSection .img-Wrapper {width: 100% !important;
     text-align: center; display: inline-block !important;
 }
-.sugg-popup .modal-body .favSection .col-md-3:last-child{padding-bottom: 60px;}
 }
 
 @media (min-width: 2560px) {
@@ -3602,7 +3601,7 @@ color:#fff
     min-width: 180px;
     margin-right: 10px;
 }
-.sugg-popup .red-btn.skip{background: #65666a;border-color: currentcolor currentcolor #65666a;}
+.sugg-popup .red-btn.skip{background: #65666a;border-color: currentcolor currentcolor #2d2c2b;}
 
 .order-soon{font-family: "bureaueaglebookregular"; text-align: center; display: block;}
 .align-center{display: inline-block; float: none;}
