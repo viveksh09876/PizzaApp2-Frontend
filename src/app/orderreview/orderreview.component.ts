@@ -162,9 +162,9 @@ export class OrderreviewComponent implements OnInit {
         }
       }
       
-      if(this.order.order_type == 'delivery') {
-         this.totalCost += 6;
-      }
+      // if(this.order.order_type == 'delivery') {
+      //    this.totalCost += 6;
+      // }
     }
 
 

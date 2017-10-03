@@ -83,9 +83,9 @@ export class CheckoutComponent implements OnInit {
           this.couponDiscount = this.orderData.couponDiscount;
           this.totalCost = this.totalCost - this.orderData.couponDiscount;
         }
-        if(this.orderData.order_type == 'delivery') {
-            this.totalCost += 6;
-        } 
+        // if(this.orderData.order_type == 'delivery') {
+        //     this.totalCost += 6;
+        // } 
 
         if(this.orderData.payment_type == undefined) { 
           this.orderData['payment_type'] = 'Cash';
