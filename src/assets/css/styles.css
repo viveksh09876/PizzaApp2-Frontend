@@ -20,10 +20,7 @@ iframe[name='google_conversion_frame'] {
     float: left;
 }
 
-input{transform: translate3d(0, 0, 0);
--webkit-transform: translate3d(0, 0, 0);
-perspective: 1000;
--webkit-perspective: 1000; overflow: hidden;}
+input{cursor: none; overflow: hidden;}
 
 
 .daterangepicker.dropdown-menu{z-index: 99999 !important;}
@@ -175,8 +172,12 @@ body {
 	padding-top: 52px
 }
 .sugg-popup .modal-header h3{font-size: 17px !important;}
-.sugg-popup .modal-body{max-height: 400px; overflow: auto; position: relative;}
-.sugg-popup .actions{position: fixed; background: #fff; width: 100%; padding: 10px 0; bottom: 0px; left: 0px;}
+.sugg-popup .modal-body{max-height: 340px; overflow: auto;}
+.sugg-popup .modal-footer{border: medium none !important;
+    display: inline-block;
+    padding: 0 !important;
+    width: 100%;}
+.sugg-popup .actions{background: #fff; width: 100%; padding: 10px 0; display: inline-block;}
 .sugg-popup .actions .red-btn{ clear: both;
     font-size: 16px;
     margin: 0 0 0px;
