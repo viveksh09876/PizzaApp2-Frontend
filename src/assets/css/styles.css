@@ -3137,7 +3137,7 @@ color:#fff
     display: none;
 }
 
-.payment_method .tab-content form{padding: 10px 0; display: inline-block; width: 100%}
+.payment_method .tab-content form{padding: 10px 0; display: inline-block; width: 100%;}
 .payment_method .tab-content form .row{margin:0 0 15px; padding: 0px;}
 .payment_method .tab-content form .row label{color: #5b5a56; font-family: "proxima_nova_ltlight";
     font-size: 14px;    line-height: 20px; font-weight: normal; display: block;}
