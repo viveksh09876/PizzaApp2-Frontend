@@ -17,6 +17,7 @@ export class MessageComponent extends DialogComponent<MessageModal, null> {
   message = this.message;
   buttonText = this.buttonText;
   doReload = this.doReload;
+  title = this.title;
 
   ngOnInit() {
 
