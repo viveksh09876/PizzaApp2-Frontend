@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit {
     this.dataService.setLocalStorageData('favOrdersFetched', null); 
     this.dataService.setLocalStorageData('confirmationItems', null); 
     this.dataService.setLocalStorageData('confirmationFinalOrder', null);
-    console.log(this.months);
+    
   }
 
 
