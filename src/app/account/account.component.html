@@ -2,7 +2,7 @@
 <div class="banner-wrapper myaccount">
 <div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
   <h1>Hey {{name}}</h1>
-  <div *ngIf="orderUrl == '' && !hideForUK" class="leftButtons buttons"><a (click)="openModal('ordernow')" class="whiteBtn cta-btn">Start a new order</a></div>
+  <div *ngIf="orderUrl == ''" class="leftButtons buttons"><a (click)="openModal('ordernow')" class="whiteBtn cta-btn">Start a new order</a></div>
   <div *ngIf="orderUrl != '' && !hideForUK" class="leftButtons buttons"><a href="{{orderUrl}}" class="whiteBtn cta-btn">Start a new order</a></div>
   <!--<div class="leftButtons searchBox">
     <input type="text" class="form-control" placeholder="">
@@ -32,7 +32,7 @@
             <li [ngClass]="{'active': currentTab == 'preference'}"><a (click)="goToTab('preference')">Preferences</a></li>
           </ul>
         </div>
-        <div class="box" *ngIf="orderUrl == '' && !hideForUK">
+        <div class="box" *ngIf="orderUrl == ''">
           <h4>My previous orders</h4>
           <ul>
             <li [ngClass]="{'active': currentTab == 'favOrders'}"><a (click)="goToTab('favOrders')">Favourite orders</a></li>
