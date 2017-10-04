@@ -136,7 +136,7 @@ body {
 @media (max-width: 767px) {
 	.forgotfeild{margin: 0 auto; width: 100%; float: none;}
 	.slider-wrapper .slides .slide{background-size: cover;}
-	.slider-wrapper .slides .slide .container .slide-content img{width: 50%;}
+	.slider-wrapper .slides .slide .container .slide-content img{/*width: 50%;*/ width: 100%;}
 	.modal-dialog{margin:12% 20px !important;}
 	#signinModal .guest button{margin:0px !important;}
 	#signinModal .signin{border:none !important;}
@@ -651,10 +651,10 @@ header.navigation .logo {
 }
 .slider-wrapper .slides .slide.slick-active .slide-content {
 	display: block;
-	-moz-animation-delay: .5s;
+	/*-moz-animation-delay: .5s;
 	-o-animation-delay: .5s;
 	-webkit-animation-delay: .5s;
-	animation-delay: .5s
+	animation-delay: .5s*/
 }
 .slider-wrapper .slides .slick-list, .slider-wrapper .slides .slick-track {
 	width: 100%;
@@ -2737,7 +2737,7 @@ color:#fff
     left: 0px;
     background-color: #5b5a56;
 }
-.three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri{height: 50px; width: 50px; cursor: pointer; background: #fff; border-radius: 100%; text-align: center; padding: 13px 0; position: absolute; top: 144px; right: 16px;}
+.three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri{height: 50px; width: 50px; cursor: pointer; background: #fff; border-radius: 100%; text-align: center; /*padding: 13px 0;*/ position: absolute; top: 144px; right: 16px;}
 .three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri i{color: #333; font-size: 24px;}
 /*.three-column-wrapper .inside-column-container .content-wrapper .content-container .ins p{    text-overflow: ellipsis;
     overflow: hidden;

@@ -6,7 +6,7 @@
             <a (click)="goToOrderNow()">
               <div class="container">
                 <div class="fade-bg visible-xs"></div>
-                <div class="slide-content fadeIn animated"> 
+                <div class="slide-content"> 
                   <ng-container *ngIf="slide.Slide.textImage!=''">
                     <img src="{{slide.Slide.textImage}}" class="img-responsive" alt="slide content"/>
                   </ng-container>
@@ -17,7 +17,7 @@
         <ng-container *ngIf="slide.Slide.coupon_code ==''">
           <div class="container">
             <div class="fade-bg visible-xs"></div>
-            <div class="slide-content fadeIn animated"> 
+            <div class="slide-content"> 
               <ng-container *ngIf="slide.Slide.textImage!=''">
                 <img src="{{slide.Slide.textImage}}" class="img-responsive" alt="slide content"/>
               </ng-container>
