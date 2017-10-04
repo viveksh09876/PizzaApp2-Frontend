@@ -800,8 +800,14 @@ export class ItemComponent implements OnInit {
   }  
 
 
-  checkout() {    
-    this.router.navigate(['/order-review']);
+  checkout() {  
+    let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+    if (allItems != null && allItems != undefined && allItems != 'null') {
+      this.router.navigate(['/order-review']);
+    } else {
+      this.dialogService.addDialog(MessageComponent, { title: 'Alert', message: 'No Items in cart. Please add atleast 1 item in cart to proceed.', buttonText: 'Continue', doReload: false }, { closeByClickingOutside:true }); 
+      
+    }    
   }
 
 

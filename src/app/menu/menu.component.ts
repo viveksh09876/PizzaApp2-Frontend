@@ -252,9 +252,26 @@ export class MenuComponent implements OnInit {
     let goFlag = this.getSuggestions();
     //let goFlag = true;
     if (goFlag) {
-      this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));    
-      this.dataService.setLocalStorageData('totalCost', this.totalCost); 
-      this.router.navigate(['/order-review']);
+      if (this.items.length > 0) {
+        let orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+
+        let minOrderFlag = true;
+        if (orderNowDetails.type == 'delivery' && this.totalCost < 12.99) {
+          minOrderFlag = false;
+        }
+
+        if (minOrderFlag) {
+          this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));    
+          this.dataService.setLocalStorageData('totalCost', this.totalCost); 
+          this.router.navigate(['/order-review']);
+        } else {
+          this.dialogService.addDialog(MessageComponent, { title: 'Alert', message: 'Minimum order should be ' + this.currencyCode + '12.99', buttonText: 'Continue', doReload: false }, { closeByClickingOutside:true });
+        }
+        
+      } else {
+        this.dialogService.addDialog(MessageComponent, { title: 'Alert', message: 'No Items in cart. Please add atleast 1 item in cart to proceed.', buttonText: 'Continue', doReload: false }, { closeByClickingOutside:true }); 
+        
+      }      
     }     
   }
 

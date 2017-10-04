@@ -138,15 +138,13 @@
                     <form class="order_reviewform" name="orderReviewForm">
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control" placeholder="Address line 1" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment" ng-required="!isDubai">
-                                <div *ngIf="apartment.errors && (apartment.dirty || apartment.touched)" class="alert alert-danger">
-                                    <div [hidden]="!apartment.errors.required">Apartment is required.</div>
-                                </div>
+                                <input class="form-control" placeholder="Apartment Number" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment">
+                                
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control" placeholder="Address line 2" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
+                                <input class="form-control" placeholder="Street Number" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
                                 <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
                                     <div [hidden]="!streetNo.errors.required">Street No is required.</div>
                                 </div>
@@ -154,9 +152,9 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control" placeholder="Address line 3" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
+                                <input class="form-control" placeholder="Street Name" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
                                 <div *ngIf="street.errors && (street.dirty || street.touched)" class="alert alert-danger">
-                                    <div [hidden]="!street.errors.required">Street is required.</div>
+                                    <div [hidden]="!street.errors.required">Street name is required.</div>
                                 </div>
                             </div>
                         </div>
@@ -168,14 +166,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <!-- <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input class="form-control" placeholder="County" type="text" name="state" id="state" #state="ngModel" [(ngModel)]="order.address.state" required>
                                 <div *ngIf="state.errors && (state.dirty || state.touched)" class="alert alert-danger">
                                     <div [hidden]="!state.errors.required">State is required.</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input class="form-control" placeholder="Postcode" type="text" name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="order.address.postal_code" (input)="validatePostalCode($event.target.value)">
