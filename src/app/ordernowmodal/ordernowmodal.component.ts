@@ -84,7 +84,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
 
 
   ngOnInit() {
-    
+    this.order['delivery_state'] = '';
     this.userCountryName = this.dataService.getLocalStorageData('userCountry');
     this.userCountryCode = this.dataService.getLocalStorageData('userCountryCode');
     if (this.userCountryName != undefined && this.userCountryName != null && this.userCountryName != '') {
