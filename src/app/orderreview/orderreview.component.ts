@@ -281,7 +281,7 @@ export class OrderreviewComponent implements OnInit {
     if(isValid) {
       if(isDelivery=='delivery'){
         if(street==''){
-          alert('Street is required.');
+          alert('Street name is required.');
         }else if(city==''){
           alert('City is required.');
         }else{
