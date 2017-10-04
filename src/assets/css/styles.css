@@ -20,7 +20,7 @@ iframe[name='google_conversion_frame'] {
     float: left;
 }
 
-input{cursor: none; overflow: hidden;}
+input{overflow: hidden;}
 
 
 .daterangepicker.dropdown-menu{z-index: 99999 !important;}
