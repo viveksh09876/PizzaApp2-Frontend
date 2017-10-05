@@ -136,20 +136,17 @@
                 </ul>
                 <ng-container *ngIf="order.order_type == 'delivery'">
                     <form class="order_reviewform" name="orderReviewForm">
+                        <div class="col-md-12 col-sm-12" *ngIf="defaultAddress != null">
+                            <label><input type="checkbox" [(ngModel)]="useDefaultAddress" name="useDefaultAddress" (click)="displayDefaultAddress()">&nbsp;Use default address</label>
+
+                        </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control" placeholder="Apartment Number" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment">
+                                <input class="form-control" placeholder="House Number or Name" type="text" name="apartment" id="apartment" #apartment="ngModel" [(ngModel)]="order.address.apartment">
                                 
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Street Number" type="text" name="streetNo" id="streetNo" #streetNo="ngModel" [(ngModel)]="order.address.streetNo" ng-required="!isDubai">
-                                <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
-                                    <div [hidden]="!streetNo.errors.required">Street No is required.</div>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input class="form-control" placeholder="Street Name" name="street" id="street" #street="ngModel" type="text" [(ngModel)]="order.address.street" ng-required="!isDubai">
@@ -160,20 +157,13 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control" placeholder="City or town" type="text" name="city" id="city" #city="ngModel" [(ngModel)]="order.address.city" required>
+                                <input class="form-control" placeholder="City" type="text" name="city" id="city" #city="ngModel" [(ngModel)]="order.address.city" required>
                                 <div *ngIf="city.errors && (city.dirty || city.touched)" class="alert alert-danger">
                                     <div [hidden]="!city.errors.required">City is required.</div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <input class="form-control" placeholder="County" type="text" name="state" id="state" #state="ngModel" [(ngModel)]="order.address.state" required>
-                                <div *ngIf="state.errors && (state.dirty || state.touched)" class="alert alert-danger">
-                                    <div [hidden]="!state.errors.required">State is required.</div>
-                                </div>
-                            </div>
-                        </div> -->
+                       
                         <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input class="form-control" placeholder="Postcode" type="text" name="postal_code" id="postal_code" #postal_code="ngModel" [(ngModel)]="order.address.postal_code" (input)="validatePostalCode($event.target.value)">

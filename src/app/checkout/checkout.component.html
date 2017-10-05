@@ -45,9 +45,9 @@
                     <address class="delivery_addrs" *ngIf="orderData.order_type == 'delivery'">
                 <h4>delivery address</h4>
                 <p><strong>{{orderData.user.first_name}} {{orderData.user.last_name}}<br></strong>
-                {{orderData.address.apartment}}, {{orderData.address.street_no}}<br>
-                {{orderData.address.street}} {{orderData.address.city}}<br>
-                {{orderData.address.state}} - {{orderData.address.postal_code}}<br>
+                {{orderData.address.apartment}}, <br>
+                {{orderData.address.street}}, <br>
+                {{orderData.address.city}} - {{orderData.address.postal_code}}<br>
                 Phone: {{orderData.user.phone}}</p>
              </address>
                 </div>
@@ -56,8 +56,8 @@
                 <h3 class="green-title">choose how to pay</h3>
                 <div class="payment_method">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Online Payment</a> </li>
-                        <li role="presentation"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay on Delivery</a> </li>
+                        <li role="presentation" class="active"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Pay by card</a> </li>
+                        <li role="presentation"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay by cash</a> </li>
 
                     </ul>
                     <div class="tab-content three-column-wrapper">

@@ -784,6 +784,7 @@ export class ItemComponent implements OnInit {
     }
     
     total =  parseFloat(this.item.originalItemCost)*this.item.Product.qty;
+    total = Number(total.toFixed(2));
     this.item.totalItemCost = total;
     this.totalCost = total;
 
