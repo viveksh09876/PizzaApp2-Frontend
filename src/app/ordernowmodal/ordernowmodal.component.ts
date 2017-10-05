@@ -381,6 +381,11 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if (val.length >= 3) {
       let code = val.trim().toUpperCase();
       this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
+
+      if (this.isValidPostalFlag) {
+        this.getStores('edinburgh');
+      }
+
     } else {
       this.isValidPostalFlag = true;
     }
