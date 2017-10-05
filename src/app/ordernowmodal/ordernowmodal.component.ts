@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
   templateUrl: './ordernowmodal.component.html',
   styleUrls: ['./ordernowmodal.component.css']
 })
-export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null> implements OnInit{
+export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boolean> implements OnInit{
 
   constructor(dialogService: DialogService, private dataService: DataService, private router: Router, private utilService: UtilService) {
     super(dialogService);
@@ -80,7 +80,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
         }
   };
 
-
+  fromObj = this.fromObj;
 
 
   ngOnInit() {
@@ -284,8 +284,63 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
         }
 
         this.dataService.setLocalStorageData('order-now', JSON.stringify(orderDetails));
-        this.close();
-        this.router.navigate(['/menu']);
+
+        if (this.fromObj != null && this.fromObj != undefined) {
+
+          if (this.fromObj.modCount > 0) {
+
+            this.close();
+            this.router.navigate(['/item', this.fromObj.slug]); 
+
+          } else {
+
+            this.dataService.getItemData(this.fromObj.slug, this.fromObj.menuCountry)
+            .subscribe(data => {
+                 
+                  data.originalItemCost = data.Product.price;
+                  data.totalItemCost = data.Product.price;
+                  let temp = this.dataService.getLocalStorageData('allItems');
+                  
+                  if(temp == null || temp == 'null') {
+  
+                    let allItems = [];  
+                    allItems.push(data);
+                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+  
+                  }else{
+  
+                    let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
+                    let isExist = false;
+                    for(var i=0; i<allItems.length; i++) {
+                      if(allItems[i].Product.id == data.Product.id) {
+                        allItems[i].Product.qty += 1;
+                        allItems[i].totalItemCost = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
+                        isExist = true;
+                        break;
+                      }
+                    }         
+                    
+                    if(!isExist) {
+                      allItems.splice(0,0,data);
+                    }
+                      
+                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+  
+                  }
+                  
+                  this.result = true;
+                  this.close();
+                  
+                  
+            });
+        
+          }
+
+        } else {
+          this.close();
+          this.router.navigate(['/menu', this.fromObj.slug]);
+        }
+        
         //window.location.reload();
       
        
@@ -295,6 +350,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
     }
     
   }
+  
 
 
   getUserLocation() {
@@ -333,5 +389,5 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, null>
 }
 
 export interface OrdernowModal {
-
+  fromObj: object;
 }

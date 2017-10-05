@@ -18,7 +18,7 @@
                   <div class="control__indicator"></div></a></li>
                     <li role="presentation" class="checkbox-inline control--checkbox" [ngClass]="{'active': order.orderType == 'delivery'}"><a (click)="updateOrderType('delivery')">delivery <input type="radio" name="orderType" [checked]="order.orderType=='delivery'">
                   <div class="control__indicator"></div></a></li>
-                  <li class="checkbox-inline control--checkbox" *ngIf="order.orderType=='delivery'"><p class="text-danger">*Minimium order of {{currencyCode}}12.99 is required</p></li>
+                  <li class="checkbox-inline control--checkbox" *ngIf="order.orderType=='delivery'"><p class="text-danger">*minimum order for delivery is {{currencyCode}}12.99</p></li>
 
                   </ul>
                 </form>
@@ -55,11 +55,11 @@
                             
                             <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
                                 <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
-                                <small>or</small>  
+                                <!-- <small>or</small>   -->
                             </div>
-                            <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
+                            <!-- <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
                                 <a (click)="getUserLocation()" class="use-location"><i class="fa fa-map-marker"></i> Use my Location</a>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12">
@@ -108,22 +108,23 @@
                                 <br/>
                             </div>
 
-                            <div class="col-md-4 col-sm-4">
+                            <!-- <div class="col-md-4 col-sm-4">
                                 <input class="form-control" type="text" placeholder="Street Number" [(ngModel)]="delivery_streetno">
-                            </div>
+                            </div> -->
                         </div>
                         
-                        <p *ngIf="!useStreetDb" class="use-location">or <a (click)="getUserLocation()"><i class="fa fa-map-marker"></i> Use my Location</a></p>
-                        
+                        <!-- <p *ngIf="!useStreetDb" class="use-location">or <a (click)="getUserLocation()"><i class="fa fa-map-marker"></i> Use my Location</a></p>
+                         -->
                         <div class="row form_sec" *ngIf="!isValidPostalFlag && postalCode.length >= 3">
                             <span class="text-danger pull-right">Sorry, we don't deliver at this location.</span>                            
                         </div>
+                        <br/>
                         <div class="row form_sec">
                             <div class="col-md-4 col-sm-4 optional">
-                                <input class="form-control" type="text" placeholder="Apartment Number" [(ngModel)]="delivery_apartment">
+                                <input class="form-control" type="text" placeholder="House Number or Name" [(ngModel)]="delivery_apartment">
                             </div>
                             <div class="col-md-4 col-sm-4">
-                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
+                                <input class="form-control" type="text" placeholder="Postcode" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
                             </div>
                             <!-- <div class="col-md-4 col-sm-4 optional">
                                 <input class="form-control" type="hidden" placeholder="State" [(ngModel)]="order.delivery_state">

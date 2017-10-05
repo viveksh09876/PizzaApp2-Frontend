@@ -126,17 +126,32 @@ export class MenuComponent implements OnInit {
     
 
     let orderNow = this.dataService.getLocalStorageData('order-now');
+    let menuCountry = this.dataService.getLocalStorageData('menuCountry');
+
+    let fromObj = {
+      modCount: modCount,
+      slug: slug,
+      menuCountry: menuCountry,
+      selectedMenuCat: this.selectedMenuCat
+    }
 
     if (orderNow == undefined || orderNow == null || orderNow == 'null') {
       //open order-now modal
-      this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutside:true }); 
+      this.dialogService.addDialog(OrdernowmodalComponent, { fromObj: fromObj }, { closeByClickingOutside:true }).subscribe((isReloadCart)=>{ 
+        if (isReloadCart) {
+          this.getCartItems();
+        }
+      }); 
+
+      
+
     } else {
       if (modCount > 0) {
         //navigate to customize page
         this.router.navigate(['/item', slug]);        
       } else {
          //add product to cart without page refresh
-         let menuCountry = this.dataService.getLocalStorageData('menuCountry');
+         
          this.dataService.getItemData(slug, menuCountry)
           .subscribe(data => {
                

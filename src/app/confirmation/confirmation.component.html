@@ -88,9 +88,9 @@
                         <address class="d-add" *ngIf="orderData.order_type == 'delivery'">
                         <strong>delivery address</strong>
                         <p><span>{{orderData.user.first_name}} {{orderData.user.last_name}}<br></span>
-                {{orderData.address.apartment}}, {{orderData.address.street_no}}<br>
-                {{orderData.address.street}} {{orderData.address.city}}<br>
-                {{orderData.address.state}} - {{orderData.address.postal_code}}<br>
+                {{orderData.address.apartment}}, <br>
+                {{orderData.address.street}},<br>
+                {{orderData.address.city}} - {{orderData.address.postal_code}}<br>
                 Phone: {{orderData.user.phone}}</p>
                     </address>
                         <address class="r-add">

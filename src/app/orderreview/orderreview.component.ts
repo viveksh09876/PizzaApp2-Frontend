@@ -90,6 +90,9 @@ export class OrderreviewComponent implements OnInit {
       };
 
     isValidPostalFlag = true;  
+    defaultAddress = null;
+    useDefaultAddress = false;
+    tempObj = null;
 
   constructor(private dataService: DataService,
                private dialogService:DialogService,
@@ -177,6 +180,30 @@ export class OrderreviewComponent implements OnInit {
       let isLoggedIn = this.dataService.getLocalStorageData('isLoggedIn');
       if(isLoggedIn != undefined && isLoggedIn == 'true') {
         let userDetails = JSON.parse(this.dataService.getLocalStorageData('user-details'));
+
+        this.dataService.getProfile(userDetails.id).subscribe(pdata => { 
+            if (pdata.Address1 != '' && pdata.Address1 != null && pdata.Address1 != "null") {
+              let address = JSON.parse(pdata.Address1);
+              if (address.is_default == 1) {
+                this.defaultAddress = address;
+              }
+            }
+      
+            if (pdata.Address2 != '' && pdata.Address2 != null && pdata.Address2 != "null") {
+              let address = JSON.parse(pdata.Address2);
+              if (address.is_default == 1) {
+                this.defaultAddress = address;
+              }
+            }
+      
+            if (pdata.Address3 != '' && pdata.Address3 != null && pdata.Address3 != "null") {
+              let address = JSON.parse(pdata.Address3);
+              if (address.is_default == 1) {
+                this.defaultAddress = address;
+              }
+            }
+        });
+
         this.order['userid'] = userDetails.id;
         this.order.user = {
           first_name: userDetails.firstName,
@@ -639,6 +666,16 @@ export class OrderreviewComponent implements OnInit {
       } else {
         this.isValidPostalFlag = true;
       }
+    }
+
+    displayDefaultAddress() {
+      if (!this.useDefaultAddress) {
+        this.tempObj = this.order.address;
+        this.order.address.apartment = this.defaultAddress.apartment;
+        this.order.address.street = this.defaultAddress.street;
+        this.order.address.city = this.defaultAddress.city;
+        this.order.address.postal_code = this.defaultAddress.postal_code;       
+      } 
     }
 
 

@@ -375,35 +375,24 @@
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Address line 1" type="text" id="apartment" #apartment="ngModel" name="address.apartment" [(ngModel)]="address.apartment" required>
+                              <input class="form-control" placeholder="House Number or Name" type="text" id="apartment" #apartment="ngModel" name="address.apartment" [(ngModel)]="address.apartment" required>
                               <div *ngIf="apartment.errors && (apartment.dirty || apartment.touched)" class="alert alert-danger">
                                   <div [hidden]="!apartment.errors.required">we need your full address please</div>
                               </div>
                           </div>
                       </div>
+                      
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Address line 2" type="text" id="streetNo" #streetNo="ngModel" name="address.streetNo" [(ngModel)]="address.streetNo">
-                              <!-- <div *ngIf="streetNo.errors && (streetNo.dirty || streetNo.touched)" class="alert alert-danger">
-                                  <div [hidden]="!streetNo.errors.required">Street Number is required.</div>
-                              </div> -->
+                              <input class="form-control" placeholder="Street Name" id="street" #street="ngModel" name="address.street" type="text" [(ngModel)]="address.street">
                           </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
-                              <input class="form-control" placeholder="Address line 3" id="street" #street="ngModel" name="address.street" type="text" [(ngModel)]="address.street">
+                              <input class="form-control" placeholder="City" type="text" id="city" #city="ngModel" name="address.city" [(ngModel)]="address.city">
                           </div>
                       </div>
-                      <div class="col-md-6 col-sm-12">
-                          <div class="form-group">
-                              <input class="form-control" placeholder="City or town" type="text" id="city" #city="ngModel" name="address.city" [(ngModel)]="address.city">
-                          </div>
-                      </div>
-                      <div class="col-md-6 col-sm-12">
-                          <div class="form-group">
-                              <input class="form-control" placeholder="country" type="text" id="state" #state="ngModel" name="address.state" [(ngModel)]="address.state">
-                          </div>
-                      </div>
+                      
                       <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                               <input class="form-control" placeholder="Postcode" type="text" id="postal_code" #postal_code="ngModel" name="address.postal_code" [(ngModel)]="address.postal_code">
@@ -431,10 +420,9 @@
                             <h5>{{addressArr.address1 != undefined?addressArr.address1.address_type: ''}}<span *ngIf="addressArr.address1 != undefined && addressArr.address1.is_default">Default</span></h5>
                             <div class="content">
                                 <p><strong>{{addressArr.address1.firstname}} {{addressArr.address1.lastname}} </strong><br>
-                                {{addressArr.address1.apartment}} <br>
-                                {{addressArr.address1.streetNo}} <br>
-                                {{addressArr.address1.street}} {{addressArr.address1.city}}<br>
-                                {{addressArr.address1.state}} {{addressArr.address1.postal_code}}</p>
+                                {{addressArr.address1.apartment}} <br>                                
+                                {{addressArr.address1.street}}<br>
+                                {{addressArr.address1.city}} {{addressArr.address1.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address1.phone}}</p>
                                 <p><a (click)="editAddress('Address1')">Edit</a> | <a (click)="deleteAddress('Address1')">Delete</a> <ng-container *ngIf="addressArr.address1 != undefined && !addressArr.address1.is_default"> | <a (click)="setAsDefault('Address1')">Set as default</a></ng-container></p>
                             </div>
@@ -446,9 +434,8 @@
                             <div class="content">
                                 <p><strong>{{addressArr.address2.firstname}} {{addressArr.address2.lastname}} </strong><br>
                                 {{addressArr.address2.apartment}} <br>
-                                {{addressArr.address2.streetNo}} <br>
-                                {{addressArr.address2.street}} {{addressArr.address2.city}}<br>
-                                {{addressArr.address2.state}} {{addressArr.address2.postal_code}}</p>
+                                {{addressArr.address2.street}} <br>
+                                {{addressArr.address2.city}} {{addressArr.address2.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address2.phone}}</p>
                                 <p><a (click)="editAddress('Address2')">Edit</a> | <a (click)="deleteAddress('Address2')">Delete</a> <ng-container *ngIf="!addressArr.address2.is_default"> | <a (click)="setAsDefault('Address2')">Set as default</a></ng-container></p>
                             </div>
@@ -460,9 +447,8 @@
                             <div class="content">
                                 <p><strong>{{addressArr.address3.firstname}} {{addressArr.address3.lastname}} </strong><br>
                                 {{addressArr.address3.apartment}} <br>
-                                {{addressArr.address3.streetNo}} <br>
-                                {{addressArr.address3.street}} {{addressArr.address3.city}}<br>
-                                {{addressArr.address3.state}} {{addressArr.address3.postal_code}}</p>
+                                {{addressArr.address3.street}}<br>
+                                {{addressArr.address3.city}} {{addressArr.address3.postal_code}}</p>
                                 <p>Phone Number:{{addressArr.address3.phone}}</p>
                                 <p><a (click)="editAddress('Address3')">Edit</a> | <a (click)="deleteAddress('Address3')">Delete</a> <ng-container *ngIf="!addressArr.address3.is_default"> | <a (click)="setAsDefault('Address3')">Set as default</a></ng-container></p>
                             </div>
