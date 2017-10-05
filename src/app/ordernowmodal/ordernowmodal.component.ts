@@ -285,7 +285,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
         this.dataService.setLocalStorageData('order-now', JSON.stringify(orderDetails));
 
-        if (this.fromObj != null && this.fromObj != undefined) {
+        if (this.fromObj != null && this.fromObj != undefined && this.fromObj.modCount != undefined) {
 
           if (this.fromObj.modCount > 0) {
 
@@ -338,7 +338,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
         } else {
           this.close();
-          this.router.navigate(['/menu', this.fromObj.slug]);
+          this.router.navigate(['/menu']);
         }
         
         //window.location.reload();
