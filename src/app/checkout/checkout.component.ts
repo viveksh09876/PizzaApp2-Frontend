@@ -131,8 +131,11 @@ export class CheckoutComponent implements OnInit {
       this.showLoading = true;
         this.showPlaceOrder = false;
         
-        this.orderData.address.street_no = this.orderData.address.apartment;
-        this.orderData.address.apartment = '';
+        if (this.orderData.order_type == 'delivery') {
+          this.orderData.address.street_no = this.orderData.address.apartment;
+          this.orderData.address.apartment = '';
+        }
+        
 
         this.dataService.placeOrder(this.orderData).subscribe(data => {
              // console.log(JSON.parse(data.response));
