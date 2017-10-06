@@ -214,11 +214,26 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
   
   getStoresFromPostalCode(postal_code) {
     this.showStoreLoading = true;
-    this.dataService.getStoresFromPostalCode(postal_code)
-        .subscribe(data => {                    
-                    this.storeList = data;
-                    this.showStoreLoading = false;                    
-                }); 
+    if (postal_code.length >= 3) {
+      let code = postal_code.trim().toUpperCase();
+      let isValidPostalFlag = this.dataService.isValidPostalCode(code);
+      
+      if (isValidPostalFlag) {
+        
+        this.getStores('edinburgh');
+        this.showStoreLoading = false; 
+      } else {
+        this.showStoreLoading = false;
+      }
+
+    } else {
+      this.showStoreLoading = false;
+    }
+    // this.dataService.getStoresFromPostalCode(postal_code)
+    //     .subscribe(data => {                    
+    //                 this.storeList = data;
+    //                 this.showStoreLoading = false;                    
+    //             }); 
   }
 
 
@@ -381,6 +396,11 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if (val.length >= 3) {
       let code = val.trim().toUpperCase();
       this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
+
+      if (this.isValidPostalFlag) {
+        this.getStores('edinburgh');
+      }
+
     } else {
       this.isValidPostalFlag = true;
     }
