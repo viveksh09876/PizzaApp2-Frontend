@@ -167,10 +167,11 @@ export class ItemComponent implements OnInit {
       for(var i=0; i<modObj.length; i++) {
         //size
         if (modObj[i].Modifier.id == 1) {
-          sizeMod = modObj[i].Modifier;
+          sizeMod = this.item.ProductModifier[i].Modifier;
           for(var j=0; j<sizeMod.ModifierOption.length; j++) {
             if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.size) {
-              modObj[i].Modifier.ModifierOption.splice(j,1);
+              //modObj[i].Modifier.ModifierOption.splice(j,1);
+              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
             } else {
               modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
               modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
@@ -179,24 +180,60 @@ export class ItemComponent implements OnInit {
               modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
             }
           }
+
+          this.item.ProductModifier = modObj;
+
+          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
+            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
+              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
+             
+            } else {
+              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+
         }
 
-        this.item.ProductModifier = modObj;
+        
 
-        // if (this.item.ProductModifier[i].Modifier.id == 2) {
-        //   sizeMod = Object.assign({},this.item.ProductModifier[i].Modifier);
-        //   for(var j=0; j<sizeMod.ModifierOption.length; j++) {
-        //     if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.modifier_plu) {
-        //       this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
-        //     } else {
-        //       this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
-        //       this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
-        //       this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
-        //       this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
-        //       this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
-        //     }
-        //   }
-        // }
+        //crust
+        if (modObj[i].Modifier.id == 2) {
+          sizeMod = this.item.ProductModifier[i].Modifier;
+          for(var j=0; j<sizeMod.ModifierOption.length; j++) {
+            if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.modifier_plu) {
+              //modObj[i].Modifier.ModifierOption.splice(j,1);
+              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
+            } else {
+              modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+          this.item.ProductModifier = modObj;
+
+          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
+            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
+              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
+              
+            } else {
+              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+
+        }
 
       }      
 
@@ -983,5 +1020,12 @@ export class ItemComponent implements OnInit {
       }
     }
   }
+
+
+  backToDealPage() {
+    this.router.navigate(['/deals', this.dealId]); 
+  }
+
+
 
 }

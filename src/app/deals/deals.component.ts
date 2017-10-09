@@ -83,6 +83,8 @@ export class DealsComponent implements OnInit {
 
       let categoriesArr = this.dealData.categories;
       let keepCats = [];
+      let atLeastoneEnable = false;
+      
 
       for (var i=0; i<allItems.length; i++) {
         let itemCatId = allItems[i].Product.category_id;
@@ -107,8 +109,13 @@ export class DealsComponent implements OnInit {
         if (categoriesArr[i].isEnable) {
           this.selectedDealMenuCatIndex = i;
           this.selectedDealMenuCatId = categoriesArr[i].id;
+          atLeastoneEnable = true;
           break;
         }
+      }
+
+      if (!atLeastoneEnable) {
+        this.selectedDealMenuCatId = null;
       }
 
       this.dealData.categories = categoriesArr;
@@ -375,6 +382,11 @@ export class DealsComponent implements OnInit {
         return prodObj.price;
       }
       
+    }
+
+
+    backToMenuPage() {
+      this.router.navigate(['/menu', 'meal-deals']); 
     }
   
 

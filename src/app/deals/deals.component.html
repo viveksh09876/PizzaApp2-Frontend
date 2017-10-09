@@ -26,6 +26,15 @@
       <select class="custom-select visible-xs" [(ngModel)]="selectedMenuCat" target="#tabSwitch" (change)="changTab($event.target.value)">
         <option *ngFor="let cat of menuData"  value="{{cat.name}}">{{cat.name}}</option>
       </select>
+
+      
+        <div class="col-md-12 deal-bar">
+          <a (click)="backToMenuPage()">Back</a>
+          <p>{{dealData.deal.Deal.title}}</p>
+          <span>{{dealData.deal.Deal.description}}</span>
+
+        </div>
+      
       
       <!-- Tab panes -->
       <div class="tab-content">
