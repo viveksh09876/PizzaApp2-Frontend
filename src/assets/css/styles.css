@@ -635,13 +635,13 @@ header.navigation .logo {
 	bottom: 0;
 	text-align: center
 }
-.slider-wrapper {overflow: hidden;}
-.slider-wrapper .slide-content .mobile-banner{display: block !important;  width: 100%; height: 100%;}
-.slider-wrapper .slide-content .desk-banner{display: none !important;width: 100%;}
+.slider-wrapper {max-height: 100%;}
+.slider-wrapper .slide-content .mobile-banner{display: block !important;  width: 100%;}
+.slider-wrapper .slide-content .desk-banner{display: none !important; width: 100%;}
 }
-.slider-wrapper {overflow: hidden; height: 64%;}
+.slider-wrapper {overflow: hidden; max-height: 64%;}
 .slider-wrapper .slide-content .mobile-banner{display: none;}
-.slider-wrapper .slide-content .desk-banner{display: block;width: 100%; height: 100%;}
+.slider-wrapper .slide-content .desk-banner{display: block;width: 100%;}
 
 .slider-wrapper .slides .slick-dots li {
 	display: inline-block;
@@ -716,7 +716,6 @@ header.navigation .logo {
 }
 @media (min-width: 991px) {
 header.navigation{z-index: 9999;}
-
 }
 @media (min-width: 768px) and (max-width: 1023px){
 	.how-are-we-different-wrapper .container{width: 100%;}
@@ -832,6 +831,7 @@ header.navigation{z-index: 9999;}
 .our-journey-wrapper .container .title-img {
 	max-width: 300px
 }
+.slider-wrapper {max-height: 42%;}
 }
 
 @media (max-width: 767px) {
@@ -1192,7 +1192,7 @@ header.navigation{z-index: 9999;}
 }
 
 @media (max-width: 540px) {
-	.slider-wrapper {height: 67% !important;}
+	.slider-wrapper {max-height: 67% !important;}
 	.mapboxgl-popup{max-width: 200px !important;}
 	.inside-column-container.thirdCol .control-group .control.checkbox{padding-right: 95px;}
 .banner-wrapper .leftButtons.buttons {
@@ -1243,6 +1243,7 @@ header.navigation{z-index: 9999;}
 }
 
 @media (max-width: 991px) {
+	.slider-wrapper {max-height: 24%;}
 	header.navigation ul.links.mobile li a {
 	background: none !Important;
 	box-shadow: none;
@@ -2280,12 +2281,6 @@ button.close:hover,button.close:focus{opacity: 1;}
 	color: #fff;
 	text-decoration: none;
 	line-height: 40px
-}
-
-@media (min-width: 992px) {
-/*.footer-wrapper ul.social-links li {
-	line-height: 114px
-}*/
 }
 .footer-wrapper ul.social-links li a {
 	font-size: 1.5em;
@@ -3574,7 +3569,7 @@ color:#fff
 .align-center{display: inline-block; float: none;}
 
 @media (max-width: 375px) {
-	.slider-wrapper {height: 55% !important;}
+	.slider-wrapper {max-height: 55% !important;}
 }
 
 
