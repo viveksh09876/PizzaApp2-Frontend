@@ -87,14 +87,16 @@ export class DealsComponent implements OnInit {
       
 
       for (var i=0; i<allItems.length; i++) {
-        let itemCatId = allItems[i].Product.category_id;
-        let index = categoriesArr.findIndex(obj => obj.id == itemCatId);
-        if (index >= 0) {
-          categoriesArr[index].isEnable = false;
-          keepCats.push(categoriesArr[index].id);
-        } else {
-          categoriesArr[index].isEnable = true;
-        } 
+        if (allItems[i].Product.dealId != undefined) {
+          let itemCatId = allItems[i].Product.category_id;
+          let index = categoriesArr.findIndex(obj => obj.id == itemCatId);
+          if (index >= 0) {
+            categoriesArr[index].isEnable = false;
+            keepCats.push(categoriesArr[index].id);
+          } else {
+            categoriesArr[index].isEnable = true;
+          } 
+        }        
       }
 
       for (var i=0; i<categoriesArr.length; i++) {
