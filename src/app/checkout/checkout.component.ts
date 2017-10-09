@@ -88,7 +88,7 @@ export class CheckoutComponent implements OnInit {
         // } 
 
         if(this.orderData.payment_type == undefined) { 
-          this.orderData['payment_type'] = 'Cash';
+          this.orderData['payment_type'] = 'Credit';
         }
 
         let userDetails = JSON.parse(this.dataService.getLocalStorageData('user-details'));
@@ -128,6 +128,7 @@ export class CheckoutComponent implements OnInit {
 
 
   placeOrder() {
+    
       this.showLoading = true;
         this.showPlaceOrder = false;
         
@@ -167,6 +168,7 @@ export class CheckoutComponent implements OnInit {
 
 
   payOnline(isValid) {
+    
     if (isValid) {
       this.showLoading = true;
       this.dataService.sendPaymentData(this.card)
@@ -182,6 +184,7 @@ export class CheckoutComponent implements OnInit {
       });
     }
   }
+
         
 
 

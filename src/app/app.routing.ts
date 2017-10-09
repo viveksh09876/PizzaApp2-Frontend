@@ -24,6 +24,7 @@ const appRoutes: Routes = [
     { path: 'menu', component: MenuComponent },
     { path: 'item/:slug', component: ItemComponent },
     { path: 'item/edit/:itemPos', component: ItemComponent },
+    { path: 'item/deal/:dealId/:comboUniqueId/:position/:slug', component: ItemComponent },
     { path: 'order-review', component: OrderreviewComponent },
     { path: 'account', component: AccountComponent },
     { path: 'events', component: EventsComponent },

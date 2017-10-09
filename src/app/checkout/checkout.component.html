@@ -56,8 +56,8 @@
                 <h3 class="green-title">choose how to pay</h3>
                 <div class="payment_method">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"> <a href="#cd-cards" aria-controls="cd-cards" role="tab" data-toggle="tab">Pay by card</a> </li>
-                        <li role="presentation"> <a href="#cod" aria-controls="cod" role="tab" data-toggle="tab">Pay by cash</a> </li>
+                        <li role="presentation" class="active"> <a href="#cd-cards" (click)="updatePaymentType('Credit')" aria-controls="cd-cards" role="tab" data-toggle="tab">Pay by card</a> </li>
+                        <li role="presentation"> <a href="#cod" (click)="updatePaymentType('Cash')" aria-controls="cod" role="tab" data-toggle="tab">Pay by cash</a> </li>
 
                     </ul>
                     <div class="tab-content three-column-wrapper">

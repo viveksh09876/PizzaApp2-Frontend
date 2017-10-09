@@ -37,6 +37,19 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
       
       <!--Second Col-->
       <div class="inside-column-container thirdCol customize-uk">
+        
+        <ng-container *ngIf="isDeal">
+            <div class="col-md-12">
+              <a (click)="backToDealPage()">Back</a>
+              <p>{{dealData.deal.Deal.title}}</p>
+              <span>{{dealData.deal.Deal.description}}</span>
+
+            </div>
+        </ng-container>
+
+        
+        
+        
         <div class="col-md-6" *ngFor="let mod of item.ProductModifier; let q = index;">
         <h3 class="bgGrey">{{mod.Modifier.title}}
         <span>{{mod.Modifier.short_description}}</span>
@@ -85,9 +98,12 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
             <div class="item-qty-price">
               <button *ngIf="showAddToCart" class="add-to-cart" (click)="add_to_cart()">Add to Cart</button>
               <div class="quantity" *ngIf="showAddToCart">
+                <ng-container *ngIf="!isDeal">
                   <a (click)="updateQuantity(0)">-</a>
                   <span class="num">{{item.Product.qty}}</span>
                   <a (click)="updateQuantity(1)">+</a>
+                 </ng-container>
+
                   <span class="cost">{{currencyCode}}{{item.totalItemCost}}</span>
               </div>
             </div>

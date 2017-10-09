@@ -305,7 +305,13 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
           if (this.fromObj.modCount > 0) {
 
             this.close();
-            this.router.navigate(['/item', this.fromObj.slug]); 
+
+            if (this.fromObj.isDeal != undefined) {
+              this.router.navigate(['/item/deal/', this.fromObj.dealId, this.fromObj.comboUniqueId, this.fromObj.selectedDealMenuCatIndex, this.fromObj.slug]); 
+            } else {
+              this.router.navigate(['/item', this.fromObj.slug]); 
+            }
+            
 
           } else {
 

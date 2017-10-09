@@ -27,6 +27,13 @@ export class ItemComponent implements OnInit {
   currencyCode = null;
   isEdit = false;
   itemPos: 0;
+  dealId = null;
+  isDeal = false;
+  comboUniqueId = null;
+  dealCode = null;
+  dealData = null;
+  dealItem = null;
+  position = null;
 
   constructor(private dialogService:DialogService,
               private dataService: DataService, 
@@ -48,7 +55,26 @@ export class ItemComponent implements OnInit {
 
       this.route.params.subscribe(params => {
         
-        if(params['slug'] && params['slug']!= '') {
+        if(params['slug'] && params['slug'] != '') {
+
+          if (params['dealId'] && params['dealId'] != '') {
+            this.isDeal = true;
+            this.dealId = params['dealId'];
+
+            this.dataService.getDealData(this.dealId).subscribe((data) => {
+                this.dealData = data;
+                this.dealCode = data.deal.Deal.code;   
+            });
+
+          }
+
+          if (params['comboUniqueId'] && params['comboUniqueId'] != '') {
+            this.comboUniqueId = params['comboUniqueId'];
+          }
+
+          if (params['position'] && params['position'] != '') {
+            this.position = params['position'];
+          }
 
           if(params['slug'] != 'favourite') {
             this.getItemData(params['slug']);
@@ -113,10 +139,109 @@ export class ItemComponent implements OnInit {
              
             }else{
                 this.item = data;
+                if (this.isDeal) {
+                  this.updateItemForDeal();
+                }
                 this.getTotalCost();
              }
             
           });
+  }
+
+
+  updateItemForDeal() {
+    console.log(this.dealData);
+    
+    for (var i=0; i<this.dealData.products.length; i++) {
+      if (this.dealData.products[i].cat_id == this.item.Product.category_id && i==this.position) {
+        this.dealItem = this.dealData.products[i];
+        break;
+      }
+    }
+
+    if (this.item.Product.category_id == 1) {
+      let sizeMod = null;
+      let default_checked = null;
+      let modObj = this.item.ProductModifier;
+
+      for(var i=0; i<modObj.length; i++) {
+        //size
+        if (modObj[i].Modifier.id == 1) {
+          sizeMod = this.item.ProductModifier[i].Modifier;
+          for(var j=0; j<sizeMod.ModifierOption.length; j++) {
+            if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.size) {
+              //modObj[i].Modifier.ModifierOption.splice(j,1);
+              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
+            } else {
+              modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+          this.item.ProductModifier = modObj;
+
+          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
+            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
+              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
+             
+            } else {
+              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+
+        }
+
+        
+
+        //crust
+        if (modObj[i].Modifier.id == 2) {
+          sizeMod = this.item.ProductModifier[i].Modifier;
+          for(var j=0; j<sizeMod.ModifierOption.length; j++) {
+            if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.modifier_plu) {
+              //modObj[i].Modifier.ModifierOption.splice(j,1);
+              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
+            } else {
+              modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code = true;
+              modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+          this.item.ProductModifier = modObj;
+
+          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
+            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
+              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
+              
+            } else {
+              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
+              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+            }
+          }
+
+
+        }
+
+      }      
+
+    } else {
+      
+      
+
+    }
   }
 
 
@@ -157,14 +282,19 @@ export class ItemComponent implements OnInit {
 
     let total = 0;
 
-    //total = Math.round(total * 100) / 100;
-    total = this.calculateTotalCost();
-    this.totalCost = +total.toFixed(2);
-    this.item.originalItemCost = this.totalCost;
-    this.item.totalItemCost = this.totalCost;
+    if (this.isDeal) {
+      this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+      this.item.originalItemCost = this.totalCost;
+      this.item.totalItemCost = this.totalCost;
+    } else {
+     
+      total = this.calculateTotalCost();
+      this.totalCost = +total.toFixed(2);
+      this.item.originalItemCost = this.totalCost;
+      this.item.totalItemCost = this.totalCost;
 
-    //this.dataService.setLocalStorageData('item', JSON.stringify(this.item));
-    //this.dataService.setLocalStorageData('totalCost', this.totalCost);
+    }
+   
   }
 
   updateModifier(option_id, type, modifier_id) {
@@ -285,13 +415,21 @@ export class ItemComponent implements OnInit {
 
     }else{
       this.showAddToCart = true;
-      this.totalCost = total;
-      this.item.originalItemCost = this.totalCost;
 
-      if(this.item.Product.qty) {
-          total = total*parseFloat(this.item.Product.qty);
+      if (this.isDeal) {
+        this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+        this.item.originalItemCost = this.totalCost;
+        this.item.totalItemCost = this.totalCost;
+      } else {
+        this.totalCost = total;
+        this.item.originalItemCost = this.totalCost;
+  
+        if(this.item.Product.qty) {
+            total = total*parseFloat(this.item.Product.qty);
+        }
+        this.item.totalItemCost = total;
       }
-      this.item.totalItemCost = total;
+      
     }
 
   }
@@ -337,17 +475,23 @@ export class ItemComponent implements OnInit {
         }
       }
 
-     
-      let total = this.calculateTotalCost();
-      this.totalCost = total;
-      this.item.originalItemCost = this.totalCost;
-
-      if(this.item.Product.qty) {
-          total = total*parseFloat(this.item.Product.qty);
+      
+      if (this.isDeal) {
+        this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+        this.item.originalItemCost = this.totalCost;
+        this.item.totalItemCost = this.totalCost;
+      } else {
+        let total = this.calculateTotalCost();
+        
+        this.totalCost = total;
+        this.item.originalItemCost = this.totalCost;
+  
+        if(this.item.Product.qty) {
+            total = total*parseFloat(this.item.Product.qty);
+        }
+  
+        this.item.totalItemCost = total;
       }
-
-      this.item.totalItemCost = total;
-          
 
   }
 
@@ -821,9 +965,16 @@ export class ItemComponent implements OnInit {
       this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems));
       
     } else {
+
+      if (this.isDeal) {
+        this.item.Product['dealId'] = this.dealId;
+        this.item.Product['comboUniqueId'] = this.comboUniqueId;
+      }
+
       if(this.dataService.getLocalStorageData('allItems') != null
           && this.dataService.getLocalStorageData('allItems') != 'null') {
         let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+
         allItems.push(this.item);  
         this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
       }else{
@@ -836,12 +987,16 @@ export class ItemComponent implements OnInit {
     this.dataService.setLocalStorageData('totalCost', this.totalCost);
     let selectedMenuCat = this.dataService.getLocalStorageData('selectedMenuCat');
 
-    if (selectedMenuCat != null) {
-      this.router.navigate(['/menu', selectedMenuCat]);   
+    if (this.isDeal) {
+      this.router.navigate(['/deals', this.dealId]);
     } else {
-      this.router.navigate(['/menu']);
+      if (selectedMenuCat != null) {
+        this.router.navigate(['/menu', selectedMenuCat]);   
+      } else {
+        this.router.navigate(['/menu']);
+      }
     }
-      
+        
   }
 
 
@@ -865,5 +1020,12 @@ export class ItemComponent implements OnInit {
       }
     }
   }
+
+
+  backToDealPage() {
+    this.router.navigate(['/deals', this.dealId]); 
+  }
+
+
 
 }
