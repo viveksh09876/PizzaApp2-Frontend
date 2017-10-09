@@ -25,7 +25,7 @@ export class DataService {
   
   getMenuData(storeId, country): Observable<any>{
 
-    return this.http.get( this.domain + '/webservice/get_all_categories_data/'+storeId+ '/'+country)
+    return this.http.get( this.domain + '/temp/get_all_categories_data/'+storeId+ '/'+country)
                     .map( (res: Response) => res.json() )
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }

@@ -85,9 +85,12 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
             <div class="item-qty-price">
               <button *ngIf="showAddToCart" class="add-to-cart" (click)="add_to_cart()">Add to Cart</button>
               <div class="quantity" *ngIf="showAddToCart">
+                <ng-container *ngIf="!isDeal">
                   <a (click)="updateQuantity(0)">-</a>
                   <span class="num">{{item.Product.qty}}</span>
                   <a (click)="updateQuantity(1)">+</a>
+                 </ng-container>
+                  
                   <span class="cost">{{currencyCode}}{{item.totalItemCost}}</span>
               </div>
             </div>
