@@ -635,11 +635,9 @@ header.navigation .logo {
 	bottom: 0;
 	text-align: center
 }
-.slider-wrapper {max-height: 100%;}
 .slider-wrapper .slide-content .mobile-banner{display: block !important;  width: 100%;}
 .slider-wrapper .slide-content .desk-banner{display: none !important; width: 100%;}
 }
-.slider-wrapper {overflow: hidden; max-height: 64%;}
 .slider-wrapper .slide-content .mobile-banner{display: none;}
 .slider-wrapper .slide-content .desk-banner{display: block;width: 100%;}
 
@@ -831,7 +829,6 @@ header.navigation{z-index: 9999;}
 .our-journey-wrapper .container .title-img {
 	max-width: 300px
 }
-.slider-wrapper {max-height: 42%;}
 }
 
 @media (max-width: 767px) {
@@ -1192,7 +1189,6 @@ header.navigation{z-index: 9999;}
 }
 
 @media (max-width: 540px) {
-	.slider-wrapper {max-height: 67% !important;}
 	.mapboxgl-popup{max-width: 200px !important;}
 	.inside-column-container.thirdCol .control-group .control.checkbox{padding-right: 95px;}
 .banner-wrapper .leftButtons.buttons {
@@ -1243,7 +1239,6 @@ header.navigation{z-index: 9999;}
 }
 
 @media (max-width: 991px) {
-	.slider-wrapper {max-height: 24%;}
 	header.navigation ul.links.mobile li a {
 	background: none !Important;
 	box-shadow: none;
@@ -1884,7 +1879,12 @@ button.close:hover,button.close:focus{opacity: 1;}
 	background-size: cover;
 	background-position: center
 }
-
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .img-Wrapper {
+background: #6b6a6a;
+text-align: center; display: table;
+}
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .img-Wrapper span{display: table-cell; height: 100%;
+width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookregular"; line-height: 1;}
 @media (max-width: 1199px) {
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .img-Wrapper {
 	height: 8em;
@@ -2138,9 +2138,9 @@ button.close:hover,button.close:focus{opacity: 1;}
 	background-color: #789c48;
 	position: relative
 }
-.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+.nav-tabs>li>a,.nav-tabs>li>span,.nav-tabs>li>span:focus,.nav-tabs>li.active>span,.nav-tabs>li.active>span:hover, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
 	font-family: "bureaueaglebookregular";
-	font-size: 1.500em;
+	font-size: 1.48em;
 	color: #fff;
 	border: none;
 	border-radius: 0;
@@ -2149,7 +2149,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 	background: none;
 	display: block
 }
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,.nav-tabs>li>span,.nav-tabs>li>span:focus,.nav-tabs>li.active>span,.nav-tabs>li.active>span:hover {
 	opacity: .4
 }
 .nav-tabs>li.active:after {
@@ -2187,6 +2187,26 @@ button.close:hover,button.close:focus{opacity: 1;}
 	padding: 5px 25px;
 	margin: 25px auto
 }
+.deal-bar{margin: 60px 0 10px 0; display: table; padding: 0px;}
+.deal-bar a{     background: #911c27;
+    border-color: currentcolor currentcolor #4f050c;
+    border-image: none;
+    border-style: none none solid;
+    border-width: medium medium 2px;
+    color: #ffffff;
+    display: table-cell;
+    font-family: "proxima_nova_ltsemibold";
+    font-size: 18px;
+    line-height: 40px;
+    padding: 5px 10px;
+    text-align: center;
+    width: 100px;}
+.deal-bar p{background: #a5a4a3;
+    display: table-cell;
+    text-align: center;
+    height: 40px;
+    color: #fff;font-family: "bureaueaglebookregular";
+	font-size: 1.500em;}
 .footer-wrapper {
 	background-color: #5b5a56;
 	padding: 2.813em 0;
@@ -3569,9 +3589,8 @@ color:#fff
 .align-center{display: inline-block; float: none;}
 
 @media (max-width: 375px) {
-	.slider-wrapper {max-height: 55% !important;}
+	.slider-wrapper {max-height: 340px !important;}
 }
-
 
 
 

@@ -136,12 +136,11 @@
                               </div>
                             
                               
-                                <div class="createWrapper" *ngIf="data.type == 'deal'">
+                                <div class="createWrapper deals" *ngIf="data.type == 'deal'">
                                   
                                   <div class="media">
                                     <div class="media-left">
-                                      <div class="img-Wrapper">{{prod.Deal.image_text}}</div>
-                                        </div>
+                                      <div class="img-Wrapper"><span>{{prod.Deal.image_text}}</span></div>
                                     </div>
                                     <div class="media-body media-middle">
                                       <div class="description">
@@ -153,6 +152,7 @@
                                         <div class="rightSection bottom"> <a (click)="goToDeal(prod.Deal.id)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
                                       </div>
                                     </div>
+                                  </div>
                                   </div>
                                   
                                 </div>
