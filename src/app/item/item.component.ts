@@ -61,11 +61,9 @@ export class ItemComponent implements OnInit {
             this.isDeal = true;
             this.dealId = params['dealId'];
 
-            this.dataService.getDealData(this.dealId).subscribe((data) => {
-                this.dealData = data;
-                this.dealCode = data.deal.Deal.code;   
-            });
-
+            let dealData = this.dataService.getDealTypeData(this.dealId);
+            this.dealData = dealData;
+            this.dealCode = dealData.code;
           }
 
           if (params['comboUniqueId'] && params['comboUniqueId'] != '') {
@@ -150,98 +148,61 @@ export class ItemComponent implements OnInit {
 
 
   updateItemForDeal() {
-    console.log(this.dealData);
     
-    for (var i=0; i<this.dealData.products.length; i++) {
-      if (this.dealData.products[i].cat_id == this.item.Product.category_id && i==this.position) {
-        this.dealItem = this.dealData.products[i];
-        break;
+
+    let dealData = this.dealData.categories[this.position];
+    let modifiersArr = null;
+    
+    if (dealData.modifiers.length > 0) {
+      if (dealData.products.length > 0) {
+        for(var i=0; i<dealData.products.length; i++) {
+          if (dealData.products[i].id == this.item.Product.id) {
+            modifiersArr = dealData.modifiers[i];
+          }
+        }
+      } else {
+        modifiersArr = dealData.modifiers;
       }
-    }
-
-    if (this.item.Product.category_id == 1) {
-      let sizeMod = null;
-      let default_checked = null;
-      let modObj = this.item.ProductModifier;
-
-      for(var i=0; i<modObj.length; i++) {
-        //size
-        if (modObj[i].Modifier.id == 1) {
-          sizeMod = this.item.ProductModifier[i].Modifier;
-          for(var j=0; j<sizeMod.ModifierOption.length; j++) {
-            if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.size) {
-              //modObj[i].Modifier.ModifierOption.splice(j,1);
-              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
-            } else {
-              modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
-              modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
-              modObj[i].Modifier.ModifierOption[j].Option.is_checked = true;
-              modObj[i].Modifier.ModifierOption[j].Option.send_code = true;
-              modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
-            }
-          }
-
-          this.item.ProductModifier = modObj;
-
-          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
-            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
-              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
-             
-            } else {
-              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
-            }
-          }
-
-
-        }
-
-        
-
-        //crust
-        if (modObj[i].Modifier.id == 2) {
-          sizeMod = this.item.ProductModifier[i].Modifier;
-          for(var j=0; j<sizeMod.ModifierOption.length; j++) {
-            if (sizeMod.ModifierOption[j].Option.plu_code != this.dealItem.modifier_plu) {
-              //modObj[i].Modifier.ModifierOption.splice(j,1);
-              modObj[i].Modifier.ModifierOption[j]['removeThis'] = true;
-            } else {
-              modObj[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
-              modObj[i].Modifier.ModifierOption[j].Option.default_checked = true;
-              modObj[i].Modifier.ModifierOption[j].Option.is_checked = true;
-              modObj[i].Modifier.ModifierOption[j].Option.send_code = true;
-              modObj[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
-            }
-          }
-
-          this.item.ProductModifier = modObj;
-
-          for(var j=0; j<this.item.ProductModifier[i].Modifier.ModifierOption.length; j++) {
-            if (this.item.ProductModifier[i].Modifier.ModifierOption[j].removeThis != undefined) {
-              this.item.ProductModifier[i].Modifier.ModifierOption.splice(j,1);
+  
+      var temp = this.item.ProductModifier;
+      let prodMods = this.item.ProductModifier;
+      
+      for (var i=0; i<prodMods.length; i++) {
+        for (var j=0; j<modifiersArr.length; j++) {
+          if (prodMods[i].modifier_id == modifiersArr[j].modifierId) {
+  
+            let modOption = prodMods[i].Modifier.ModifierOption;
+            for (var k=0; k<modOption.length; k++) {
               
-            } else {
-              //this.item.ProductModifier[i].default_option_id = sizeMod.ModifierOption[j].Option.id;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.default_checked = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.is_checked = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code = true;
-              this.item.ProductModifier[i].Modifier.ModifierOption[j].Option.send_code_permanent = true;
+              if (modOption[k].Option.plu_code != modifiersArr[j].modOptionPlu) {
+                delete prodMods[i].Modifier.ModifierOption[k];
+              } else {
+                
+                prodMods[i].Modifier.ModifierOption[k].Option.default_checked = true;
+                prodMods[i].Modifier.ModifierOption[k].Option.is_checked = true;
+                prodMods[i].Modifier.ModifierOption[k].Option.send_code = true;
+                prodMods[i].Modifier.ModifierOption[k].Option.send_code_permanent = true;
+              }
+  
             }
+  
           }
-
-
         }
-
-      }      
-
-    } else {
-      
-      
-
+      }
+  
+      for (var i=0; i<prodMods.length; i++) {
+        for(var j=0; j<prodMods[i].Modifier.ModifierOption.length; j++) {
+  
+          let pArr = prodMods[i].Modifier.ModifierOption.filter(val => val);
+          prodMods[i].Modifier.ModifierOption = pArr;
+          
+        }
+      }
+  
+      this.item.ProductModifier = prodMods;
+  
     }
+    
   }
 
 
@@ -282,18 +243,18 @@ export class ItemComponent implements OnInit {
 
     let total = 0;
 
-    if (this.isDeal) {
-      this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
-      this.item.originalItemCost = this.totalCost;
-      this.item.totalItemCost = this.totalCost;
-    } else {
+    // if (this.isDeal) {
+    //   this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+    //   this.item.originalItemCost = this.totalCost;
+    //   this.item.totalItemCost = this.totalCost;
+    // } else {
      
       total = this.calculateTotalCost();
       this.totalCost = +total.toFixed(2);
       this.item.originalItemCost = this.totalCost;
       this.item.totalItemCost = this.totalCost;
 
-    }
+    //}
    
   }
 
@@ -969,6 +930,7 @@ export class ItemComponent implements OnInit {
       if (this.isDeal) {
         this.item.Product['dealId'] = this.dealId;
         this.item.Product['comboUniqueId'] = this.comboUniqueId;
+        this.item.Product['position'] = this.position;
       }
 
       if(this.dataService.getLocalStorageData('allItems') != null

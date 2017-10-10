@@ -431,6 +431,80 @@ export class DataService {
   }
 
 
+  getDealTypeData(id) {
+    
+    if (id == 1) {
+      let deal = {
+        id: 1,
+        title: 'Couples Night In - Feed two for £11 each',
+        imageText: 'Couples Night In',
+        description: 'Any Large pizza, sweet potato waffle fries or chicken wings, and a pesto focaccia and two dips for £22.00',
+        code: 'CPLNIGHT',
+        overallPrice: '22.00',
+        categories: [
+          {
+            id: 1,
+            qty: 1,
+            isEnable: true,
+            name: 'pizza',
+            slug: 'pizzas',
+            catText: 'Select any large pizza',
+            products: [],
+            modifiers: [{ modifierId: 1, modOptionPlu: 999993 }],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 0
+          },
+          {
+            id: 3,
+            qty: 1,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Add sweet potato waffle fries or chicken wings',
+            products: ['15','11','12'],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: 'OR',
+            pos: 1
+          },
+          {
+            id: 3,
+            qty: 1,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Add pesto focaccia',
+            products: ['14'],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 2
+          },
+          {
+            id: 3,
+            qty: 2,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Add 2 dips',
+            products: ['18'],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 3
+          }
+        ]
+      }
+
+      return deal;
+    }
+
+
+  }
+
+
+
 }
 
 

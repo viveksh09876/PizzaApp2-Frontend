@@ -52,7 +52,7 @@ export class DealsComponent implements OnInit {
     this.route.params.subscribe(params => { 
       if(params['dealId'] && params['dealId']!= '') {
         this.dealId = params['dealId'];
-        this.getDealData();
+        this.getDealData(this.dealId);
         
       }
     });
@@ -64,46 +64,50 @@ export class DealsComponent implements OnInit {
   }
 
 
-  getDealData() {
-
-    this.dataService.getDealData(this.dealId).subscribe((data) => {
-        console.log(data);
-        this.dealData = data;
-        this.dealCode = data.deal.Deal.code;
-        this.getAllCategories();
-        
-    });
-
+  getDealData(dealId) {
+    
+    let dealData = this.dataService.getDealTypeData(dealId); 
+    this.dealData = dealData;
+    this.getAllCategories();
+     
   }
 
-  validateDealItems() {
-    let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+  validateDealItems(allItems) {
+    allItems = JSON.parse(allItems);
     
     if (allItems != null) {
 
       let categoriesArr = this.dealData.categories;
-      let keepCats = [];
+      let keepCats = [];      //cats for which products added
       let atLeastoneEnable = false;
-      
+      let isExistArr = [];
+           
 
       for (var i=0; i<allItems.length; i++) {
         if (allItems[i].Product.dealId != undefined) {
+          
+          if (isExistArr[allItems[i].Product.id] == undefined) {
+            isExistArr[allItems[i].Product.id] = 0;
+          }
+          isExistArr[allItems[i].Product.id] += 1;
+
           let itemCatId = allItems[i].Product.category_id;
-          let index = categoriesArr.findIndex(obj => obj.id == itemCatId);
-          if (index >= 0) {
-            categoriesArr[index].isEnable = false;
-            keepCats.push(categoriesArr[index].id);
-          } else {
-            categoriesArr[index].isEnable = true;
-          } 
+
+          for (var j=0; j<categoriesArr.length; j++) {
+            if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id]) {         
+              keepCats.push(categoriesArr[j].pos);
+            } 
+          }
+
         }        
       }
 
       for (var i=0; i<categoriesArr.length; i++) {
-        if (keepCats.indexOf(categoriesArr[i].id) > -1) {
-          categoriesArr[i].isEnable = false;
-        } else {
+        
+        if (keepCats.indexOf(categoriesArr[i].pos) < 0) {
           categoriesArr[i].isEnable = true;
+        } else {
+          categoriesArr[i].isEnable = false;
         }
       }
 
@@ -117,7 +121,15 @@ export class DealsComponent implements OnInit {
       }
 
       if (!atLeastoneEnable) {
-        this.selectedDealMenuCatId = null;
+        //this.selectedDealMenuCatId = null;
+        
+        //calculate discount
+
+
+
+
+
+        this.router.navigate(['/menu', 'meal deals']);
       }
 
       this.dealData.categories = categoriesArr;
@@ -214,10 +226,12 @@ export class DealsComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          //console.log(this.menuData[0].name);
+          console.log(this.menuData[0].name);
           this.selectedMenuCat = 'meal deals';  
           
-          this.validateDealItems();
+
+          var addedItems = this.dataService.getLocalStorageData('allItems');
+          this.validateDealItems(addedItems);
 
           //this.loadAddedCategories();
 
@@ -263,7 +277,9 @@ export class DealsComponent implements OnInit {
           this.dialogService.addDialog(OrdernowmodalComponent, { fromObj: fromObj }, { closeByClickingOutside:true }).subscribe((isReloadCart)=>{ 
             if (isReloadCart) {
               this.getCartItems();
-              this.validateDealItems();
+
+              let addedItems = this.dataService.getLocalStorageData('allItems');
+              this.validateDealItems(addedItems);
             }
           }); 
     
@@ -281,12 +297,11 @@ export class DealsComponent implements OnInit {
 
                    data.Product['dealId'] = this.dealId;
                    data.Product['comboUniqueId'] = this.comboUniqueId;
-                    data.originalItemCost = this.getProductDealPrice(data.Product.plu_code, data.Product.category_id);
+                   data.Product['position'] = this.selectedDealMenuCatIndex;
+                  
 
-                    data.totalItemCost = data.originalItemCost ;
-
-                    //data.originalItemCost = data.Product.price;
-                    //data.totalItemCost = data.Product.price;
+                    data.originalItemCost = data.Product.price;
+                    data.totalItemCost = data.Product.price;
                     let temp = this.dataService.getLocalStorageData('allItems');
                     
                     if(temp == null || temp == 'null') {
@@ -294,7 +309,10 @@ export class DealsComponent implements OnInit {
                       let allItems = [];  
                       allItems.push(data);
                       this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-                      this.validateDealItems();
+
+                      var addedItems = JSON.stringify(allItems);
+                      this.validateDealItems(addedItems);
+
                     }else{
     
                       let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
@@ -313,7 +331,8 @@ export class DealsComponent implements OnInit {
                       }
                         
                       this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems));   
-                      this.validateDealItems();  
+                      var addedItems = JSON.stringify(allItems);
+                      this.validateDealItems(addedItems); 
                     }
                     this.getCartItems();
 
@@ -355,18 +374,19 @@ export class DealsComponent implements OnInit {
               alert('No items remaining in your cart!');
             }
             
-            this.validateDealItems();
+            var addedItems = JSON.stringify(this.items);
+            this.validateDealItems(addedItems);
 
         }  
         
     }    
 
 
-    checkForDealArray(pluCode, catId) {
-      let prodArr = this.dealData.products;
-      if (catId != 1) {
-        let index = prodArr.findIndex(obj => obj.product_plu == pluCode);
-        if (index > -1) {
+    checkForDealArray(productId, pluCode, catId) {
+      let prodArr = this.dealData.categories[this.selectedDealMenuCatIndex].products;
+      
+      if (prodArr.length > 0) {
+        if (prodArr.indexOf(productId) > -1) {
           return true;
         } else {
           return false;

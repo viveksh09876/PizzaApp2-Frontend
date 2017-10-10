@@ -30,16 +30,18 @@
       
         <div class="col-md-12 deal-bar">
           <a (click)="backToMenuPage()">Back</a>
-          <p>{{dealData.deal.Deal.title}}</p>
-          <span>{{dealData.deal.Deal.description}}</span>
+          <p>{{dealData.title}}</p>
+          <span>{{dealData.description}}</span>
 
         </div>
       
       
       <!-- Tab panes -->
       <div class="tab-content">
+        
         <ng-container *ngIf="selectedDealMenuCatId != null">
         <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.id == selectedDealMenuCatId)}"  class="tab-pane" id="{{data.name}}">
+           
             <div class="content-wrapper">
                 <div class="content-container">
                     <div class="favSection">
@@ -52,7 +54,7 @@
                               <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
                                
                                 <ng-container *ngFor="let cat of dealData.categories; let j = index;">
-                                    
+                                  
                                       <li role="presentation" [ngClass]="(cat.id == selectedDealMenuCatId)? 'active': ''"><span *ngIf="!cat.isEnable">{{cat.catText}}</span><a *ngIf="cat.isEnable" (click)="changeCatTab(cat.id);" aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.catText}}</a> </li>
                                   
                                 </ng-container>
@@ -74,7 +76,7 @@
                                   
                                 <div *ngFor="let subProducts of subCt.value" class="col-md-12">
                                   <ng-container *ngFor="let subProd of subProducts.products">
-                                  <ng-container *ngIf="subProd.is_price_mapped == 1 && checkForDealArray(subProd.plu_code, subProd.category_id)">
+                                  <ng-container *ngIf="subProd.is_price_mapped == 1 && checkForDealArray(subProd.id, subProd.plu_code, subProd.category_id)">
                                   
                                   <div class="createWrapper">
                                     <div class="media">
@@ -108,11 +110,11 @@
                               </div>                             
                
                             </div> 
-
+                            
                             <ng-container *ngIf="data.subCatsName.length == 0">
                             <div  class="col-md-6" *ngFor="let prod of data.products">
-                            
-                              <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.plu_code, prod.category_id)"> 
+                              
+                              <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)" style="margin-top: 100px"> 
                                   <ng-container>
                                   <div class="media">
                                     <div class="media-left">
@@ -124,7 +126,7 @@
                                         <div class="leftSection">
                                           <h4 class="media-heading">{{prod.title}}</h4>
 
-                                          <h5>{{currencyCode}}{{getProductDealPrice(prod.plu_code, prod.category_id)}} </h5> 
+                                          <h5>{{currencyCode}}{{prod.price}} </h5> 
                                            
                                            <div class="nutrition-icons">
                                             <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
@@ -175,6 +177,8 @@
         </div>
       </ng-container>  
       <ng-container *ngIf="items.length > 0">  
+          selectedDealMenuCatIndex:: {{selectedDealMenuCatIndex}}
+          selectedDealMenuCatId:: {{selectedDealMenuCatId}}
         <h3>view cart <!-- <a class="down-nutri" href="https://nkdpizza.com/uk/nutrition.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i></a> --></h3>
         <div class="content-wrapper">
           <div class="right-padd">

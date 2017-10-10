@@ -113,7 +113,18 @@ export class MenuComponent implements OnInit {
               this.selectedMenuCat = params['slug'];
               this.dataService.setLocalStorageData('selectedMenuCat', this.selectedMenuCat);
             }
-          });          
+          });    
+          
+          for (var i=0; i<this.menuData.length; i++) {
+            if (this.menuData[i].type == 'deal') {
+              let dealData = this.dataService.getDealTypeData(1);
+              this.menuData[i].products = [];
+              this.menuData[i].products.push(dealData);
+              console.log(this.menuData[i].products);
+            }
+          }
+
+
       }); 
 
       
