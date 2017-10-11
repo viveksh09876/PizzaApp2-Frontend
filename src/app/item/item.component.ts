@@ -985,7 +985,7 @@ export class ItemComponent implements OnInit {
 
 
   backToDealPage() {
-    this.router.navigate(['/deals', this.dealId]); 
+    this.router.navigate(['/deals', this.dealId,this.dealCode]); 
   }
 
 

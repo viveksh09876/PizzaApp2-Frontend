@@ -28,7 +28,7 @@
       </select>
 
       
-        <div class="col-md-12 deal-bar">
+        <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
           <a (click)="backToMenuPage()">Back</a>
           <p><img src="{{dealData.detailImage}}" alt="" ></p>
           <!-- <span>{{dealData.deal.Deal.description}}</span>
@@ -59,8 +59,8 @@
                                   
                                 </ng-container>
                               </ul>
-                              <select class="custom-select visible-xs" [(ngModel)]="selectedMenuCat" target="#tabSwitch" (change)="changTab($event.target.value)">
-                                  <option *ngFor="let cat of menuData"  value="{{cat.name}}">{{cat.name}}</option>
+                              <select class="custom-select visible-xs" [(ngModel)]="selectedDealMenuCatIndex" target="#tabSwitch">
+                                  <option *ngFor="let cat of dealData.categories; let j = index;"  value="{{j}}">{{cat.catText}}</option>
                                 </select>
 
                                 
@@ -112,6 +112,7 @@
                             </div> 
                             
                             <ng-container *ngIf="data.subCatsName.length == 0">
+                              <div class="sub-deal-list">
                             <div  class="col-md-6 " *ngFor="let prod of data.products">
                               
                               <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)"> 
@@ -140,11 +141,9 @@
                                     </div>
                                   </div>
                                   </ng-container>
-                              </div>
-                            
-                              
-                                  
+                              </div> 
                             </div>
+                          </div>
                               
 
                             </ng-container>
