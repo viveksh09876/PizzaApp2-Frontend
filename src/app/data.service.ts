@@ -620,7 +620,7 @@ export class DataService {
 	  return dealArr;
   }
   
-  formatCartData(allItems) {
+  formatCartData(allItems, page) {
 	  
 	  let deals = {};
 	  let otherItems = [];
@@ -643,22 +643,33 @@ export class DataService {
 	  //validate deal items
 	  for (var key in deals) {
 		if (deals.hasOwnProperty(key)) {
-			let valid = this.validateDealItems(deals[key], deals[key][0].Product.dealId, deals[key][0].Product.comboUniqueId);
+
+      let dId = deals[key][0].Product.dealId;
+      if (isNaN(dId)) {
+        dId = this.getDealIdFromCode(dId);
+      }
+
+			let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
 			if (!valid) {
 				for (var i=0; i<deals[key].length; i++) {
-					let dObj = deals[key][i];
-					delete dObj.dealPrice;
-					delete dObj.Product.dealId;
-					delete dObj.Product.comboUniqueId;
-					delete dObj.Product.position;
+          let dObj = deals[key][i];
+          if (page != 'deal') {
+            delete dObj.dealPrice;
+            delete dObj.Product.dealId;
+            delete dObj.Product.comboUniqueId;
+            delete dObj.Product.position;
+          }
+					
 					otherItems.push(dObj);
 				}
 				
 				delete deals[key];
 			} else {
-				totPrice += deals[key][0].dealPrice;
+        totPrice += deals[key][0].dealPrice;
+        
+
 				let dealObject = {
-					title: this.getDealTitle(deals[key][0].Product.dealId),
+					title: this.getDealTitle(dId),
 					dealData: deals[key]
 				}
 				
@@ -753,7 +764,17 @@ export class DataService {
 		
 		let deal = this.getDealTypeData(type);
 		return deal.code;
-	}
+  }
+  
+  getDealIdFromCode(code) {
+    if (code == 'CPLNIGHT') {
+      return 1;
+    } else if (code == 'DOUBLEUP7') {
+      return 2;
+    } else if(code == 'LRGNIGHT') {
+      return 3;
+    }
+  }
 
 
 }

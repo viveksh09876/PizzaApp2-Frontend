@@ -131,9 +131,10 @@ export class DealsComponent implements OnInit {
         //this.selectedDealMenuCatId = null;
         
         //calculate discount
-		this.showLoading = true;	
+    this.showLoading = true;	
+    console.log('dealcode', this.dealCode, 'dealdi', this.dealId);
 		let thisDealItems = this.getThisDealItems(this.dealCode, allItems, this.comboUniqueId);
-		console.log('dealitems', thisDealItems);
+		
 		
 		let orderDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
 		let orderObj = {
@@ -163,7 +164,7 @@ export class DealsComponent implements OnInit {
 		
 		
 
-		this.router.navigate(['/menu', 'meal deals']);
+		    this.router.navigate(['/menu', 'meal deals']);
       }
 
       this.dealData.categories = categoriesArr;
@@ -248,7 +249,12 @@ export class DealsComponent implements OnInit {
 	  let itemsArr = [];
 	  
 	  for(var i=0; i<allItems.length; i++) {
-		  if (allItems[i].Product.dealId != undefined && allItems[i].Product.dealId == dealId && allItems[i].Product.comboUniqueId == comboUniqueId) {
+      let dId = allItems[i].Product.dealId;
+      if (!isNaN(dId)) {
+        dId = this.dataService.getDealCode(dId);
+      } 
+
+		  if (allItems[i].Product.dealId != undefined && dId == dealId && allItems[i].Product.comboUniqueId == comboUniqueId) {
 			  let itemObj = allItems[i];
 			  itemObj.Product.dealId = this.dealCode;
 			  itemsArr.push(itemObj);
@@ -420,7 +426,7 @@ export class DealsComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		    let formattedItemsData = this.dataService.formatCartData(this.items);
+		    let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
         
 		    this.formattedItems = formattedItemsData;
 		
@@ -588,7 +594,7 @@ export class DealsComponent implements OnInit {
               this.items = allItems;
               this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
               
-              let formattedItemsData = this.dataService.formatCartData(this.items);    
+              let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');    
               this.formattedItems = formattedItemsData;
               this.totalCost =  formattedItemsData.totalPrice;
               this.netCost = this.totalCost;
@@ -622,7 +628,7 @@ export class DealsComponent implements OnInit {
         if(remainingItems.length > 0) {
           this.items = remainingItems;    
           this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-          let formattedItemsData = this.dataService.formatCartData(this.items);    
+          let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');    
           this.formattedItems = formattedItemsData;
           this.totalCost =  formattedItemsData.totalPrice;
           this.netCost = this.totalCost;
@@ -662,7 +668,7 @@ export class DealsComponent implements OnInit {
 
 
     backToMenuPage() {
-      this.router.navigate(['/menu', 'meal-deals']); 
+      this.router.navigate(['/menu', 'meal deals']); 
     }
   
 

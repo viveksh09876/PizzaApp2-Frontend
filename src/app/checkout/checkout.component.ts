@@ -77,13 +77,13 @@ export class CheckoutComponent implements OnInit {
         
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('finalOrder'));
-        let formattedItemsData = this.dataService.formatCartData(this.items);
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'checkout');
         
         this.formattedItems = formattedItemsData;
     
         this.totalCost =  formattedItemsData.totalPrice;
         this.netCost = this.totalCost; 
-        
+
         if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
           this.couponDiscount = this.orderData.couponDiscount;
           this.totalCost = this.totalCost - this.orderData.couponDiscount;

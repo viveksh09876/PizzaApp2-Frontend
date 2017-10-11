@@ -64,7 +64,7 @@ export class MenuComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		    let formattedItemsData = this.dataService.formatCartData(this.items);
+		    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
         
 		    this.formattedItems = formattedItemsData;
 		
@@ -236,7 +236,7 @@ export class MenuComponent implements OnInit {
       }
     }
 
-    let formattedItemsData = this.dataService.formatCartData(this.items);    
+    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
     this.formattedItems = formattedItemsData;
     this.totalCost =  formattedItemsData.totalPrice;
     this.netCost = this.totalCost;
@@ -256,7 +256,7 @@ export class MenuComponent implements OnInit {
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
             
-            let formattedItemsData = this.dataService.formatCartData(this.items);    
+            let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
             this.formattedItems = formattedItemsData;
             this.totalCost =  formattedItemsData.totalPrice;
             this.netCost = this.totalCost;
@@ -288,7 +288,7 @@ export class MenuComponent implements OnInit {
       if(remainingItems.length > 0) {
         this.items = remainingItems;    
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-        let formattedItemsData = this.dataService.formatCartData(this.items);    
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
         this.formattedItems = formattedItemsData;
         this.totalCost =  formattedItemsData.totalPrice;
         this.netCost = this.totalCost;

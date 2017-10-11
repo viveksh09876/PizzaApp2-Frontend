@@ -54,8 +54,8 @@
                               <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
                                
                                 <ng-container *ngFor="let cat of dealData.categories; let j = index;">
-                                  
-                                      <li role="presentation" [ngClass]="(cat.id == selectedDealMenuCatId)? 'active': ''"><span *ngIf="!cat.isEnable">{{cat.catText}}</span><a *ngIf="cat.isEnable" (click)="changeCatTab(cat.id);" aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.catText}}</a> </li>
+                                   
+                                      <li role="presentation" [ngClass]="(j == selectedDealMenuCatIndex)? 'active': ''"><span *ngIf="!cat.isEnable || j != selectedDealMenuCatIndex">{{cat.catText}}</span><a *ngIf="cat.isEnable && j == selectedDealMenuCatIndex"  aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.catText}}</a> </li>
                                   
                                 </ng-container>
                               </ul>
@@ -247,11 +247,12 @@
                                     <div class="item_pic">
                                         <div class="img-control">
                                             <a (click)="deleteItem(i, item)"><span class="icon icon-close"></span></a>
-                                            <a *ngIf="item.ProductModifier.length > 0" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a>
+                                            <!-- <a *ngIf="item.ProductModifier.length > 0 && item.Product.dealId == undefined" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a> -->
                                         </div>
                                         <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
                                         <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
-                                        <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
+                                        
+                                        <!-- <div class="quantity" *ngIf="item.Product.dealId == undefined"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div> -->
                                     </div>
                                 
                         
@@ -262,10 +263,10 @@
               </div>
           </div>
           <div class="sumarry-box">
-          <div class="total">
+          <!-- <div class="total">
           <label>Sub total</label>
           <span>{{currencyCode}}{{netCost}}</span>
-          </div>
+          </div> -->
           <a (click)="backToMenuPage()">Back to Menu</a>
           </div>
         </div>

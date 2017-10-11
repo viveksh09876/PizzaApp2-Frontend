@@ -378,7 +378,7 @@ export class ItemComponent implements OnInit {
       this.showAddToCart = true;
 
       if (this.isDeal) {
-        this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+        this.totalCost = Number(parseFloat(this.item.Product.price).toFixed(2));
         this.item.originalItemCost = this.totalCost;
         this.item.totalItemCost = this.totalCost;
       } else {
