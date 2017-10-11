@@ -423,6 +423,7 @@ export class OrderreviewComponent implements OnInit {
     }
      
     tVal = this.order.delivery_time;
+    console.log('orderstart', this.order);
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
 
     if (goFlag) {
@@ -438,6 +439,7 @@ export class OrderreviewComponent implements OnInit {
             } else {
 
               let orderData = this.order;
+              console.log('orderData', orderData);
               if(orderData.address) {
               orderData.address.street_no = orderData.address.streetNo;
               
@@ -504,8 +506,11 @@ export class OrderreviewComponent implements OnInit {
 
             if (products.Product.dealId != undefined) {
               let dCode = products.Product.dealId;
+              console.log('dcode', dCode);
               if(!isNaN(products.Product.dealId)) {
                 product.dealId = this.dataService.getDealCode(products.Product.dealId);
+              } else {
+                product.dealId = products.Product.dealId;
               }
               
               product.comboUniqueId = products.Product.comboUniqueId;
@@ -602,7 +607,7 @@ export class OrderreviewComponent implements OnInit {
         }
 
       }
-
+      console.log('finalOerer', finalOrder);
       return finalOrder;
 
   }
