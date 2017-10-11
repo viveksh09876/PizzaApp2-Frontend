@@ -2132,13 +2132,15 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	margin-bottom: 60px;
 	border-spacing: 0
 }
-.nav-tabs>li, .nav-tabs>li.active {
+.nav-tabs>li,.nav-tabs>li.active,.deals-sub-menu .nav-tabs>li.active{
 	display: table-cell;
 	margin: 0;
 	float: none;
 	background-color: #789c48;
 	position: relative
 }
+.deals-sub-menu .nav-tabs>li,.deals-sub-menu .nav-tabs>li>span{background: #bbb; cursor: default;}
+.deals-sub-menu .nav-tabs>li.active{cursor: pointer;}
 .nav-tabs>li>a,.nav-tabs>li>span,.nav-tabs>li>span:focus,.nav-tabs>li.active>span,.nav-tabs>li.active>span:hover, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover, .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
 	font-family: "bureaueaglebookregular";
 	font-size: 1.48em;
@@ -2148,7 +2150,8 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	margin: 0;
 	text-align: center;
 	background: none;
-	display: block
+	display: block;
+	cursor: pointer;
 }
 .deals-sub-menu .nav-tabs>li>a,.deals-sub-menu .nav-tabs>li>span,.deals-sub-menu .nav-tabs>li>span:focus,.deals-sub-menu .nav-tabs>li.active>span,.deals-sub-menu .nav-tabs>li.active>span:hover,.deals-sub-menu .nav-tab>li>a:focus,.deals-sub-menu .nav-tabs>li>a:hover,.deals-sub-menu .nav-tabs>li.active>a,.deals-sub-menu .nav-tabs>li.active>a:focus,.deals-sub-menu .nav-tabs>li.active>a:hover{font-size: 1em;}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,.nav-tabs>li>span,.nav-tabs>li>span:focus,.nav-tabs>li.active>span,.nav-tabs>li.active>span:hover {
@@ -2204,6 +2207,12 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     color: #fff;font-family: "bureaueaglebookregular";
 	font-size: 1.500em;}
 .deal-bar p img{max-width: 100%;}
+
+.customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
+.customize-uk .deal-bar a{border:none;}
+
+
+
 .footer-wrapper {
 	background-color: #5b5a56;
 	padding: 2.813em 0;
