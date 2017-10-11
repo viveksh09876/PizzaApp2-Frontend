@@ -37,7 +37,7 @@
       
       
       <!-- Tab panes -->
-      <div class="tab-content">
+      <div class="tab-content  deals-sub-menu">
         
         <ng-container *ngIf="selectedDealMenuCatId != null">
         <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.id == selectedDealMenuCatId)}"  class="tab-pane" id="{{data.name}}">
@@ -112,9 +112,9 @@
                             </div> 
                             
                             <ng-container *ngIf="data.subCatsName.length == 0">
-                            <div  class="col-md-6" *ngFor="let prod of data.products">
+                            <div  class="col-md-6 " *ngFor="let prod of data.products">
                               
-                              <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)" style="margin-top: 100px"> 
+                              <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)"> 
                                   <ng-container>
                                   <div class="media">
                                     <div class="media-left">
