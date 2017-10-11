@@ -113,7 +113,18 @@ export class MenuComponent implements OnInit {
               this.selectedMenuCat = params['slug'];
               this.dataService.setLocalStorageData('selectedMenuCat', this.selectedMenuCat);
             }
-          });          
+          });    
+          
+          for (var i=0; i<this.menuData.length; i++) {
+            if (this.menuData[i].type == 'deal') {
+              let dealData = this.dataService.getAllDeals();
+              
+              this.menuData[i].products = dealData;
+              console.log(this.menuData[i].products);
+            }
+          }
+
+
       }); 
 
       
@@ -390,7 +401,8 @@ export class MenuComponent implements OnInit {
 
 
   goToDeal(dealId) {
-    this.router.navigate(['/deals', dealId]);
+	let comboUniqueId = this.utilService.generateUniqueId();   
+    this.router.navigate(['/deals', dealId, comboUniqueId]);
   }
 
 

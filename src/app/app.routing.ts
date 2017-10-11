@@ -36,7 +36,7 @@ const appRoutes: Routes = [
     { path: 'bahrain-order', component: BahrainComponent },
     { path: 'privacy', component: PrivacyComponent },
     { path: 'terms', component: TermsComponent },
-    { path: 'deals/:dealId', component: DealsComponent }
+    { path: 'deals/:dealId/:comboUniqueId', component: DealsComponent }
 ]; 
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes,{ useHash: true });
