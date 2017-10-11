@@ -1879,10 +1879,12 @@ button.close:hover,button.close:focus{opacity: 1;}
 	background-size: cover;
 	background-position: center
 }
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals{min-height: 0px !important;}
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .media-left{display: flex; padding: 0px; margin: -1.5em -1.5em 20px -1.5em;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .img-Wrapper {
-background: #6b6a6a;
-text-align: center; display: table;
+height: auto; width:100%; border-radius: 0; margin: 0px; overflow: visible;
 }
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .img-Wrapper img{max-width: 100%;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper.deals .media .img-Wrapper span{display: table-cell; height: 100%;
 width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookregular"; line-height: 1;}
 @media (max-width: 1199px) {
@@ -2189,24 +2191,19 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 .deal-bar{margin: 60px 0 10px 0; display: table; padding: 0px;}
 .deal-bar a{     background: #911c27;
-    border-color: currentcolor currentcolor #4f050c;
-    border-image: none;
-    border-style: none none solid;
-    border-width: medium medium 2px;
     color: #ffffff;
     display: table-cell;
     font-family: "proxima_nova_ltsemibold";
     font-size: 18px;
-    line-height: 40px;
-    padding: 5px 10px;
+    border-right: 10px solid #fff;
     text-align: center;
     width: 100px;}
 .deal-bar p{background: #a5a4a3;
     display: table-cell;
     text-align: center;
-    height: 40px;
     color: #fff;font-family: "bureaueaglebookregular";
 	font-size: 1.500em;}
+.deal-bar p img{max-width: 100%;}
 .footer-wrapper {
 	background-color: #5b5a56;
 	padding: 2.813em 0;
