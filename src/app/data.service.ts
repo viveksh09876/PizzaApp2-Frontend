@@ -66,7 +66,7 @@ export class DataService {
   }
 
   placeOrder(data): Observable<any>{
-    return this.http.post( this.domain + '/webservice/placeOrder', data)
+    return this.http.post( this.domain + '/temp/placeOrder', data)
                     .map((res: Response) => res.json())
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -442,6 +442,8 @@ export class DataService {
         description: 'Any Large pizza, sweet potato waffle fries or chicken wings, and a pesto focaccia and two dips for £22.00',
         code: 'CPLNIGHT',
         overallPrice: '22.00',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -503,12 +505,14 @@ export class DataService {
 	} else if (id == 2) {
 			
       let deal = {
-        id: 1,
+        id: 2,
         title: 'Double up for £7',
         imageText: 'Double up for £7',
         description: 'Buy any medium or large pizza and get a second for just £7.00',
         code: 'DOUBLEUP7',
         overallPrice: '',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -547,12 +551,14 @@ export class DataService {
 	} else if (id == 3) {
 		
       let deal = {
-        id: 1,
+        id: 3,
         title: 'Large Night In - Feed four for £9 each',
         imageText: 'Large Night In',
         description: 'Two Large pizzas, two sides of your choice, and two dips for £36.00',
         code: 'LRGNIGHT',
         overallPrice: '36.00',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -679,14 +685,8 @@ export class DataService {
   
   
 	validateDealItems(allItems, dealCode, comboUniqueId) {
-		let type = null;
-		if (dealCode == 'CPLNIGHT') {
-			type = 1;
-		} else if (dealCode == 'DOUBLEUP7') {
-			type = 2;
-		} else if (dealCode == 'LRGNIGHT') {
-			type = 3;
-		}
+		let type = dealCode;
+		
 		
 		  let dealData = this.getDealTypeData(type);
 		  let categoriesArr = dealData.categories;
@@ -742,17 +742,17 @@ export class DataService {
 	
 	
 	getDealTitle(dealCode) {
-		let type = null;
-		if (dealCode == 'CPLNIGHT') {
-			type = 1;
-		} else if (dealCode == 'DOUBLEUP7') {
-			type = 2;
-		} else if (dealCode == 'LRGNIGHT') {
-			type = 3;
-		}
+		let type = dealCode;
 		
 		let deal = this.getDealTypeData(type);
 		return deal.title;
+  }
+  
+  getDealCode(dealId) {
+		let type = dealId;
+		
+		let deal = this.getDealTypeData(type);
+		return deal.code;
 	}
 
 

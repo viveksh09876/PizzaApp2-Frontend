@@ -42,7 +42,8 @@ export class DealsComponent implements OnInit {
     dealCode = null;
     comboUniqueId = null;   
     dealValidated = false;  
-	showLoading = false;
+  showLoading = false;
+  formattedItems = null;
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -419,8 +420,11 @@ export class DealsComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-        let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-        this.totalCost =  getTCost;
+		    let formattedItemsData = this.dataService.formatCartData(this.items);
+        
+		    this.formattedItems = formattedItemsData;
+		
+        this.totalCost =  formattedItemsData.totalPrice;
         
         this.netCost = this.totalCost;
 
@@ -584,9 +588,10 @@ export class DealsComponent implements OnInit {
               this.items = allItems;
               this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
               
-              let getTCost = Number(this.utilService.calculateOverAllCost(allItems).toFixed(2));
-              this.totalCost =  getTCost;
-              this.netCost = this.totalCost; 
+              let formattedItemsData = this.dataService.formatCartData(this.items);    
+              this.formattedItems = formattedItemsData;
+              this.totalCost =  formattedItemsData.totalPrice;
+              this.netCost = this.totalCost;
   
             }else{
               this.items = [];
@@ -599,7 +604,36 @@ export class DealsComponent implements OnInit {
 
         }  
         
-    }    
+    }  
+    
+    deleteDealItem(dealId, comboUniqueId) {
+      var y = confirm('Are you sure, you want to delete this deal from order?');
+      if(y) {
+        let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+        
+        let remainingItems = [];
+  
+        for (var i=0; i<allItems.length; i++) {
+          if (allItems[i].Product.dealId == undefined || (allItems[i].Product.dealId != dealId && allItems[i].Product.comboUniqueId != comboUniqueId)) {
+            remainingItems.push(allItems[i]);
+          }
+        }
+  
+        if(remainingItems.length > 0) {
+          this.items = remainingItems;    
+          this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
+          let formattedItemsData = this.dataService.formatCartData(this.items);    
+          this.formattedItems = formattedItemsData;
+          this.totalCost =  formattedItemsData.totalPrice;
+          this.netCost = this.totalCost;
+        } else {
+          this.items = [];
+          this.dataService.setLocalStorageData('allItems', 'null');
+          alert('No items remaining in your cart!');
+        }
+      }
+  
+    }
 
 
     checkForDealArray(productId, pluCode, catId) {

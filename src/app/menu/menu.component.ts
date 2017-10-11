@@ -64,9 +64,9 @@ export class MenuComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		let formattedItemsData = this.dataService.formatCartData(this.items);
+		    let formattedItemsData = this.dataService.formatCartData(this.items);
         
-		this.formattedItems = formattedItemsData;
+		    this.formattedItems = formattedItemsData;
 		
 		//let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
         this.totalCost =  formattedItemsData.totalPrice;
@@ -83,7 +83,7 @@ export class MenuComponent implements OnInit {
     let items = this.items;
     let catsArr = [];
     for (var i=0; i<items.length; i++) {
-      if (catsArr.indexOf(items[i].Product.category_id) < 0) {
+      if (catsArr.indexOf(items[i].Product.category_id) < 0 && items[i].Product.dealId == undefined) {
         catsArr.push(items[i].Product.category_id);
       }
     }
@@ -236,8 +236,9 @@ export class MenuComponent implements OnInit {
       }
     }
 
-    let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-    this.totalCost =  getTCost;
+    let formattedItemsData = this.dataService.formatCartData(this.items);    
+    this.formattedItems = formattedItemsData;
+    this.totalCost =  formattedItemsData.totalPrice;
     this.netCost = this.totalCost;
   }
 
@@ -255,9 +256,10 @@ export class MenuComponent implements OnInit {
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
             
-            let getTCost = Number(this.utilService.calculateOverAllCost(allItems).toFixed(2));
-            this.totalCost =  getTCost;
-            this.netCost = this.totalCost; 
+            let formattedItemsData = this.dataService.formatCartData(this.items);    
+            this.formattedItems = formattedItemsData;
+            this.totalCost =  formattedItemsData.totalPrice;
+            this.netCost = this.totalCost;
 
           }else{
             this.items = [];
@@ -267,6 +269,36 @@ export class MenuComponent implements OnInit {
          
       }  
       
+  }
+
+
+  deleteDealItem(dealId, comboUniqueId) {
+    var y = confirm('Are you sure, you want to delete this deal from order?');
+    if(y) {
+      let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+      
+      let remainingItems = [];
+
+      for (var i=0; i<allItems.length; i++) {
+        if (allItems[i].Product.dealId == undefined || (allItems[i].Product.dealId != dealId && allItems[i].Product.comboUniqueId != comboUniqueId)) {
+          remainingItems.push(allItems[i]);
+        }
+      }
+
+      if(remainingItems.length > 0) {
+        this.items = remainingItems;    
+        this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
+        let formattedItemsData = this.dataService.formatCartData(this.items);    
+        this.formattedItems = formattedItemsData;
+        this.totalCost =  formattedItemsData.totalPrice;
+        this.netCost = this.totalCost;
+      } else {
+        this.items = [];
+        this.dataService.setLocalStorageData('allItems', 'null');
+        alert('No items remaining in your cart!');
+      }
+    }
+
   }
 
 
@@ -330,7 +362,7 @@ export class MenuComponent implements OnInit {
     if (menuItems != null) {
       //get categories which are not added
       for (var i=0; i<menuItems.length; i++) {
-        if (addedCategories.indexOf(menuItems[i].id) < 0) {
+        if (menuItems[i].type != 'deal' && addedCategories.indexOf(menuItems[i].id) < 0) {
           myCats.push(menuItems[i].id);
         }
       }
@@ -338,7 +370,7 @@ export class MenuComponent implements OnInit {
       for (var i=0; i<myCats.length; i++) {
         if (products.length < 4) {
           let item = this.getProductFromCat(myCats[i]);
-          if (addedProducts.indexOf(item.id) < 0) {
+          if (item != undefined && addedProducts.indexOf(item.id) < 0) {
             products.push(item);
             addedProducts.push(item.id);
           }          

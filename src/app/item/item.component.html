@@ -39,12 +39,12 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
       <div class="inside-column-container thirdCol customize-uk">
         
         <ng-container *ngIf="isDeal">
-            <div class="col-md-12">
-              <a (click)="backToDealPage()">Back</a>
-              <p>{{dealData.title}}</p>
-              <span>{{dealData.description}}</span>
-
-            </div>
+            <div class="col-md-12 deal-bar">
+                <a (click)="backToMenuPage()">Back</a>
+                <p><img src="{{dealData.detailImage}}" alt="" ></p>
+                <!-- <span>{{dealData.deal.Deal.description}}</span>
+       -->
+              </div>
         </ng-container>
 
         
