@@ -442,8 +442,8 @@ export class DataService {
         description: 'Any Large pizza, sweet potato waffle fries or chicken wings, and a pesto focaccia and two dips for £22.00',
         code: 'CPLNIGHT',
         overallPrice: '22.00',
-        listImage: 'assets/images/deals/couple-night-list.jpg',
-        detailImage: 'assets/images/deals/couple-night-detail.jpg',
+        listImage: 'assets/images/deals/couples-night-list.jpg',
+        detailImage: 'assets/images/deals/couples-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -511,8 +511,8 @@ export class DataService {
         description: 'Buy any medium or large pizza and get a second for just £7.00',
         code: 'DOUBLEUP7',
         overallPrice: '',
-        listImage: 'assets/images/deals/couple-night-list.jpg',
-        detailImage: 'assets/images/deals/couple-night-detail.jpg',
+        listImage: 'assets/images/deals/double-up-list.jpg',
+        detailImage: 'assets/images/deals/double-up-detail.jpg',
         categories: [
           {
             id: 1,
@@ -557,8 +557,8 @@ export class DataService {
         description: 'Two Large pizzas, two sides of your choice, and two dips for £36.00',
         code: 'LRGNIGHT',
         overallPrice: '36.00',
-        listImage: 'assets/images/deals/couple-night-list.jpg',
-        detailImage: 'assets/images/deals/couple-night-detail.jpg',
+        listImage: 'assets/images/deals/large-night-list.jpg',
+        detailImage: 'assets/images/deals/large-night-detail.jpg',
         categories: [
           {
             id: 1,
