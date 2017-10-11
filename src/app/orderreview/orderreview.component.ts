@@ -301,7 +301,10 @@ export class OrderreviewComponent implements OnInit {
 
   confirmOrder(isFormValid) {
     let isDelivery = this.order.order_type;
-    let apartment = this.order.address.apartment;
+    if (this.order.address != undefined) {
+      let apartment = this.order.address.apartment;
+    }
+    
     let city = this.order.address.city;
     let postal_code = this.order.address.postal_code;
     let state = this.order.address.state;
@@ -500,7 +503,11 @@ export class OrderreviewComponent implements OnInit {
             product.quantity = products.Product.qty;
 
             if (products.Product.dealId != undefined) {
-              product.dealId = this.dataService.getDealCode(products.Product.dealId);
+              let dCode = products.Product.dealId;
+              if(!isNaN(products.Product.dealId)) {
+                product.dealId = this.dataService.getDealCode(products.Product.dealId);
+              }
+              
               product.comboUniqueId = products.Product.comboUniqueId;
             } else {
               delete product.dealId;
