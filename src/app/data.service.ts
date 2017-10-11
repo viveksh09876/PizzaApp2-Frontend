@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Jsonp  } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { environment } from '../environments/environment';
+import { UtilService } from './util.service';
 import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class DataService {
 
-  constructor(private http: Http, private jsonp:Jsonp) { }
+  constructor(private http: Http, private jsonp:Jsonp, private utilService: UtilService) { }
 
   domain = environment.cmsApiPath;
   selectedFavItemData = null;
@@ -65,7 +66,7 @@ export class DataService {
   }
 
   placeOrder(data): Observable<any>{
-    return this.http.post( this.domain + '/webservice/placeOrder', data)
+    return this.http.post( this.domain + '/temp/placeOrder', data)
                     .map((res: Response) => res.json())
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -262,7 +263,7 @@ export class DataService {
   }
 
   applyCoupon(orderData): Observable<any>{
-        return this.http.post( this.domain + '/webservice/applyCoupon', orderData)
+        return this.http.post( this.domain + '/temp/applyCoupon', orderData)
                   .map((res: Response) => res.json())
                   .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -441,6 +442,8 @@ export class DataService {
         description: 'Any Large pizza, sweet potato waffle fries or chicken wings, and a pesto focaccia and two dips for £22.00',
         code: 'CPLNIGHT',
         overallPrice: '22.00',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -502,12 +505,14 @@ export class DataService {
 	} else if (id == 2) {
 			
       let deal = {
-        id: 1,
+        id: 2,
         title: 'Double up for £7',
         imageText: 'Double up for £7',
         description: 'Buy any medium or large pizza and get a second for just £7.00',
         code: 'DOUBLEUP7',
         overallPrice: '',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -546,12 +551,14 @@ export class DataService {
 	} else if (id == 3) {
 		
       let deal = {
-        id: 1,
+        id: 3,
         title: 'Large Night In - Feed four for £9 each',
         imageText: 'Large Night In',
         description: 'Two Large pizzas, two sides of your choice, and two dips for £36.00',
         code: 'LRGNIGHT',
         overallPrice: '36.00',
+        listImage: 'assets/images/deals/couple-night-list.jpg',
+        detailImage: 'assets/images/deals/couple-night-detail.jpg',
         categories: [
           {
             id: 1,
@@ -612,7 +619,141 @@ export class DataService {
 	  
 	  return dealArr;
   }
+  
+  formatCartData(allItems) {
+	  
+	  let deals = {};
+	  let otherItems = [];
+	  
+	  //separate deal and other items
+	  for (var i=0; i<allItems.length; i++) {
+		  if (allItems[i].Product.dealId != undefined) {
+			  if (deals[allItems[i].Product.comboUniqueId] == undefined) {
+				  deals[allItems[i].Product.comboUniqueId] = [];
+			  }
+			  deals[allItems[i].Product.comboUniqueId].push(allItems[i]);
+		  } else {
+			  otherItems.push(allItems[i]);
+		  }
+	  }
+	  
+	  let totPrice = 0;
+	  let dealsArr = [];
+	  
+	  //validate deal items
+	  for (var key in deals) {
+		if (deals.hasOwnProperty(key)) {
+			let valid = this.validateDealItems(deals[key], deals[key][0].Product.dealId, deals[key][0].Product.comboUniqueId);
+			if (!valid) {
+				for (var i=0; i<deals[key].length; i++) {
+					let dObj = deals[key][i];
+					delete dObj.dealPrice;
+					delete dObj.Product.dealId;
+					delete dObj.Product.comboUniqueId;
+					delete dObj.Product.position;
+					otherItems.push(dObj);
+				}
+				
+				delete deals[key];
+			} else {
+				totPrice += deals[key][0].dealPrice;
+				let dealObject = {
+					title: this.getDealTitle(deals[key][0].Product.dealId),
+					dealData: deals[key]
+				}
+				
+				dealsArr.push(dealObject);
+			}
+			
+		}
+	  }
+	  
+	  
+	  	  
+	  let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+	  let returnObj = {
+		  deals: dealsArr,
+		  otherItems: otherItems,
+		  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
+	  }
+	  
+	  console.log('return obj', returnObj);
+	  return returnObj;
+	  
+	  
+  }
+  
+  
+	validateDealItems(allItems, dealCode, comboUniqueId) {
+		let type = dealCode;
+		
+		
+		  let dealData = this.getDealTypeData(type);
+		  let categoriesArr = dealData.categories;
+		  let keepCats = [];      //cats for which products added
+		  let atLeastoneEnable = false;
+		  let isExistArr = [];
+			   
 
+		  for (var i=0; i<allItems.length; i++) {
+			if (allItems[i].Product.dealId != undefined) {
+			  
+			  if (isExistArr[allItems[i].Product.id] == undefined) {
+				isExistArr[allItems[i].Product.id] = 0;
+			  }
+			  isExistArr[allItems[i].Product.id] += 1;
+
+			  let itemCatId = allItems[i].Product.category_id;
+
+			  for (var j=0; j<categoriesArr.length; j++) {
+				if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id] && allItems[i].Product.comboUniqueId == comboUniqueId) {         
+				  keepCats.push(categoriesArr[j].pos);
+				} 
+			  }
+
+			}        
+		  }
+
+		  for (var i=0; i<categoriesArr.length; i++) {
+			
+			if (keepCats.indexOf(categoriesArr[i].pos) < 0) {
+			  categoriesArr[i].isEnable = true;
+			} else {
+			  categoriesArr[i].isEnable = false;
+			}
+		  }
+
+		  for(var i=0; i<categoriesArr.length; i++) {
+			if (categoriesArr[i].isEnable) {
+			  
+			  atLeastoneEnable = true;
+			  break;
+			}
+		  }
+		  
+		  
+		  if (atLeastoneEnable) {
+			  return false;
+		  } else {
+			  return true;
+		  }
+		  
+	}
+	
+	
+	getDealTitle(dealCode) {
+		let type = dealCode;
+		
+		let deal = this.getDealTypeData(type);
+		return deal.title;
+  }
+  
+  getDealCode(dealId) {
+		let type = dealId;
+		
+		let deal = this.getDealTypeData(type);
+		return deal.code;
+	}
 
 
 }

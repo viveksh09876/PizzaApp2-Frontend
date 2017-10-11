@@ -44,6 +44,7 @@ export class CheckoutComponent implements OnInit {
 
   months = this.utilService.getMonths();
   years = this.utilService.getYears(2037);
+  formattedItems = null;
 
   // card = {
   //   name: 'Random Guy',
@@ -76,9 +77,13 @@ export class CheckoutComponent implements OnInit {
         
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('finalOrder'));
-        let tCost = this.utilService.calculateOverAllCost(this.items);
-        this.totalCost = Number(tCost.toFixed(2));
-        this.netCost = tCost;  
+        let formattedItemsData = this.dataService.formatCartData(this.items);
+        
+        this.formattedItems = formattedItemsData;
+    
+        this.totalCost =  formattedItemsData.totalPrice;
+        this.netCost = this.totalCost; 
+        
         if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
           this.couponDiscount = this.orderData.couponDiscount;
           this.totalCost = this.totalCost - this.orderData.couponDiscount;

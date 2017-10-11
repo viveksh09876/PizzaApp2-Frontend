@@ -70,6 +70,7 @@ export class OrderreviewComponent implements OnInit {
     isDubai = false;
     time = { hour: '01', minutes: '00' };
     showStoreTimeError = false;
+    formattedItems = null;
 
     hours = [];
     minutes = this.utilService.getMinutes();
@@ -228,12 +229,16 @@ export class OrderreviewComponent implements OnInit {
     
     if(this.dataService.getLocalStorageData('allItems') != null 
             && this.dataService.getLocalStorageData('allItems') != undefined) {
+              
+              this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
 
-        this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
-        //console.log(this.items);
-        let tCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-        this.totalCost = tCost
-        this.netCost = tCost;
+              let formattedItemsData = this.dataService.formatCartData(this.items);
+              
+              this.formattedItems = formattedItemsData;
+          
+              this.totalCost =  formattedItemsData.totalPrice;
+              this.netCost = this.totalCost;
+        
               
     }else{
       window.location.href = '/';
@@ -275,9 +280,10 @@ export class OrderreviewComponent implements OnInit {
       }
     }
 
-    let tCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-    this.totalCost = tCost 
-    this.netCost = tCost;
+    let formattedItemsData = this.dataService.formatCartData(this.items);    
+    this.formattedItems = formattedItemsData;
+    this.totalCost =  formattedItemsData.totalPrice;
+    this.netCost = this.totalCost;
    // console.log(type, this.totalCost, this.items.Product.qty);
   }
 
@@ -337,9 +343,10 @@ export class OrderreviewComponent implements OnInit {
             
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-            let tCost = Number(this.utilService.calculateOverAllCost(allItems).toFixed(2));
-            this.totalCost = tCost
-            this.netCost = tCost; 
+            let formattedItemsData = this.dataService.formatCartData(this.items);    
+            this.formattedItems = formattedItemsData;
+            this.totalCost =  formattedItemsData.totalPrice;
+            this.netCost = this.totalCost;
 
           }else{
             this.items = [];
@@ -350,6 +357,36 @@ export class OrderreviewComponent implements OnInit {
          
       }
       
+
+  }
+
+
+  deleteDealItem(dealId, comboUniqueId) {
+    var y = confirm('Are you sure, you want to delete this deal from order?');
+    if(y) {
+      let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+      
+      let remainingItems = [];
+
+      for (var i=0; i<allItems.length; i++) {
+        if (allItems[i].Product.dealId == undefined || (allItems[i].Product.dealId != dealId && allItems[i].Product.comboUniqueId != comboUniqueId)) {
+          remainingItems.push(allItems[i]);
+        }
+      }
+
+      if(remainingItems.length > 0) {
+        this.items = remainingItems;    
+        this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
+        let formattedItemsData = this.dataService.formatCartData(this.items);    
+        this.formattedItems = formattedItemsData;
+        this.totalCost =  formattedItemsData.totalPrice;
+        this.netCost = this.totalCost;
+      } else {
+        this.items = [];
+        this.dataService.setLocalStorageData('allItems', 'null');
+        alert('No items remaining in your cart!');
+      }
+    }
 
   }
 
@@ -453,14 +490,22 @@ export class OrderreviewComponent implements OnInit {
 
     let finalOrder = [];
     if(items.length > 0) {
-
+        console.log('placeorder', items);
         for(var p=0; p<items.length; p++) {
            let products = items[p];
           
-           let product = { name: '', plu: '', category_id: products.Product.category_id, quantity: 1, modifier: []};
+           let product = { name: '', plu: '', category_id: products.Product.category_id, quantity: 1, modifier: [], dealId: null, comboUniqueId: null};
             product.name = products.Product.title;
             product.plu = products.Product.plu_code;
             product.quantity = products.Product.qty;
+
+            if (products.Product.dealId != undefined) {
+              product.dealId = this.dataService.getDealCode(products.Product.dealId);
+              product.comboUniqueId = products.Product.comboUniqueId;
+            } else {
+              delete product.dealId;
+              delete product.comboUniqueId;
+            }
             
             
           // console.log(products);

@@ -33,51 +33,80 @@
                 <h3 class="green-title">order summary</h3>
                 <div class="gray_box">
                     <div class="scroller">
-                        <div class="cartbox" *ngFor="let item of items; let i=index;">
-                            <div class="item_info">
-                                <h4>{{item.Product.title}}</h4>
-                                <ng-container *ngFor="let mod of item.ProductModifier">
-                                    <!--<h5 class="space">{{mod.Modifier.title}}</h5>-->
-                                    <ul>
-                                        <ng-container *ngFor="let option of mod.Modifier.ModifierOption">
-
-                                            <ng-container *ngIf="(option.Option.plu_code == 91 || option.Option.plu_code == 'I100' || option.Option.plu_code == 'I101') && option.Option.is_checked">
-                                                <li><strong>Crust:</strong> {{option.Option.name}}</li>
-                                            </ng-container>
-                                            <ng-container *ngIf="(option.Option.plu_code == 999991 || option.Option.plu_code == 999992 || option.Option.plu_code == 999993) && option.Option.is_checked">
-                                                <li><strong>Size:</strong> {{option.Option.name}}</li>
-                                            </ng-container>
-
-                                            <ng-container *ngIf="option.Option.is_checked && option.Option.is_included_mod && option.Option.add_extra && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small>
-                                                    <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container>
-                                                </li>
-                                            </ng-container>
-                                            <ng-container *ngIf="!option.Option.is_checked && option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                <li>- {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small>
-                                                    <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container>
-                                                </li>
-                                            </ng-container>
-                                            <ng-container *ngIf="option.Option.is_checked && !option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small>
-                                                    <ng-container *ngIf="item.Product.category_id == 1">({{ option.Option.subop_name}})</ng-container>
-                                                </li>
-                                            </ng-container>
-                                            <!--<li *ngIf="option.Option.is_checked">Add {{option.Option.name}}</li>-->
-                                        </ng-container>
-                                    </ul>
-                                </ng-container>
-                            </div>
-                            <div class="item_pic">
-                                <div class="img-control">
-                                    <a (click)="deleteItem(i, item)"><span class="icon icon-close"></span></a>
-                                    <a *ngIf="item.ProductModifier.length > 0" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a>
-                                </div>
-                                <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
-                                <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
-                                <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
-                            </div>
-                        </div>
+                            <ng-container *ngFor="let item of formattedItems.deals; let i=index;">
+                                    
+                                        <div class="cartbox">
+                                          
+                                          
+                                        <div class="item_info">
+                                              <h4>{{item.title}}</h4>  
+                                              <ul>
+                                                <ng-container *ngFor="let dItem of item.dealData">
+                                                  <li>{{dItem.Product.title}}</li>
+                                                </ng-container>
+                                              </ul>                           
+                                        </div>
+                                            <div class="item_pic">
+                                                <div class="img-control">
+                                                        <a (click)="deleteDealItem(item.dealData[0].Product.dealId, item.dealData[0].Product.comboUniqueId)"><span class="icon icon-close"></span></a>
+                                                </div>
+                                                <!--<img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
+                                                <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">-->
+                                                
+                                            </div>
+                                        
+                                          
+                                        </div>
+                                      
+                                      </ng-container>		
+                                    
+                                      <ng-container *ngFor="let item of formattedItems.otherItems; let i=index;">
+                                    
+                                        <div class="cartbox">
+                                          
+                                          
+                                              <div class="item_info">
+                                                <h4>{{item.Product.title}}</h4>  
+                                                <ng-container *ngFor="let mod of item.ProductModifier">
+                                                  <!--<h5 class="space">{{mod.Modifier.title}}</h5>-->
+                                                  <ul>                            
+                                                      <ng-container *ngFor="let option of mod.Modifier.ModifierOption">
+                                                              
+                                                          <ng-container *ngIf="(option.Option.plu_code == 91 || option.Option.plu_code == 'I100' || option.Option.plu_code == 'I101') && option.Option.is_checked">
+                                                          <li><strong>Crust:</strong> {{option.Option.name}}</li>
+                                                        </ng-container>  
+                                                        <ng-container *ngIf="(option.Option.plu_code == 999991 || option.Option.plu_code == 999992 || option.Option.plu_code == 999993) && option.Option.is_checked">
+                                                          <li><strong>Size:</strong> {{option.Option.name}}</li>
+                                                        </ng-container>  
+                      
+                                                        <ng-container *ngIf="option.Option.is_checked && option.Option.is_included_mod && option.Option.add_extra && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!option.Option.is_checked && option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                                          <li>- {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                                        </ng-container> 
+                                                        <ng-container *ngIf="option.Option.is_checked && !option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
+                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{ option.Option.subop_name}})</ng-container></li>
+                                                        </ng-container> 
+                                                        <!--<li *ngIf="option.Option.is_checked">Add {{option.Option.name}}</li>-->
+                                                      </ng-container>                    
+                                                  </ul>    
+                                                </ng-container>                      
+                                            </div>
+                                            <div class="item_pic">
+                                                <div class="img-control">
+                                                    <a (click)="deleteItem(i, item)"><span class="icon icon-close"></span></a>
+                                                    <a *ngIf="item.ProductModifier.length > 0" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a>
+                                                </div>
+                                                <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
+                                                <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
+                                                <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
+                                            </div>
+                                        
+                                          
+                                        </div>
+                                      
+                                      </ng-container>	
                     </div>
                 </div>
                 <div class="save_orderbox text-center">
@@ -179,7 +208,7 @@
             <div class="col-md-4 col-sm-4">
                 <h3 class="green-title">order details</h3>
                 <div class="dottedlist_box">
-                    <form class="coupan_box">
+                    <form class="coupan_box" *ngIf="formattedItems.deals == undefined || formattedItems.deals == null || formattedItems.deals.length == 0">
                         <p class="danger" *ngIf="couponMsg != ''">{{couponMsg}}</p>
                         <ng-container *ngIf="order.coupon == ''">
                             <input type="text" [(ngModel)]="couponCode" name="coupnCode" placeholder="Coupon code" autocomplete="off">
