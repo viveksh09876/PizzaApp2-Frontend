@@ -165,7 +165,7 @@ export class ItemComponent implements OnInit {
       }
   
       var temp = this.item.ProductModifier;
-      let prodMods = this.item.ProductModifier;
+      var prodMods = this.item.ProductModifier;
       
       for (var i=0; i<prodMods.length; i++) {
         for (var j=0; j<modifiersArr.length; j++) {
@@ -174,14 +174,16 @@ export class ItemComponent implements OnInit {
             let modOption = prodMods[i].Modifier.ModifierOption;
             for (var k=0; k<modOption.length; k++) {
               
-              if (modOption[k].Option.plu_code != modifiersArr[j].modOptionPlu) {
-                delete prodMods[i].Modifier.ModifierOption[k];
-              } else {
-                
+              if (modOption[k].Option.plu_code == modifiersArr[j].modOptionPlu) {
                 prodMods[i].Modifier.ModifierOption[k].Option.default_checked = true;
                 prodMods[i].Modifier.ModifierOption[k].Option.is_checked = true;
                 prodMods[i].Modifier.ModifierOption[k].Option.send_code = true;
                 prodMods[i].Modifier.ModifierOption[k].Option.send_code_permanent = true;
+                
+              } else {
+                
+                delete  prodMods[i].Modifier.ModifierOption[k];
+                
               }
   
             }
@@ -189,6 +191,8 @@ export class ItemComponent implements OnInit {
           }
         }
       }
+
+      
   
       for (var i=0; i<prodMods.length; i++) {
         for(var j=0; j<prodMods[i].Modifier.ModifierOption.length; j++) {
@@ -198,7 +202,8 @@ export class ItemComponent implements OnInit {
           
         }
       }
-  
+      
+      console.log(prodMods);
       this.item.ProductModifier = prodMods;
   
     }

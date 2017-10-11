@@ -87,21 +87,21 @@ export class DealsComponent implements OnInit {
       let categoriesArr = this.dealData.categories;
       let keepCats = [];      //cats for which products added
       let atLeastoneEnable = false;
-      let isExistArr = [];
+      let isExistArr = {};
            
 
       for (var i=0; i<allItems.length; i++) {
         if (allItems[i].Product.dealId != undefined) {
           
-          if (isExistArr[allItems[i].Product.id] == undefined) {
-            isExistArr[allItems[i].Product.id] = 0;
+          if (isExistArr[allItems[i].Product.category_id] == undefined) {
+            isExistArr[allItems[i].Product.category_id] = 0;
           }
-          isExistArr[allItems[i].Product.id] += 1;
+          isExistArr[allItems[i].Product.category_id] = parseInt(isExistArr[allItems[i].Product.category_id]) + 1;
 
           let itemCatId = allItems[i].Product.category_id;
 
           for (var j=0; j<categoriesArr.length; j++) {
-            if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id] && allItems[i].Product.comboUniqueId == this.comboUniqueId) {         
+            if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.category_id] && allItems[i].Product.comboUniqueId == this.comboUniqueId) {         
               keepCats.push(categoriesArr[j].pos);
             } 
           }
