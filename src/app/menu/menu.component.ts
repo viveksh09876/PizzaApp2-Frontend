@@ -39,6 +39,7 @@ export class MenuComponent implements OnInit {
   selectedMenuCat = null;
   addedCategories = [];
   suggestionProducts = [];
+  formattedItems = null;
 
 
   ngOnInit() {
@@ -63,8 +64,12 @@ export class MenuComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-        let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-        this.totalCost =  getTCost;
+		let formattedItemsData = this.dataService.formatCartData(this.items);
+        
+		this.formattedItems = formattedItemsData;
+		
+		//let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
+        this.totalCost =  formattedItemsData.totalPrice;
         
         this.netCost = this.totalCost;
 
