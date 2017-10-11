@@ -144,7 +144,7 @@ export class CheckoutComponent implements OnInit {
         }
 
         
-        
+        console.log('order', this.orderData);
 
         this.dataService.placeOrder(this.orderData).subscribe(data => {
              // console.log(JSON.parse(data.response));
