@@ -117,9 +117,9 @@ export class MenuComponent implements OnInit {
           
           for (var i=0; i<this.menuData.length; i++) {
             if (this.menuData[i].type == 'deal') {
-              let dealData = this.dataService.getDealTypeData(1);
-              this.menuData[i].products = [];
-              this.menuData[i].products.push(dealData);
+              let dealData = this.dataService.getAllDeals();
+              
+              this.menuData[i].products = dealData;
               console.log(this.menuData[i].products);
             }
           }
@@ -401,7 +401,8 @@ export class MenuComponent implements OnInit {
 
 
   goToDeal(dealId) {
-    this.router.navigate(['/deals', dealId]);
+	let comboUniqueId = this.utilService.generateUniqueId();   
+    this.router.navigate(['/deals', dealId, comboUniqueId]);
   }
 
 

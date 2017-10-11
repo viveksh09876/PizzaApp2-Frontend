@@ -498,9 +498,119 @@ export class DataService {
       }
 
       return deal;
-    }
+    
+	} else if (id == 2) {
+			
+      let deal = {
+        id: 1,
+        title: 'Double up for £7',
+        imageText: 'Double up for £7',
+        description: 'Buy any medium or large pizza and get a second for just £7.00',
+        code: 'DOUBLEUP7',
+        overallPrice: '',
+        categories: [
+          {
+            id: 1,
+            qty: 1,
+            isEnable: true,
+            name: 'pizza',
+            slug: 'pizzas',
+            catText: 'Select any medium or large pizza',
+            products: [],
+            modifiers: [
+				{ modifierId: 1, modOptionPlu: 999992 },
+				{ modifierId: 1, modOptionPlu: 999993 }
+			],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 0
+          },
+          {
+            id: 1,
+            qty: 1,
+            isEnable: true,
+            name: 'pizza',
+            slug: 'pizzas',
+            catText: 'Select second pizza',
+            products: [],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 1
+          }
+        ]
+      }
+	
+		return deal;
+			
+	} else if (id == 3) {
+		
+      let deal = {
+        id: 1,
+        title: 'Large Night In - Feed four for £9 each',
+        imageText: 'Large Night In',
+        description: 'Two Large pizzas, two sides of your choice, and two dips for £36.00',
+        code: 'LRGNIGHT',
+        overallPrice: '36.00',
+        categories: [
+          {
+            id: 1,
+            qty: 2,
+            isEnable: true,
+            name: 'pizza',
+            slug: 'pizzas',
+            catText: 'Select two large pizza',
+            products: [],
+            modifiers: [{ modifierId: 1, modOptionPlu: 999993 }],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 0
+          },
+          {
+            id: 3,
+            qty: 1,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Select two sides',
+            products: [11,12,13,14,15],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: 'OR',
+            pos: 1
+          },
+          {
+            id: 3,
+            qty: 2,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Add 2 dips',
+            products: ['18'],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 2
+          }
+        ]
+      }
+
+      return deal;
+    
+	}
 
 
+  }
+  
+  getAllDeals() {
+	  let dealLength = 3;
+	  let dealArr = [];
+	  for (var i=1; i<=dealLength; i++) {
+		  let deal = this.getDealTypeData(i);
+		  dealArr.push(deal);
+	  }
+	  
+	  return dealArr;
   }
 
 

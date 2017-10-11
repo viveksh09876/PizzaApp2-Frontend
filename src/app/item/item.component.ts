@@ -950,7 +950,7 @@ export class ItemComponent implements OnInit {
     let selectedMenuCat = this.dataService.getLocalStorageData('selectedMenuCat');
 
     if (this.isDeal) {
-      this.router.navigate(['/deals', this.dealId]);
+      this.router.navigate(['/deals', this.dealId, this.comboUniqueId]);
     } else {
       if (selectedMenuCat != null) {
         this.router.navigate(['/menu', selectedMenuCat]);   

@@ -40,8 +40,9 @@ export class DealsComponent implements OnInit {
     dealId = null;   
     dealData = null; 
     dealCode = null;
-    comboUniqueId = 987;   
+    comboUniqueId = null;   
     dealValidated = false;  
+	showLoading = false;
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -54,6 +55,10 @@ export class DealsComponent implements OnInit {
         this.dealId = params['dealId'];
         this.getDealData(this.dealId);
         
+      }
+	  
+	  if(params['comboUniqueId'] && params['comboUniqueId']!= '') {
+        this.comboUniqueId = params['comboUniqueId'];        
       }
     });
 
@@ -68,6 +73,7 @@ export class DealsComponent implements OnInit {
     
     let dealData = this.dataService.getDealTypeData(dealId); 
     this.dealData = dealData;
+	this.dealCode = dealData.code;
     this.getAllCategories();
      
   }
@@ -94,7 +100,7 @@ export class DealsComponent implements OnInit {
           let itemCatId = allItems[i].Product.category_id;
 
           for (var j=0; j<categoriesArr.length; j++) {
-            if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id]) {         
+            if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id] && allItems[i].Product.comboUniqueId == this.comboUniqueId) {         
               keepCats.push(categoriesArr[j].pos);
             } 
           }
@@ -124,12 +130,13 @@ export class DealsComponent implements OnInit {
         //this.selectedDealMenuCatId = null;
         
         //calculate discount
+		this.showLoading = true;	
+		let thisDealItems = this.getThisDealItems(this.dealId, allItems);
+		console.log('dealitems', thisDealItems);
+		this.mapDealPrice(thisDealItems, this.dealId, this.dealCode);
 
 
-
-
-
-        this.router.navigate(['/menu', 'meal deals']);
+        //this.router.navigate(['/menu', 'meal deals']);
       }
 
       this.dealData.categories = categoriesArr;
@@ -145,6 +152,163 @@ export class DealsComponent implements OnInit {
             
     }
   }
+  
+  
+  mapDealPrice(dealItems, dealId, dealCode) {
+	  let orderDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
+		let orderObj = {
+		  storeId: orderDetails.selectedStore.Store.store_id,
+		  coupon: dealCode,
+		  order_type: orderDetails.type,
+		  order_details: this.prepareFinalOrderData(dealItems),
+		  is_meal_deal: 'MEALDEAL'
+		}
+		console.log('orderObj', orderObj);
+		this.dataService.applyCoupon(orderObj)
+              .subscribe(data => {
+                  let resp = data;
+					console.log('discount', data);
+                  if(resp.Status == 'Error') {
+                    //this.couponMsg = resp.Message;
+                    //this.showCouponWait = false;
+					alert(resp.Message);
+                  }else if(resp.Status == 'OK') {
+                    /*
+					this.couponDiscount = parseFloat(resp.Discount);  
+                    this.isDiscountApply = true;
+                    this.couponMsg = 'Coupon appled successfully.';
+                    this.showCouponWait = false;
+                    this.order.coupon = this.couponCode;
+                    this.order.couponDiscount = this.couponDiscount;
+                    this.totalCost = this.totalCost - this.couponDiscount;*/
+                  }
+
+                  
+              }); 
+		
+  }
+  
+  
+  getThisDealItems(dealId, allItems) {
+	  let itemsArr = [];
+	  
+	  for(var i=0; i<allItems.length; i++) {
+		  if (allItems[i].Product.dealId != undefined && allItems[i].Product.dealId == dealId) {
+			  itemsArr.push(allItems[i]);
+		  }
+	  }
+	  
+	  return itemsArr;
+  }
+  
+  
+    prepareFinalOrderData(items) {
+
+		let finalOrder = [];
+		if(items.length > 0) {
+
+			for(var p=0; p<items.length; p++) {
+			   let products = items[p];
+			  
+			   let product = { name: '', plu: '', category_id: products.Product.category_id, quantity: 1, modifier: [], dealId: null, comboUniqueId: null};
+				product.name = products.Product.title;
+				product.plu = products.Product.plu_code;
+				product.quantity = products.Product.qty;
+				product.dealId = products.Product.dealId;
+				product.comboUniqueId = products.Product.comboUniqueId;
+				
+			  // console.log(products);
+				if(products.ProductModifier.length > 0) {
+				  
+				  for(var i = 0; i<products.ProductModifier.length; i++) {
+					
+					for(var j = 0; j < products.ProductModifier[i].Modifier.ModifierOption.length; j++) {
+						
+						let opt = products.ProductModifier[i].Modifier.ModifierOption[j].Option;
+						
+					   
+						  if((opt.plu_code == '91' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
+							  opt.send_code = 1;
+							  //console.log('fix', opt.name);
+						  }
+
+						if((opt.send_code == 1) 
+							|| (opt.plu_code == 999991 && opt.is_checked)
+							  || (opt.plu_code == 999992 && opt.is_checked)  
+								|| (opt.plu_code == 999993 && opt.is_checked)) {
+						  
+						  let isSizeCrust = false;
+						  if(opt.plu_code == 999991
+							  || opt.plu_code == 999992  
+								|| opt.plu_code == 999993 
+								  || opt.plu_code == 91
+									|| opt.plu_code == 'I100'  
+									  || opt.plu_code == 'I101') {
+
+								  isSizeCrust = true;
+						  
+						  }       
+
+
+						  let circle_type = 'Full';
+
+						  for(var a=0; a < opt.OptionSuboption.length; a++) {
+							if(opt.OptionSuboption[a].SubOption.is_active == true) {
+							  circle_type = opt.OptionSuboption[a].SubOption.name;
+							}
+						  }
+
+						  let sendToOrder = true;
+						  if(opt.category_id != 1 && isSizeCrust == false) {
+							if(opt.is_checked && opt.default_checked) {
+							  if(!opt.add_extra) {
+								sendToOrder = false;  
+							  }
+							}
+						  } 
+						 
+						  
+						  if(sendToOrder) {
+
+							  
+							  let modType = 'modifier';
+							  if(opt.is_included_mod) {
+								modType = 'included_modifier';
+							  }
+
+							  let val = {
+								  plu: opt.plu_code,   
+								  category_id: product.category_id,                
+								  add_extra: opt.add_extra,
+								  quantity: opt.quantity,
+								  type: 0,
+								  modifier_type: modType,
+								  choice: circle_type,
+								  send_code: opt.send_code                              
+							  }
+
+							  if(opt.is_checked || opt.add_extra == true) {
+								val.type = 1
+							  }
+							  
+							  product.modifier.push(val);
+						  }
+						  
+						}
+
+					}
+				  }
+				}
+				
+				finalOrder.push(product); 
+			}
+
+		  }
+
+      return finalOrder;
+
+  }
+
 
 
   validateDealConditions() {
