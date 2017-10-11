@@ -523,9 +523,9 @@ export class DataService {
             catText: 'Select any medium or large pizza',
             products: [],
             modifiers: [
-				{ modifierId: 1, modOptionPlu: 999992 },
-				{ modifierId: 1, modOptionPlu: 999993 }
-			],
+                { modifierId: 1, modOptionPlu: '999992' },
+                { modifierId: 1, modOptionPlu: '999993' }
+              ],
             itemCount: 1,
             itemCondition: null,
             pos: 0
@@ -568,19 +568,19 @@ export class DataService {
             slug: 'pizzas',
             catText: 'Select two large pizza',
             products: [],
-            modifiers: [{ modifierId: 1, modOptionPlu: 999993 }],
+            modifiers: [{ modifierId: 1, modOptionPlu: '999993' }],
             itemCount: 1,
             itemCondition: null,
             pos: 0
           },
           {
             id: 3,
-            qty: 1,
+            qty: 2,
             isEnable: true,
             name: 'sides & salads',
             slug: 'sides&salads',
             catText: 'Select two sides',
-            products: [11,12,13,14,15],
+            products: ['11','12','13','14','15'],
             modifiers: [],
             itemCount: 1,
             itemCondition: 'OR',
