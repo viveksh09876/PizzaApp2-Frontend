@@ -47,7 +47,7 @@ export class DataService {
     if(menuCountry == null) {
       menuCountry = 'UK';
     }
-    return this.http.get( this.domain + '/webservice/getItemData/'+slug+'/'+menuCountry)
+    return this.http.get( this.domain + '/temp/getItemData/'+slug+'/'+menuCountry)
                     .map( (res: Response) => res.json() )
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
