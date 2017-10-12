@@ -145,8 +145,9 @@ export class CheckoutComponent implements OnInit {
 
         
         console.log('order', this.orderData);
-
-        this.dataService.placeOrder(this.orderData).subscribe(data => {
+		console.log('items', this.items);
+		
+		this.dataService.placeOrder(this.orderData).subscribe(data => {
              // console.log(JSON.parse(data.response));
               let resp = JSON.parse(data.response);
 
@@ -169,6 +170,9 @@ export class CheckoutComponent implements OnInit {
               }
               this.showLoading = false;
             });
+
+        
+			
   }
 
 

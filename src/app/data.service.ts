@@ -720,6 +720,7 @@ export class DataService {
 
 				let dealObject = {
 					title: this.getDealTitle(dId),
+					totalCostPrice: Number(totPrice.toFixed(2)),
 					dealData: deals[key]
 				}
 				

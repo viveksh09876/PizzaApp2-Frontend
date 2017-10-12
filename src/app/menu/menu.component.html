@@ -265,7 +265,8 @@
 			  </div>
           </div>
           <div class="sumarry-box">
-          <div class="total" *ngIf="!isNaN(netCost)">
+		  
+          <div class="total" *ngIf="netCost != 0">
           <label>Sub total</label>
           <span>{{currencyCode}}{{netCost}}</span>
           </div>

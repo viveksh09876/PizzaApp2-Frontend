@@ -72,6 +72,10 @@ export class MenuComponent implements OnInit {
         this.totalCost =  formattedItemsData.totalPrice;
         
         this.netCost = this.totalCost;
+		
+		if (isNaN(this.netCost)) {
+			this.netCost = 0;
+		}
 
       }      
       this.showViewCart = true;      

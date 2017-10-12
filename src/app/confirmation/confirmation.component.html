@@ -41,7 +41,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of items">
+                            <tr *ngFor="let item of formattedItems.deals">
+                                <td>
+                                    <h4>{{item.title}}</h4>
+									<ng-container *ngFor="let dItem of item.dealData">
+										<p>{{dItem.Product.title}}</p>
+									</ng-container>
+                                    <!--<p><span>Size :</span> Medium</p>
+                                <p><span>Crust:</span> Gluten-free</p>-->
+                                </td>
+                                <td>1</td>
+                                <td><ng-container *ngIf="item.dealData">{{item.totalCostPrice}}</ng-container></td>
+                            </tr>
+							<tr *ngFor="let item of formattedItems.otherItems">
                                 <td>
                                     <h4>{{item.Product.title}}</h4>
                                     <!--<p><span>Size :</span> Medium</p>
@@ -93,7 +105,7 @@
                 {{orderData.address.city}} - {{orderData.address.postal_code}}<br>
                 Phone: {{orderData.user.phone}}</p>
                     </address>
-                        <address class="r-add">
+                        <address class="r-add" *ngIf="storeData != null">
                         <strong>restaurant address</strong>
                         <p><span>{{storeData.Store.store_name}} <br></span>
                         {{storeData.Store.store_address}} <br>

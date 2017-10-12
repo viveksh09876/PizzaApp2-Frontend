@@ -24,6 +24,7 @@ export class ConfirmationComponent implements OnInit {
   currencyCode = null;
   showLoading = true;
   orderId = null;
+  formattedItems=null;
 
   ngOnInit() {
     this.currencyCode = this.utilService.currencyCode;
@@ -44,9 +45,12 @@ export class ConfirmationComponent implements OnInit {
         
         this.items = JSON.parse(this.dataService.getLocalStorageData('confirmationItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('confirmationFinalOrder'));
-        let tCost = this.utilService.calculateOverAllCost(this.items);
-        this.totalCost = tCost
-        this.netCost = tCost;  
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'confirmation');
+        
+        this.formattedItems = formattedItemsData;
+		console.log('this.formattedItems', this.formattedItems);
+        this.totalCost =  formattedItemsData.totalPrice;
+        this.netCost = this.totalCost; 
         if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
           this.couponDiscount = this.orderData.couponDiscount;
           this.totalCost = this.totalCost - this.orderData.couponDiscount;
