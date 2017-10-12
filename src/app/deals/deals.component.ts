@@ -114,7 +114,7 @@ export class DealsComponent implements OnInit {
 			}
 		}
 		
-		console.log('keepCats', keepCats);
+		//console.log('keepCats', keepCats);
 		
 
       for (var i=0; i<categoriesArr.length; i++) {
@@ -140,7 +140,7 @@ export class DealsComponent implements OnInit {
         
         //calculate discount
     this.showLoading = true;	
-    console.log('dealcode', this.dealCode, 'dealdi', this.dealId);
+    //console.log('dealcode', this.dealCode, 'dealdi', this.dealId);
 		let thisDealItems = this.getThisDealItems(this.dealCode, allItems, this.comboUniqueId);
 		
 		
@@ -152,12 +152,12 @@ export class DealsComponent implements OnInit {
 		  order_details: this.prepareFinalOrderData(thisDealItems),
 		  is_meal_deal: 'MEALDEAL'
 		}
-		console.log('orderObj', orderObj);
+		//console.log('orderObj', orderObj);
 		let discount = 0;
 		this.dataService.applyCoupon(orderObj)
               .subscribe(data => {
 			  let resp = data;
-				console.log('discount', data);
+				//console.log('discount', data);
 			  if(resp.Status == 'Error') {
 				discount = 0;
 			  }else if(resp.Status == 'OK') {
@@ -206,10 +206,10 @@ export class DealsComponent implements OnInit {
 		
 	}
 	
-	console.log(discount);
+	//console.log(discount);
 	let discountPrice = Number(parseFloat(discount).toFixed(2));
 	totalPrice = totalPrice - discountPrice;
-	console.log(totalPrice, discountPrice);
+	//console.log(totalPrice, discountPrice);
 	
 	for (var i=0; i<allItems.length; i++) {
 		for (var j=0; j<curDealItems.length; j++) {
@@ -236,11 +236,11 @@ export class DealsComponent implements OnInit {
 		  order_details: this.prepareFinalOrderData(dealItems),
 		  is_meal_deal: 'MEALDEAL'
 		}
-		console.log('orderObj', orderObj);
+		//console.log('orderObj', orderObj);
 		this.dataService.applyCoupon(orderObj)
               .subscribe(data => {
                   let resp = data;
-					console.log('discount', data);
+					//console.log('discount', data);
                   if(resp.Status == 'Error') {
                     return 0;
                   }else if(resp.Status == 'OK') {
@@ -288,7 +288,7 @@ export class DealsComponent implements OnInit {
 				product.dealId = products.Product.dealId;
 				product.comboUniqueId = products.Product.comboUniqueId;
 				
-			  // console.log(products);
+			  // //console.log(products);
 				if(products.ProductModifier.length > 0) {
 				  
 				  for(var i = 0; i<products.ProductModifier.length; i++) {
@@ -300,7 +300,7 @@ export class DealsComponent implements OnInit {
 					   
 						  if((opt.plu_code == '91' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
 							  opt.send_code = 1;
-							  //console.log('fix', opt.name);
+							  ////console.log('fix', opt.name);
 						  }
 
 						if((opt.send_code == 1) 
@@ -464,7 +464,7 @@ export class DealsComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          console.log(this.menuData[0].name);
+          //console.log(this.menuData[0].name);
           this.selectedMenuCat = 'meal deals';  
           
 

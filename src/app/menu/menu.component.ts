@@ -114,7 +114,7 @@ export class MenuComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          //console.log(this.menuData[0].name);
+          ////console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
 
           this.route.params.subscribe(params => { 
@@ -129,7 +129,7 @@ export class MenuComponent implements OnInit {
               let dealData = this.dataService.getAllDeals();
               
               this.menuData[i].products = dealData;
-              console.log(this.menuData[i].products);
+              //console.log(this.menuData[i].products);
             }
           }
 
@@ -391,7 +391,7 @@ export class MenuComponent implements OnInit {
         if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
           orderNowDetails = JSON.parse(orderNowDetails);
     
-          //console.log('suggestions', this.suggestionProducts);
+          ////console.log('suggestions', this.suggestionProducts);
         let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
                 items: products }, { closeByClickingOutside:true 
             }).subscribe((isSkipped)=>{

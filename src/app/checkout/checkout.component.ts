@@ -144,11 +144,11 @@ export class CheckoutComponent implements OnInit {
         }
 
         
-        console.log('order', this.orderData);
-		console.log('items', this.items);
+        //console.log('order', this.orderData);
+		//console.log('items', this.items);
 		
 		this.dataService.placeOrder(this.orderData).subscribe(data => {
-             // console.log(JSON.parse(data.response));
+             // //console.log(JSON.parse(data.response));
               let resp = JSON.parse(data.response);
 
               if(resp.Status == 'Error') {

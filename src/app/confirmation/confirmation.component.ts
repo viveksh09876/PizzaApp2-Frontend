@@ -48,7 +48,7 @@ export class ConfirmationComponent implements OnInit {
         let formattedItemsData = this.dataService.formatCartData(this.items, 'confirmation');
         
         this.formattedItems = formattedItemsData;
-		console.log('this.formattedItems', this.formattedItems);
+		//console.log('this.formattedItems', this.formattedItems);
         this.totalCost =  formattedItemsData.totalPrice;
         this.netCost = this.totalCost; 
         if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {

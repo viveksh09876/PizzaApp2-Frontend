@@ -812,7 +812,7 @@ export class DataService {
 		  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
 	  }
 	  
-	  console.log('return obj', returnObj);
+	  //console.log('return obj', returnObj);
 	  return returnObj;
 	  
 	  
@@ -854,7 +854,7 @@ export class DataService {
         }
       }
       
-      console.log('keepCats', keepCats);
+      //console.log('keepCats', keepCats);
       
   
         for (var i=0; i<categoriesArr.length; i++) {

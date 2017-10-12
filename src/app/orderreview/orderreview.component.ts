@@ -174,7 +174,7 @@ export class OrderreviewComponent implements OnInit {
 
 
     
-    //console.log(this.order);
+    ////console.log(this.order);
   }
 
 
@@ -222,7 +222,7 @@ export class OrderreviewComponent implements OnInit {
       .subscribe(data => {              
               this.storeDetails = data;
               this.order.storeId = data.Store.store_id;
-              //console.log('store details', this.order.storeId);
+              ////console.log('store details', this.order.storeId);
           });
   }
 
@@ -288,7 +288,7 @@ export class OrderreviewComponent implements OnInit {
     this.formattedItems = formattedItemsData;
     this.totalCost =  formattedItemsData.totalPrice;
     this.netCost = this.totalCost;
-   // console.log(type, this.totalCost, this.items.Product.qty);
+   // //console.log(type, this.totalCost, this.items.Product.qty);
   }
 
 
@@ -317,7 +317,7 @@ export class OrderreviewComponent implements OnInit {
     let streetNo = this.order.address.streetNo;
 
     let isValid = this.validateFields();
-    //console.log('validate', this.order);
+    ////console.log('validate', this.order);
     if(isValid) {
       if(isDelivery=='delivery'){
         if(street==''){
@@ -427,7 +427,7 @@ export class OrderreviewComponent implements OnInit {
     }
      
     tVal = this.order.delivery_time;
-    console.log('orderstart', this.order);
+    //console.log('orderstart', this.order);
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
 
     if (goFlag) {
@@ -443,7 +443,7 @@ export class OrderreviewComponent implements OnInit {
             } else {
 
               let orderData = this.order;
-              console.log('orderData', orderData);
+              //console.log('orderData', orderData);
               if(orderData.address) {
               orderData.address.street_no = orderData.address.streetNo;
               
@@ -486,7 +486,7 @@ export class OrderreviewComponent implements OnInit {
               this.order.order_details = this.prepareFinalOrderData(this.items);
               this.order['latlong'] = this.dataService.getLocalStorageData('latlong');
               this.dataService.setLocalStorageData('finalOrder', JSON.stringify(orderData));
-              //console.log('order', this.order.order_details);
+              ////console.log('order', this.order.order_details);
               this.showLoading = false;
               this.router.navigate(['/checkout']);
               
@@ -504,7 +504,7 @@ export class OrderreviewComponent implements OnInit {
 
     let finalOrder = [];
     if(items.length > 0) {
-        console.log('placeorder', items);
+        //console.log('placeorder', items);
         for(var p=0; p<items.length; p++) {
            let products = items[p];
           
@@ -515,7 +515,7 @@ export class OrderreviewComponent implements OnInit {
 
             if (products.Product.dealId != undefined) {
               let dCode = products.Product.dealId;
-              console.log('dcode', dCode);
+              //console.log('dcode', dCode);
               if(!isNaN(products.Product.dealId)) {
                 product.dealId = this.dataService.getDealCode(products.Product.dealId);
               } else {
@@ -529,7 +529,7 @@ export class OrderreviewComponent implements OnInit {
             }
             
             
-          // console.log(products);
+          // //console.log(products);
             if(products.ProductModifier.length > 0) {
               
               for(var i = 0; i<products.ProductModifier.length; i++) {
@@ -541,7 +541,7 @@ export class OrderreviewComponent implements OnInit {
                    
                       if((opt.plu_code == '91' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
                           opt.send_code = 1;
-                          //console.log('fix', opt.name);
+                          ////console.log('fix', opt.name);
                       }
 
                     if((opt.send_code == 1) 
@@ -616,7 +616,7 @@ export class OrderreviewComponent implements OnInit {
         }
 
       }
-      console.log('finalOerer', finalOrder);
+      //console.log('finalOerer', finalOrder);
       return finalOrder;
 
   }
@@ -646,13 +646,13 @@ export class OrderreviewComponent implements OnInit {
       }
 
       favData = favOrdArr;
-      //console.log('fav', favData);
+      ////console.log('fav', favData);
       this.showSavingFav = true;
       this.dataService.saveFavItem(userId, this.favTitle, favData, 'order')
         .subscribe(data => {
             this.showSavingFav = false;
             this.openMessageModal('Your favourite item has been saved successfully!');
-            //console.log('fav resp', data);
+            ////console.log('fav resp', data);
         });  
 
     }
