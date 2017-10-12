@@ -142,7 +142,7 @@ export class SuggestionmodalComponent extends DialogComponent<SuggestModal, bool
         let total = 0;
         let defaultSize = 'small';
     
-        if(this.item.Product.category_id == 1 || this.item.Product.category_id == 8) {
+        if(this.item.Product.category_id == 1) {
     
           let itemBasePrice = false;
           let itemSizePrice = '';

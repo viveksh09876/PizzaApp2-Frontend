@@ -26,7 +26,7 @@ export class DataService {
   
   getMenuData(storeId, country): Observable<any>{
 
-    return this.http.get( this.domain + '/temp/get_all_categories_data/'+storeId+ '/'+country)
+    return this.http.get( this.domain + '/webservice/get_all_categories_data/'+storeId+ '/'+country)
                     .map( (res: Response) => res.json() )
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -66,7 +66,7 @@ export class DataService {
   }
 
   placeOrder(data): Observable<any>{
-    return this.http.post( this.domain + '/temp/placeOrder', data)
+    return this.http.post( this.domain + '/webservice/placeOrder', data)
                     .map((res: Response) => res.json())
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -263,7 +263,7 @@ export class DataService {
   }
 
   applyCoupon(orderData): Observable<any>{
-        return this.http.post( this.domain + '/temp/applyCoupon', orderData)
+        return this.http.post( this.domain + '/webservice/applyCoupon', orderData)
                   .map((res: Response) => res.json())
                   .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -374,7 +374,7 @@ export class DataService {
 
   getItemSuggestions(addedCategories): Observable<any>{
     var data = addedCategories;
-    return this.http.post( this.domain + '/temp/getItemSuggestions', data)
+    return this.http.post( this.domain + '/webservice/getItemSuggestions', data)
               .map((res: Response) => res.json())
               .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -388,7 +388,7 @@ export class DataService {
 
   getDealData(dealId): Observable<any>{
 
-    return this.http.get( this.domain + '/temp/getDealData/' + dealId)
+    return this.http.get( this.domain + '/webservice/getDealData/' + dealId)
                       .map( (res: Response) => res.json() )
                         .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
 
