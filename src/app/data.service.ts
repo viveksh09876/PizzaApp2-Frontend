@@ -715,7 +715,7 @@ export class DataService {
 				name: 'beverages',
 				slug: 'beverages',
 				catText: 'select any drink',
-				products: [],
+				products: ['29','30','31'],
 				modifiers: [],
 				itemCount: 1,
 				itemCondition: null,

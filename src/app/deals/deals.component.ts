@@ -554,7 +554,9 @@ export class DealsComponent implements OnInit {
                     }else{
     
                       let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
-                      let isExist = false;
+                      allItems.push(data);
+					  /*
+					  let isExist = false;
                       for(var i=0; i<allItems.length; i++) {
                         if(allItems[i].Product.id == data.Product.id) {
                           allItems[i].Product.qty += 1;
@@ -567,6 +569,8 @@ export class DealsComponent implements OnInit {
                       if(!isExist) {
                         allItems.splice(0,0,data);
                       }
+					  
+					  */
                         
                       this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems));   
                       var addedItems = JSON.stringify(allItems);
