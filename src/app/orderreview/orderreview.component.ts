@@ -571,7 +571,7 @@ export class OrderreviewComponent implements OnInit {
                       }
 
                       let sendToOrder = true;
-                      if(opt.category_id != 1 && isSizeCrust == false) {
+                      if(opt.category_id != 1 && opt.category_id != 8 && isSizeCrust == false) {
                         if(opt.is_checked && opt.default_checked) {
                           if(!opt.add_extra) {
                             sendToOrder = false;  

@@ -333,7 +333,7 @@ export class ItemComponent implements OnInit {
               }
 
               //hard code for pizza
-              if(this.item.Product.category_id == '1') {
+              if(this.item.Product.category_id == '1' || this.item.Product.category_id == '8') {
                 if(options[j].Option.dependent_modifier_option_id != null) {
 
                   let p_mod_id = options[j].Option.dependent_modifier_id; 
@@ -519,7 +519,7 @@ export class ItemComponent implements OnInit {
     let total = 0;
     let defaultSize = 'small';
 
-    if(this.item.Product.category_id == 1) {
+    if(this.item.Product.category_id == 1 || this.item.Product.category_id == 8) {
 
       let itemBasePrice = false;
       let itemSizePrice = '';

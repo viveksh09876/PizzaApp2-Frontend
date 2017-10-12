@@ -80,13 +80,13 @@
                                                         </ng-container>  
                       
                                                         <ng-container *ngIf="option.Option.is_checked && option.Option.is_included_mod && option.Option.add_extra && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1 || item.Product.category_id == 8">({{option.Option.subop_name}})</ng-container></li>
                                                         </ng-container>
                                                         <ng-container *ngIf="!option.Option.is_checked && option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                          <li>- {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{option.Option.subop_name}})</ng-container></li>
+                                                          <li>- {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1 || item.Product.category_id == 8">({{option.Option.subop_name}})</ng-container></li>
                                                         </ng-container> 
                                                         <ng-container *ngIf="option.Option.is_checked && !option.Option.is_included_mod && option.Option.plu_code != 91 && option.Option.plu_code != 'I100' && option.Option.plu_code != 'I101' && option.Option.plu_code != 999991 && option.Option.plu_code != 999992 && option.Option.plu_code != 999993">
-                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1">({{ option.Option.subop_name}})</ng-container></li>
+                                                          <li>+ {{option.Option.name}} <small *ngIf="option.Option.add_extra">(Add Extra)</small> <ng-container *ngIf="item.Product.category_id == 1 || item.Product.category_id == 8">({{ option.Option.subop_name}})</ng-container></li>
                                                         </ng-container> 
                                                         <!--<li *ngIf="option.Option.is_checked">Add {{option.Option.name}}</li>-->
                                                       </ng-container>                    
