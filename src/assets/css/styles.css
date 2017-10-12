@@ -589,6 +589,8 @@ header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 .slider-wrapper {
 	width: 100%;
 	background: #fff;
+	overflow: hidden;
+	height: 0px; 
 }
 .slider-wrapper .slides {
 	width: 100%;
@@ -599,7 +601,6 @@ header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 	height: 100%;
 	outline: 0
 }
-
 
 
 @media (max-width: 767px) {
