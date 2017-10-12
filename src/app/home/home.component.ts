@@ -231,8 +231,13 @@ export class HomeComponent implements OnInit, AfterContentInit {
                     prevArrow: false,
                     nextArrow: false
                   });
+                  if(jQuery(window).width() > 767){
                   jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.desk-banner').height()+'px')});
-              }, 2000);
+                  }
+                  if(jQuery(window).width() < 767){
+                  jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.mobile-banner').height()+'px')});
+                  }
+              }, 1000);
                
           });
   }
