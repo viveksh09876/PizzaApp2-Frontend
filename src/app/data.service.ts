@@ -654,13 +654,86 @@ export class DataService {
 		return deal;
 		
 		
+	} else if (id == 5) {
+		
+		let deal = {
+			id: 5,
+			title: "NKD kid's meal for £5.99",
+			imageText: "NKD kid's meal",
+			description: "Get a child's cheese & Tomato or Pepperoni, a pot of Jude's ice cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
+			code: 'KIDSMEAL',
+			overallPrice: '5.99',
+			listImage: 'assets/images/deals/kids-meal-list.jpg',
+			detailImage: 'assets/images/deals/kids-meal-detail.jpg',
+			categories: [
+			  {
+				id: 1,
+				qty: 1,
+				isEnable: true,
+				name: 'pizza',
+				slug: 'pizzas',
+				catText: 'Select any medium or large pizza',
+				products: [],
+				modifiers: [
+					{ modifierId: 1, modOptionPlu: 999992 },
+					{ modifierId: 1, modOptionPlu: 999993 }
+				],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 0
+			  },
+			  {
+				id: 8,
+				qty: 1,
+				isEnable: true,
+				name: 'kids pizza',
+				slug: 'kids pizza',
+				catText: 'Select one kids pizza',
+				products: [],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: 'OR',
+				pos: 1
+			  },
+			  {
+				id: 4,
+				qty: 1,
+				isEnable: true,
+				name: 'desserts',
+				slug: 'desserts',
+				catText: 'Select one ice cream',
+				products: ['19','20','21','22'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 2
+			  },
+			  {
+				id: 5,
+				qty: 1,
+				isEnable: true,
+				name: 'beverages',
+				slug: 'beverages',
+				catText: 'select any drink',
+				products: [],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 3
+			  }
+			]
+		  }
+
+      return deal;
+    
+		
 	}
 
 
   }
   
   getAllDeals() {
-	  let dealLength = 4;
+	  let dealLength = 5;
 	  let dealArr = [];
 	  for (var i=1; i<=dealLength; i++) {
 		  let deal = this.getDealTypeData(i);
@@ -826,7 +899,9 @@ export class DataService {
       return 3;
     } else if(code == 'SKINNYIT') {
       return 4;
-    }
+    } else if (code == 'KIDSMEAL') {
+		return 5;
+	}
   }
 
 
