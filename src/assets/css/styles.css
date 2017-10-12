@@ -2208,7 +2208,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 .deals-sub-menu .custom-select {margin: 25px 16px;}
 .deal-bar.full{width: 95.5%;}
-.deal-bar{padding: 64px 0 14px 0; background: #fff; display: table; margin: 0px; position: fixed; width:64.3%; z-index: 98;}
+.deal-bar{padding: 64px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:64.3%; z-index: 98;}
 .deal-bar a{     background: #911c27;
     color: #ffffff;
     display: table-cell;
