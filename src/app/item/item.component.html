@@ -59,7 +59,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
           <div class="content-container">
             <div class="control-group">
               <ng-container *ngFor="let option of mod.Modifier.ModifierOption | modsort: 'option.Option.is_checked' | sort:'option.Option.name'; let m = index;">
-                <ng-container *ngIf="mod.is_required == 1">
+                <ng-container *ngIf="mod.is_required == 1 && option.isRemove == undefined">
                   <label class="control radio" [ngClass]="{'checked': option.Option.is_checked == true}" (click)="updateModifier(option.Option.id, 'radio', mod.modifier_id)">
                     <h4>{{option.Option.name}}</h4>
                     <p></p>                  
@@ -68,7 +68,7 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
                     <div class="control__indicator"></div>    
                   </label>
                 </ng-container>
-                <ng-container *ngIf="mod.is_required == 0">
+                <ng-container *ngIf="mod.is_required == 0 && option.isRemove == undefined">
                   <div class="control checkbox" [ngClass]="{'extra': option.Option.add_extra, 'checked': option.Option.is_checked == true}">
                     
                     <h4 (click)="updateModifier(option.Option.id,'checkbox', mod.modifier_id)">{{option.Option.name}}</h4> 

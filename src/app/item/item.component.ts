@@ -163,37 +163,57 @@ export class ItemComponent implements OnInit {
       } else {
         modifiersArr = dealData.modifiers;
       }
+	  
+	  console.log('modifiersArr', modifiersArr);
   
       var temp = this.item.ProductModifier;
       var prodMods = this.item.ProductModifier;
       
-      for (var i=0; i<prodMods.length; i++) {
-        for (var j=0; j<modifiersArr.length; j++) {
-          if (prodMods[i].modifier_id == modifiersArr[j].modifierId) {
-  
-            let modOption = prodMods[i].Modifier.ModifierOption;
-            for (var k=0; k<modOption.length; k++) {
-              
-              if (modOption[k].Option.plu_code == modifiersArr[j].modOptionPlu) {
-                prodMods[i].Modifier.ModifierOption[k].Option.default_checked = true;
-                prodMods[i].Modifier.ModifierOption[k].Option.is_checked = true;
-                prodMods[i].Modifier.ModifierOption[k].Option.send_code = true;
-                prodMods[i].Modifier.ModifierOption[k].Option.send_code_permanent = true;
-                
-              } else {
-                
-                delete  prodMods[i].Modifier.ModifierOption[k];
-                
-              }
-  
-            }
-  
-          }
-        }
-      }
-
       
-  
+	  for (var i=0; i<prodMods.length; i++) {
+		 
+		 let modOption = prodMods[i].Modifier.ModifierOption;
+		 let isOneChecked = false;
+		 let modId = null;
+		 
+		 for (var j=0; j<modOption.length; j++) {
+			for (var k=0; k<modifiersArr.length; k++) {
+				if (modOption[j].modifier_id == modifiersArr[k].modifierId) {
+					
+					modId = modifiersArr[k].modifierId;
+					let index = modifiersArr.findIndex(obj => obj.modOptionPlu == modOption[j].Option.plu_code);
+					//console.log('index', index, modOption[j].Option.plu_code);
+					if (index < 0) {
+						prodMods[i].Modifier.ModifierOption[j]['isRemove'] = true;
+						prodMods[i].Modifier.ModifierOption[j].Option.default_checked = false;
+						prodMods[i].Modifier.ModifierOption[j].Option.is_checked = false;
+						prodMods[i].Modifier.ModifierOption[j].Option.send_code = false;
+						prodMods[i].Modifier.ModifierOption[j].Option.send_code_permanent = false;
+					} else {
+						if (prodMods[i].Modifier.ModifierOption[j].Option.default_checked) {
+							isOneChecked = true;
+						}
+					}
+				}
+			}
+		 }
+		 
+		 if (!isOneChecked) {
+			for (var p=0; p<modOption.length; p++) {
+				if (modId == prodMods[i].Modifier.ModifierOption[p].modifier_id && prodMods[i].Modifier.ModifierOption[p].isRemove == undefined) {
+					prodMods[i].Modifier.ModifierOption[p].Option.default_checked = true;
+					prodMods[i].Modifier.ModifierOption[p].Option.is_checked = true;
+					prodMods[i].Modifier.ModifierOption[p].Option.send_code = true;
+					prodMods[i].Modifier.ModifierOption[p].Option.send_code_permanent = true;
+					break;
+				}				
+			}
+		 }
+		 
+		 
+	  }
+	  	
+	
       for (var i=0; i<prodMods.length; i++) {
         for(var j=0; j<prodMods[i].Modifier.ModifierOption.length; j++) {
   
@@ -381,12 +401,12 @@ export class ItemComponent implements OnInit {
 
     }else{
       this.showAddToCart = true;
-
+	/*
       if (this.isDeal) {
         this.totalCost = Number(parseFloat(this.item.Product.price).toFixed(2));
         this.item.originalItemCost = this.totalCost;
         this.item.totalItemCost = this.totalCost;
-      } else {
+      } else {*/
         this.totalCost = total;
         this.item.originalItemCost = this.totalCost;
   
@@ -394,7 +414,7 @@ export class ItemComponent implements OnInit {
             total = total*parseFloat(this.item.Product.qty);
         }
         this.item.totalItemCost = total;
-      }
+      //}
       
     }
 
@@ -441,12 +461,12 @@ export class ItemComponent implements OnInit {
         }
       }
 
-      
+      /*
       if (this.isDeal) {
         this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
         this.item.originalItemCost = this.totalCost;
         this.item.totalItemCost = this.totalCost;
-      } else {
+      } else { */
         let total = this.calculateTotalCost();
         
         this.totalCost = total;
@@ -457,7 +477,7 @@ export class ItemComponent implements OnInit {
         }
   
         this.item.totalItemCost = total;
-      }
+      //}
 
   }
 
