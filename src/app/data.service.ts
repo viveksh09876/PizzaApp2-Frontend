@@ -502,10 +502,10 @@ export class DataService {
 
       return deal;
     
-	} else if (id == 2) {
+	} else if (id == 5) {
 			
       let deal = {
-        id: 2,
+        id: 5,
         title: 'Double up for £7',
         imageText: 'Double up for £7',
         description: 'Buy any medium or large pizza and get a second for just £7.00',
@@ -654,10 +654,10 @@ export class DataService {
 		return deal;
 		
 		
-	} else if (id == 5) {
+	} else if (id == 2) {
 		
 		let deal = {
-			id: 5,
+			id: 2,
 			title: "NKD kid's meal for £5.99",
 			imageText: "NKD kid's meal",
 			description: "Get a child's cheese & Tomato or Pepperoni, a pot of Jude's ice cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
@@ -901,13 +901,13 @@ export class DataService {
     if (code == 'CPLNIGHT') {
       return 1;
     } else if (code == 'DOUBLEUP7') {
-      return 2;
+      return 5;
     } else if(code == 'LRGNIGHT') {
       return 3;
     } else if(code == 'SKINNYIT') {
       return 4;
     } else if (code == 'KIDSMEAL') {
-		return 5;
+		return 2;
 	}
   }
 
