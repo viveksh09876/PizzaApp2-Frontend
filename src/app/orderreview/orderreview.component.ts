@@ -74,6 +74,7 @@ export class OrderreviewComponent implements OnInit {
 
     hours = [];
     minutes = this.utilService.getMinutes();
+	isMealDeal = false;
     
     pickerOptions = {
         showDropdowns: true,
@@ -234,6 +235,9 @@ export class OrderreviewComponent implements OnInit {
 
               let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
               
+			  if (formattedItemsData.deals.length > 0) {
+				  this.isMealDeal = true;
+			  }
               this.formattedItems = formattedItemsData;
           
               this.totalCost =  formattedItemsData.totalPrice;
@@ -452,6 +456,11 @@ export class OrderreviewComponent implements OnInit {
               }
                 delete orderData.address.streetNo; 
               }
+			  
+			  //meal deal
+			  if (this.isMealDeal) {
+				  this.order['is_meal_deal'] = 'MEALDEAL';
+			  }
   
               if(this.order.order_type == 'delivery' && this.order.delivery_time_type == 'defer') {
                 
