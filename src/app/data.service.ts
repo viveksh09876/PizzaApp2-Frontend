@@ -830,42 +830,49 @@ export class DataService {
 		  let isExistArr = [];
 			   
 
-		  for (var i=0; i<allItems.length; i++) {
-			if (allItems[i].Product.dealId != undefined) {
-			  
-			  if (isExistArr[allItems[i].Product.id] == undefined) {
-				isExistArr[allItems[i].Product.id] = 0;
-			  }
-			  isExistArr[allItems[i].Product.id] += 1;
-
-			  let itemCatId = allItems[i].Product.category_id;
-
-			  for (var j=0; j<categoriesArr.length; j++) {
-				if (categoriesArr[j].pos == allItems[i].Product.position && categoriesArr[j].qty == isExistArr[allItems[i].Product.id] && allItems[i].Product.comboUniqueId == comboUniqueId) {         
-				  keepCats.push(categoriesArr[j].pos);
-				} 
-			  }
-
-			}        
-		  }
-
-		  for (var i=0; i<categoriesArr.length; i++) {
-			
-			if (keepCats.indexOf(categoriesArr[i].pos) < 0) {
-			  categoriesArr[i].isEnable = true;
-			} else {
-			  categoriesArr[i].isEnable = false;
-			}
-		  }
-
-		  for(var i=0; i<categoriesArr.length; i++) {
-			if (categoriesArr[i].isEnable) {
-			  
-			  atLeastoneEnable = true;
-			  break;
-			}
-		  }
-		  
+		  let count = 0;
+      for (var i=0; i<categoriesArr.length; i++) {
+        
+        for (var j=0; j<allItems.length; j++) {
+          if (allItems[j].Product.dealId != undefined) {
+            
+            
+            
+            if (allItems[j].Product.position == categoriesArr[i].pos && allItems[j].Product.comboUniqueId == comboUniqueId) {
+              count++;
+            }
+            
+            
+            let itemCatId = allItems[j].Product.category_id;
+            
+            if (categoriesArr[i].qty == count && allItems[j].Product.comboUniqueId == comboUniqueId) {         
+              keepCats.push(categoriesArr[i].pos);
+              count = 0;
+            }
+            
+          }
+        }
+      }
+      
+      console.log('keepCats', keepCats);
+      
+  
+        for (var i=0; i<categoriesArr.length; i++) {
+          
+          if (keepCats.indexOf(categoriesArr[i].pos) < 0) {
+            categoriesArr[i].isEnable = true;
+          } else {
+            categoriesArr[i].isEnable = false;
+          }
+        }
+  
+        for(var i=0; i<categoriesArr.length; i++) {
+          if (categoriesArr[i].isEnable) {
+            
+            atLeastoneEnable = true;
+            break;
+          }
+        }
 		  
 		  if (atLeastoneEnable) {
 			  return false;
