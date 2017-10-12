@@ -538,7 +538,10 @@ export class DataService {
             slug: 'pizzas',
             catText: 'Select second pizza',
             products: [],
-            modifiers: [],
+            modifiers: [
+                { modifierId: 1, modOptionPlu: '999992' },
+                { modifierId: 1, modOptionPlu: '999993' }
+              ],
             itemCount: 1,
             itemCondition: null,
             pos: 1
@@ -604,13 +607,60 @@ export class DataService {
 
       return deal;
     
+	} else if (id == 4) {
+		
+		let deal = {
+        id: 4,
+        title: 'Keep it skinny!',
+        imageText: 'Keep it skinny!',
+        description: 'Get a Caprese salad for £1 when you buy any medium skinny pizza',
+        code: 'SKINNYIT',
+        overallPrice: '',
+        listImage: 'assets/images/deals/keep-it-skinny-list.jpg',
+        detailImage: 'assets/images/deals/keep-it-skinny-detail.jpg',
+        categories: [
+          {
+            id: 1,
+            qty: 1,
+            isEnable: true,
+            name: 'pizza',
+            slug: 'pizzas',
+            catText: 'Select any medium skinny pizza',
+            products: [],
+            modifiers: [
+                { modifierId: 1, modOptionPlu: '999992' },
+                { modifierId: 2, modOptionPlu: 'I101' }
+              ],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 0
+          },
+          {
+            id: 3,
+            qty: 1,
+            isEnable: true,
+            name: 'sides & salads',
+            slug: 'sides&salads',
+            catText: 'Select Caprese Salad',
+            products: ['16'],
+            modifiers: [],
+            itemCount: 1,
+            itemCondition: null,
+            pos: 1
+          }
+        ]
+      }
+	
+		return deal;
+		
+		
 	}
 
 
   }
   
   getAllDeals() {
-	  let dealLength = 3;
+	  let dealLength = 4;
 	  let dealArr = [];
 	  for (var i=1; i<=dealLength; i++) {
 		  let deal = this.getDealTypeData(i);
@@ -773,6 +823,8 @@ export class DataService {
       return 2;
     } else if(code == 'LRGNIGHT') {
       return 3;
+    } else if(code == 'SKINNYIT') {
+      return 4;
     }
   }
 
