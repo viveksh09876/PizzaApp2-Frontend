@@ -98,7 +98,7 @@ export class DealsComponent implements OnInit {
 					
 					
 					
-					if (allItems[j].Product.position == categoriesArr[i].pos) {
+					if (allItems[j].Product.position == categoriesArr[i].pos && allItems[j].Product.comboUniqueId == this.comboUniqueId) {
 						count++;
 					}
 					
