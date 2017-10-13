@@ -745,7 +745,7 @@ export class DataService {
 				isEnable: true,
 				name: 'pizza',
 				slug: 'pizzas',
-				catText: 'Select two large pizza',
+				catText: 'Select two medium pizza',
 				products: [],
 				modifiers: [{ modifierId: 1, modOptionPlu: '999992' }],
 				itemCount: 1,
