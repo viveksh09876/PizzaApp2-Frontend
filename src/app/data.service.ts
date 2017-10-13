@@ -727,13 +727,184 @@ export class DataService {
       return deal;
     
 		
+	} else if (id == 6) {
+		
+		let deal = {
+			id: 6,
+			title: 'Medium Night In - Feed four for £7.50 each',
+			imageText: 'Medium Night In',
+			description: 'Two medium pizzas, two sides of your choice and two dips for £30',
+			code: 'MEDNIGHT',
+			overallPrice: '30.00',
+			listImage: 'assets/images/deals/medium-night-list.jpg',
+			detailImage: 'assets/images/deals/medium-night-detail.jpg',
+			categories: [
+			  {
+				id: 1,
+				qty: 2,
+				isEnable: true,
+				name: 'pizza',
+				slug: 'pizzas',
+				catText: 'Select two large pizza',
+				products: [],
+				modifiers: [{ modifierId: 1, modOptionPlu: '999992' }],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 0
+			  },
+			  {
+				id: 3,
+				qty: 2,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Select two sides',
+				products: ['11','12','13','14','15'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: 'OR',
+				pos: 1
+			  },
+			  {
+				id: 3,
+				qty: 2,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Add 2 dips',
+				products: ['18'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 2
+			  }
+			]
+		  }
+
+		  return deal;
+		
+		
+	} else if (id == 7) {
+		
+		let deal = {
+			id: 7,
+			title: 'A bit on the side',
+			imageText: 'A bit on the side',
+			description: 'Buy any large pizza and get two sides and dips of your choice for £5.99',
+			code: 'BITSIDE',
+			overallPrice: '5.99',
+			listImage: 'assets/images/deals/bitside-list.jpg',
+			detailImage: 'assets/images/deals/bitside-detail.jpg',
+			categories: [
+			  {
+				id: 1,
+				qty: 1,
+				isEnable: true,
+				name: 'pizza',
+				slug: 'pizzas',
+				catText: 'Select any large pizza',
+				products: [],
+				modifiers: [{ modifierId: 1, modOptionPlu: '999993' }],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 0
+			  },
+			  {
+				id: 3,
+				qty: 2,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Select two sides',
+				products: ['11','12','13','14','15'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: 'OR',
+				pos: 1
+			  },
+			  {
+				id: 3,
+				qty: 2,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Add 2 dips',
+				products: ['18'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 2
+			  }
+			]
+		  }
+
+		  return deal;
+		
+		
+	} else if (id == 8) {
+		
+		let deal = {
+			id: 8,
+			title: 'Any pizza £12.99 when you buy a side',
+			imageText: 'Any pizza £12.99 when you buy a side',
+			description: 'Pick a side and dip of your choice and get any pizza for £12.99',
+			code: 'PIZZA1299',
+			overallPrice: '12.99',
+			listImage: 'assets/images/deals/any-pizza-list.jpg',
+			detailImage: 'assets/images/deals/any-pizza-detail.jpg',
+			categories: [
+			  {
+				id: 3,
+				qty: 1,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Select any side',
+				products: ['11','12','13','14','15'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: 'OR',
+				pos: 0
+			  },
+			  {
+				id: 3,
+				qty: 1,
+				isEnable: true,
+				name: 'sides & salads',
+				slug: 'sides&salads',
+				catText: 'Add a dip',
+				products: ['18'],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 1
+			  },
+			  {
+				id: 1,
+				qty: 1,
+				isEnable: true,
+				name: 'pizza',
+				slug: 'pizzas',
+				catText: 'Select any pizza',
+				products: [],
+				modifiers: [],
+				itemCount: 1,
+				itemCondition: null,
+				pos: 2
+			  }
+			]
+		  }
+
+		  return deal;
+		
+		
 	}
 
 
   }
   
   getAllDeals() {
-	  let dealLength = 5;
+	  let dealLength = 8;
 	  let dealArr = [];
 	  for (var i=1; i<=dealLength; i++) {
 		  let deal = this.getDealTypeData(i);
@@ -908,6 +1079,12 @@ export class DataService {
       return 4;
     } else if (code == 'KIDSMEAL') {
 		return 2;
+	} else if (code == 'MEDNIGHT') {
+		return 6;
+	} else if (code == 'BITSIDE') {
+		return 7;
+	} else if (code == 'PIZZA1299') {
+		return 8;
 	}
   }
 
