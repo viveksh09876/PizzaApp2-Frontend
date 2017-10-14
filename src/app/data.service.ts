@@ -571,7 +571,10 @@ export class DataService {
             slug: 'pizzas',
             catText: 'Select two large pizza',
             products: [],
-            modifiers: [{ modifierId: 1, modOptionPlu: '999993' }],
+            modifiers: [{ modifierId: 1, modOptionPlu: '999993' },
+            { modifierId: 2, modOptionPlu: 'I100' },
+            { modifierId: 2, modOptionPlu: 'I101' }
+          ],
             itemCount: 1,
             itemCondition: null,
             pos: 0
@@ -625,10 +628,11 @@ export class DataService {
             isEnable: true,
             name: 'pizza',
             slug: 'pizzas',
-            catText: 'Select any medium skinny pizza',
+            catText: 'Select any medium or large skinny pizza',
             products: [],
             modifiers: [
                 { modifierId: 1, modOptionPlu: '999992' },
+                { modifierId: 1, modOptionPlu: '999993' },
                 { modifierId: 2, modOptionPlu: 'I101' }
               ],
             itemCount: 1,
@@ -904,7 +908,7 @@ export class DataService {
   }
   
   getAllDeals() {
-	  let dealLength = 8;
+	  let dealLength = 5;
 	  let dealArr = [];
 	  for (var i=1; i<=dealLength; i++) {
 		  let deal = this.getDealTypeData(i);
