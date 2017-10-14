@@ -278,7 +278,7 @@ a.cta-btn {
 	display: inline-block;
 	text-align: center;
 	color: #fff;
-	padding: 10px 1.20em;
+	padding: 6px 1em;
 	-moz-transition-duration: .5s;
 	-o-transition-duration: .5s;
 	-webkit-transition-duration: .5s;
@@ -290,13 +290,24 @@ a.cta-btn {
 	will-change: transform
 }
 a.addBtn {
-	background-color: #911c27;
+	background: #911c27;
+    border-color: currentcolor currentcolor #4f050c;
+    border-image: none;
+    border-radius: 3px;
+    border-style: none none solid;
+    border-width: medium medium 2px;
 	font: 17px "proxima_nova_rgregular";
 	max-width: 150px;
-	white-space: nowrap
+	white-space: nowrap;
+	margin-top: 10px;
 }
 a.addBtn:hover {
-	background-color: #789c48
+	background-color: #789c48;
+    border-color: currentcolor currentcolor #4d6330;
+    border-image: none;
+    border-radius: 3px;
+    border-style: none none solid;
+    border-width: medium medium 2px;
 }
 a.greenBtn {
 	background-color: #789c48;
@@ -1873,7 +1884,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 	padding: 1.5em;
 	border-spacing: 0
 }
-
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .media-left{text-align: center; padding-right: 20px;}
 @media (max-width: 767px) {
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media {
 	padding: 15px
@@ -1883,7 +1894,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 	height: 10.55em;
 	width: 10.55em;
 	overflow: hidden;
-	margin-right: 0.80em;
+/*	margin-right: 0.80em;*/
 	border-radius: 50%;
 	background-size: cover;
 	background-position: center
@@ -2001,11 +2012,11 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .leftSection {
 	padding-right: 1em
 }
-.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn {
+/*.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn {
 	height: 2.25em;
 	width: 2.25em;
 	padding: 0
-}
+}*/
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn span {
 	line-height: 2.2em
 }

@@ -83,6 +83,7 @@
                                       <div class="media-left">
                                         <div class="img-Wrapper" *ngIf="subProd.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
                                         <div class="img-Wrapper" *ngIf="subProd.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + subProd.thumb_image + ')'}"> </div>
+                                        <a (click)="addToCart(subProd.slug, subProd.mod_count)" class="addBtn cta-btn">Add to Cart</a>
                                       </div>
                                       <div class="media-body media-middle">
                                         <div class="description">
@@ -97,7 +98,6 @@
                                             </div>
                                             <p>{{subProd.short_description}}</p>
                                           </div>
-                                          <div class="rightSection bottom"> <a (click)="addToCart(subProd.slug, subProd.mod_count)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
                                         </div>
                                       </div>
                                     </div>
@@ -121,6 +121,7 @@
                                     <div class="media-left">
                                       <div class="img-Wrapper" *ngIf="prod.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
                                         <div class="img-Wrapper" *ngIf="prod.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + prod.thumb_image + ')'}"> </div>
+                                        <a (click)="addToCart(prod.slug, prod.mod_count)" class="addBtn cta-btn">Add to Cart</a>
                                     </div>
                                     <div class="media-body media-middle">
                                       <div class="description">
@@ -135,7 +136,6 @@
                                           </div>
                                           <p>{{prod.short_description}}</p>
                                         </div>
-                                        <div class="rightSection bottom"> <a (click)="addToCart(prod.slug, prod.mod_count)" class="addBtn cta-btn"><span class="glyphicon glyphicon-plus"></span></a> </div>
                                       </div>
                                     </div>
                                   </div>
