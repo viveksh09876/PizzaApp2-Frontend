@@ -6,7 +6,7 @@ import { UtilService } from '../util.service';
 import {DateRangePickDirective} from '../date-range-pick.directive';
 import { DateRange } from '../date-range';
 import { environment } from '../../environments/environment';
-
+declare var $: any;
 @Component({
   selector: 'app-ordernowmodal',
   templateUrl: './ordernowmodal.component.html',
@@ -274,7 +274,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
   goToMenu() {
   
     if(this.selectedStore.info != '') {
-
+        this.delivery_time = $("#DateTimeDel").val();
         let orderDetails = {
             
               type: this.order.orderType,
