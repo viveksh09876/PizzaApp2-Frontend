@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 import { UtilService } from '../util.service';
 import {DateRangePickDirective} from '../date-range-pick.directive';
 import { DateRange } from '../date-range';
+declare var $: any;
 
 @Component({
   selector: 'app-orderreview',
@@ -425,7 +426,7 @@ export class OrderreviewComponent implements OnInit {
     if (this.order.order_type == 'delilvery' && !this.isValidPostalFlag) {
       goFlag = false;
     }
-     
+    this.order.delivery_time = $("#DateTimeDel").val();
     tVal = this.order.delivery_time;
     //console.log('orderstart', this.order);
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
@@ -482,7 +483,7 @@ export class OrderreviewComponent implements OnInit {
               if(this.order.delivery_time_type == 'asap') {
                 delete orderData.defer;
               }
-  
+
               this.order.order_details = this.prepareFinalOrderData(this.items);
               this.order['latlong'] = this.dataService.getLocalStorageData('latlong');
               this.dataService.setLocalStorageData('finalOrder', JSON.stringify(orderData));

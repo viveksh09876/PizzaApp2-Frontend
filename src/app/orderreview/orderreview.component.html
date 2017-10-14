@@ -243,8 +243,8 @@
                             <form class="order_reviewform">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group calendar">
-                                        <input appDateRangePick *ngIf="order.delivery_time_type == 'defer'" name="dateTime" [(ngModel)]="order.delivery_time" [options]="pickerOptions" type="text" class="form-control" readonly/>
-                                        <input *ngIf="order.delivery_time_type == 'asap'" name="dateTime" [(ngModel)]="order.delivery_time" type="text" class="form-control" readonly />
+                                        <input appDateRangePick *ngIf="order.delivery_time_type == 'defer'" name="dateTime" [(ngModel)]="order.delivery_time" [options]="pickerOptions" type="text" class="form-control" readonly id="DateTimeDel"/>
+                                        <input *ngIf="order.delivery_time_type == 'asap'" name="dateTime" [(ngModel)]="order.delivery_time" type="text" class="form-control" readonly id="DateTimeDel" />
                                     </div>
                                 </div>
 
