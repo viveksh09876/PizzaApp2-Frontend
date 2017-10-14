@@ -524,7 +524,7 @@ export class DealsComponent implements OnInit {
           
     
         } else {
-          if (modCount > 0) {
+          if (modCount > 0 && slug != 'chicken-tenders-2-2-2') {
             //navigate to customize page
             this.router.navigate(['/item/deal/', this.dealId, this.comboUniqueId, this.selectedDealMenuCatIndex, slug]);        
           } else {
