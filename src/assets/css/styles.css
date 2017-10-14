@@ -2226,14 +2226,13 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-family: "proxima_nova_ltsemibold";
     font-size: 18px;
     border-right: 10px solid #fff;
-    text-align: center;
-    width: 100px;}
+    text-align: center; min-width: 146px;}
 .deal-bar p{background: #a5a4a3;
     display: table-cell;
     text-align: center;
     color: #fff;font-family: "bureaueaglebookregular";
 	font-size: 1.500em;}
-.deal-bar p img{max-width: 100%; max-height: 64px; width: 100%; min-height: 32px;}
+.deal-bar p img{max-width: 100%; max-height: 64px; min-height: 32px;}
 
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
 .customize-uk .deal-bar a{border:none;}
