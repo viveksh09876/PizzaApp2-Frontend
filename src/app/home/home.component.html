@@ -12,7 +12,7 @@
                 </div>
             </a>
         </ng-container>
-        <ng-container *ngIf="slide.Slide.coupon_code ==''">
+        <ng-container *ngIf="slide.Slide.coupon_code =='' && slide.Slide.slide_link==''">
             <div class="slide-content"> 
               <ng-container>
                 <img src="{{slide.Slide.image}}" class="img-responsive desk-banner" alt="slide content"/>
@@ -20,6 +20,16 @@
               </ng-container>
           </div>
         </ng-container>
+        <ng-container *ngIf="slide.Slide.slide_link!=''">
+          <a href="{{slide.Slide.slide_link}}">
+            <div class="slide-content"> 
+              <ng-container>
+                <img src="{{slide.Slide.image}}" class="img-responsive desk-banner" alt="slide content"/>
+                    <img src="{{slide.Slide.textImage}}" class="img-responsive mobile-banner" alt="slide content"/>
+              </ng-container>
+            </div>
+          </a>
+      </ng-container>
     </div>
     </ng-container>
   </div>
@@ -74,7 +84,7 @@
 <div class="blog-wrapper">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 col-sm-6">
+      <!-- <div class="col-md-4 col-sm-6">
         <div class="blog-content red">
           <div class="media">
             <div class="media-left media-middle"> <i class="icon-twitter"></i> </div>
@@ -84,9 +94,9 @@
           </div>
           <p>{{latestTweet}}</p>
         </div>
-      </div>
+      </div> -->
       <ng-container *ngFor=" let Fbfeed of latestFbFeeds;  let j=index">
-       <ng-container *ngIf="Fbfeed != null && j<2">
+       <ng-container *ngIf="Fbfeed != null && j<1">
       <div class="col-md-4 col-sm-6" >
         <div class="blog-content" [ngStyle]="{ 'background-image': 'url(' + Fbfeed.image + ')'}">
           <div class="media">
@@ -116,7 +126,7 @@
         
       </div> -->
       <ng-container *ngFor=" let feed of latestIgFeeds;  let i=index">
-      <ng-container *ngIf="feed != null && i<3">
+      <ng-container *ngIf="feed != null && i<2">
       <div class="col-md-4 col-sm-6">
         <div class="blog-content" [ngStyle]="{ 'background-image': 'url(' + feed.image + ')'}">
           <div class="media">
