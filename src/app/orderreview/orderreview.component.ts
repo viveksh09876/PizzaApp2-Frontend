@@ -175,7 +175,7 @@ export class OrderreviewComponent implements OnInit {
 
 
     
-    ////console.log(this.order);
+    //console.log(this.order);
   }
 
 
@@ -401,6 +401,9 @@ export class OrderreviewComponent implements OnInit {
 
   updateDeliveryTimeType(type) {
     this.order.delivery_time_type = type;
+    if (type == 'asap') {
+      this.order.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(35));
+    }
   }
 
   validateFields() {
@@ -461,23 +464,24 @@ export class OrderreviewComponent implements OnInit {
 			  //meal deal
 			  if (this.isMealDeal) {
 				  this.order['is_meal_deal'] = 'MEALDEAL';
-			  }
+        } 
+        
+        if (this.order.delivery_time_type == 'defer') {
+          orderData.defer = {
+            print_time: new Date().toString(),
+            required_time: new Date(tVal).toString()
+          }
+          
+          orderData.defer.print_time = this.utilService.toISOString(orderData.defer.print_time);
+          orderData.defer.required_time = this.utilService.toISOString(orderData.defer.required_time);
+
+        }
   
-              if(this.order.order_type == 'delivery' && this.order.delivery_time_type == 'defer') {
-                
-                orderData.defer = {
-                  print_time: new Date().toString(),
-                  required_time: new Date(tVal).toString()
-                }
-                
-                orderData.defer.print_time = this.utilService.toISOString(orderData.defer.print_time);
-                orderData.defer.required_time = this.utilService.toISOString(orderData.defer.required_time);
-  
-              }else if(this.order.order_type == 'pickup') {
+          if(this.order.order_type == 'pickup') {
                 //orderData.delivery_time;
                 //delete orderData.delivery_time_type;
                 delete orderData.address;
-                delete orderData.defer;
+                //delete orderData.defer;
               }
   
               if(this.order.delivery_time_type == 'asap') {
