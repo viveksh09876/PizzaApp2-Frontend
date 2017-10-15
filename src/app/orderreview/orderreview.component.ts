@@ -587,7 +587,8 @@ export class OrderreviewComponent implements OnInit {
                       
                       if(sendToOrder) {
 
-                          
+                          //console.log('verify: ply', opt.plu_code, 'sendcode: ', opt.send_code, 'issizecrust:', isSizeCrust, 'is_checked:', opt.is_checked, 'defalt checked: ', opt.default_checked, 'add extra', opt.add_extra);
+
                           let modType = 'modifier';
                           if(opt.is_included_mod) {
                             modType = 'included_modifier';
@@ -604,11 +605,22 @@ export class OrderreviewComponent implements OnInit {
                               send_code: opt.send_code                              
                           }
 
-                          if(opt.is_checked || opt.add_extra == true) {
-                            val.type = 1
+                          if (opt.plu_code == 999991 || opt.plu_code == 999992 || opt.plu_code == 999993 || opt.plu_code == 91 || opt.plu_code == 'I100' || opt.plu_code == 'I101') {
+
+                            if (opt.is_checked) {
+                              val.type = 1;
+                              product.modifier.push(val);
+                            }
+
+                          } else {
+                            if(opt.is_checked || opt.add_extra == true) {
+                              val.type = 1;
+                              
+                            }
+                            product.modifier.push(val);
                           }
                           
-                          product.modifier.push(val);
+                          
                       }
                       
                     }
