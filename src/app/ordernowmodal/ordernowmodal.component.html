@@ -25,7 +25,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane" [ngClass]="{'active': order.orderType == 'pickup'}" id="pickup">
                         <div class="row form_sec">
-                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
+                            <!-- <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
                                  <input class="form-control" placeholder="City" (keyup)="getCities($event.target.value);" [(ngModel)]="cityVal" (change)="getStores($event.target.value)" name="cityVal">
                                 <ul class="autocomplete-list" *ngIf="showCityList && cityList.length > 0">       <ng-container *ngIf="cityList.length > 0">
                                         <li *ngFor="let city of cityList"><a (click)="selectCity(city);">{{city}}</a></li>
@@ -33,7 +33,7 @@
                                 </ul>
                                 
                                 <small>or</small>  
-                            </div>
+                            </div> -->
                             <div class="col-md-12 col-sm-12" *ngIf="useStreetDb">
                                 <input class="form-control" placeholder="Enter Area Name" (keyup)="getStreetArea($event.target.value);" [(ngModel)]="areaVal" (change)="getAreaStreets($event.target.value)" name="areaVal">
                                 <ul class="autocomplete-list" *ngIf="showAreaList && areaList.areas.length > 0">       
@@ -53,8 +53,8 @@
                             </div>
                                 
                             
-                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
-                                <input class="form-control" type="text" placeholder="Postal code" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
+                            <div class="col-md-12 col-sm-12 optional" *ngIf="!useStreetDb">
+                                <input class="form-control" type="text" placeholder="Ex. EH105LY" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
                                 <!-- <small>or</small>   -->
                             </div>
                             <!-- <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
@@ -83,13 +83,13 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" [ngClass]="{'active': order.orderType == 'delivery'}" id="delivery">
                         <div class="row form_sec">
-                            <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
+                            <!-- <div class="col-md-4 col-sm-4 optional" *ngIf="!useStreetDb">
                                  <input class="form-control" placeholder="City" (keyup)="getCities($event.target.value);" [(ngModel)]="cityVal" (change)="getStores($event.target.value)" name="cityVal">
                                 <ul class="autocomplete-list" *ngIf="showCityList && cityList.length > 0">       <ng-container *ngIf="cityList.length > 0">
                                         <li *ngFor="let city of cityList"><a (click)="selectCity(city);">{{city}}</a></li>
                                     </ng-container>
                                 </ul>
-                            </div>
+                            </div> -->
                             <div class="col-md-4 col-sm-4" *ngIf="useStreetDb">
                                 <input class="form-control" placeholder="Enter Area Name" (keyup)="getStreetArea($event.target.value);" [(ngModel)]="areaVal" (change)="getAreaStreets($event.target.value)" name="areaVal">
                                 <ul class="autocomplete-list" *ngIf="showAreaList && areaList.areas.length > 0">       
@@ -120,11 +120,11 @@
                         </div>
                         <br/>
                         <div class="row form_sec">
-                            <div class="col-md-4 col-sm-4 optional">
+                            <!-- <div class="col-md-4 col-sm-4 optional">
                                 <input class="form-control" type="text" placeholder="House Number or Name" [(ngModel)]="delivery_apartment">
-                            </div>
-                            <div class="col-md-4 col-sm-4">
-                                <input class="form-control" type="text" placeholder="Postcode" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
+                            </div> -->
+                            <div class="col-md-12 col-sm-12">
+                                <input class="form-control" type="text" placeholder="Ex. EH105LY" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
                             </div>
                             <!-- <div class="col-md-4 col-sm-4 optional">
                                 <input class="form-control" type="hidden" placeholder="State" [(ngModel)]="order.delivery_state">

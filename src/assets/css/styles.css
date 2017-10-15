@@ -279,6 +279,7 @@ a.cta-btn {
 	text-align: center;
 	color: #fff;
 	padding: 6px 1em;
+	border-radius: 3px;
 	-moz-transition-duration: .5s;
 	-o-transition-duration: .5s;
 	-webkit-transition-duration: .5s;
@@ -1190,9 +1191,11 @@ header.navigation{z-index: 9999;}
 	pointer-events: none;
 	background-color: #65646a;
 	display: inline-block;
-	padding: 10px;
+	padding:6px 10px;
 	color: #fff;
-	margin-left: -4px
+	margin: 0 -6px;
+    position: relative;
+    z-index: 9999;
 }
 .banner-wrapper .leftButtons.buttons a.greenBtn.btn-sm {
 	width: 175px;
@@ -1206,6 +1209,15 @@ header.navigation{z-index: 9999;}
 }
 
 @media (max-width: 540px) {
+	.deal-bar a {
+        font-size: 14px !important;
+    padding: 0px;
+    vertical-align: middle;
+    border-right: 0px !important;
+    min-width: 84px !important;
+}
+.deal-bar p.hidden540{display: none;}
+.deal-bar p.visible540{display: block !important;}
 	.mapboxgl-popup{max-width: 200px !important;}
 	.inside-column-container.thirdCol .control-group .control.checkbox{padding-right: 95px;}
 .banner-wrapper .leftButtons.buttons {
@@ -1880,6 +1892,7 @@ button.close:hover,button.close:focus{opacity: 1;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper a {
 	text-decoration: none
 }
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn{margin: 0 0 0 10px;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media {
 	padding: 1.5em;
 	border-spacing: 0
@@ -1952,12 +1965,13 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	display: block;
 	width: 100%
 }
-.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .description .rightSection a.cta-btn {
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn{margin: 10px 0 0 0;}
+/*.two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .description .rightSection a.cta-btn {
 	margin-top: 15px;
 	height: 2.25em;
     width: 2.25em;
     padding: 10px 0;
-}
+}*/
 }
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .description h4 {
 	font: 1.625em "bureaueaglebookregular";
@@ -2002,6 +2016,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection h5 {
 	font-size: 2em
 }
+.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection{width: 17%;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn {float: left;}
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .createWrapper .media .description .rightSection a.cta-btn{float: left;}
 }
@@ -2010,7 +2025,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	min-height: 240px;
 }
 .two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .leftSection {
-	padding-right: 1em
+	padding-right: 0em
 }
 /*.two-column-wrapper .inside-column-container .content-wrapper .content-container .favSection .createWrapper .media .description .rightSection a.addBtn {
 	height: 2.25em;
@@ -2039,6 +2054,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (max-width: 1199px) {
+	.leftContent .tab-content{margin: 20px 0 0 0 !important;}
 .two-column-wrapper .inside-column-container.aside-wrapper {
 	width: 100%
 }
@@ -2114,7 +2130,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns {
 	margin-top: 2em;
 }
-.leftContent .tab-content.deals-sub-menu{margin: 116px 0 0 0 !important;}
+/*.leftContent .tab-content.deals-sub-menu{margin: 116px 0 0 0 !important;}*/
 .leftContent .tab-content.deals-sub-menu .sub-deal-list,.leftContent .tab-content.deals-sub-menu .sub-cat-section{margin: 0px !important;}
 .leftContent .nav-tabs.orderTabs,.deal-bar{width: 100% !important; right:0px; position: static !important; padding: 0px !important;}
 }
@@ -2128,7 +2144,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (max-width: 991px) {
-	.leftContent .tab-content.deals-sub-menu{margin: 30px 0 0 0 !important;}
+	.leftContent .tab-content.deals-sub-menu{margin: 10px 0 0 0 !important;}
 .two-column-wrapper {
 	display: block
 }
@@ -2217,9 +2233,15 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     width: 100%;
 	margin: 25px auto
 }
-.deals-sub-menu .custom-select {margin: 25px 16px;}
+.deals-sub-menu .custom-select {margin: 0 15px 15px;
+    float: left;
+    -webkit-appearance: none;
+    pointer-events: none;
+    text-align: center;
+    font-size: 18px;
+    white-space: inherit;}
 .deal-bar.full{width: 95.5%;}
-.deal-bar{padding: 64px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:64.3%; z-index: 98;}
+.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:64.3%; z-index: 98;}
 .deal-bar a{     background: #911c27;
     color: #ffffff;
     display: table-cell;
@@ -2227,11 +2249,12 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-size: 18px;
     border-right: 10px solid #fff;
     text-align: center; min-width: 146px;}
-.deal-bar p{background: #a5a4a3;
+.deal-bar p{background: #f4f4f4;
     display: table-cell;
     text-align: center;
     color: #fff;font-family: "bureaueaglebookregular";
 	font-size: 1.500em;}
+	.deal-bar p.visible540{display: none;}
 .deal-bar p img{max-width: 100%; max-height: 64px; min-height: 32px;}
 
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
@@ -2277,6 +2300,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (max-width: 767px) {
+	.deal-bar{margin: 25px 0 0 0;}
 .footer-wrapper ul.nav-links {
 	padding: 0
 }
@@ -2472,7 +2496,7 @@ color:#fff
 
 .added-exclass.delry > .col-md-8{ width: 100%;}
 .added-exclass.delry > .col-md-4{  display: none;}
-#pickup.tab-pane .optional .form-control{ display: inline-block; width: 80%; margin-bottom: 30px;}
+#pickup.tab-pane .optional .form-control{ display: inline-block; /*width: 80%;*/ margin-bottom: 30px;}
 #pickup.tab-pane .use-location{font-family: "proxima_nova_rgregular"; font-size: 16px; line-height: 20px; color: #911c27; text-transform: uppercase; display: inline-block;}
 .modal-dialog .modal-content .modal-body.white h5 {
 	font: normal 18px "proxima_nova_rgregular";
@@ -3025,7 +3049,7 @@ color:#fff
 .leftContent .tab-content.deals-sub-menu{margin: 0px !important;}
 }
 /*# sourceMappingURL=styles.css.map */
-.leftContent .tab-content.deals-sub-menu{margin-top:142px;}
+/*.leftContent .tab-content.deals-sub-menu{margin-top:142px;}*/
 .leftContent .tab-content.deals-sub-menu .sub-deal-list{margin: 58px 0 0 0;}
 .leftContent .tab-content.deals-sub-menu .sub-cat-section{margin-top:58px;}
 .leftContent .tab-content{margin-top:70px;}

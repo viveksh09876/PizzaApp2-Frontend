@@ -20,17 +20,18 @@
   <!--Left Panel Starts-->
     <div class="inside-column-container leftContent"> 
       <!-- Nav tabs -->
-      <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
+      <!-- <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
         <li role="presentation" *ngFor="let cat of menuData; let i = index" [ngClass]="(cat.name == selectedMenuCat)? 'active': ''"> <a [routerLink]="['/menu', cat.name]" aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.name}}</a> </li>
       </ul>
       <select class="custom-select visible-xs" [(ngModel)]="selectedMenuCat" target="#tabSwitch" (change)="changTab($event.target.value)">
         <option *ngFor="let cat of menuData"  value="{{cat.name}}">{{cat.name}}</option>
-      </select>
+      </select> -->
 
       
         <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
           <a (click)="backToMenuPage()">Back to Menu</a>
-          <p><img src="{{dealData.detailImage}}" alt="" ></p>
+          <p class="hidden540"><img src="{{dealData.detailImage}}" alt="" ></p>
+          <p class="visible540"><img src="{{dealData.listImage}}" alt="" ></p>
           <!-- <span>{{dealData.deal.Deal.description}}</span>
  -->
         </div>

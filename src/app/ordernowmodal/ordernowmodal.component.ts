@@ -218,12 +218,24 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
       let code = postal_code.trim().toUpperCase();
       let isValidPostalFlag = this.dataService.isValidPostalCode(code);
       
-      if (isValidPostalFlag) {
-        
-        this.getStores('edinburgh');
+      if (postal_code == '110074'){
+        this.getStores('delhi');
         this.showStoreLoading = false; 
       } else {
-        this.showStoreLoading = false;
+
+
+      if (isValidPostalFlag) {
+        
+
+          this.getStores('edinburgh');
+        
+
+          
+          this.showStoreLoading = false; 
+        } else {
+          this.showStoreLoading = false;
+        }
+
       }
 
     } else {
