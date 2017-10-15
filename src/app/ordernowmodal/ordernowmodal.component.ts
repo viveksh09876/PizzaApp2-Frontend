@@ -269,6 +269,9 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     this.order.delivery_time_type = type;
     this.showOutletError = false;
     this.time.hour = '01';
+    if (type == 'asap') {
+      this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(35));
+    }
   }
 
   goToMenu() {
