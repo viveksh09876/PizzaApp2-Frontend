@@ -2177,7 +2177,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	cursor: pointer;
 }
 .deals-sub-menu .nav-tabs>li>a,.deals-sub-menu .nav-tabs>li>span,.deals-sub-menu .nav-tabs>li>span:focus,.deals-sub-menu .nav-tabs>li.active>span,.deals-sub-menu .nav-tabs>li.active>span:hover,.deals-sub-menu .nav-tab>li>a:focus,.deals-sub-menu .nav-tabs>li>a:hover,.deals-sub-menu .nav-tabs>li.active>a,.deals-sub-menu .nav-tabs>li.active>a:focus,.deals-sub-menu .nav-tabs>li.active>a:hover{font-size: 1em !important;}
-.deals-sub-menu .nav-tabs>li.active>a{opacity: 1;}
+.deals-sub-menu .nav-tabs>li.active>a{opacity: 1 !important;}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,.nav-tabs>li>span,.nav-tabs>li>span:focus,.nav-tabs>li.active>span,.nav-tabs>li.active>span:hover {
 	opacity: .4
 }
