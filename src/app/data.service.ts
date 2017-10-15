@@ -908,7 +908,7 @@ export class DataService {
   }
   
   getAllDeals() {
-	  let dealLength = 8;
+	  let dealLength = 5;
 	  let dealArr = [];
 	  for (var i=1; i<=dealLength; i++) {
 		  let deal = this.getDealTypeData(i);
