@@ -298,7 +298,7 @@ export class DealsComponent implements OnInit {
 						let opt = products.ProductModifier[i].Modifier.ModifierOption[j].Option;
 						
 					   
-						  if((opt.plu_code == '91' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
+						  if((opt.plu_code == '217' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
 							  opt.send_code = 1;
 							  ////console.log('fix', opt.name);
 						  }
@@ -312,7 +312,7 @@ export class DealsComponent implements OnInit {
 						  if(opt.plu_code == 999991
 							  || opt.plu_code == 999992  
 								|| opt.plu_code == 999993 
-								  || opt.plu_code == 91
+								  || opt.plu_code == 217
 									|| opt.plu_code == 'I100'  
 									  || opt.plu_code == 'I101') {
 

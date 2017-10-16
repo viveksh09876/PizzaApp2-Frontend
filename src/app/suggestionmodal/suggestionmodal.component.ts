@@ -228,7 +228,7 @@ export class SuggestionmodalComponent extends DialogComponent<SuggestModal, bool
                         
                       }else{
     
-                        if((options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101' || options[j].Option.plu_code == '91') && options[j].Option.is_checked) {
+                        if((options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101' || options[j].Option.plu_code == '217') && options[j].Option.is_checked) {
                           if(typeof options[j].Option.price[defaultSize] == 'string') {
                             
                             addPrice = parseFloat(options[j].Option.price[defaultSize]);
@@ -365,7 +365,7 @@ export class SuggestionmodalComponent extends DialogComponent<SuggestModal, bool
                         options[j].Option.send_code = 0;
                       }
     
-                      if(options[j].Option.plu_code == '91' || options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101') {
+                      if(options[j].Option.plu_code == '217' || options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101') {
                         if(options[j].Option.is_checked == true) {
                           options[j].Option.send_code = 1;
                         }else{
