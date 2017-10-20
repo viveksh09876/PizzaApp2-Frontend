@@ -250,11 +250,11 @@ export class UtilService {
   }
 
   getStoreTimings() {
-    //let n = this.getCurrentDay();
-    let storeTime = '11:00am - 11:00pm'; 
-    // if (n == 'Friday' || n == 'Saturday') {
-    //   storeTime = '11:00am - 12:00am(midnight)';
-    // }
+    let n = this.getCurrentDay();
+    let storeTime = '12:00pm - 9:45pm'; 
+    if (n == 'Friday' || n == 'Saturday') {
+      storeTime = '12:00pm - 10:45pm';
+    }
 
     return storeTime;
   }

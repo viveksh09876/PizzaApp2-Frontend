@@ -167,7 +167,7 @@ $(document).ready(function(){
                           var latitude = stData[p].Store.latitude;
                           var longitude = stData[p].Store.longitude;
 
-                          var infoWindowText = '<div class="infoWrapper"><a class="close-btn" id="closeBtn"></><a href="/uk/#/menu" class="custom-button"><span>order now</span></a><div class="image-container"><img src="'+ cmsurl +'/' + stData[p].Store.store_image +'" class="img-responsive" alt="Map Image"/></div><div class="content-container"><div class="media"><div class="media-body"><h4 class="media-heading">'+stData[p].Store.store_name+'</h4><p>'+stData[p].Store.store_address+'</p></div><div class="media-right"><a href="'+ directionUrl + '&daddr=' + latitude + ',' + longitude  +'" target="_blank"><i class="icon icon-directions"></i> Direction</a></div></div><ul class="list-inline"><li><a><i class="icon icon-time"></i><span>Open now:  11AM - 11PM<span/></a></li><li><a href="tel:'+stData[p].Store.store_phone+'"><i class="icon icon-phone"></i><span>'+stData[p].Store.store_phone+'<span/></a></li></ul></div><div class="tail-wrapper"></div></div>';
+                          var infoWindowText = '<div class="infoWrapper"><a class="close-btn" id="closeBtn"></><a href="/uk/#/menu" class="custom-button"><span>order now</span></a><div class="image-container"><img src="'+ cmsurl +'/' + stData[p].Store.store_image +'" class="img-responsive" alt="Map Image"/></div><div class="content-container"><div class="media"><div class="media-body"><h4 class="media-heading">'+stData[p].Store.store_name+'</h4><p>'+stData[p].Store.store_address+'</p></div><div class="media-right"><a href="'+ directionUrl + '&daddr=' + latitude + ',' + longitude  +'" target="_blank"><i class="icon icon-directions"></i> Direction</a></div></div><ul class="list-inline"><li><a><i class="icon icon-time"></i><span>Open now:  '+ getStoreTimings()+'<span/></a></li><li><a href="tel:'+stData[p].Store.store_phone+'"><i class="icon icon-phone"></i><span>'+stData[p].Store.store_phone+'<span/></a></li></ul></div><div class="tail-wrapper"></div></div>';
 
                               // create a DOM element for the marker
                               var el = document.createElement('div');
@@ -215,5 +215,32 @@ $(document).ready(function(){
   });
 });
 }
+
+
+function getStoreTimings() {
+    let n = this.getCurrentDay();
+    let storeTime = '12:00pm - 9:45pm'; 
+    if (n == 'Friday' || n == 'Saturday') {
+      storeTime = '12:00pm - 10:45pm';
+    }
+
+    return storeTime;
+  }
+
+
+  function getCurrentDay() {
+    var d = new Date();
+    var weekday = new Array(7);
+    weekday[0] =  "Sunday";
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    
+    var n = weekday[d.getDay()];
+    return n;
+  }
 
 
