@@ -1,0 +1,35 @@
+<div id="messageModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span aria-hidden="true">&times;</span></button>
+      </div>
+<div class="modal-body white">
+          <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4 *ngIf="title != 'block'">{{message}}</h4>
+                    <h5 *ngIf="title=='block'" class="order-soon">In Store pickup only<br/><br/>
+                        Online ordering will be active from October 2nd onwards.</h5>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              
+                <div class="">
+                    <div role="tabpanel" class="tab-pane active" id="asap">
+                        
+                        <div class="row text-center">
+                            <div class="col-md-4 align-center">
+                                <button class="btn btn-danger btn-block continue-btn" (click)="closeModal()">{{buttonText}}</button>  
+                            </div>
+                        </div>
+                    </div>                    
+                  </div>
+              </div>
+            </div>
+        </div>
+        </div>
+            </div>
+        </div>

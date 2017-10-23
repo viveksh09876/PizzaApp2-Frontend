@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Cors test </title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.2/jquery.js"></script>
+</head>
+<body>
+
+	<a href="javascript://" onclick="hitApi()">Access API</a>
+
+	
+	<script type="text/javascript">
+		function hitApi() {
+			
+			var test = {temp: 123};
+		
+			$.post('http://35.185.240.172/nkd/index.php/placeOrder', test, function(resp){
+				console.log(resp);
+			});
+		}
+	</script>
+</body>
+</html>

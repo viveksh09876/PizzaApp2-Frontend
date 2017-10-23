@@ -1,0 +1,103 @@
+<!--Navigation-->
+<nav class="main-navigation fadeIn animated">
+<div class="menu-overlay"></div>
+  <div class="nav-container">
+    <ul>
+      <li class="active"> <a (click)="navigateMenu('')">home</a> </li>
+      <li> <a (click)="navigateMenu('franchising')">franchising </a> </li>
+      <li *ngIf="!hideForUK"> <a (click)="navigateMenu('catering')">catering</a> </li>
+      <!-- <li> <a (click)="navigateMenu('events')">events</a> </li> -->
+      <li> <a (click)="openModal('contact')">contact us</a> </li>
+      <li> <a (click)="navigateMenu('careers')">join our team</a> </li>
+      <!-- <li> <a href="#">news</a> </li> -->
+    </ul>
+    <hr class="clearfix visible-xs visible-sm">
+    <ul class="links visible-xs visible-sm">
+
+      <li *ngIf="showLocationTab"> <a href="#mapCanvas"> <span class="icon icon-locations"></span> <span>locations</span> </a> </li>
+      <li *ngIf="showLogin"> <a (click)="openModal('login')"> <span class="icon icon-eclub"></span> <span class="loginText">MyNKD</span> </a> </li>
+      <li *ngIf="!showLogin"> <a (click)="logout()"> <i class="fa fa-sign-out"></i> Logout</a> 
+      </li>
+    </ul>
+    <hr class="clearfix visible-xs visible-sm">
+    <ul class="list-inline social-list visible-xs visible-sm">
+      <li><a href="{{followUsLinks.fb}}" target="_blank"><i class="icon-facebook"></i></a></li>
+      <li><a href="{{followUsLinks.twitter}}" target="_blank"><i class="icon-twitter"></i></a></li>
+      <li><a href="{{followUsLinks.instagram}}" target="_blank"><i class="icon-instagram"></i></a></li>
+    </ul>
+  </div>
+</nav>
+
+<!--Header-->
+<header class="navigation"> <a href class="menu-button" id="menuButton"> <i class="menu-icon"> <span></span> <span></span> <span></span> </i> <i class="icon-close"> </i> </a> <a [routerLink]="['/']" class="logo"> <img src="assets/images/logo.svg" alt="Logo" /> </a>
+  <ul class="list-inline links hidden-xs hidden-sm">
+    <li *ngIf="showLocationTab"> <a href="#mapCanvas"> <span class="icon icon-locations"></span> <span>Locations</span> </a> </li>
+    <li class="eclub-btn" *ngIf="showLogin"> <a (click)="openModal('login')"> <span class="icon icon-eclub"></span> <span class="loginText">myNKD</span> </a> </li>
+    <li class="eclub-btn" *ngIf="!showLogin"> <a > <span class="fa fa-user-circle-o"></span></a> 
+    <ul>
+      <li><a [routerLink]="['/account']"><i class="fa fa-user"></i> My Account</a></li>
+      <li><a (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
+    </ul>
+    </li>
+  </ul>
+<ul class="list-inline links hidden-xs hidden-sm">
+     <li *ngIf="orderUrl == ''"> <a [routerLink]="['/menu']"> <span class="icon icon-pizza"></span><span>Menu</span> </a> </li>
+    <li *ngIf="orderUrl != ''"> <a href="{{this.orderUrl}}" target="_blank"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
+    <li *ngIf="orderUrl == ''"> <a (click)="goToOrderNow()"> <span class="icon icon-pizza-icon"></span><span>Order Now</span> </a> </li>
+    <li *ngIf="orderUrl == ''"> <a (click)="goToFav()"><span class="icon icon-favourite"></span><span>Favourites</span></a></li>
+  </ul>
+  
+  <ul class="list-inline mobile links hidden-md hidden-lg">
+      <li *ngIf="orderUrl == ''"><a (click)="goToOrderNow()"><span class="icon icon-pizza"></span></a></li>
+      <li *ngIf="orderUrl == ''"><a (click)="goToFav()"><span class="icon icon-favourite"></span></a> </li>
+      <li *ngIf="showLogin"><a (click)="openModal('login')"><span class="icon icon-eclub"></span></a> </li>
+      <li *ngIf="!showLogin"> <a [routerLink]="['/account']"> <span class="fa fa-user-circle-o"></span> <!-- <span class="myNKDText">My NKD</span>  --></a> </li>
+  </ul>
+  <div class="mob-order hidden-md hidden-lg">
+    <span *ngIf="orderUrl != ''"> <a href="{{this.orderUrl}}" target="_blank">Start Your Order Now </a> </span>
+    <span *ngIf="orderUrl == ''"> <a (click)="goToOrderNow()">Start Your Order Now</a> </span>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
+
+<!--Footer-->
+<footer class="footer-wrapper" *ngIf="showFooter">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-sm-6"> <img src="assets/images/logo-footer.jpg" class="img-responsive logo" alt="Logo"/> </div>
+          <div class="col-sm-3">
+            <ul class="nav-links">
+              <li> <a [routerLink]="['/franchising']">franchising </a> </li>
+              <li *ngIf="!hideForUK"> <a [routerLink]="['/catering']">catering</a> </li>
+              <li> <a [routerLink]="['/terms']">terms of use</a> </li>
+              <li> <a [routerLink]="['/privacy']">privacy policy</a> </li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <ul class="nav-links border-right">
+              <li> <a (click)="openModal('contact')">contact us</a> </li>
+              <li> <a [routerLink]="['/careers']">join our team</a> </li>
+              <li> <a href="https://nkdpizza.com/uk/nutrition.pdf" target="_blank">nuitritions</a> </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+      <ul class="list-inline social-links">
+          <li>follow us /</li>
+          <li><a href="{{followUsLinks.fb}}" target="_blank"><i class="icon-facebook"></i></a></li>
+          <li><a href="{{followUsLinks.twitter}}" target="_blank"><i class="icon-twitter"></i></a></li>
+          <li><a href="{{followUsLinks.instagram}}" target="_blank"><i class="icon-instagram"></i></a></li>
+        </ul>
+      <p class="add-info">NKD Europe Office<br> 96 Kensington High Street, London, United Kingdom, W8 4SG.<br>
+<a href="tel:+44 (0)20 3667 8784">+44 (0)20 3667 8784</a>
+<a href="mailto:marketing@nkdpizza.com">marketing@nkdpizza.com</a></p>
+        
+      </div>
+    </div>
+  </div>
+  <p>© 2017 NKD Pizza. All rights reserved.</p>
+</footer>

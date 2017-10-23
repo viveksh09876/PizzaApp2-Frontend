@@ -1,0 +1,48 @@
+<!-- Login Modal -->
+<div id="signinModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" (click)="close()"><span _ngcontent-c5="" class="icon icon-close"></span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6 signin">
+                <h3>sign in to mynkd pizza</h3>
+                <p class="text-danger" *ngIf="error.show == true">{{error.message}}<p>
+                <form  #heroForm="ngForm">
+                  <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" id="username1" #username1="ngModel" class="form-control" required name="username" placeholder="Email" [(ngModel)]="username" email>
+                    <div *ngIf="username1.errors && (username1.dirty || username1.touched)">                      
+                      <p class="text-danger" [hidden]="!username1.errors.required">
+                        email is required
+                      </p>
+                      <p class="text-danger" [hidden]="!username1.errors.email">
+                        invalid email
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password" required>
+                  </div>
+                  <div class="form-group"><a (click)="openModal('forgot')">Forgot username or password?</a></div>
+                  <div class="form-group">
+                    <button type="button" (click)="loginApi()" class="btn btn-default btn-block">Submit</button>
+                  </div>
+                </form>
+            </div>    
+            <div class="col-md-6 guest">
+                <h3>continue as our guest</h3>
+                <button type="submit" (click)="openModal('ordernow')" class="btn btn-default btn-block">Order without signing in</button>
+                <span class="seprator"><small>OR</small></span>
+                <button type="submit" class="btn btn-default btn-block signup" (click)="openModal('register')">Register for myNKD pizza</button>
+                <div class="text-center offer-text">get offers, discounts and other benefits</div>
+            </div>    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
