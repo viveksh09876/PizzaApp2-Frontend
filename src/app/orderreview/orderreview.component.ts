@@ -467,9 +467,13 @@ export class OrderreviewComponent implements OnInit {
         } 
         
         if (this.order.delivery_time_type == 'defer') {
+
+          let rTime = new Date(tVal);
+          let pTime = this.utilService.subtractTime(rTime, 20);
+
           orderData.defer = {
-            print_time: new Date().toString(),
-            required_time: new Date(tVal).toString()
+            print_time: pTime.toString(),
+            required_time: rTime.toString()
           }
           
           orderData.defer.print_time = this.utilService.toISOString(orderData.defer.print_time);
