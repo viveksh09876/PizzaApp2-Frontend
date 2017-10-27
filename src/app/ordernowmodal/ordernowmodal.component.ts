@@ -225,14 +225,14 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
         if (isValidPostalFlag) {
 
-          this.dataService.getStoresFromPostalCode(postal_code)
-          .subscribe(data => {                    
-                    this.storeList = data;
-                    this.selectedStore.val = data[0].Store.id;
-                    this.setSelectedStore(data[0].Store.id);
-                    this.showStoreLoading = false;                 
-                }); 
-          //this.getStores('edinburgh');  
+          // this.dataService.getStoresFromPostalCode(postal_code)
+          // .subscribe(data => {                    
+          //           this.storeList = data;
+          //           this.selectedStore.val = data[0].Store.id;
+          //           this.setSelectedStore(data[0].Store.id);
+          //           this.showStoreLoading = false;                 
+          //       }); 
+          this.getStores('edinburgh');  
           //this.showStoreLoading = false; 
 
         } else {
