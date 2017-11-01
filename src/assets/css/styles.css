@@ -3176,7 +3176,7 @@ color:#fff
 .payment_method .nav-tabs > li a:hover, .payment_method .nav-tabs > li a:focus{ opacity: 1; font-family: 'proxima_nova_ltlight'; font-size: 18px; border-right:4px solid #cfcfcf; text-align: right}
 .payment_method .nav-tabs > li.active a{ border-color: #789c48; color: #789c48; font-family: 'proxima_nova_rgbold'; }
 
-.payment_method .tab-content{ float: right; width: 75%; padding: 20px 0 0 5%; height: 310px; position: relative}
+.payment_method .tab-content{ float: right; width: 75%; padding: 20px 0 0 5%; min-height: 310px; position: relative}
 .payment_method .tab-content:after{ position: absolute; left: -4px; top: 0; width: 4px; height: 100%; content: ''; background: #cfcfcf;}
 .payment_method .tab-content h5{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_rgbold'; margin: 0 0 15px;}
 .payment_method .tab-content p{ color: #5b5a56; font-size: 18px; line-height: 22px; font-family: 'proxima_nova_ltlight'; margin: 0 0 20px;}
