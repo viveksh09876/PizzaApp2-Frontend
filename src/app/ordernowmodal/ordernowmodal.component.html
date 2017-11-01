@@ -54,7 +54,7 @@
                                 
                             
                             <div class="col-md-12 col-sm-12 optional" *ngIf="!useStreetDb">
-                                <input class="form-control" type="text" placeholder="Ex. EH105LY" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
+                                <input class="form-control" type="text" placeholder="Enter your postcode here" [(ngModel)]="postalCode" (change)="getStoresFromPostalCode($event.target.value)">
                                 <!-- <small>or</small>   -->
                             </div>
                             <!-- <div class="col-md-4 col-sm-4" *ngIf="!useStreetDb">
@@ -124,7 +124,7 @@
                                 <input class="form-control" type="text" placeholder="House Number or Name" [(ngModel)]="delivery_apartment">
                             </div> -->
                             <div class="col-md-12 col-sm-12">
-                                <input class="form-control" type="text" placeholder="Ex. EH105LY" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
+                                <input class="form-control" type="text" placeholder="Enter your postcode here" [(ngModel)]="postalCode" (input)="validatePostalCode($event.target.value);">
                             </div>
                             <!-- <div class="col-md-4 col-sm-4 optional">
                                 <input class="form-control" type="hidden" placeholder="State" [(ngModel)]="order.delivery_state">
