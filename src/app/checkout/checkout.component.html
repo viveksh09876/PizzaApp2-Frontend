@@ -117,11 +117,11 @@
                                         <div>Card holder name is required.</div>
                                     </div>
                                     <div class="row col-md-12">
-                                        <label>Postal code</label>
-                                        <span><input type="text" id="cardPostalCode" name="cardPostalCode" [(ngModel)]="card.postalCode" placeholder="Enter postal code" #cardPostalCode="ngModel" required autocomplete="off"></span>
+                                        <label>Postcode</label>
+                                        <span><input type="text" id="cardPostalCode" name="cardPostalCode" [(ngModel)]="card.postalCode" placeholder="Enter your postcode here" #cardPostalCode="ngModel" required autocomplete="off"></span>
                                     </div>
                                     <div [hidden]="cardPostalCode.valid  || (cardPostalCode.pristine  && !newRuleForm.submitted)" class="alert alert-danger">
-                                        <div>Postal Code is required.</div>
+                                        <div>Postcode is required.</div>
                                     </div>
                                     <div class="row col-md-12 submit">
                                         <button *ngIf="showPlaceOrder" class="btn-red btn-block">Submit</button>
