@@ -40,7 +40,7 @@
                           <div class="img-Wrapper" *ngIf="prod.thumb_image == null" style="background-image:url(assets/images/pizza-images/1.jpg)"> </div>
                           <div class="img-Wrapper" *ngIf="prod.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + prod.thumb_image + ')'}"> </div>
                           <a *ngIf="prod.mod_count == 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Add to Cart</a>
-                          <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Customize</a>
+                          <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Customise</a>
                         </div>
                         <div class="media-body media-middle">
                             <div class="description">
@@ -79,7 +79,7 @@
                                         <div class="img-Wrapper" *ngIf="subProd.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
                                         <div class="img-Wrapper" *ngIf="subProd.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + subProd.thumb_image + ')'}"> </div>
                                         <a *ngIf="subProd.mod_count == 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="addBtn cta-btn">Add to Cart</a>
-                                        <a *ngIf="subProd.mod_count > 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="addBtn cta-btn">Customize</a>
+                                        <a *ngIf="subProd.mod_count > 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="addBtn cta-btn">Customise</a>
                                       </div>
                                       <div class="media-body media-middle">
                                         <div class="description">
@@ -117,7 +117,7 @@
                                       <div class="img-Wrapper" *ngIf="prod.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
                                         <div class="img-Wrapper" *ngIf="prod.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + prod.thumb_image + ')'}"> </div>
                                         <a *ngIf="prod.mod_count == 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Add to Cart</a>
-                                        <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Customize</a>
+                                        <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="addBtn cta-btn">Customise</a>
                                     </div>
                                     <div class="media-body media-middle">
                                       <div class="description">
@@ -153,7 +153,7 @@
                                           <p>{{prod.description}}</p>
                                         </div>
                                         <div _ngcontent-c2="" class="rightSection bottom">
-                                        <a (click)="goToDeal(prod.id)" class="addBtn cta-btn">Customize</a>
+                                        <a (click)="goToDeal(prod.id)" class="addBtn cta-btn">Customise</a>
                                         </div>
                                       </div>
                                     </div>
