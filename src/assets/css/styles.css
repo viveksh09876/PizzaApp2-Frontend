@@ -2109,6 +2109,18 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	text-transform: lowercase;
 	padding: 0.95rem 1em
 }
+.two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .clear-cart{    float: right;
+    color: #fff;
+    background: #911c28;
+    text-align: center;
+    font-weight: 300;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-transform: initial;
+    line-height: 18px;
+    border: none;
+    font-family: "proxima_nova_rgregular";}
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .down-nutri{background: #ffffff none repeat scroll 0 0;
     border-radius: 100%;
     cursor: pointer;
@@ -2654,7 +2666,7 @@ color:#fff
 	overflow: hidden; position:relative;
 }
 .three-column-wrapper .inside-column-container.fixed{position: fixed;
-    width: 28%;}
+    width: 28%; overflow: visible;}
 .three-column-wrapper .inside-column-container .item-qty-price{background:#f4f4f4; padding:1em; float: left;
     width: 100%;}
 .three-column-wrapper .inside-column-container .item-qty-price button{float:right; color: #fff;
@@ -2766,10 +2778,10 @@ color:#fff
 }
 .three-column-wrapper .inside-column-container .content-wrapper .content-container .ins {
 	padding: 1em 3em;
-    margin: -1em -20px;
+    margin: -1em 0px;
     position: absolute;
     overflow: auto;
-    width: 106%;
+    width: 100%;
     bottom: 16px;
     height: 120px;
     left: 0px;
@@ -2777,6 +2789,7 @@ color:#fff
 }
 .three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri{height: 50px; width: 50px; cursor: pointer; background: #fff; border-radius: 100%; text-align: center; /*padding: 13px 0;*/ position: absolute; top: 144px; right: 16px;}
 .three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri i{color: #333; font-size: 24px;}
+.three-column-wrapper .inside-column-container .content-wrapper .content-container .down-nutri .popover{left: -44px !important;}
 /*.three-column-wrapper .inside-column-container .content-wrapper .content-container .ins p{    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
