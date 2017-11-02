@@ -764,6 +764,11 @@ export class OrderreviewComponent implements OnInit {
         this.order.address.postal_code = this.defaultAddress.postal_code;       
       } 
     }
+	
+	clearCart() {
+		this.dataService.clearCart();
+		window.location.href = '/';
+	}
 
 
 }

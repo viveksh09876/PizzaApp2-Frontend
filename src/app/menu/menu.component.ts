@@ -460,6 +460,14 @@ export class MenuComponent implements OnInit {
 	let comboUniqueId = this.utilService.generateUniqueId();   
     this.router.navigate(['/deals', dealId, comboUniqueId]);
   }
+  
+  clearCart() {
+	  this.dataService.clearCart();
+	  this.items = [];
+	  this.showViewCart = false;
+	  this.formattedItems.deals = [];
+	  this.formattedItems.otherItems = [];
+  }
 
 
 }

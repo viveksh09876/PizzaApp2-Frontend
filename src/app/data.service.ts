@@ -1094,7 +1094,18 @@ export class DataService {
 		return 8;
 	}
   }
-
+  
+  
+	clearCart(): Observable<any> {
+		this.setLocalStorageData('allItems', null);
+		this.setLocalStorageData('order-now', null);
+		this.setLocalStorageData('finalOrder', null);
+		this.setLocalStorageData('favItemFetched', null);
+		this.setLocalStorageData('favOrdersFetched', null); 
+		this.setLocalStorageData('confirmationItems', null); 
+		this.setLocalStorageData('confirmationFinalOrder', null);
+		return;
+	}
 
 }
 

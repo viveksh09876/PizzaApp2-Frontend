@@ -30,7 +30,7 @@
     <div class="col-md-12 stepboxes">
         <div class="row step1" *ngIf="showStep == 'step1'">
             <div class="col-md-4 col-sm-4">
-                <h3 class="green-title">order summary</h3>
+                <h3 class="green-title">order summary <a class="clear-cart" (click)="clearCart();">Clear Cart</a></h3>
                 <div class="gray_box">
                     <div class="scroller">
                             <ng-container *ngFor="let item of formattedItems.deals; let i=index;">
