@@ -667,7 +667,7 @@ export class DataService {
 			id: 2,
 			title: "NKD kid's meal for £5.99",
 			imageText: "NKD kid's meal",
-			description: "Get a child's cheese & Tomato or Pepperoni, a pot of Jude's Ice Cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
+			description: "Get a child's cheese & tomato or pepperoni, a pot of Jude's Ice Cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
 			code: 'KIDSMEAL',
 			overallPrice: '5.99',
 			listImage: 'assets/images/deals/kids-meal-list.jpg',

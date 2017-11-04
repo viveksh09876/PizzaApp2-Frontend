@@ -223,7 +223,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
         this.showStoreLoading = false; 
       } else {
 
-        if (isValidPostalFlag) {
+        if (isValidPostalFlag && this.order.orderType == 'delivery') {
 
           // this.dataService.getStoresFromPostalCode(postal_code)
           // .subscribe(data => {                    
@@ -236,7 +236,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
           //this.showStoreLoading = false; 
 
         } else {
-          this.showStoreLoading = false;
+          this.getStores('edinburgh');
         }
 
       }
