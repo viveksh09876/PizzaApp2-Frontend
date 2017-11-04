@@ -234,12 +234,14 @@ export class HomeComponent implements OnInit, AfterContentInit {
                     prevArrow: false,
                     nextArrow: false
                   });
-                  if(jQuery(window).width() > 767){
-                  jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.desk-banner').height()+'px')});
-                  }
-                  if(jQuery(window).width() < 767){
-                  jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.mobile-banner').height()+'px')});
-                  }
+                  setTimeout(function(){
+                    if(jQuery(window).width() > 767){
+                      jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.desk-banner').height()+'px')});
+                    }
+                    if(jQuery(window).width() < 767){
+                      jQuery(".slider-wrapper").css({'height':(jQuery('.img-responsive.mobile-banner').height()+'px')});
+                    }
+                },500);
               }, 1000);
                
           });
