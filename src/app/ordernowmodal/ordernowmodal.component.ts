@@ -223,7 +223,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
         this.showStoreLoading = false; 
       } else {
 
-        if (isValidPostalFlag) {
+        if (isValidPostalFlag && this.order.orderType == 'delivery') {
 
           // this.dataService.getStoresFromPostalCode(postal_code)
           // .subscribe(data => {                    
@@ -236,7 +236,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
           //this.showStoreLoading = false; 
 
         } else {
-          this.showStoreLoading = false;
+          this.getStores('edinburgh');
         }
 
       }
@@ -275,8 +275,18 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if(this.selectedStore.val == '') {
       this.showOutletError = true;
     }else{
-      this.order.selectedStore = this.selectedStore.info;
-      this.showContent = 'delivery-time';
+
+      if (this.order.orderType == 'delivery') {
+        this.isValidPostalFlag = this.dataService.isValidPostalCode(this.postalCode);
+        if (this.isValidPostalFlag) {
+          this.order.selectedStore = this.selectedStore.info;
+          this.showContent = 'delivery-time';
+        }
+      } else {
+        this.order.selectedStore = this.selectedStore.info;
+        this.showContent = 'delivery-time';
+      }
+      
     }
   }
 
