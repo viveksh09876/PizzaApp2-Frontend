@@ -417,7 +417,7 @@ export class DataService {
         flag = true;
       }
       
-    } else if (code.length >= 3 && code.charAt(2) == '3' && code.charAt(0) == 'E'){
+    } else if (code.length >= 3 && code.charAt(2) == '3' && code.charAt(0) == 'E' && code.charAt(3) == '9'){
       flag = true;
     } else {
       
