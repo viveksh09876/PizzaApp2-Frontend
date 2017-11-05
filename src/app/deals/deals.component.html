@@ -30,8 +30,8 @@
       
         <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
           <a (click)="backToMenuPage()">Back to Menu</a>
-          <p class="hidden540"><img src="{{dealData.detailImage}}" alt="" ></p>
-          <p class="visible540"><img src="{{dealData.listImage}}" alt="" ></p>
+          <p class="hidden540"><img src="{{cmsApiPath + '/'+ dealData.detailImage}}" alt="" ></p>
+          <p class="visible540"><img src="{{cmsApiPath + '/'+ dealData.listImage}}" alt="" ></p>
           <!-- <span>{{dealData.deal.Deal.description}}</span>
  -->
         </div>

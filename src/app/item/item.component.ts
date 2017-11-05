@@ -61,9 +61,11 @@ export class ItemComponent implements OnInit {
             this.isDeal = true;
             this.dealId = params['dealId'];
 
-            let dealData = this.dataService.getDealTypeData(this.dealId);
-            this.dealData = dealData;
-            this.dealCode = dealData.code;
+            this.dataService.getDealTypeData(this.dealId).subscribe(data => {
+              this.dealData = data[0];
+              this.dealCode = data[0]['code'];
+            });
+            
           }
 
           if (params['comboUniqueId'] && params['comboUniqueId'] != '') {
@@ -153,8 +155,8 @@ export class ItemComponent implements OnInit {
     let dealData = this.dealData.categories[this.position];
     let modifiersArr = null;
     
-    if (dealData.modifiers.length > 0) {
-      if (dealData.products.length > 0) {
+    if (dealData != null && dealData.modifiers != null && dealData.modifiers.length > 0) {
+      if (dealData.products != null && dealData.products.length > 0) {
         for(var i=0; i<dealData.products.length; i++) {
           if (dealData.products[i].id == this.item.Product.id) {
             modifiersArr = dealData.modifiers[i];

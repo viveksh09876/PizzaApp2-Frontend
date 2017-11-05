@@ -71,12 +71,11 @@ export class DealsComponent implements OnInit {
 
 
   getDealData(dealId) {
-    
-    let dealData = this.dataService.getDealTypeData(dealId); 
-    this.dealData = dealData;
-	this.dealCode = dealData.code;
-    this.getAllCategories();
-     
+    this.dataService.getDealTypeData(dealId).subscribe(data => {
+      this.dealData = data[0];
+      this.dealCode = data[0]['code'];
+      this.getAllCategories();
+    }); 
   }
 
   validateDealItems(allItems) {
@@ -657,7 +656,7 @@ export class DealsComponent implements OnInit {
     checkForDealArray(productId, pluCode, catId) {
       let prodArr = this.dealData.categories[this.selectedDealMenuCatIndex].products;
       
-      if (prodArr.length > 0) {
+      if (prodArr != null && prodArr.length > 0) {
         if (prodArr.indexOf(productId) > -1) {
           return true;
         } else {

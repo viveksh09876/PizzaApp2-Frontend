@@ -438,489 +438,19 @@ export class DataService {
 
 
   getDealTypeData(id) {
-    
-    if (id == 1) {
-      let deal = {
-        id: 1,
-        title: 'Couples Night In - Feed two for £11 each',
-        imageText: 'Couples Night In',
-        description: 'Any large pizza plus sweet potato waffle fries or chicken wings, with a pesto focaccia and 2 dips.',
-        code: 'CPLNIGHT',
-        overallPrice: '22.00',
-        listImage: 'assets/images/deals/couples-night-list.jpg',
-        detailImage: 'assets/images/deals/couples-night-detail.jpg',
-        categories: [
-          {
-            id: 1,
-            qty: 1,
-            isEnable: true,
-            name: 'pizza',
-            slug: 'pizzas',
-            catText: 'Select any large pizza',
-            products: [],
-            modifiers: [{ modifierId: 1, modOptionPlu: 999993 }],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 0
-          },
-          {
-            id: 3,
-            qty: 1,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Add sweet potato waffle fries or chicken wings',
-            products: ['15','11','12'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: 'OR',
-            pos: 1
-          },
-          {
-            id: 3,
-            qty: 1,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Add pesto focaccia',
-            products: ['14'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 2
-          },
-          {
-            id: 3,
-            qty: 2,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Add 2 dips',
-            products: ['18'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 3
-          }
-        ]
-      }
-
-      return deal;
-    
-	} else if (id == 5) {
-			
-      let deal = {
-        id: 5,
-        title: 'Double up for £7',
-        imageText: 'Double up for £7',
-        description: 'Buy any medium or large pizza and get a second for just £7.',
-        code: 'DOUBLEUP7',
-        overallPrice: '',
-        listImage: 'assets/images/deals/double-up-list.jpg',
-        detailImage: 'assets/images/deals/double-up-detail.jpg',
-        categories: [
-          {
-            id: 1,
-            qty: 1,
-            isEnable: true,
-            name: 'pizza',
-            slug: 'pizzas',
-            catText: 'Select any medium or large pizza',
-            products: [],
-            modifiers: [
-                { modifierId: 1, modOptionPlu: '999992' },
-                { modifierId: 1, modOptionPlu: '999993' }
-              ],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 0
-          },
-          {
-            id: 1,
-            qty: 1,
-            isEnable: true,
-            name: 'pizza',
-            slug: 'pizzas',
-            catText: 'Select second pizza',
-            products: [],
-            modifiers: [
-                { modifierId: 1, modOptionPlu: '999992' },
-                { modifierId: 1, modOptionPlu: '999993' }
-              ],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 1
-          }
-        ]
-      }
-	
-		return deal;
-			
-	} else if (id == 3) {
-		
-      let deal = {
-        id: 3,
-        title: 'Large Night In - Feed four for £9 each',
-        imageText: 'Large Night In',
-        description: 'Two large pizzas with any two sides and two dips for £36.',
-        code: 'LRGNIGHT',
-        overallPrice: '36.00',
-        listImage: 'assets/images/deals/large-night-list.jpg',
-        detailImage: 'assets/images/deals/large-night-detail.jpg',
-        categories: [
-          {
-            id: 1,
-            qty: 2,
-            isEnable: true,
-            name: 'pizza',
-            slug: 'pizzas',
-            catText: 'Select two large pizza',
-            products: [],
-            modifiers: [{ modifierId: 1, modOptionPlu: '999993' },
-            { modifierId: 2, modOptionPlu: 'I100' },
-            { modifierId: 2, modOptionPlu: 'I101' }
-          ],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 0
-          },
-          {
-            id: 3,
-            qty: 2,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Select two sides',
-            products: ['11','12','13','14','15'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: 'OR',
-            pos: 1
-          },
-          {
-            id: 3,
-            qty: 2,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Add 2 dips',
-            products: ['18'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 2
-          }
-        ]
-      }
-
-      return deal;
-    
-	} else if (id == 4) {
-		
-		let deal = {
-        id: 4,
-        title: 'Keep it skinny!',
-        imageText: 'Keep it skinny!',
-        description: 'Get a Caprese salad for £1 when you buy any medium skinny pizza',
-        code: 'SKINNYIT',
-        overallPrice: '',
-        listImage: 'assets/images/deals/keep-it-skinny-list.jpg',
-        detailImage: 'assets/images/deals/keep-it-skinny-detail.jpg',
-        categories: [
-          {
-            id: 1,
-            qty: 1,
-            isEnable: true,
-            name: 'pizza',
-            slug: 'pizzas',
-            catText: 'Select any medium or large skinny pizza',
-            products: [],
-            modifiers: [
-                { modifierId: 1, modOptionPlu: '999992' },
-                { modifierId: 1, modOptionPlu: '999993' },
-                { modifierId: 2, modOptionPlu: 'I101' }
-              ],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 0
-          },
-          {
-            id: 3,
-            qty: 1,
-            isEnable: true,
-            name: 'sides & salads',
-            slug: 'sides&salads',
-            catText: 'Select Caprese Salad',
-            products: ['16'],
-            modifiers: [],
-            itemCount: 1,
-            itemCondition: null,
-            pos: 1
-          }
-        ]
-      }
-	
-		return deal;
-		
-		
-	} else if (id == 2) {
-		
-		let deal = {
-			id: 2,
-			title: "NKD kid's meal for £5.99",
-			imageText: "NKD kid's meal",
-			description: "Get a child's cheese & tomato or pepperoni, a pot of Jude's Ice Cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
-			code: 'KIDSMEAL',
-			overallPrice: '5.99',
-			listImage: 'assets/images/deals/kids-meal-list.jpg',
-			detailImage: 'assets/images/deals/kids-meal-detail.jpg',
-			categories: [
-			  {
-				id: 1,
-				qty: 1,
-				isEnable: true,
-				name: 'pizza',
-				slug: 'pizzas',
-				catText: 'Select any medium or large pizza',
-				products: [],
-				modifiers: [
-					{ modifierId: 1, modOptionPlu: 999992 },
-					{ modifierId: 1, modOptionPlu: 999993 }
-				],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 0
-			  },
-			  {
-				id: 8,
-				qty: 1,
-				isEnable: true,
-				name: 'kids pizza',
-				slug: 'kids pizza',
-				catText: 'Select one kids pizza',
-				products: [],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: 'OR',
-				pos: 1
-			  },
-			  {
-				id: 4,
-				qty: 1,
-				isEnable: true,
-				name: 'desserts',
-				slug: 'desserts',
-				catText: 'Select one ice cream',
-				products: ['19','20','21','22'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 2
-			  },
-			  {
-				id: 5,
-				qty: 1,
-				isEnable: true,
-				name: 'beverages',
-				slug: 'beverages',
-				catText: 'select any drink',
-				products: ['29','30','31'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 3
-			  }
-			]
-		  }
-
-      return deal;
-    
-		
-	} else if (id == 6) {
-		
-		let deal = {
-			id: 6,
-			title: 'Medium Night In - Feed four for £7.50 each',
-			imageText: 'Medium Night In',
-			description: 'Two medium pizzas with any two sides and two dips for £30.',
-			code: 'MEDNIGHT',
-			overallPrice: '30.00',
-			listImage: 'assets/images/deals/medium-night-list.jpg',
-			detailImage: 'assets/images/deals/medium-night-detail.jpg',
-			categories: [
-			  {
-				id: 1,
-				qty: 2,
-				isEnable: true,
-				name: 'pizza',
-				slug: 'pizzas',
-				catText: 'Select two medium pizza',
-				products: [],
-				modifiers: [{ modifierId: 1, modOptionPlu: '999992' }],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 0
-			  },
-			  {
-				id: 3,
-				qty: 2,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Select two sides',
-				products: ['11','12','13','14','15'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: 'OR',
-				pos: 1
-			  },
-			  {
-				id: 3,
-				qty: 2,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Add 2 dips',
-				products: ['18'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 2
-			  }
-			]
-		  }
-
-		  return deal;
-		
-		
-	} else if (id == 7) {
-		
-		let deal = {
-			id: 7,
-			title: 'A bit on the side',
-			imageText: 'A bit on the side',
-			description: 'Add two sides and two dips for just £5.99, when you buy any full priced large pizza.',
-			code: 'BITSIDE',
-			overallPrice: '5.99',
-			listImage: 'assets/images/deals/bitside-list.jpg',
-			detailImage: 'assets/images/deals/bitside-detail.jpg',
-			categories: [
-			  {
-				id: 1,
-				qty: 1,
-				isEnable: true,
-				name: 'pizza',
-				slug: 'pizzas',
-				catText: 'Select any large pizza',
-				products: [],
-				modifiers: [{ modifierId: 1, modOptionPlu: '999993' }],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 0
-			  },
-			  {
-				id: 3,
-				qty: 2,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Select two sides',
-				products: ['11','12','13','14','15'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: 'OR',
-				pos: 1
-			  },
-			  {
-				id: 3,
-				qty: 2,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Add 2 dips',
-				products: ['18'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 2
-			  }
-			]
-		  }
-
-		  return deal;
-		
-		
-	} else if (id == 8) {
-		
-		let deal = {
-			id: 8,
-			title: 'Any pizza £12.99 when you buy a side',
-			imageText: 'Any pizza £12.99 when you buy a side',
-			description: 'Get any pizza for £12.99, when you buy a side order and a dip.',
-			code: 'PIZZA1299',
-			overallPrice: '12.99',
-			listImage: 'assets/images/deals/any-pizza-list.jpg',
-			detailImage: 'assets/images/deals/any-pizza-detail.jpg',
-			categories: [
-			  {
-				id: 3,
-				qty: 1,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Select any side',
-				products: ['11','12','13','14','15'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: 'OR',
-				pos: 0
-			  },
-			  {
-				id: 3,
-				qty: 1,
-				isEnable: true,
-				name: 'sides & salads',
-				slug: 'sides&salads',
-				catText: 'Add a dip',
-				products: ['18'],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 1
-			  },
-			  {
-				id: 1,
-				qty: 1,
-				isEnable: true,
-				name: 'pizza',
-				slug: 'pizzas',
-				catText: 'Select any pizza',
-				products: [],
-				modifiers: [],
-				itemCount: 1,
-				itemCondition: null,
-				pos: 2
-			  }
-			]
-		  }
-
-		  return deal;
-		
-		
-	}
-
+    console.log('id', id);
+    return this.http.get( this.domain + '/webservice/getDealItemList/'+id)
+    .map( (res: Response) => res.json() )
+    .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
 
   }
   
   getAllDeals() {
-	  let dealLength = 8;
-	  let dealArr = [];
-	  for (var i=1; i<=dealLength; i++) {
-		  let deal = this.getDealTypeData(i);
-		  dealArr.push(deal);
-	  }
-	  
-	  return dealArr;
+    
+    return this.http.get( this.domain + '/webservice/getDealItemList')
+    .map( (res: Response) => res.json() )
+    .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+    
   }
   
   formatCartData(allItems, page) {
@@ -930,6 +460,7 @@ export class DataService {
 	  
 	  //separate deal and other items
 	  for (var i=0; i<allItems.length; i++) {
+      
 		  if (allItems[i].Product.dealId != undefined) {
 			  if (deals[allItems[i].Product.comboUniqueId] == undefined) {
 				  deals[allItems[i].Product.comboUniqueId] = [];
@@ -939,7 +470,7 @@ export class DataService {
 			  otherItems.push(allItems[i]);
 		  }
 	  }
-	  
+	  console.log('ch', deals, otherItems, page);
 	  let totPrice = 0;
 	  let dealsArr = [];
 	  
@@ -948,39 +479,81 @@ export class DataService {
 		if (deals.hasOwnProperty(key)) {
 
       let dId = deals[key][0].Product.dealId;
+      //TODO: Optimise this dirty code
+      dId = +dId;
+      console.log('did=', dId, typeof dId);
       if (isNaN(dId)) {
-        dId = this.getDealIdFromCode(dId);
+        
+        dId = this.getDealIdFromCode(dId).subscribe(data => {
+          this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
+            let valid = resp;
+            if (!valid) {
+              for (var i=0; i<deals[key].length; i++) {
+                let dObj = deals[key][i];
+                if (page != 'deal') {
+                  delete dObj.dealPrice;
+                  delete dObj.Product.dealId;
+                  delete dObj.Product.comboUniqueId;
+                  delete dObj.Product.position;
+                }
+                
+                otherItems.push(dObj);
+              }
+              
+              delete deals[key];
+            } else {
+              totPrice += deals[key][0].dealPrice;
+              
+      
+              let dealObject = {
+                title: this.getDealTitle(dId),
+                totalCostPrice: Number(totPrice.toFixed(2)),
+                dealData: deals[key]
+              }
+              
+              dealsArr.push(dealObject);
+            }
+          });
+          
+        });
+      } else {
+        
+          this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
+            let valid = resp;
+            console.log(465, valid);
+            if (!valid) {
+              for (var i=0; i<deals[key].length; i++) {
+                let dObj = deals[key][i];
+                if (page != 'deal') {
+                  delete dObj.dealPrice;
+                  delete dObj.Product.dealId;
+                  delete dObj.Product.comboUniqueId;
+                  delete dObj.Product.position;
+                }
+                
+                otherItems.push(dObj);
+              }
+              
+              delete deals[key];
+            } else {
+              totPrice += deals[key][0].dealPrice;
+              
+      
+              let dealObject = {
+                title: this.getDealTitle(dId),
+                totalCostPrice: Number(totPrice.toFixed(2)),
+                dealData: deals[key]
+              }
+              
+              dealsArr.push(dealObject);
+            }
+          });
+          
       }
 
-			let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
-			if (!valid) {
-				for (var i=0; i<deals[key].length; i++) {
-          let dObj = deals[key][i];
-          if (page != 'deal') {
-            delete dObj.dealPrice;
-            delete dObj.Product.dealId;
-            delete dObj.Product.comboUniqueId;
-            delete dObj.Product.position;
-          }
-					
-					otherItems.push(dObj);
-				}
-				
-				delete deals[key];
-			} else {
-        totPrice += deals[key][0].dealPrice;
-        
-
-				let dealObject = {
-					title: this.getDealTitle(dId),
-					totalCostPrice: Number(totPrice.toFixed(2)),
-					dealData: deals[key]
-				}
-				
-				dealsArr.push(dealObject);
-			}
 			
-		}
+			
+		  }
 	  }
 	  
 	  
@@ -992,51 +565,51 @@ export class DataService {
 		  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
 	  }
 	  
-	  //console.log('return obj', returnObj);
+	  console.log('return obj', returnObj);
 	  return returnObj;
 	  
 	  
   }
   
   
-	validateDealItems(allItems, dealCode, comboUniqueId) {
-		let type = dealCode;
+	validateDealItems(allItems, dealCode, comboUniqueId, callback) {
+		  let type = dealCode;
 		
-		
-		  let dealData = this.getDealTypeData(type);
-		  let categoriesArr = dealData.categories;
-		  let keepCats = [];      //cats for which products added
-		  let atLeastoneEnable = false;
-		  let isExistArr = [];
-			   
-
-		  let count = 0;
-      for (var i=0; i<categoriesArr.length; i++) {
-        
-        for (var j=0; j<allItems.length; j++) {
-          if (allItems[j].Product.dealId != undefined) {
+      this.getDealTypeData(type).subscribe(dealData => {
+        console.log('deeldata', dealData, comboUniqueId);
+        dealData = dealData[0];
+        let categoriesArr = dealData['categories'];
+        let keepCats = [];      //cats for which products added
+        let atLeastoneEnable = false;
+        let isExistArr = [];
+           
+  
+        let count = 0;
+        for (var i=0; i<categoriesArr.length; i++) {
+          
+          for (var j=0; j<allItems.length; j++) {
             
-            
-            
-            if (allItems[j].Product.position == categoriesArr[i].pos && allItems[j].Product.comboUniqueId == comboUniqueId) {
-              count++;
+            if (allItems[j].Product.dealId != undefined) {
+              
+              
+              console.log('ct', allItems[j].Product.position, categoriesArr[i].pos, allItems[j].Product.comboUniqueId);
+              if (allItems[j].Product.position == +categoriesArr[i].pos && allItems[j].Product.comboUniqueId == comboUniqueId) {
+                console.log('ct');
+                count++;
+              }
+              
+              
+              let itemCatId = allItems[j].Product.category_id;
+              
+              if (categoriesArr[i].qty == count && allItems[j].Product.comboUniqueId == comboUniqueId) {         
+                keepCats.push(categoriesArr[i].pos);
+                count = 0;
+              }
+              
             }
-            
-            
-            let itemCatId = allItems[j].Product.category_id;
-            
-            if (categoriesArr[i].qty == count && allItems[j].Product.comboUniqueId == comboUniqueId) {         
-              keepCats.push(categoriesArr[i].pos);
-              count = 0;
-            }
-            
           }
         }
-      }
-      
-      //console.log('keepCats', keepCats);
-      
-  
+        
         for (var i=0; i<categoriesArr.length; i++) {
           
           if (keepCats.indexOf(categoriesArr[i].pos) < 0) {
@@ -1053,12 +626,19 @@ export class DataService {
             break;
           }
         }
-		  
-		  if (atLeastoneEnable) {
-			  return false;
-		  } else {
-			  return true;
-		  }
+
+        let resp = false;
+
+        if (!atLeastoneEnable) {
+          return true;
+        }         
+        
+        if (callback) {
+          console.log('asd');
+          callback(resp);
+        }
+      });
+      
 		  
 	}
 	
@@ -1066,35 +646,47 @@ export class DataService {
 	getDealTitle(dealCode) {
 		let type = dealCode;
 		
-		let deal = this.getDealTypeData(type);
-		return deal.title;
+    let deal = this.getDealTypeData(type).subscribe(data => {
+      deal = deal[0];
+      return deal['title'];
+    });
+    
   }
   
   getDealCode(dealId) {
 		let type = dealId;
 		
-		let deal = this.getDealTypeData(type);
-		return deal.code;
+    let deal = this.getDealTypeData(type).subscribe(deal => {
+      deal = deal[0];
+      return deal['code'];
+    });
+    
   }
   
   getDealIdFromCode(code) {
-    if (code == 'CPLNIGHT') {
-      return 1;
-    } else if (code == 'DOUBLEUP7') {
-      return 5;
-    } else if(code == 'LRGNIGHT') {
-      return 3;
-    } else if(code == 'SKINNYIT') {
-      return 4;
-    } else if (code == 'KIDSMEAL') {
-		return 2;
-	} else if (code == 'MEDNIGHT') {
-		return 6;
-	} else if (code == 'BITSIDE') {
-		return 7;
-	} else if (code == 'PIZZA1299') {
-		return 8;
-	}
+
+    return this.http.get( this.domain + '/webservice/getDealIdFromCode/'+code)
+    .map( (res: Response) => res.json() )
+    .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+    
+
+    // if (code == 'CPLNIGHT') {
+    //   return 1;
+    // } else if (code == 'DOUBLEUP7') {
+    //   return 5;
+    // } else if(code == 'LRGNIGHT') {
+    //   return 3;
+    // } else if(code == 'SKINNYIT') {
+    //   return 4;
+    // } else if (code == 'KIDSMEAL') {
+    //   return 2;
+    // } else if (code == 'MEDNIGHT') {
+    //   return 6;
+    // } else if (code == 'BITSIDE') {
+    //   return 7;
+    // } else if (code == 'PIZZA1299') {
+    //   return 8;
+    // }
   }
   
   

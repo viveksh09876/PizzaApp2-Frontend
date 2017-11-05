@@ -124,15 +124,13 @@ export class MenuComponent implements OnInit {
             }
           });    
           
-          for (var i=0; i<this.menuData.length; i++) {
-            if (this.menuData[i].type == 'deal') {
-              let dealData = this.dataService.getAllDeals();
-              
-              this.menuData[i].products = dealData;
-              //console.log(this.menuData[i].products);
+          this.dataService.getAllDeals().subscribe(data => {
+            for (var i=0; i<this.menuData.length; i++) {
+              if (this.menuData[i].type == 'deal') {
+                  this.menuData[i].products = data;
+              }
             }
-          }
-
+          });
 
       }); 
 

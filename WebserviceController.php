@@ -7,7 +7,7 @@ class WebserviceController extends AppController {
     function beforeFilter(){
         parent::beforeFilter();
 		// Configure::write('debug', 2);
-        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_slides_app','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data', 'get_all_categories_data_app','getItemData','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getCitiesSuggestionApp','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData','sendAckEmail','uploadAttachment', 'sendPaymentData', 'getDealItemList','getCategoryData'));
+        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_slides_app','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data', 'get_all_categories_data_app','getItemData','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getCitiesSuggestionApp','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData','sendAckEmail','uploadAttachment', 'sendPaymentData', 'getDealItemList','getCategoryData','getDealIdFromCode'));
     }
 
 	public function get_countries(){
@@ -3074,21 +3074,34 @@ function sendCareerInfo(){
 		}
 	} 
 
-	function getDealItemList(){
+	function getDealItemList($id = ''){
         $this->autoRender = false;
         $dealArr = array();
-        $this->Deal->bindModel(array('hasMany'=>array('DealItem')));
-        $deals = $this->Deal->find('all',array('conditions'=>array('Deal.status'=>1)));
+		$this->Deal->bindModel(array('hasMany'=>array('DealItem')));
+		
+		if (empty($id)) {
+			$conditions = array(
+				'Deal.status' => 1
+			);
+		} else {
+			$conditions = array(
+				'Deal.status' => 1,
+				'Deal.id' => $id
+			);
+		}
+		$deals = $this->Deal->find('all',array('conditions' => $conditions));
+		$i=0;
+
         foreach ($deals as $key => $value) {
             $itemArr = array();
-            $dealArr['id'] = $value['Deal']['id'];
-            $dealArr['title'] = $value['Deal']['title'];
-            $dealArr['imageText'] = $value['Deal']['image_text'];
-            $dealArr['description'] = $value['Deal']['description'];
-            $dealArr['code'] = $value['Deal']['code'];
-            $dealArr['overallPrice'] = $value['Deal']['price'];
-            $dealArr['listImage'] = $value['Deal']['thumbnail'];
-            $dealArr['detailImage'] = $value['Deal']['image'];
+            $dealArr[$i]['id'] = $value['Deal']['id'];
+            $dealArr[$i]['title'] = $value['Deal']['title'];
+            $dealArr[$i]['imageText'] = $value['Deal']['image_text'];
+            $dealArr[$i]['description'] = $value['Deal']['description'];
+            $dealArr[$i]['code'] = $value['Deal']['code'];
+            $dealArr[$i]['overallPrice'] = $value['Deal']['price'];
+            $dealArr[$i]['listImage'] = 'img/admin/products/deals/'.$value['Deal']['thumbnail'];
+            $dealArr[$i]['detailImage'] = 'img/admin/products/deals/'.$value['Deal']['image'];
 
             foreach ($value['DealItem'] as $k => $item) {
                 $itemArr[$k]['id'] = $item['cat_id'];
@@ -3097,16 +3110,28 @@ function sendCareerInfo(){
                 $itemArr[$k]['name'] = $this->getCategoryData($item['cat_id'],'name');
                 $itemArr[$k]['slug'] = $this->getCategoryData($item['cat_id'],'slug');
                 $itemArr[$k]['catText'] = $item['cat_text'];
-                $itemArr[$k]['products'] = (!empty($item['products'])?json_encode(explode(',', $item['products'])):null);
-                $itemArr[$k]['modifiers'] = ($item['modifiers']=="[]")?null:$item['modifiers'];
+                $itemArr[$k]['products'] = (!empty($item['products'])?(explode(',', $item['products'])):null);
+                $itemArr[$k]['modifiers'] = ($item['modifiers']=="[]")?null:json_decode($item['modifiers']);
                 $itemArr[$k]['itemCount'] = $item['item_count'];
                 $itemArr[$k]['itemCondition'] = (!empty($item['item_condition'])?$item['item_condition']:null);
                 $itemArr[$k]['pos'] = $item['pos'];
             }    
-            $dealArr['categories']  = $itemArr;
+			$dealArr[$i]['categories']  = $itemArr;
+			$i++;
         }
         echo json_encode($dealArr);
-    }
+	}
+	
+	public function getDealIdFromCode($code) {
+		if (!empty($code)) {
+
+			$deal = $this->Deal->findByCode($code);
+			echo $deal['Deal']['id']; die;
+
+
+		}
+	}
+
 
     function getCategoryData($catId,$field){
         $this->autoRender = false;
