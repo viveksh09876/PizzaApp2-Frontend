@@ -406,7 +406,8 @@ export class DataService {
       'EH111',
       'EH130',
       'EH139',
-      'EH141'
+      'EH141',
+      '110074'
     ];
     let flag = false;
 
@@ -416,7 +417,7 @@ export class DataService {
         flag = true;
       }
       
-    } else if (code.length >= 3 && code.charAt(2) == '3'){
+    } else if (code.length >= 3 && code.charAt(2) == '3' && code.charAt(0) == 'E'){
       flag = true;
     } else {
       

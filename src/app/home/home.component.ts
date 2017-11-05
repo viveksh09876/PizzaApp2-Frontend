@@ -16,10 +16,7 @@ declare var window: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  host: {
-    '(window:resize)': 'onResize($event)'
-  }
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterContentInit {
 
@@ -247,9 +244,6 @@ export class HomeComponent implements OnInit, AfterContentInit {
           });
   }
 
-onResize(event){
-  window.location.reload();
-}
 
   
 

@@ -223,7 +223,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
         this.showStoreLoading = false; 
       } else {
 
-        if (isValidPostalFlag && this.order.orderType == 'delivery') {
+        if (isValidPostalFlag) {
 
           // this.dataService.getStoresFromPostalCode(postal_code)
           // .subscribe(data => {                    
@@ -235,10 +235,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
           this.getStores('edinburgh');  
           //this.showStoreLoading = false; 
 
-        } else {
-          this.getStores('edinburgh');
-        }
-
+        } 
       }
 
     } else {
@@ -275,18 +272,18 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if(this.selectedStore.val == '') {
       this.showOutletError = true;
     }else{
+        if (this.order.orderType == 'delivery') {
 
-      if (this.order.orderType == 'delivery') {
-        this.isValidPostalFlag = this.dataService.isValidPostalCode(this.postalCode);
-        if (this.isValidPostalFlag) {
+          this.isValidPostalFlag = this.dataService.isValidPostalCode(this.postalCode);
+          if (this.isValidPostalFlag) {
+            this.order.selectedStore = this.selectedStore.info;
+            this.showContent = 'delivery-time';
+          } 
+
+        } else {
           this.order.selectedStore = this.selectedStore.info;
           this.showContent = 'delivery-time';
         }
-      } else {
-        this.order.selectedStore = this.selectedStore.info;
-        this.showContent = 'delivery-time';
-      }
-      
     }
   }
 
@@ -430,8 +427,9 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if (val.length >= 3) {
       let code = val.trim().toUpperCase();
       this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
-
+     
       if (this.isValidPostalFlag) {
+        
         this.getStores('edinburgh');
       }
 
