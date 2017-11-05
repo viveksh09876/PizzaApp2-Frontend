@@ -3125,6 +3125,9 @@ color:#fff
 .stepboxes .green-title{background: #789c48; color: #ffffff; font-size: 22px; line-height: 30px; font-family: 'proxima_nova_rgbold'; padding: 10px 20px;}
 .stepboxes .green-title.gray{ color: #5b5a56; background: #f4f4f4;}
 
+.stepboxes .green-title .clear-cart { float: right;  color: #fff;  background: #911c28; text-align: center; font-weight: 300;  border-radius: 5px;
+    padding: 5px 10px;  font-size: 14px; text-transform: initial; line-height: 18px;  border: none;  font-family: "proxima_nova_rgregular";}
+
 .stepboxes .gray_box{ background: #f4f4f4; padding: 10px 20px;}
 .stepboxes .gray_box .scroller{height: 304px; overflow: auto;}
 .stepboxes .gray_box .item_info { float: left; font-family: "proxima_nova_rgregular"; width: 60%;}
