@@ -426,6 +426,7 @@ export class DataService {
       }
 
       validCodes.forEach(function(a){
+        
         if (a.indexOf(code) > -1) {
           flag = true;
         } 

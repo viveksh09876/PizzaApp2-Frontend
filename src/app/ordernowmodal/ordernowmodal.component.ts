@@ -273,8 +273,8 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
       this.showOutletError = true;
     }else{
         if (this.order.orderType == 'delivery') {
-
-          this.isValidPostalFlag = this.dataService.isValidPostalCode(this.postalCode);
+          let code = this.postalCode.trim().toUpperCase();
+          this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
           if (this.isValidPostalFlag) {
             this.order.selectedStore = this.selectedStore.info;
             this.showContent = 'delivery-time';
