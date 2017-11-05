@@ -406,7 +406,8 @@ export class DataService {
       'EH111',
       'EH130',
       'EH139',
-      'EH141'
+      'EH141',
+      '110074'
     ];
     let flag = false;
 
@@ -416,7 +417,7 @@ export class DataService {
         flag = true;
       }
       
-    } else if (code.length >= 3 && code.charAt(2) == '3'){
+    } else if (code.length >= 3 && code.charAt(2) == '3' && code.charAt(0) == 'E'){
       flag = true;
     } else {
       
@@ -425,6 +426,7 @@ export class DataService {
       }
 
       validCodes.forEach(function(a){
+        
         if (a.indexOf(code) > -1) {
           flag = true;
         } 
@@ -667,7 +669,7 @@ export class DataService {
 			id: 2,
 			title: "NKD kid's meal for £5.99",
 			imageText: "NKD kid's meal",
-			description: "Get a child's cheese & Tomato or Pepperoni, a pot of Jude's Ice Cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
+			description: "Get a child's cheese & tomato or pepperoni, a pot of Jude's Ice Cream and a drink of your choice for £5.99 when you buy any medium or large size pizza",
 			code: 'KIDSMEAL',
 			overallPrice: '5.99',
 			listImage: 'assets/images/deals/kids-meal-list.jpg',
