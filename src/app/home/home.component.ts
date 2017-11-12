@@ -47,6 +47,15 @@ export class HomeComponent implements OnInit, AfterContentInit {
   ngOnInit() {
     this.getSlideImages();
     
+    this.dataService.setLocalStorageData('favItemFetched', null);
+    this.dataService.setLocalStorageData('favOrdersFetched', null); 
+    this.dataService.setLocalStorageData('confirmationItems', null); 
+    this.dataService.setLocalStorageData('confirmationFinalOrder', null);
+    
+    this.dataService.setLocalStorageData('confirmationItems', null);
+    this.dataService.setLocalStorageData('confirmationFinalOrder', null); 
+    this.dataService.setLocalStorageData('nearByStore', null); 
+
     this.setStore();
     
     //check if user logged In
@@ -58,13 +67,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
 
     window.temp();
 
-    this.dataService.setLocalStorageData('favItemFetched', null);
-    this.dataService.setLocalStorageData('favOrdersFetched', null); 
-    this.dataService.setLocalStorageData('confirmationItems', null); 
-    this.dataService.setLocalStorageData('confirmationFinalOrder', null);
-    
-    this.dataService.setLocalStorageData('confirmationItems', null);
-    this.dataService.setLocalStorageData('confirmationFinalOrder', null);    
+       
     
     //loadScript();
 
@@ -125,7 +128,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
                       this.store = this.utilService.findNearbyStore(this.storeList, position.coords.latitude, position.coords.longitude);
                       
                       this.dataService.setLocalStorageData('latlong', 'from geolocation: ' + position.coords.latitude + ',' + position.coords.longitude);
-                      this.dataService.setLocalStorageData('nearByStore', this.store.Store.id);
+                      this.dataService.setLocalStorageData('nearByStore', this.store.Store.store_id);
                     }else{
                       this.dataService.setLocalStorageData('menuCountry', 'UAE');
                     }                 
@@ -145,7 +148,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
                           this.dataService.setLocalStorageData('menuCountry', this.countryName);
                           this.store = this.utilService.findNearbyStore(this.storeList, data.geoplugin_latitude, data.geoplugin_longitude);
                           this.dataService.setLocalStorageData('latlong', 'from ip: ' + data.geoplugin_latitude + ',' + data.geoplugin_longitude);
-                          this.dataService.setLocalStorageData('nearByStore', this.store.Store.id); 
+                          this.dataService.setLocalStorageData('nearByStore', this.store.Store.store_id); 
                         } else{
                           this.dataService.setLocalStorageData('menuCountry', 'UAE');
                         }                        
