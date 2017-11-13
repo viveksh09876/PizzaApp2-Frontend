@@ -134,7 +134,7 @@ body {
 }
 
 @media (max-width: 767px) {
-	.forgotfeild{margin: 0 auto; width: 100%; float: none;}
+	.forgotfeild{margin: 0 auto; width: 100% !important; float: none;}
 	.modal-dialog{margin:12% 20px !important;}
 	#signinModal .guest button{margin:0px !important;}
 	#signinModal .signin{border:none !important;}
