@@ -64,21 +64,23 @@ export class MenuComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
+		    this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+            this.formattedItems = formattedItemsData;
+            //console.log('formatted', this.formattedItems);
+            //let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
+            this.totalCost =  formattedItemsData.totalPrice;
+            
+            this.netCost = this.totalCost;
         
-		    this.formattedItems = formattedItemsData;
-		
-		//let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
-        this.totalCost =  formattedItemsData.totalPrice;
-        
-        this.netCost = this.totalCost;
-		
-		if (isNaN(this.netCost)) {
-			this.netCost = 0;
-		}
+            if (isNaN(this.netCost)) {
+              this.netCost = 0;
+            }
+
+            this.showViewCart = true;     
+        });
 
       }      
-      this.showViewCart = true;      
+      
     }
   }
 
@@ -114,7 +116,7 @@ export class MenuComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          ////console.log(this.menuData[0].name);
+          //////console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
 
           this.route.params.subscribe(params => { 
@@ -238,10 +240,12 @@ export class MenuComponent implements OnInit {
       }
     }
 
-    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
-    this.formattedItems = formattedItemsData;
-    this.totalCost =  formattedItemsData.totalPrice;
-    this.netCost = this.totalCost;
+    this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+      this.formattedItems = formattedItemsData;
+      this.totalCost =  formattedItemsData.totalPrice;
+      this.netCost = this.totalCost;
+    });    
+    
   }
 
 
@@ -258,10 +262,12 @@ export class MenuComponent implements OnInit {
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
             
-            let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
-            this.formattedItems = formattedItemsData;
-            this.totalCost =  formattedItemsData.totalPrice;
-            this.netCost = this.totalCost;
+            this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+              this.formattedItems = formattedItemsData;
+              this.totalCost =  formattedItemsData.totalPrice;
+              this.netCost = this.totalCost;
+            });    
+            
 
           }else{
             this.items = [];
@@ -290,10 +296,12 @@ export class MenuComponent implements OnInit {
       if(remainingItems.length > 0) {
         this.items = remainingItems;    
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-        let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');    
-        this.formattedItems = formattedItemsData;
-        this.totalCost =  formattedItemsData.totalPrice;
-        this.netCost = this.totalCost;
+        this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+          this.formattedItems = formattedItemsData;
+          this.totalCost =  formattedItemsData.totalPrice;
+          this.netCost = this.totalCost;
+        });    
+        
       } else {
         this.items = [];
         this.dataService.setLocalStorageData('allItems', 'null');
@@ -404,7 +412,7 @@ export class MenuComponent implements OnInit {
         if (orderNowDetails != null && orderNowDetails != undefined && orderNowDetails != '') {
           orderNowDetails = JSON.parse(orderNowDetails);
     
-          ////console.log('suggestions', this.suggestionProducts);
+          //////console.log('suggestions', this.suggestionProducts);
         let dservice = this.dialogService.addDialog(SuggestionmodalComponent, { 
                 items: products }, { closeByClickingOutside:true 
             }).subscribe((isSkipped)=>{

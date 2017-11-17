@@ -347,6 +347,14 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
                  
                   data.originalItemCost = data.Product.price;
                   data.totalItemCost = data.Product.price;
+
+                  if (this.fromObj.dealId != undefined) {
+                    data.Product.dealId = this.fromObj.dealId;
+                    data.Product.comboUniqueId = this.fromObj.comboUniqueId;
+                    data.Product.position = this.fromObj.selectedDealMenuCatIndex;
+                  }
+
+
                   let temp = this.dataService.getLocalStorageData('allItems');
                   
                   if(temp == null || temp == 'null') {

@@ -234,16 +234,16 @@ export class OrderreviewComponent implements OnInit {
               
               this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
 
-              let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
-              
-			  if (formattedItemsData.deals.length > 0) {
-				  this.isMealDeal = true;
-			  }
-              this.formattedItems = formattedItemsData;
-          
-              this.totalCost =  formattedItemsData.totalPrice;
-              this.netCost = this.totalCost;
-        
+              this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+                    if (formattedItemsData.deals.length > 0) {
+                      this.isMealDeal = true;
+                    }
+                      this.formattedItems = formattedItemsData;
+                  
+                      this.totalCost =  formattedItemsData.totalPrice;
+                      this.netCost = this.totalCost;
+              });
+             
               
     }else{
       window.location.href = '/';
@@ -285,11 +285,13 @@ export class OrderreviewComponent implements OnInit {
       }
     }
 
-    let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');    
-    this.formattedItems = formattedItemsData;
-    this.totalCost =  formattedItemsData.totalPrice;
-    this.netCost = this.totalCost;
-   // //console.log(type, this.totalCost, this.items.Product.qty);
+    this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+      this.formattedItems = formattedItemsData;
+      this.totalCost =  formattedItemsData.totalPrice;
+      this.netCost = this.totalCost;
+     // //console.log(type, this.totalCost, this.items.Product.qty);
+    });    
+    
   }
 
 
@@ -351,10 +353,12 @@ export class OrderreviewComponent implements OnInit {
             
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-            let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');    
-            this.formattedItems = formattedItemsData;
-            this.totalCost =  formattedItemsData.totalPrice;
-            this.netCost = this.totalCost;
+            this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+              this.formattedItems = formattedItemsData;
+              this.totalCost =  formattedItemsData.totalPrice;
+              this.netCost = this.totalCost;
+            });    
+            
 
           }else{
             this.items = [];
@@ -385,10 +389,12 @@ export class OrderreviewComponent implements OnInit {
       if(remainingItems.length > 0) {
         this.items = remainingItems;    
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-        let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');    
-        this.formattedItems = formattedItemsData;
-        this.totalCost =  formattedItemsData.totalPrice;
-        this.netCost = this.totalCost;
+        this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+          this.formattedItems = formattedItemsData;
+          this.totalCost =  formattedItemsData.totalPrice;
+          this.netCost = this.totalCost;
+        });    
+        
       } else {
         this.items = [];
         this.dataService.setLocalStorageData('allItems', 'null');
