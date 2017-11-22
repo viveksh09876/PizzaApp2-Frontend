@@ -30,10 +30,12 @@ export class MenuComponent implements OnInit {
   categories: Array<any>;
   subcategories: Array<any>;
   items = [];
+  itemsQtyBeforeCart={};
+  orderNowDetails=null;
   totalCost = 0;
   netCost = 0;
   showViewCart = false;
-  showFooter = false;
+  showFooter = true;
   cmsApiPath = environment.cmsApiPath;
   currencyCode = null;
   selectedMenuCat = null;
@@ -43,7 +45,6 @@ export class MenuComponent implements OnInit {
 
 
   ngOnInit() {
-    
     this.dataService.setLocalStorageData('favItemFetched', null);
     this.dataService.setLocalStorageData('favOrdersFetched', null); 
     this.dataService.setLocalStorageData('confirmationItems', null); 
@@ -51,8 +52,19 @@ export class MenuComponent implements OnInit {
 
     this.currencyCode = this.utilService.currencyCode;
     this.getAllCategories();
-    this.getCartItems();        
-    
+    this.getCartItems(); 
+    this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+    if(this.orderNowDetails != null && this.orderNowDetails != 'null') {
+   
+//console.log(this.orderNowDetails.type);
+//console.log(this.orderNowDetails.address.postal_code);
+//console.log(this.orderNowDetails.delivery_time);
+//console.log(this.orderNowDetails.delivery_time_type);
+//console.log(this.orderNowDetails.selectedStore.Store.store_name);
+    }else{
+
+      this.updateStoreAndTime();
+     }
   }
 
 
@@ -175,11 +187,18 @@ export class MenuComponent implements OnInit {
                
                 data.originalItemCost = data.Product.price;
                 data.totalItemCost = data.Product.price;
+                // code for add qty  
+                if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
+                   data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
+                   data.totalItemCost = parseFloat(data.Product.price)*data.Product.qty;
+                   //this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
+                }
+                /// end 
                 let temp = this.dataService.getLocalStorageData('allItems');
                 
                 if(temp == null || temp == 'null') {
 
-                  let allItems = [];  
+                  let allItems = [];
                   allItems.push(data);
                   this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
 
@@ -189,7 +208,7 @@ export class MenuComponent implements OnInit {
                   let isExist = false;
                   for(var i=0; i<allItems.length; i++) {
                     if(allItems[i].Product.id == data.Product.id) {
-                      allItems[i].Product.qty += 1;
+                      allItems[i].Product.qty += data.Product.qty;
                       allItems[i].totalItemCost = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
                       isExist = true;
                       break;
@@ -209,6 +228,7 @@ export class MenuComponent implements OnInit {
           });
       }
     }
+   this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
   }
 
 
@@ -244,6 +264,22 @@ export class MenuComponent implements OnInit {
     this.netCost = this.totalCost;
   }
 
+
+  updateQuantityBeforeCart(type, plu_code) {
+       var qty_key='qty_'+plu_code; 
+       if(!this.itemsQtyBeforeCart[qty_key]){
+              this.itemsQtyBeforeCart[qty_key]=1;
+          }
+       if(type == 1) {
+            this.itemsQtyBeforeCart[qty_key] += 1;    
+          }else{
+            this.itemsQtyBeforeCart[qty_key] = this.itemsQtyBeforeCart[qty_key] - 1;
+            if(this.itemsQtyBeforeCart[qty_key] <= 0) {
+              this.itemsQtyBeforeCart[qty_key] = 1;
+            }
+       }
+      //this.dataService.setLocalStorageData('itemsQtyBeforeCart',  JSON.stringify(this.itemsQtyBeforeCart));
+   }
 
   deleteItem(num, prod) {
     var y = confirm('Are you sure, you want to delete this item from order?');
@@ -465,7 +501,19 @@ export class MenuComponent implements OnInit {
 	  this.showViewCart = false;
 	  this.formattedItems.deals = [];
 	  this.formattedItems.otherItems = [];
+          this.netCost = 0;
   }
+
+updateStoreAndTime(){
+this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutside:true }).subscribe((data)=>{ 
+        if (data) {
+                     this.getCartItems();
+         }
+     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+           console.log(this.orderNowDetails);
+      }); 
+ 
+}
 
 
 }
