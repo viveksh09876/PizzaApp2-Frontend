@@ -62,6 +62,10 @@ export class AccountComponent implements OnInit {
 
   orderUrl = '';
   hideForUK = false;
+  voucherBalance = null;
+  voucherCode = null;
+  loadingBalance = false;
+  voucherBalanceData = {};
 
 
   ngOnInit() {
@@ -629,6 +633,22 @@ export class AccountComponent implements OnInit {
         this.dialogService.addDialog(OrdernowmodalComponent, {  }, { closeByClickingOutside:true }); 
       }
                 
+  }
+
+
+  checkVoucherBalance() {
+      let code = this.voucherCode.trim();
+      this.loadingBalance = true;
+      this.dataService.getVoucherBalance(this.voucherCode)
+            .subscribe(data => {
+                this.voucherBalanceData = data;
+                if(data.Status == 'OK') {
+                  this.voucherBalance = data.Balance;
+                } else {
+                  this.voucherBalance = data.Message;
+                }
+                this.loadingBalance = false;
+            });
   }
 
 

@@ -699,6 +699,13 @@ export class DataService {
     // }
   }
   
+
+  getVoucherBalance(code) {
+      return this.http.get( this.domain + '/webservice/getVoucherBalance/'+code)
+      .map( (res: Response) => res.json() )
+      .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+  }
+
   
 	clearCart(): Observable<any> {
 		this.setLocalStorageData('allItems', null);
