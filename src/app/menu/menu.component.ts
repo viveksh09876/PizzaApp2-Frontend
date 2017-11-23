@@ -136,14 +136,14 @@ export class MenuComponent implements OnInit {
             }
           });    
           
-        /*  this.dataService.getAllDeals().subscribe(data => {
+          this.dataService.getAllDeals().subscribe(data => {
             for (var i=0; i<this.menuData.length; i++) {
               if (this.menuData[i].type == 'deal') {
                   this.menuData[i].products = data;
               }
             }
           });
-*/
+
       }); 
 
       
@@ -191,7 +191,7 @@ export class MenuComponent implements OnInit {
                 if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
                    data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
                    data.totalItemCost = parseFloat(data.Product.price)*data.Product.qty;
-                   //this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
+                   this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
                 }
                 /// end 
                 let temp = this.dataService.getLocalStorageData('allItems');

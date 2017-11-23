@@ -2,15 +2,15 @@
     <div class="container-fluid">
         <div class="menutabs">
             <ul>
-                <li class="active"><a _ngcontent-c0>menu</a></li>
-                <li><a _ngcontent-c0>deals</a></li>
+                <li  [ngClass]="{'active': (selectedMenuCat != 'meal deals')}" role="presentation"><a [routerLink]="['/menu','pizzas']">menu</a></li>
+                <li  [ngClass]="{'active': (selectedMenuCat == 'meal deals')}" role="presentation"><a [routerLink]="['/menu','meal deals']">deals</a></li>
             </ul>
         </div>
 
         <div class="dropdown_rightmenu">
             <ul>
                 <li>
-                    <a _ngcontent-c0>Store location <span *ngIf="orderNowDetails" (click)="updateStoreAndTime()">{{orderNowDetails.selectedStore.Store.store_name}}</span></a>
+                    <a (click)="updateStoreAndTime()">Store location <span *ngIf="orderNowDetails" >{{orderNowDetails.selectedStore.Store.store_name}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Store location 1</a></li>
                         <li><a _ngcontent-c0>Store location 2</a></li>
@@ -19,7 +19,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a _ngcontent-c0>Order time <span  *ngIf="orderNowDetails" (click)="updateStoreAndTime()">{{ orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type}}</span></a>
+                    <a (click)="updateStoreAndTime()">Order time <span  *ngIf="orderNowDetails" >{{ orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Date & Time 1</a></li>
                         <li><a _ngcontent-c0>Date & Time 2</a></li>
@@ -27,7 +27,7 @@
                         <li><a _ngcontent-c0>Date & Time 4</a></li>
                     </ul>
                 </li>
-                <li><a _ngcontent-c0>postcode <span  *ngIf="orderNowDetails" (click)="updateStoreAndTime()">{{orderNowDetails.address.postal_code}}</span></a></li>
+                <li><a (click)="updateStoreAndTime()">postcode <span  *ngIf="orderNowDetails" >{{orderNowDetails.address.postal_code}}</span></a></li>
                 <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
             </ul>
         </div>
@@ -51,7 +51,7 @@
     <div class="two-column-wrapper ourmenu">
         <div class="col-md-8 col-sm-8 col-lg-9 menulist-items">
             <div class="tab-content">
-                <div class="menutabcontent active">
+                <div class="menutabcontent" [ngClass]="{'active': (selectedMenuCat != 'meal deals')}">
                     <div class="row">
                         <div class="col-md-12">
                             <select class="menu_innertabs_mobile visible-xs" [(ngModel)]="selectedMenuCat" target="#tabSwitch" (change)="changTab($event.target.value)">
@@ -61,7 +61,7 @@
                             </select>
                             <ul class="menu_innertabs hidden-xs" [ngClass]="{'full': showViewCart ==  false}">
                                 <ng-container *ngFor="let cat of menuData; let i = index">
-                                    <li *ngIf="cat.type != 'deal'" role="presentation"  [ngClass]="(cat.name == selectedMenuCat)? 'active': ''"  ng-if="cat.type!='deal'"> <a [routerLink]="['/menu', cat.name]">{{cat.name}}</a> </li>
+                                    <li *ngIf="cat.type != 'deal'" role="presentation"  [ngClass]="(cat.name == selectedMenuCat)? 'active': ''" > <a [routerLink]="['/menu', cat.name]">{{cat.name}}</a> </li>
                                 </ng-container>
                             </ul>
 
@@ -71,7 +71,8 @@
                     </div>
 
                     <div class="menuTabdetails">
-                        <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.name == selectedMenuCat)}"  class="tab_content fadeIn animated" id="{{data.name}}">
+                         <ng-container *ngFor="let data of menuData; let z=index;">
+                         <div role="tabpanel"  *ngIf="data.type != 'deal'" [ngClass]="{'active': (data.name == selectedMenuCat)}"  class="tab_content fadeIn animated" id="{{data.name}}">
                              <div class="row hidden-xs">
                                 <div class="col-md-12 text-right">
                                     <a target="_blank" href="assets/images/nkd-nutrition-information.pdf" class="allergens">Allergens Information</a>
@@ -101,7 +102,7 @@
                                             <select *ngIf=" prod.mod_count > 0">
                                                 <option>Original Crust - large - £10.99 999</option>
                                             </select>
-                                            <span><a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a></span>
+                                            <span ><a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a></span>
                                            <!-- <span >
                                                 <a _ngcontent-c0>-</a>
                                                 <a _ngcontent-c0>1</a>
@@ -164,34 +165,35 @@
                                 </ng-container>
                             </div>
                         </div>
+                        </ng-container>
+
                     </div>
                 </div>
-                <div class="dealtabcontent">
-                    <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.name == selectedMenuCat)}"  class="tab_content fadeIn animated" id="{{data.name}}">
-                         <ng-container *ngFor="let prod of data.products">
+                <div class="dealtabcontent" [ngClass]="{'active': ('meal deals' == selectedMenuCat)}">
+                     <ng-container *ngFor="let data of menuData">
+                       <ng-container *ngFor="let prod of data.products">
                             <div class="createWrapper deals" *ngIf="data.type == 'deal'">
-
-                                <div class="media">
+                                  <div class="media">
                                     <div class="media-left">
-                                        <div class="img-Wrapper"><a (click)="goToDeal(prod.id)"><img src="{{cmsApiPath + '/' + prod.image}}" alt="" ></a></div>
+                                      <div class="img-Wrapper"><a (click)="goToDeal(prod.id)"><img src="{{cmsApiPath + '/' + prod.listImage}}" alt="" ></a></div>
                                     </div>
                                     <div class="media-body media-middle">
-                                        <div class="description">
-                                            <div class="leftSection">
-                                                <!-- <h4 class="media-heading">{{prod.Deal.title}}</h4> -->
-
-                                                <p>{{prod.description}}</p>
-                                            </div>
-                                            <div _ngcontent-c2="" class="rightSection bottom">
-                                                <a (click)="goToDeal(prod.id)" class="addBtn cta-btn">Customise</a>
-                                            </div>
+                                      <div class="description">
+                                        <div class="leftSection">
+                                          <!-- <h4 class="media-heading">{{prod.Deal.title}}</h4> -->
+                                          
+                                          <p>{{prod.description}}</p>
                                         </div>
+                                        <div _ngcontent-c2="" class="rightSection bottom">
+                                        <a (click)="goToDeal(prod.id)" class="addBtn cta-btn">Customise</a>
+                                        </div>
+                                      </div>
                                     </div>
-                                </div>
+                                  </div>
+                                  </div>
+                       </ng-container>
+                      </ng-container>  
 
-                            </div>
-                        </ng-container>  
-                    </div>
                 </div>
             </div>
         </div>
