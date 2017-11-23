@@ -77,47 +77,49 @@ export class CheckoutComponent implements OnInit {
         
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('finalOrder'));
-        let formattedItemsData = this.dataService.formatCartData(this.items, 'checkout');
-        
+        this.dataService.formatCartData(this.items, 'checkout', (formattedItemsData) => {
+            
         this.formattedItems = formattedItemsData;
-    
-        this.totalCost =  formattedItemsData.totalPrice;
-        this.netCost = this.totalCost; 
-
-        if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
-          this.couponDiscount = this.orderData.couponDiscount;
-          this.totalCost = this.totalCost - this.orderData.couponDiscount;
-        }
-        // if(this.orderData.order_type == 'delivery') {
-        //     this.totalCost += 6;
-        // } 
-
-        if(this.orderData.payment_type == undefined) { 
-          this.orderData['payment_type'] = 'Credit';
-        }
-
-        let userDetails = JSON.parse(this.dataService.getLocalStorageData('user-details'));
-        let userId = '';
-        if (userDetails != '' && userDetails != null) {
-          
-          userId = userDetails.id;
-        }
-
-        this.card.customerId = userId;
-        this.card.customerEmail = this.orderData.user.email;
-        this.card.amount = this.totalCost;
         
-        let favData = null;
-        let favOrdArr = [];
-        for(var i=0; i < this.items.length; i++) {
-          let favObj = this.utilService.formatFavData(this.items[i]);
-          let favDataObj = {
-            userId: userId,
-            data: favObj
-          }
-          favOrdArr.push(favDataObj);
-        }
-        this.orderData['customData'] = favOrdArr;
+            this.totalCost =  formattedItemsData.totalPrice;
+            this.netCost = this.totalCost; 
+    
+            if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
+              this.couponDiscount = this.orderData.couponDiscount;
+              this.totalCost = this.totalCost - this.orderData.couponDiscount;
+            }
+            // if(this.orderData.order_type == 'delivery') {
+            //     this.totalCost += 6;
+            // } 
+    
+            if(this.orderData.payment_type == undefined) { 
+              this.orderData['payment_type'] = 'Credit';
+            }
+    
+            let userDetails = JSON.parse(this.dataService.getLocalStorageData('user-details'));
+            let userId = '';
+            if (userDetails != '' && userDetails != null) {
+              
+              userId = userDetails.id;
+            }
+    
+            this.card.customerId = userId;
+            this.card.customerEmail = this.orderData.user.email;
+            this.card.amount = this.totalCost;
+            
+            let favData = null;
+            let favOrdArr = [];
+            for(var i=0; i < this.items.length; i++) {
+              let favObj = this.utilService.formatFavData(this.items[i]);
+              let favDataObj = {
+                userId: userId,
+                data: favObj
+              }
+              favOrdArr.push(favDataObj);
+            }
+            this.orderData['customData'] = favOrdArr;
+        });
+        
 
     } else {
         window.location.href = '/';

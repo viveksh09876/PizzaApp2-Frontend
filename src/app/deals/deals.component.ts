@@ -433,15 +433,14 @@ export class DealsComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		    let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
+		    this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+            this.formattedItems = formattedItemsData;
+            this.totalCost =  formattedItemsData.totalPrice;
+            this.netCost = this.totalCost;
+            //this.loadAddedCategories();
+        });
         
-		    this.formattedItems = formattedItemsData;
-		
-        this.totalCost =  formattedItemsData.totalPrice;
-        
-        this.netCost = this.totalCost;
-
-        //this.loadAddedCategories();
+		    
       }      
       this.showViewCart = true;      
     }
@@ -605,10 +604,12 @@ export class DealsComponent implements OnInit {
               this.items = allItems;
               this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
               
-              let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');    
-              this.formattedItems = formattedItemsData;
-              this.totalCost =  formattedItemsData.totalPrice;
-              this.netCost = this.totalCost;
+              this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+                this.formattedItems = formattedItemsData;
+                this.totalCost =  formattedItemsData['totalPrice'];
+                this.netCost = this.totalCost;
+              });    
+              
   
             }else{
               this.items = [];
@@ -639,10 +640,12 @@ export class DealsComponent implements OnInit {
         if(remainingItems.length > 0) {
           this.items = remainingItems;    
           this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-          let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');    
-          this.formattedItems = formattedItemsData;
-          this.totalCost =  formattedItemsData.totalPrice;
-          this.netCost = this.totalCost;
+          this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+            this.formattedItems = formattedItemsData;
+            this.totalCost =  formattedItemsData.totalPrice;
+            this.netCost = this.totalCost;
+          });    
+          
         } else {
           this.items = [];
           this.dataService.setLocalStorageData('allItems', 'null');

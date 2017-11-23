@@ -7,7 +7,7 @@ class WebserviceController extends AppController {
     function beforeFilter(){
         parent::beforeFilter();
 		// Configure::write('debug', 2);
-        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_slides_app','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data', 'get_all_categories_data_app','getItemData','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getCitiesSuggestionApp','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData','sendAckEmail','uploadAttachment', 'sendPaymentData', 'getDealItemList','getCategoryData','getDealIdFromCode'));
+        $this->Auth->allow(array('get_countries','get_categories','getPageInfo','getip','sendApplyInfo','get_languages','get_slides','get_slides_app','get_sub_categories','get_products','get_modifiers','get_options','get_suboptions','getImagePath','get_all_categories_data', 'get_all_categories_data_app','getItemData','getItemDataApp','placeOrder','getStoreList','getStoresFromPostalCode', 'getStoresFromLatLong','getStoreDetails','login','getTwitterFeeds','getInstagramPost','getCountryStores','saveFavItem','getCitiesSuggestion','getCitiesSuggestionApp','getFBFeed','getIGFeed','getPrefrences','signUp', 'getFav', 'getFavItemData','applyCoupon','getFavOrderData','getProfile','sendCateringInfo','sendContactInfo','sendCareerInfo','getOrderHistory','updateProfile','getProductNameByPlu','getModifierName','updatePrefrence','addAddress','deleteAddress','editAddress','setAsDefault','getUserPrefreces','getAreaSuggestion','testUrl', 'getStoreDetailsByStoreId','forgot_password','reset_password','getReOrderData','sendAckEmail','uploadAttachment', 'sendPaymentData', 'getDealItemList','getCategoryData','getDealIdFromCode','get_all_categories_data_full', 'getVoucherBalance'));
     }
 
 	public function get_countries(){
@@ -484,7 +484,7 @@ class WebserviceController extends AppController {
 						$cats[$i]['name'] = $dat['Category']['name'];
 						$cats[$i]['subCats'] = null;
 						$cats[$i]['products'] = array();
-						$cats[$i]['subCatsName'] = array();
+						$cats[$i]['subCatsName'] = null;
 						$all_categories[] = $dat['Category']['name'];
 					}
 					
@@ -493,6 +493,241 @@ class WebserviceController extends AppController {
 						$j = 0; $count = array();
 						$subIndexArr = array();
 						$totSubIndex = 0;
+						foreach($dat['Product'] as $prod) {
+							
+							$prod['is_price_mapped'] = 0;
+							$prod['mod_count'] = count($prod['ProductModifier']);
+							unset($prod['ProductModifier']);
+							
+							//map price of product using plu code
+							if(!empty($plu_json)) {
+								foreach($plu_json as $pluData) {
+									//echo '<pre>'; print_r($pluData); die;
+									foreach($pluData as $pdat) {
+										//echo '<pre>'; print_r($pdat); 
+										if($dat['Category']['id'] == '1' || $dat['Category']['id'] == '8') {
+											
+											if($prod['plu_code'] == 999999) {
+												$prod['is_price_mapped'] = 1;
+												$prod['price'] = $prod['price_title'];	
+											}else{
+												
+												if(is_array($pdat)) {
+													foreach($pdat as $pz) {
+														if(isset($pz['PLU'])) {
+															if($prod['plu_code'] == $pz['PLU']) {
+																$prod['is_price_mapped'] = 1;
+
+																if ($prod['plu_code'] == '289' || $prod['plu_code'] == '290') {
+																	$prod['price'] = array(
+																		'small' => null,
+																		'medium' => null,
+																		'large' => null,
+																		'freeSize' => $pz['PriceSm'] 
+																	);
+																} else {
+																	$prod['price'] = array(
+																		'small' => $pz['PriceSm'],
+																		'medium' => $pz['PriceMed'],
+																		'large' => $pz['PriceLg'],
+																		'freeSize' => null
+																	);
+																}
+																
+															}	
+														}
+													}
+												}
+												
+											}
+											
+											
+										}else{
+											if(isset($pdat['PLU'])) {
+												
+												if($prod['plu_code'] == $pdat['PLU']) {
+													
+													$prod['is_price_mapped'] = 1;
+													$prod['price'] = array(
+																		'small' => null,
+																		'medium' => null,
+																		'large' => null,
+																		'freeSize' =>$pdat['Price'] 
+																	);
+												}	
+											}
+										}									
+									}								
+								}
+							}
+							
+							//echo '<pre>'; print_r($prod); die;
+							if(!empty($prod['sub_category_id'])){
+								
+								if(!in_array($prod['SubCategory']['name'], $cats[$i]['subCatsName'])) {
+									$cats[$i]['subCatsName'][] = $prod['SubCategory']['name'];
+									$cats[$i]['subCatsPrice'][] = $prod['SubCategory']['short_description'];
+								} 
+								
+								
+								$subIndex = array_search($prod['SubCategory']['name'], $cats[$i]['subCatsName']);
+								$tname = 'subCat_'.$subIndex;
+								
+								
+								
+								if(!isset($count[$prod['SubCategory']['name']])) {
+									$count[$prod['SubCategory']['name']] = 0;
+								}
+								
+								$sName = $prod['SubCategory'];
+								unset($prod['SubCategory']);
+								unset($prod['created']);
+								unset($prod['modified']);
+								
+								//$tName = preg_replace("![^a-z0-9]+!i", "-", $sName['name']);
+								
+								$cats[$i]['subCats'][$tname][$count[$sName['name']]]['name'] = $sName['name'];
+								$cats[$i]['subCats'][$tname][$count[$sName['name']]]['products'][] = $prod;
+								
+								$count[$sName['name']] +=1;
+							}else{
+								if(empty($prod['SubCategory'])){
+									$prod['SubCategory'] =  null;
+								}
+								$cats[$i]['products'][] = $prod;
+							}
+							
+							$j++;
+						}
+					}
+
+				} else {
+					//meal deals
+
+					// $this->Deal->bindModel(array(
+					// 	'hasMany' => array(
+					// 		'DealItem' => array(
+					// 			'className' => 'DealItem',
+					// 			'foreignKey' => 'deal_id'
+					// 		)
+					// 	)
+					// ));
+
+					$tempData = array();
+					$alldeals = $this->Deal->find('all', array('conditions' => array(
+											'Deal.status' => 1,
+											'Deal.store_id' => $storeId
+										)));
+
+					$p=0;					
+					foreach ($alldeals as $key => $value) {
+						$value['Deal']['image'] = 'img/admin/products/deals/'.$value['Deal']['image'];
+						$value['Deal']['thumbnail'] = 'img/admin/products/deals/'.$value['Deal']['thumbnail'];
+						$tempData[] = $value['Deal'];
+						$p++;
+					}
+					$alldeals = $tempData;
+
+					$cats[$i]['id'] = $dat['Category']['id'];
+					$cats[$i]['type'] = 'deal';
+					$cats[$i]['name'] = $dat['Category']['name'];
+					$cats[$i]['products'] = $alldeals; 
+					$cats[$i]['subCats'] = null;
+					$cats[$i]['subCatsName'] = array();
+					$all_categories[] = $dat['Category']['name'];
+					//echo '<pre>'; print_r($alldeals); die;
+				}
+				
+				
+				$i++;			
+			}
+		}
+			
+		
+		//die;
+		// echo '<pre>'; print_r($cats); die;
+        echo json_encode(array('itemList'=>$cats)); die;
+	}
+	
+
+
+	public function get_all_categories_data_full($storeId = 1, $menuCountry = 'UK'){
+		
+		//Configure::write('debug', 2);
+        $this->layout = FALSE;
+        $this->autoRender = FALSE;
+		$this->Category->recursive = 2;
+		
+		$this->Category->bindModel(array('hasMany'=>array(
+								'Product' => array(
+										'conditions' => array('Product.status' => 1, 'Product.lang_id !=' => 0),
+										'fields' => array(
+														'Product.id', 'Product.lang_id','Product.category_id',
+														'Product.sub_category_id', 'Product.short_description', 'Product.plu_code',
+														'Product.title', 'Product.price_title', 'Product.slug','Product.price','Product.image',
+														'Product.thumb_image','Product.sort_order','groupv','grouph','groupvh'
+														
+												),
+										'order' => array('Product.sort_order' => 'asc')		
+								)
+						)));
+						
+		$this->Product->bindModel(array(
+									'belongsTo' => array(
+										'SubCategory' => array(
+											'ClassName' => 'SubCategory',
+											'foreignKey' => 'sub_category_id',
+											'conditions' => array('SubCategory.status' => 1),
+											'fields' => array(
+													'SubCategory.id','SubCategory.lang_id','SubCategory.store_id','SubCategory.cat_id','SubCategory.name','SubCategory.slug','SubCategory.short_description','SubCategory.sort_order','SubCategory.image','SubCategory.status'
+												),
+											'order' => array('SubCategory.sort_order' => 'asc')	
+										)
+									),
+									'hasMany' => array(
+										'ProductModifier' => array(
+											'className' => 'ProductModifier',
+											'foreignKey' => 'product_id',
+											'fields' => array('ProductModifier.id')
+										)
+									)
+								));
+        
+		
+									
+		$data = $this->Category->find('all', array('conditions' => array(
+														'Category.status' => 1,
+														'Category.lang_id' => $storeId)
+												));
+		
+		//echo '<pre>'; print_r($data); die;
+		//$plu_json = $this->curlGetRequest('https://nkdpizza.com/beta/pos/index.php/menu/'.$menuCountry);
+		
+		$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UK');
+		$plu_json = json_decode($plu_json, true);
+		//echo '<pre>'; print_r($plu_json); die;
+		$plu_json = $plu_json['item'];
+		$resp = array();
+		$all_categories = $cats = $subCats = array();
+		
+		if(!empty($data)){
+			$i = 0;
+			foreach($data as $dat) {
+				
+				if ($dat['Category']['slug'] != 'meal-deals') {
+					if(!in_array($dat['Category']['name'], $all_categories)) {
+						$cats[$i]['id'] = $dat['Category']['id'];
+						$cats[$i]['type'] = 'category';
+						$cats[$i]['name'] = $dat['Category']['name'];
+						$cats[$i]['subCats'] = array();
+						$cats[$i]['products'] = array();
+						$cats[$i]['subCatsName'] = array();
+						$all_categories[] = $dat['Category']['name'];
+					}
+					
+					
+					if(!empty($dat['Product'])) {
+						$j = 0; $count = array();
 						foreach($dat['Product'] as $prod) {
 							
 							$prod['is_price_mapped'] = 0;
@@ -556,12 +791,7 @@ class WebserviceController extends AppController {
 								if(!in_array($prod['SubCategory']['name'], $cats[$i]['subCatsName'])) {
 									$cats[$i]['subCatsName'][] = $prod['SubCategory']['name'];
 									$cats[$i]['subCatsPrice'][] = $prod['SubCategory']['short_description'];
-								} 
-								
-								
-								$subIndex = array_search($prod['SubCategory']['name'], $cats[$i]['subCatsName']);
-								$tname = 'subCat_'.$subIndex;
-								
+								}
 								
 								
 								if(!isset($count[$prod['SubCategory']['name']])) {
@@ -573,10 +803,8 @@ class WebserviceController extends AppController {
 								unset($prod['created']);
 								unset($prod['modified']);
 								
-								//$tName = preg_replace("![^a-z0-9]+!i", "-", $sName['name']);
-								
-								$cats[$i]['subCats'][$tname][$count[$sName['name']]]['name'] = $sName['name'];
-								$cats[$i]['subCats'][$tname][$count[$sName['name']]]['products'][] = $prod;
+								$cats[$i]['subCats'][$sName['name']][$count[$sName['name']]]['name'] = $sName['name'];
+								$cats[$i]['subCats'][$sName['name']][$count[$sName['name']]]['products'][] = $prod;
 								
 								$count[$sName['name']] +=1;
 							}else{
@@ -599,26 +827,17 @@ class WebserviceController extends AppController {
 					// 	)
 					// ));
 
-					$tempData = array();
+
 					$alldeals = $this->Deal->find('all', array('conditions' => array(
 											'Deal.status' => 1,
 											'Deal.store_id' => $storeId
 										)));
-
-					$p=0;					
-					foreach ($alldeals as $key => $value) {
-						$value['Deal']['image'] = 'img/admin/products/deals/'.$value['Deal']['image'];
-						$value['Deal']['thumbnail'] = 'img/admin/products/deals/'.$value['Deal']['thumbnail'];
-						$tempData[] = $value['Deal'];
-						$p++;
-					}
-					$alldeals = $tempData;
-
+					
 					$cats[$i]['id'] = $dat['Category']['id'];
 					$cats[$i]['type'] = 'deal';
 					$cats[$i]['name'] = $dat['Category']['name'];
 					$cats[$i]['products'] = $alldeals; 
-					$cats[$i]['subCats'] = null;
+					$cats[$i]['subCats'] = array();
 					$cats[$i]['subCatsName'] = array();
 					$all_categories[] = $dat['Category']['name'];
 					//echo '<pre>'; print_r($alldeals); die;
@@ -631,8 +850,8 @@ class WebserviceController extends AppController {
 			
 		
 		//die;
-		// echo '<pre>'; print_r($cats); die;
-        echo json_encode(array('itemList'=>$cats)); die;
+		//echo '<pre>'; print_r($cats); die;
+        echo json_encode($cats); die;
     }
 	
 
@@ -647,7 +866,438 @@ class WebserviceController extends AppController {
 		}
 	}
     
-	
+	public function getItemDataApp($slug = '', $menuCountry = 'UK') {
+		//Configure::write('debug', 2);
+		if($slug != '') {
+			
+			$item = $this->getFormattedItemDataApp($slug, $menuCountry);
+			//echo '<pre>'; print_r($item); die;
+			echo json_encode($item); die;
+		}
+	}
+    
+	public function getFormattedItemDataApp($slug, $menuCountry = 'UK') {
+		$this->Product->recursive = 6;
+			
+			$this->OptionSuboption->bindModel(array(
+								'belongsTo' => array(
+									'SubOption' => array(
+										'className' => 'SubOption',
+										'foreignKey' => 'suboption_id'
+									)
+								)
+							));
+			
+			$this->ModiferOption->bindModel(array(
+								'belongsTo' => array(
+									'Option' => array(
+										'className' => 'Option',
+										'foreignKey' => 'option_id',
+										'conditions' => array('Option.status' => 1),
+										'fields' => array(
+												'Option.id','Option.lang_id','Option.store_id','Option.name','Option.plu_code','Option.image','Option.sort_order','Option.dependent_modifier_id','Option.dependent_modifier_option_id','Option.dependent_modifier_count'
+											
+										),
+										'order' => array('Option.sort_order' => 'asc', 'Option.no_modifier' => 'asc')
+									)
+								)
+							));
+			
+			$this->Modifier->bindModel(array(
+								'hasMany' => array(
+									'ModifierOption' => array(
+										'className' => 'ModifierOption',
+										'foreignKey' => 'modifier_id',
+										'fields' => array(
+												'ModifierOption.id', 'ModifierOption.modifier_id', 'ModifierOption.option_id'
+										)
+									)
+								)
+							));
+			
+			$this->ProductModifier->bindModel(array(
+								'belongsTo' => array(
+										'Modifier' => array(
+											'className' => 'Modifier',
+											'foreignKey' => 'modifier_id',
+											'conditions' => array('Modifier.status' => 1),
+											'fields' => array(
+													'Modifier.id','Modifier.lang_id','Modifier.store_id','Modifier.title','Modifier.image','Modifier.short_description','Modifier.sort_order','Modifier.status'											
+											 ),
+											 'order' => array('Modifier.sort_order' => 'asc')
+										)
+								)
+							));
+			
+			$this->ProductIncludedModifier->bindModel(array(
+								'belongsTo' => array(
+									'ModifierOption' => array(
+										'className' => 'ModifierOption',
+										'foreignKey' => 'modifier_option_id'
+									)
+								)							
+							));
+			
+			$this->Product->bindModel(array(
+								'hasMany' => array(
+											'ProductModifier' => array(
+												'className' => 'ProductModifier',
+												'foreignKey' => 'product_id',
+												'fields' => array(
+														'ProductModifier.id','ProductModifier.product_id','ProductModifier.modifier_id','ProductModifier.default_option_id','ProductModifier.store_id','ProductModifier.lang_id','ProductModifier.is_required','ProductModifier.choice','ProductModifier.min_choice','ProductModifier.max_choice','ProductModifier.max_choice',
+														'ProductModifier.free'
+													),
+												'order' => 'ProductModifier.sort_order ASC'	
+											),
+											'ProductIncludedModifier' => array(
+												'className' => 'ProductIncludedModifier',
+												'foreignKey' => 'product_id'
+											)
+										)
+							));
+			$item = $this->Product->find('first', array(
+											'conditions' => array('Product.slug' => $slug),
+											'fields' => array(
+												'Product.id', 'Product.lang_id','Product.category_id',
+												'Product.sub_category_id', 'Product.short_description', 'Product.plu_code', 'Product.title', 'Product.price_title', 'Product.slug','Product.price','Product.image',
+												'Product.thumb_image','Product.sort_order'
+											)
+										));
+			
+			//$plu_json = $this->curlGetRequest('https://nkdpizza.com/beta/pos/index.php/menu/'.$menuCountry);
+			$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UK');
+			$plu_json = json_decode($plu_json, true);
+			
+			// pr($item); 
+			// pr($plu_json);
+
+			// die;
+			if(!empty($item)) {
+				
+				$item['Product']['price'] = 0;
+				
+				//map price of product
+				foreach($plu_json['item'] as $plu_item) {	
+					foreach($plu_item as $pt) {	
+						//echo '<pre>'; print_r($pt); die;						
+						if($item['Product']['category_id'] == 1 || $item['Product']['category_id'] == 8) {		
+							
+
+							foreach($pt as $pti) {
+								if(isset($pti['PLU']) && ($pti['PLU'] == $item['Product']['plu_code'])) {
+									if(isset($pti['Price'])) {
+										$item['Product']['price'] = array(
+												'small' => null,
+												'medium' => null,
+												'large' => null,
+												'freeSize' => $pti['Price']
+											);
+									}else if(isset($pti['PriceSm'])) {
+
+										if ($pti['PLU'] == 289 || $pti['PLU'] == 290) {
+											$item['Product']['price'] = array(
+												'small' => null,
+												'medium' => null,
+												'large' => null,
+												'freeSize' => $pti['PriceSm']
+											);
+										} else {
+											$item['Product']['price'] = array(
+												'small' => $pti['PriceSm'],
+												'medium' => $pti['PriceMed'],
+												'large' => $pti['PriceLg'],
+												'freeSize' => null	
+											);
+										}
+
+										
+									}	
+								}
+							}								
+							
+						}else{
+							if(isset($pt['PLU']) && ($pt['PLU'] == $item['Product']['plu_code'])) {
+									$item['Product']['price'] = array(
+												'small' => null,
+												'medium' => null,
+												'large' => null,
+												'freeSize' => $pt['Price']	
+											);
+							}
+						}					
+					}								
+				}  
+				
+				
+				
+				$item['Product']['qty'] = 1;	
+				
+				
+				if(!empty($item['ProductIncludedModifier'])) {					
+					$i = 0;
+					$includedArr = array();					
+					foreach($item['ProductIncludedModifier'] as $pim) {						
+						if(!empty($pim['ModifierOption'])) {
+							$includedArr[$pim['ModifierOption']['modifier_id']]['title'] = $pim['ModifierOption']['Modifier']['title'];
+							$includedArr[$pim['ModifierOption']['modifier_id']]['option'][] = $pim['ModifierOption']['Option'];	
+							$i++;	
+						}						
+					}
+					
+					//map prices of included modifier using plu
+					if(!empty($includedArr)) {
+						foreach($includedArr as $key => $ia) {
+							$i = 0;
+							foreach($ia['option'] as $opt) {
+								
+								if(empty($includedArr[$key]['option'][$i]['OptionSuboption'])){
+									$includedArr[$key]['option'][$i]['OptionSuboption'] = null;
+								}
+
+								foreach($plu_json['modifier'] as $plu_mod) {
+									foreach($plu_mod as $pl_m) {
+										if($pl_m['PLU'] == $opt['plu_code']) {
+											if(isset($pl_m['Price'])) {
+												$price = array(
+													'small' => null,
+													'medium' => null,
+													'large' => null,
+													'freeSize' => $pl_m['Price']	
+												);
+											}else if(isset($pl_m['PriceSm'])){
+												$price = array(
+													'small' => $pl_m['PriceSm'],
+													'medium' => $pl_m['PriceMed'],
+													'large' => $pl_m['PriceLg'],
+													'freeSize' => null
+												);
+											}	
+											$includedArr[$key]['option'][$i]['price'] = $price;
+											$includedArr[$key]['option'][$i]['send_code'] = '';
+											$includedArr[$key]['option'][$i]['add_extra'] = false;
+											$includedArr[$key]['option'][$i]['default_checked'] = true;
+											$includedArr[$key]['option'][$i]['is_checked'] = true;
+											$i++;
+										}
+									}
+								}								
+							}						
+						}						
+					}
+					
+					$iArr = array();
+					if(!empty($includedArr)) {
+						$i = 0;
+						foreach($includedArr as $arr) {
+							$iArr[$i] = $arr;
+							$i++;
+						}
+					}
+					
+					$item['ProductIncludedModifier'] = $iArr;
+				}
+				
+				//map modifier price				
+				if(!empty($item['ProductModifier'])) {	
+					$i = 0;
+					foreach($item['ProductModifier'] as $pm) {
+						$j = 0;
+						foreach($pm['Modifier']['ModifierOption'] as $mo) {
+							
+							unset($mo['Modifier']['ModifierOption']);
+							unset($item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Modifier']['ModifierOption']);
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = false;
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['default_checked'] = false;
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['send_code'] = '';
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['add_extra'] = false;
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['quantity'] = 1;
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_included_mod'] = false;
+							
+							$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['send_code_permanent'] = false;
+							
+							if($item['Product']['category_id'] == 1) {
+								$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['subop_name'] = 'Full';
+							}
+							
+							//add param if it is included modifier
+							if(!empty($item['ProductIncludedModifier'])) {
+								foreach($item['ProductIncludedModifier'] as $includedPm) {
+									foreach($includedPm['option'] as $ipmOP) {
+									
+										if($ipmOP['plu_code'] == $mo['Option']['plu_code']) {
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_checked'] = true;								
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['default_checked'] = true;								
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_included_mod'] = true;
+										}
+									}
+								}
+							}
+							
+							if(!empty($mo['Option']['OptionSuboption'])) {
+								$n = 0;
+								foreach($mo['Option']['OptionSuboption'] as $sop) {
+									if($item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'][$n]['SubOption']['name'] == 'Full') {
+										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'][$n]['SubOption']['is_active'] = true;	
+									}else{
+										$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'][$n]['SubOption']['is_active'] = false;
+									}									
+									$n++;
+								}
+							}
+							
+							if($item['Product']['category_id'] == 1) {
+								
+								$loopArr = $plu_json['modifier'];
+								if($item['Product']['plu_code'] == 999999) {
+									$loopArr = $plu_json['item'];	
+								}
+								
+								
+								foreach($loopArr as $plu_mod) {
+									foreach($plu_mod as $pl_m) {
+										if(empty($item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'])){
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'] = null;
+										}
+										if($item['Product']['plu_code'] == 999999) {
+											foreach($pl_m as $cyo) {
+												if(isset($cyo['PLU'])) {
+													if($cyo['PLU'] == $mo['Option']['plu_code']) {
+																							
+														if(isset($cyo['Price'])) {
+															$price = array(
+																		'small' => null,
+																		'medium' => null,
+																		'large' => null,
+																		'freeSize' => $cyo['Price']	
+																	);
+															$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = $price;
+														}else if(isset($cyo['PriceSm'])){
+															$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = array(
+																	'small' => $cyo['PriceSm'],
+																	'medium' => $cyo['PriceMed'],
+																	'large' => $cyo['PriceLg'],
+																	'freeSize' => null
+																);
+														}												
+													}
+												}
+												
+											}
+											
+											//echo '<pre>'; print_r(); die;
+											
+										}else{	
+												// pr($pl_m);															
+											if($pl_m['PLU'] == $mo['Option']['plu_code']) {
+																							
+												if(isset($pl_m['Price'])) {
+													$price = array(
+														'small' => null,
+														'medium' => null,
+														'large' => null,
+														'freeSize' => $pl_m['Price']
+													);
+													$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = $price;
+												}else if(isset($pl_m['PriceSm'])){
+													$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = array(
+														'small' => $pl_m['PriceSm'],
+														'medium' => $pl_m['PriceMed'],
+														'large' => $pl_m['PriceLg'],
+														'freeSize' => null
+													);
+												}	
+												
+												//$mo['price'] = $pl_m['Price'];
+											}
+										}
+									}
+								}	
+								
+								
+								//loop to get values of crust for pizza other than cyo
+								foreach($plu_json['item'] as $plu_mod) {
+									foreach($plu_mod as $pl_m) {
+																								
+										foreach($pl_m as $cyo) {											if(empty($item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'])){
+															$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'] = null;
+													}
+											if(isset($cyo['PLU'])) {
+												if($cyo['PLU'] == $mo['Option']['plu_code']) {
+													
+													
+													if(isset($cyo['Price'])) {
+														$price = array(
+															'small' => null,
+															'medium' => null,
+															'large' => null,
+															'freeSize' => $cyo['Price']
+														);
+														$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = $price;
+													}else if(isset($cyo['PriceSm'])){
+														$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = array(
+															'small' => $cyo['PriceSm'],
+															'medium' => $cyo['PriceMed'],
+															'large' => $cyo['PriceLg'],
+															'freeSize' => null
+														);
+													}												
+												}	
+											}	
+											
+										}
+										
+									}
+								}
+							}
+										
+							
+							foreach($plu_json['modifier'] as $plu_mod) {
+								foreach($plu_mod as $pl_m) {
+															
+										if($pl_m['PLU'] == $mo['Option']['plu_code']) {
+										
+											if(isset($pl_m['Price'])) {
+												$price = array(
+														'small' => null,
+														'medium' => null,
+														'large' => null,
+														'freeSize' => $pl_m['Price']
+													);
+											}else if(isset($pl_m['PriceSm'])){
+												$price = array(
+													'small' => $pl_m['PriceSm'],
+													'medium' => $pl_m['PriceMed'],
+													'large' => $pl_m['PriceLg'],
+													'freeSize' => null
+												);
+											}	
+											if(empty($item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'])){
+												$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['OptionSuboption'] = null;
+											}
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['price'] = ($price['freeSize']!='0.00')?$price:null;
+											$item['ProductModifier'][$i]['Modifier']['ModifierOption'][$j]['Option']['is_topping'] = true;
+											//$mo['price'] = $pl_m['Price'];
+										}	
+								}
+							}
+							$j++;			
+						}
+						$i++;	
+					}
+				}				
+			}
+			
+			$item['ProductIncludedModifier'] = null;
+			//unset($item['ProductIncludedModifier']);
+			return $item;
+	}
+
 	public function getFormattedItemData($slug, $menuCountry = 'UK') {
 		$this->Product->recursive = 6;
 			
@@ -1615,7 +2265,7 @@ class WebserviceController extends AppController {
         $arrReplace=array($username,$email,$tel,$location,$date,$noofuser,$social);
         
         $from=$template['EmailTemplate']['from_email'];
-        $subject=$template['EmailTemplate']['email_subject'];
+        $subject=$template['EmailTemplate']['email_subject'].' '.$username;
         $content=str_replace($arrFind, $arrReplace,$template['EmailTemplate']['email_body']);
     }
 
@@ -1657,7 +2307,7 @@ class WebserviceController extends AppController {
         $arrReplace=array($name,$email,$tel,$location,$question,$feedback);
         
         $from=$template['EmailTemplate']['from_email'];
-        $subject=$template['EmailTemplate']['email_subject'];
+        $subject=$template['EmailTemplate']['email_subject'].' '.$name;
         $content=str_replace($arrFind, $arrReplace,$template['EmailTemplate']['email_body']);
     }
   
@@ -1698,7 +2348,7 @@ class WebserviceController extends AppController {
         $arrReplace=array($name,$email,$tel,$country,$city,$feedback);
         
         $from=$template['EmailTemplate']['from_email'];
-        $subject=$template['EmailTemplate']['email_subject'];
+        $subject=$template['EmailTemplate']['email_subject'].' '.$name;
         $content=str_replace($arrFind, $arrReplace,$template['EmailTemplate']['email_body']);
     }
     if($this->sendPhpEmail(ENQUIRY_EMAIL,$from,$subject,$content)){
@@ -1739,7 +2389,7 @@ function sendCareerInfo(){
         $arrReplace=array($name,$email,$tel,$position,$lkdin,$resume);
         
         $from=$template['EmailTemplate']['from_email'];
-        $subject=$template['EmailTemplate']['email_subject'];
+        $subject=$template['EmailTemplate']['email_subject'].' '.$name;
         $content=str_replace($arrFind, $arrReplace,$template['EmailTemplate']['email_body']);
     }
 
@@ -2648,8 +3298,8 @@ function sendCareerInfo(){
 			
 			//$details = json_encode($details);
 			//echo $details; die;
-			//$url = APIURL.'/index.php/Pay';
-			$url = 'http://35.185.240.172/nkd/index.php/Pay';
+			$url = APIURL.'/index.php/Pay';
+			//$url = 'http://35.185.240.172/nkd/index.php/Pay';
 			 
 			$result     = $this->curlPostRequest($url, $details);
 			$response   = json_decode($result);
@@ -3136,7 +3786,19 @@ function sendCareerInfo(){
     function getCategoryData($catId,$field){
         $this->autoRender = false;
         return $this->Category->field($field,array('Category.id'=>$catId));
-    }
+	}
+	
+
+	public function getVoucherBalance($code){
+		$this->layout = 'false';
+		$this->autoRender = false;
+
+		$result = array();
+		$resp = $this->curlGetRequest(APIURL.'/index.php/VoucherBal/'.$code);
+		$result = json_decode($resp, true);
+		echo json_encode($result);
+	    die;
+	}
 
 	
 }
