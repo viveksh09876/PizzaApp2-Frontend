@@ -49,7 +49,9 @@
         <div class="cube2 icon icon-pizza-icon"></div>
     </div>
     <div class="two-column-wrapper ourmenu">
+        
         <div class="col-md-8 col-sm-8 col-lg-9 menulist-items">
+            <div class="inside-column-container leftContent">
             <div class="tab-content">
                 <div class="menutabcontent" [ngClass]="{'active': (selectedMenuCat != 'meal deals')}">
                     <div class="row">
@@ -170,8 +172,13 @@
                     </div>
                 </div>
                 <div class="dealtabcontent" [ngClass]="{'active': ('meal deals' == selectedMenuCat)}">
+                    <div class="content-wrapper">
+                        <div class="content-container">
+                    <div class="fav-section">
+                        <div class="row">
                      <ng-container *ngFor="let data of menuData">
                        <ng-container *ngFor="let prod of data.products">
+                        <div class="col-md-6">
                             <div class="createWrapper deals" *ngIf="data.type == 'deal'">
                                   <div class="media">
                                     <div class="media-left">
@@ -191,12 +198,17 @@
                                     </div>
                                   </div>
                                   </div>
+                              </div>
                        </ng-container>
                       </ng-container>  
-
+                    </div>
+                </div>
+            </div>
+                </div>
                 </div>
             </div>
         </div>
+    </div>
         <div class="col-md-4 col-sm-4 col-lg-3">
             <div class="viewcart_sec fixedsticky">
                 <div class="inside-column-container aside-wrapper orderProcessIns hidden-xs">
@@ -290,14 +302,14 @@
 
                                 </div>
                             </div>
-                            <div class="sumarry-box">
+                            <!-- <div class="sumarry-box">
 
                                 <div class="total" *ngIf="netCost != 0">
                                     <label>Sub total</label>
                                     <span>{{currencyCode}}{{netCost}}</span>
                                 </div>
                                 <a (click)="checkout()">Proceed</a>
-                            </div>
+                            </div> -->
                         </div>
                     </ng-container>                
                 </div>
