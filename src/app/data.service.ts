@@ -515,6 +515,19 @@ export class DataService {
                   })
                   
                 }
+
+
+                let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+                let returnObj = {
+                  deals: dealsArr,
+                  otherItems: otherItems,
+                  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
+                }
+
+                if (callback) {
+                  callback(returnObj);
+                }
+
               });
               
             });
@@ -539,7 +552,7 @@ export class DataService {
                   delete deals[key];
                 } else {
                   totPrice += deals[key][0].dealPrice;
-
+                  //console.log('totprice', totPrice);
                   this.getDealTitle(dId, (titleText) => {
                     let dealObject = {
                       title: titleText,
@@ -551,6 +564,18 @@ export class DataService {
                   })
                   
                 }
+
+                let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+                let returnObj = {
+                  deals: dealsArr,
+                  otherItems: otherItems,
+                  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
+                }
+
+                if (callback) {
+                  callback(returnObj);
+                }
+
               });
               
           }
@@ -562,18 +587,7 @@ export class DataService {
 	  }
 	  
 	  
-	  	  
-	  let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
-	  let returnObj = {
-		  deals: dealsArr,
-		  otherItems: otherItems,
-		  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
-	  }
-	  
-    //console.log('return obj', returnObj);
-    if (callback) {
-      callback(returnObj);
-    }
+    
 	  //return returnObj;
 	  
 	  

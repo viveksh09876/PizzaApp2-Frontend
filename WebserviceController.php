@@ -706,6 +706,7 @@ class WebserviceController extends AppController {
 		$plu_json = $this->curlGetRequest(APIURL.'/index.php/menu/UK');
 		$plu_json = json_decode($plu_json, true);
 		//echo '<pre>'; print_r($plu_json); die;
+		$plu_mods = $plu_json['modifier'];
 		$plu_json = $plu_json['item'];
 		$resp = array();
 		$all_categories = $cats = $subCats = array();
@@ -732,19 +733,36 @@ class WebserviceController extends AppController {
 							
 							$prod['is_price_mapped'] = 0;
 							$prod['mod_count'] = count($prod['ProductModifier']);
+							
+							
 							unset($prod['ProductModifier']);
 							
 							//map price of product using plu code
 							if(!empty($plu_json)) {
 								foreach($plu_json as $pluData) {
-									//echo '<pre>'; print_r($pluData); die;
-									foreach($pluData as $pdat) {
-										//echo '<pre>'; print_r($pdat); 
+									
+									if (isset($pluData['CYO'])) {
+										$crustData = $pluData['CYO'];
+										$r = 0;
+										foreach($crustData as $cd) {
+											unset($crustData[$r]['Contents']);
+											$r++;
+										}
+									}
+									
+									foreach($pluData as $key => $pdat) {
+										//echo '<pre>'; print_r($key); 
 										if($dat['Category']['id'] == '1' || $dat['Category']['id'] == '8') {
+											
+											
+											$prod['crust_price'] = $crustData;
+											
+											
 											
 											if($prod['plu_code'] == 999999) {
 												$prod['is_price_mapped'] = 1;
 												$prod['price'] = $prod['price_title'];	
+												
 											}else{
 												
 												if(is_array($pdat)) {
@@ -773,7 +791,7 @@ class WebserviceController extends AppController {
 											
 										}else{
 											if(isset($pdat['PLU'])) {
-												
+												$prod['dipping_sauce_data'] = $plu_mods['dipping sauce'];
 												if($prod['plu_code'] == $pdat['PLU']) {
 													
 													$prod['is_price_mapped'] = 1;
