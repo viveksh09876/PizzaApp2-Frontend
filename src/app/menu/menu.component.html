@@ -10,7 +10,7 @@
         <div class="dropdown_rightmenu">
             <ul>
                 <li>
-                    <a (click)="updateStoreAndTime()">Store location <span *ngIf="orderNowDetails" >{{orderNowDetails.selectedStore.Store.store_name}}</span></a>
+                    <a (click)="updateStoreAndTime()">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Store location 1</a></li>
                         <li><a _ngcontent-c0>Store location 2</a></li>
@@ -19,7 +19,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a (click)="updateStoreAndTime()">Order time <span  *ngIf="orderNowDetails" >{{ orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type}}</span></a>
+                    <a (click)="updateStoreAndTime()">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Date & Time 1</a></li>
                         <li><a _ngcontent-c0>Date & Time 2</a></li>
@@ -27,7 +27,7 @@
                         <li><a _ngcontent-c0>Date & Time 4</a></li>
                     </ul>
                 </li>
-                <li><a (click)="updateStoreAndTime()">postcode <span  *ngIf="orderNowDetails" >{{orderNowDetails.address.postal_code}}</span></a></li>
+                <li><a (click)="updateStoreAndTime()">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
                 <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
             </ul>
         </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="two-column-wrapper ourmenu">
         
-        <div class="col-md-8 col-sm-8 col-lg-9 menulist-items">
+        <div class="col-md-8 col-sm-8 col-lg-9 menulist-items" [ngClass]="{'fullview': (showViewCart ==  false)}">
             <div class="inside-column-container leftContent">
             <div class="tab-content">
                 <div class="menutabcontent" [ngClass]="{'active': (selectedMenuCat != 'meal deals')}">
@@ -91,7 +91,7 @@
                                 <ng-container *ngFor="let prod of data.products; let y=index;">
                                     <div class="col-md-6 col-sm-6 col-lg-4">
                                         <div class="imgbox">
-                                            <img src="{{cmsApiPath + '/' + prod.thumb_image}}" alt="" class="img-responsive">
+                                            <img src="{{cmsApiPath + '/' + prod.image}}" alt="" class="img-responsive">
                                             <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
                                             <img  class="nutrision" src="assets/images/hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                             <img  class="nutrision" src="assets/images/gluten.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
@@ -131,8 +131,8 @@
                                         </div>
                                     </div>
 
-
-                                    <div  *ngIf="prod.plu_code == 999999 && data.subCatsName.length > 0" >
+                                    
+                                    <ng-container *ngIf="prod.plu_code == 999999 && data.subCatsName.length > 0" >
                                         <ng-container  *ngFor="let subCt of data.subCats | keysPipe; let r=index;" >
                                             <div class="col-md-6 col-sm-6 col-lg-4"  *ngFor="let subProducts of subCt.value">
                                              <ng-container *ngFor="let subProd of subProducts.products">
@@ -162,8 +162,8 @@
                                                     </div>
                                                 </ng-container>
                                             </div>
-                                        </ng-container>  
-                                    </div>
+                                        </ng-container>
+                                       </ng-container>
                                 </ng-container>
                             </div>
                         </div>
@@ -178,8 +178,8 @@
                         <div class="row">
                      <ng-container *ngFor="let data of menuData">
                        <ng-container *ngFor="let prod of data.products">
-                        <div class="col-md-6">
-                            <div class="createWrapper deals" *ngIf="data.type == 'deal'">
+                        <div class="col-md-3" *ngIf="data.type == 'deal'">
+                            <div class="createWrapper deals">
                                   <div class="media">
                                     <div class="media-left">
                                       <div class="img-Wrapper"><a (click)="goToDeal(prod.id)"><img src="{{cmsApiPath + '/' + prod.listImage}}" alt="" ></a></div>
@@ -209,7 +209,7 @@
             </div>
         </div>
     </div>
-        <div class="col-md-4 col-sm-4 col-lg-3">
+        <div class="col-md-4 col-sm-4 col-lg-3" *ngIf="showViewCart==true">
             <div class="viewcart_sec fixedsticky">
                 <div class="inside-column-container aside-wrapper orderProcessIns hidden-xs">
 

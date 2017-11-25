@@ -1,10 +1,58 @@
 <!--Banner-->
-<div class="banner-wrapper">
+<!--<div class="banner-wrapper">
 <div class="container" style="background-image:url(assets/images/cater-banner.jpg)">
   <h1><span>choose your order</span></h1>
   <div class="leftButtons buttons hidden-md hidden-lg" *ngIf="items.length > 0"><a (click)="checkout()" class="whiteBtn cta-btn">Checkout</a></div>
   </div>
+</div>-->
+
+<div class="secondary_menu">
+    <div class="container-fluid">
+        <div class="menutabs">
+            <ul>
+                <li  [ngClass]="{'active': (selectedMenuCat != 'meal deals')}" role="presentation"><a [routerLink]="['/menu','pizzas']">menu</a></li>
+                <li  [ngClass]="{'active': (selectedMenuCat == 'meal deals')}" role="presentation"><a [routerLink]="['/menu','meal deals']">deals</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown_rightmenu">
+            <ul>
+                <li>
+                    <a (click)="updateStoreAndTime()">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
+                    <ul>
+                        <li><a _ngcontent-c0>Store location 1</a></li>
+                        <li><a _ngcontent-c0>Store location 2</a></li>
+                        <li><a _ngcontent-c0>Store location 3</a></li>
+                        <li><a _ngcontent-c0>Store location 4</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a (click)="updateStoreAndTime()">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
+                    <ul>
+                        <li><a _ngcontent-c0>Date & Time 1</a></li>
+                        <li><a _ngcontent-c0>Date & Time 2</a></li>
+                        <li><a _ngcontent-c0>Date & Time 3</a></li>
+                        <li><a _ngcontent-c0>Date & Time 4</a></li>
+                    </ul>
+                </li>
+                <li><a (click)="updateStoreAndTime()">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
+                <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
+            </ul>
+        </div>
+        <div class="visible-xs mobileallergens">
+            <span class=""><i class="fa fa-chevron-left"></i> <i class="fa fa-close"></i>Allergens</span>
+            <ul class="menu_type">
+                <li><a _ngcontent-c0><img src="assets/images/vegeterian.png" alt="">Vegetarian</a></li>
+                <li><a _ngcontent-c0><img src="assets/images/gluten.png" alt="">Gluten Free</a></li>
+                <li><a _ngcontent-c0><img src="assets/images/hot.png" alt="">Hot</a></li>
+                <li><a _ngcontent-c0><img src="assets/images/nuts.png" alt="">Nuts</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
+
+
+
  <div class="clearfix"></div>
 
 

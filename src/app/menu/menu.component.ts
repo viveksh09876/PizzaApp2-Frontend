@@ -54,16 +54,8 @@ export class MenuComponent implements OnInit {
     this.getAllCategories();
     this.getCartItems(); 
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
-    if(this.orderNowDetails != null && this.orderNowDetails != 'null') {
-   
-//console.log(this.orderNowDetails.type);
-//console.log(this.orderNowDetails.address.postal_code);
-//console.log(this.orderNowDetails.delivery_time);
-//console.log(this.orderNowDetails.delivery_time_type);
-//console.log(this.orderNowDetails.selectedStore.Store.store_name);
-    }else{
-
-      this.updateStoreAndTime();
+    if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
+      //this.updateStoreAndTime();
      }
   }
 
@@ -128,7 +120,7 @@ export class MenuComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          //////console.log(this.menuData[0].name);
+          ////console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
 
           this.route.params.subscribe(params => { 
@@ -518,7 +510,6 @@ this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutsi
                      this.getCartItems();
          }
      this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
-           console.log(this.orderNowDetails);
       }); 
  
 }

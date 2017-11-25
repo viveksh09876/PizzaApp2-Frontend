@@ -44,6 +44,8 @@ export class DealsComponent implements OnInit {
     dealValidated = false;  
   showLoading = false;
   formattedItems = null;
+  orderNowDetails=null;
+
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -66,6 +68,10 @@ export class DealsComponent implements OnInit {
     this.currencyCode = this.utilService.currencyCode;
     
     this.getCartItems(); 
+    this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+    if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
+      //this.updateStoreAndTime();
+     }
     
   }
 

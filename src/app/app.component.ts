@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
         this.router.events.subscribe((e) => {
           if (e instanceof NavigationEnd) {
             let urlArr = e.url.split('/');
+            this.showFooter = true;
             //if(urlArr.indexOf('menu') > -1 || urlArr.indexOf('item') > -1 || urlArr.indexOf('deals') > -1) {
-            if(urlArr.indexOf('item') > -1 || urlArr.indexOf('deals') > -1) {
-              this.showFooter = false;
-            }else{
-              this.showFooter = true;
-            } 
+            //  this.showFooter = false;
+            //}else{
+            //  this.showFooter = true;
+            //} 
 
             if(urlArr.indexOf('reset-password')> -1 ){
               let loggedIn = this.dataService.getLocalStorageData('isLoggedIn');
