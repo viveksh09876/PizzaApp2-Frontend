@@ -1362,7 +1362,7 @@ header.navigation{z-index: 9999;}
 	width: 100%;
 	border-spacing: 0
 }
-.two-column-wrapper .inside-column-container {
+.two-column-wrapper .viewcart_sec .inside-column-container {
 	display: table-cell;
 	vertical-align: top;
 	overflow: hidden;
@@ -2112,8 +2112,9 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     background: transparent;
 }
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .clear-cart{    float: right;
-    color: #fff;
-    background: #911c28;
+    color: #911c28;
+    border: 1px solid #911c28;
+    background: transparent; transition: .2s all;
     text-align: center;
     font-weight: 300;
     border-radius: 5px;
@@ -2121,8 +2122,8 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-size: 14px;
     text-transform: initial;
     line-height: 18px;
-    border: none;
     font-family: "proxima_nova_rgregular";}
+ .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .clear-cart:hover{background: #911c28; color: #fff;}   
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .down-nutri{background: #ffffff none repeat scroll 0 0;
     border-radius: 100%;
     cursor: pointer;
@@ -3677,9 +3678,9 @@ color:#fff
 /*======== Our Menu css start here======*/
 .secondary_menu{ position: fixed; left: 0; top: 63px; z-index: 9; width: 100%; background: #f4f4f4; border-bottom: 1px solid #d8d8d8; margin: 0 0 30px;}
 .secondary_menu:before{content: ''; border-bottom: 20px solid #fff; position: absolute; bottom: -20px; left: 0px; width: 100%;}
-.secondary_menu .container-fluid{padding-right: 0px;}
+.secondary_menu .container-fluid{padding-right: 30px; padding-left: 30px;}
 .secondary_menu .menutabs{ display: inline-block; list-style: none;}
-.secondary_menu .menutabs ul{ margin: 20px 0 -1px; padding: 0px 0 0 46px;}
+.secondary_menu .menutabs ul{ margin: 20px 0 -1px; padding: 0px;}
 .secondary_menu .menutabs li{display: inline-block; margin: 0 2px;}
 .secondary_menu .menutabs li.active a{ background: #ffffff; color: #646569; border-bottom: 1px solid #fff; outline: none; text-decoration: none;}
 .secondary_menu .menutabs li a{display: inline-block; background: #911c28; border-bottom: 1px solid #911c28; color: #fff; font-size: 20px; line-height: 30px; padding: 10px 30px; font-family: 'bureaueaglebookregular'; border-radius: 7px 7px 0 0;}
@@ -3708,43 +3709,51 @@ color:#fff
 
 .two-column-wrapper.ourmenu{ margin: 90px 0 0; display: inline-block; width: 100%; position: relative;}
 
-.allergens{ border: 1px solid #911c28; color: #646569; font-size: 16px; font-family: 'proxima_nova_ltlight'; line-height: 32px; display: inline-block; vertical-align: middle; height: 32px; background: url(../images/select-dropdown.png) no-repeat left center; border-radius: 5px; padding: 0 10px 0 45px; margin-right: 5px; transition: .3s; cursor: pointer;}
+.allergens{ border: 1px solid #911c28; color: #646569; font-size: 16px; font-family: 'proxima_nova_ltlight'; line-height: 32px; display: inline-block; vertical-align: top; height: 32px; background: url(../images/select-dropdown.png) no-repeat left center; border-radius: 5px; padding: 0 10px 0 45px; margin:10px 5px 0 0; transition: .3s; cursor: pointer;}
 .allergens:hover,.allergens:focus{background:#911c28 url(../images/select-dropdown.png) no-repeat left center; color: #fff; text-decoration: none;}
 
 
 .menulist-items.fullview{width: 100%;}
-.menulist-items .menu_type{ padding: 0; margin: 30px 0 30px; display: inline-block; vertical-align: middle;} 
+.menulist-items .menu_type{ padding: 0; margin: 10px 0 20px; display: inline-block; vertical-align: middle;} 
 .menulist-items .menu_type li{ display: inline-block; vertical-align: middle; font-size: 15px; line-height: 33px; font-family: 'proxima_nova_ltlight'; margin: 0 5px;  color: #646569;}
 .menulist-items .menu_type li img{ margin-right: 5px; vertical-align: top}
 
 .menulist-items .tab-content > div{ display:none; min-height: 82vh;}
 .menulist-items .tab-content > div.active{ display: block}
 
-.menu_innertabs{ list-style: none; border-bottom: 1px solid #d8d8d8; padding: 0;}
+.menulist-items .tab-content .menuTabdetails{margin-top: 46px;}
+
+.menu_innertabs {list-style: none; border-bottom: 1px solid #d8d8d8;padding: 0;width: 71.2%;
+    background: #fff; position: fixed; z-index: 9;}
+.fullview .menu_innertabs{width: 95.6%;}
 .menu_innertabs li{ display: inline-block; font-size: 20px; line-height: 35px;}
 .menu_innertabs li.active a{ border-color: #7a9c49; color: #7a9c49;}
 .menu_innertabs li a{ display: inline-block; color: #acadaf; font-family: 'bureaueaglebookregular'; padding: 5px 35px; font-size: 25px; border-bottom: 10px solid rgba(0,0,0,0); text-decoration: none!Important;}
 .menu_innertabs li a:hover{ color: #7a9c49; }
 
 .menulist-items .imgbox{ position: relative; height: 15.6em; overflow: hidden;}
+.menulist-items .imgbox img.info { position: absolute; top: 10px; right: 10px;}
+.menulist-items .imgbox p.active{display: block;}
+.menulist-items .imgbox p{position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: rgba(0,0,0,.7); color: #fff; text-align: center; padding: 50px 10px; display: none; transition: .2s all;}
+.menulist-items .imgbox p span{position: absolute; top: 10px; right: 10px; height: 30px; width: 30px; background: #fff; color: #333; text-align: center; border-radius: 100%; font-size: 20px;  padding: 5px 0;}
 .menulist-items .imgbox .nutrision{ position: absolute; bottom: -1px; left: 18px; background: #fff;
     border-radius: 10px 10px 0 0;  padding: 10px 10px 0;}
-.menulist-items .imgbox small{ position: absolute; right: 0; top:18px; background: url(../images/frock.png) no-repeat left center; line-height: 39px; padding: 10px 10px 10px 65px; color: #7a9c49; font-size: 20px; font-family: 'bureaueaglebookregular';}
+.menulist-items .imgbox small{ position: absolute; right: 0; top:34px; background: url(../images/frock.png) no-repeat left center; line-height: 39px; padding: 10px 10px 10px 65px; color: #7a9c49; font-size: 20px; font-family: 'bureaueaglebookregular';}
 
 .menulist-items .imgbox ~ .row{ margin: 0 -5px;}
 .menulist-items .imgbox ~ .row .col-md-12,
 .menulist-items .imgbox ~ .row .col-md-6{ padding: 0 5px;}
 
 .menulist-items h2{ font-size: 40px; color: #646569; font-family: 'bureaueaglebookregular'; line-height: 35px; margin: 7px 0 10px}
-.menulist-items h4{ font-size: 26px; color: #646569; font-family: 'bureaueaglebookregular'; line-height: 30px; margin: 10px 0 5px;}
+.menulist-items h4{ font-size: 26px; color: #646569; font-family: 'bureaueaglebookregular'; line-height: 30px; margin: 10px 0 5px; min-height: 60px;}
 .menulist-items p{ font-size: 15px; color: #646569; line-height: 20px; font-family: 'proxima_nova_ltlight'; margin: 0 0 10px; min-height: 66px;}
-
+.menulist-items h5{margin:0 0 12px 0; color: #646569;}
 .menulist-items .columnsdivider .col-lg-4{ margin-bottom: 50px;}
 
 .menulist-items .proinfo{ margin: 0 0 12px; display: inline-block; vertical-align: top;  width: 100%;}
-.menulist-items .proinfo select{ color: #646569; border: 1px solid #646569; font-family: 'proxima_nova_ltlight'; font-size: 12px; height: 30px; line-height: 30px; float: left; width: calc(100% - 100px); padding: 0 30px 0 5px; appearance:none; -webkit-appearance:none; -moz-appearance:none; background: url(../images/arrow-down.png) no-repeat 95% center; border-radius: 5px;}
+.menulist-items .proinfo select{ color: #646569; border: 1px solid #646569; font-family: 'proxima_nova_ltlight'; font-size: 12px; height: 30px; line-height: 30px; float: left; width: calc(100% - 100px); padding: 0 30px 0 5px; margin:0 8px 0 0; appearance:none; -webkit-appearance:none; -moz-appearance:none; background: url(../images/arrow-down.png) no-repeat 95% center; border-radius: 5px;}
 
-.menulist-items .proinfo span{ width: 90px; border: 1px solid #646569; line-height: 28px; float: right; border-radius: 5px;}
+.menulist-items .proinfo span{ width: 90px; border: 1px solid #646569; line-height: 28px; float: left; border-radius: 5px;}
 .menulist-items .proinfo span a{ width: 29px; color: #911c27; font-size: 28px; float: left; text-align: center;}
 .menulist-items .proinfo span a:nth-child(2){ font-size: 18px; background: #911c27; color: #fff;}
 
@@ -3764,9 +3773,10 @@ color:#fff
 @media only screen and (min-width:1200px){
 
 .fullview .col-lg-4 { width: 25%;}
+.fullview .dealtabcontent .col-md-4{width: 25%;}
 .menu_innertabs li{width: 19.5%}	
 .menu_innertabs li a{display: block; text-align: center; padding: 0px; font-size: 24px;}
-.menulist-items .columnsdivider .col-lg-4{ margin-bottom: 50px; min-height: 385px; }
+/*.menulist-items .columnsdivider .col-lg-4{ margin-bottom: 50px; min-height: 385px; }*/
 }
 
 @media only screen and (min-width:992px) and (max-width:1199px){

@@ -96,10 +96,11 @@
                                             <img  class="nutrision" src="assets/images/hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                             <img  class="nutrision" src="assets/images/gluten.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
                                             <img  class="nutrision" src="assets/images/nuts.png" *ngIf="prod.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                            <img _ngcontent-c4="" height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info">
+                                            <p>{{prod.short_description}} <span class="icon icon-close"></span></p>
                                         </div>
                                         <h4>{{prod.title}}</h4>
                                         <h5>{{prod.price_title}}</h5>
-                                        <p>{{prod.short_description}}</p>
                                         <div class="proinfo" *ngIf="prod.plu_code != 999999">
                                             <select *ngIf=" prod.mod_count > 0">
                                                 <option>Original Crust - large - £10.99 999</option>
@@ -143,9 +144,11 @@
                                                         <img  class="nutrision" src="assets/images/hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                                         <img  class="nutrision" src="assets/images/gluten.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
                                                         <img  class="nutrision" src="assets/images/nuts.png" *ngIf="subProd.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                                        <img _ngcontent-c4="" height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info">
+                                            <p>{{prod.short_description}} <span class="icon icon-close"></span></p> 
                                                     </div>
                                                     <h4>{{subProd.title}}</h4>
-                                                    <p>{{subProd.short_description}}</p>
+                                                    
                                                     <div class="proinfo">
                                                         <select>
                                                             <option>Original Crust - large - £10.99</option>
@@ -178,7 +181,7 @@
                         <div class="row">
                      <ng-container *ngFor="let data of menuData">
                        <ng-container *ngFor="let prod of data.products">
-                        <div class="col-md-3" *ngIf="data.type == 'deal'">
+                        <div class="col-md-4" *ngIf="data.type == 'deal'">
                             <div class="createWrapper deals">
                                   <div class="media">
                                     <div class="media-left">
