@@ -81,7 +81,8 @@ export class MenuComponent implements OnInit {
               this.netCost = 0;
             }
 
-            this.showViewCart = true;     
+            this.showViewCart = true;  
+             
         });
 
       }      
@@ -145,7 +146,7 @@ export class MenuComponent implements OnInit {
   }
 
 
-  goToCustomize(slug, modCount) {
+  goToCustomize(slug, modCount,dipping_sauce_data_selected) {
 
     // this.dialogService.addDialog(MessageComponent, { title: 'block', message: 'In Store pickup only. Online ordering will be active from October 2nd onwards.', buttonText: 'OK', doReload: false }, { closeByClickingOutside:true }); 
     
@@ -514,19 +515,6 @@ export class MenuComponent implements OnInit {
       }); 
  
 }
-
-  getDropCustomizeDropDown(data){
-      let Crust_dropDown=[];
-      for (var i=0; i<data.length; i++) {
-        if(data[i].PriceSm!=0)
-         Crust_dropDown[data[i].PLU+'_PriceSm']=data[i].Name + ' - Small - '+ data[i].PriceSm;
-        if(data[i].PriceMed!=0)
-          Crust_dropDown[data[i].PLU+'_PriceMed']=data[i].Name + ' - Medium - '+ data[i].PriceMed;
-        if(data[i].PriceLg!=0)
-          Crust_dropDown[data[i].PLU+'_PriceLg']=data[i].Name + ' - Large - '+ data[i].PriceLg;
-       }
-       return Crust_dropDown;
-     } 
 
 
 }

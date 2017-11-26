@@ -8,7 +8,7 @@ import { DataService } from '../data.service';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent extends DialogComponent<MessageModal, null> {
+export class MessageComponent extends DialogComponent<MessageModal, boolean> {
   
   constructor(dialogService: DialogService, private dataService: DataService) {
     super(dialogService);
@@ -33,6 +33,12 @@ export class MessageComponent extends DialogComponent<MessageModal, null> {
       location.reload();
     }
 
+  }
+
+
+  applyVoucher() {
+    this.result = true;
+    this.close();
   }
  
 }

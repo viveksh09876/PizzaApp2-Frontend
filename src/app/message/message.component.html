@@ -22,6 +22,7 @@
                         
                         <div class="row text-center">
                             <div class="col-md-4 align-center">
+                                <button *ngIf="title == 'prompt'" class="btn btn-danger btn-block continue-btn" (click)="applyVoucher()">Apply Voucher</button>  
                                 <button class="btn btn-danger btn-block continue-btn" (click)="closeModal()">{{buttonText}}</button>  
                             </div>
                         </div>

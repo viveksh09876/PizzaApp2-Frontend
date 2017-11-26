@@ -26,6 +26,7 @@ export class OrderreviewComponent implements OnInit {
   storeDetails = '';
   favTitle = '';
   couponMsg = '';
+  voucherMsg = '';
   order = { 
             storeId: '',
             coupon: '',
@@ -64,7 +65,9 @@ export class OrderreviewComponent implements OnInit {
     cmsApiPath = environment.cmsApiPath;
     showSavingFav = false;
     couponCode = '';
+    voucherCode = '';
     showCouponWait = false;
+    showVoucherWait = false;
     couponDiscount = 0;  
     isDiscountApply = false;
     currencyCode = null;
@@ -75,7 +78,8 @@ export class OrderreviewComponent implements OnInit {
 
     hours = [];
     minutes = this.utilService.getMinutes();
-	isMealDeal = false;
+    isMealDeal = false;
+    addedVouchers = [];
     
     pickerOptions = {
         showDropdowns: true,
@@ -233,6 +237,11 @@ export class OrderreviewComponent implements OnInit {
             && this.dataService.getLocalStorageData('allItems') != undefined) {
               
               this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
+              let vouchers = JSON.parse(this.dataService.getLocalStorageData('vouchers'));
+              
+              if (vouchers != null) {
+                this.addedVouchers = vouchers;
+              }
 
               this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
                     if (formattedItemsData.deals.length > 0) {
@@ -240,8 +249,8 @@ export class OrderreviewComponent implements OnInit {
                     }
                       this.formattedItems = formattedItemsData;
                   
-                      this.totalCost =  formattedItemsData.totalPrice;
-                      this.netCost = this.totalCost;
+                      this.netCost =  formattedItemsData.totalPrice;
+                      this.totalCost = this.utilService.getTotalCost(this.netCost, vouchers);
               });
              
               
@@ -287,8 +296,9 @@ export class OrderreviewComponent implements OnInit {
 
     this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
       this.formattedItems = formattedItemsData;
-      this.totalCost =  formattedItemsData.totalPrice;
-      this.netCost = this.totalCost;
+      
+      this.netCost = formattedItemsData.totalPrice;
+      this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
      // //console.log(type, this.totalCost, this.items.Product.qty);
     });    
     
@@ -355,8 +365,9 @@ export class OrderreviewComponent implements OnInit {
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
             this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
               this.formattedItems = formattedItemsData;
-              this.totalCost =  formattedItemsData.totalPrice;
-              this.netCost = this.totalCost;
+              this.netCost =  formattedItemsData.totalPrice;
+              
+              this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
             });    
             
 
@@ -391,8 +402,8 @@ export class OrderreviewComponent implements OnInit {
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
         this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
           this.formattedItems = formattedItemsData;
-          this.totalCost =  formattedItemsData.totalPrice;
-          this.netCost = this.totalCost;
+          this.netCost =  formattedItemsData.totalPrice;
+          this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
         });    
         
       } else {
@@ -737,6 +748,56 @@ export class OrderreviewComponent implements OnInit {
     }
 
 
+    checkVoucher() {
+      this.showVoucherWait = true;
+        if (this.voucherCode.trim() != '') {
+          let code = this.voucherCode.trim();
+          this.dataService.getVoucherBalance(code)
+          .subscribe(data => {
+              
+              if(data.Status == 'OK') {
+                //this.voucherBalance = data.Balance;
+
+                let dservice = this.dialogService.addDialog(MessageComponent, { title: 'prompt', message: 'Available voucher balance: ' + this.currencyCode + data.Balance, buttonText: 'Cancel', doReload: false }, { closeByClickingOutside:true }).subscribe((isApply)=>{
+                    //We get dialog result
+                    if(isApply) {
+
+                      if (this.addedVouchers.indexOf(code) > -1) {
+                        alert('This voucher is already applied!');
+                      } else {
+                        let vObj = {
+                          voucherCode: code,
+                          balance: data.Balance
+                        }
+
+                        this.addedVouchers.push(vObj);
+                        this.dataService.setLocalStorageData('vouchers', JSON.stringify(this.addedVouchers));
+                        this.getItems();
+
+                      }
+                      
+                    }
+                });
+
+
+              } else {
+                this.voucherMsg = data.Message;
+              }
+              this.showVoucherWait = false;
+          });
+
+        } else{
+          this.showVoucherWait = false;
+          this.voucherMsg = 'Please enter valid voucher code';
+        }
+
+        setTimeout(function() {
+          this.voucherMsg = '';
+        }, 5000);
+    }
+    
+
+
     removeCoupon() {
       this.order.coupon = '';
       this.isDiscountApply = false;
@@ -774,7 +835,19 @@ export class OrderreviewComponent implements OnInit {
 	clearCart() {
 		this.dataService.clearCart();
 		window.location.href = '/';
-	}
+  }
+  
+
+  removeVoucher(pos) {
+    let vouchers = JSON.parse(this.dataService.getLocalStorageData('vouchers'));
+
+    if (vouchers != null) {
+      vouchers.splice(pos, 1);
+    }
+
+    this.dataService.setLocalStorageData('vouchers', JSON.stringify(vouchers));
+    this.getItems();
+  }
 
 
 }

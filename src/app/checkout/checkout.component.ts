@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit {
   currencyCode = null;      
   showLoading = true; 
   payError = '';
+  addedVouchers = [];
   card = {
     name: null,
     customerId: null,
@@ -77,12 +78,20 @@ export class CheckoutComponent implements OnInit {
         
         this.items = JSON.parse(this.dataService.getLocalStorageData('allItems'));
         this.orderData = JSON.parse(this.dataService.getLocalStorageData('finalOrder'));
+        
+        let vouchers = JSON.parse(this.dataService.getLocalStorageData('vouchers'));
+        
+        if (vouchers != null) {
+          this.addedVouchers = vouchers;
+        }
+
         this.dataService.formatCartData(this.items, 'checkout', (formattedItemsData) => {
             
         this.formattedItems = formattedItemsData;
         
-            this.totalCost =  formattedItemsData.totalPrice;
-            this.netCost = this.totalCost; 
+            
+            this.netCost =  formattedItemsData.totalPrice;
+            this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
     
             if(this.orderData.couponDiscount != 0 && !isNaN(this.orderData.couponDiscount)) {
               this.couponDiscount = this.orderData.couponDiscount;
@@ -145,6 +154,13 @@ export class CheckoutComponent implements OnInit {
           this.orderData.address.state = 'UK';
         }
 
+        if (this.addedVouchers.length > 0) {
+          this.orderData['vouchers'] = [];
+          for (var i=0; i<this.addedVouchers.length; i++) {
+            this.orderData.vouchers.push(this.addedVouchers[i].voucherCode);
+          }          
+        }
+
         
         //console.log('order', this.orderData);
 		//console.log('items', this.items);
@@ -181,6 +197,7 @@ export class CheckoutComponent implements OnInit {
   payOnline(isValid) {
     
     if (isValid) {
+      
       this.showLoading = true;
       this.dataService.sendPaymentData(this.card)
       .subscribe(data => {

@@ -473,118 +473,137 @@ export class DataService {
 	  //console.log('ch', deals, otherItems, page);
 	  let totPrice = 0;
 	  let dealsArr = [];
-	  
-	  //validate deal items
-	  for (var key in deals) {
-		if (deals.hasOwnProperty(key)) {
+    
+    if (Object.keys(deals).length > 0) {
 
-          let dId = deals[key][0].Product.dealId;
-          //TODO: Optimise this dirty code
-          dId = +dId;
-          //console.log('did=', dId, typeof dId);
-          if (isNaN(dId)) {
-            
-            dId = this.getDealIdFromCode(dId).subscribe(data => {
-              this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
-                let valid = resp;
-                if (!valid) {
-                  for (var i=0; i<deals[key].length; i++) {
-                    let dObj = deals[key][i];
-                    if (page != 'deal') {
-                      delete dObj.dealPrice;
-                      delete dObj.Product.dealId;
-                      delete dObj.Product.comboUniqueId;
-                      delete dObj.Product.position;
+        //validate deal items
+        for (var key in deals) {
+          if (deals.hasOwnProperty(key)) {
+
+              let dId = deals[key][0].Product.dealId;
+              //TODO: Optimise this dirty code
+              dId = +dId;
+              //console.log('did=', dId, typeof dId);
+              if (isNaN(dId)) {
+                
+                dId = this.getDealIdFromCode(dId).subscribe(data => {
+                  this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
+                    let valid = resp;
+                    if (!valid) {
+                      for (var i=0; i<deals[key].length; i++) {
+                        let dObj = deals[key][i];
+                        if (page != 'deal') {
+                          delete dObj.dealPrice;
+                          delete dObj.Product.dealId;
+                          delete dObj.Product.comboUniqueId;
+                          delete dObj.Product.position;
+                        }
+                        
+                        otherItems.push(dObj);
+                      }
+                      
+                      delete deals[key];
+                    } else {
+                      totPrice += deals[key][0].dealPrice;
+                      
+                      this.getDealTitle(dId, (titleText) => {
+                        let dealObject = {
+                          title: titleText,
+                          totalCostPrice: Number(totPrice.toFixed(2)),
+                          dealData: deals[key]
+                        }
+                        
+                        dealsArr.push(dealObject);
+                      })
+                      
                     }
-                    
-                    otherItems.push(dObj);
-                  }
-                  
-                  delete deals[key];
-                } else {
-                  totPrice += deals[key][0].dealPrice;
-                  
-                  this.getDealTitle(dId, (titleText) => {
-                    let dealObject = {
-                      title: titleText,
-                      totalCostPrice: Number(totPrice.toFixed(2)),
-                      dealData: deals[key]
+
+
+                    let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+                    let returnObj = {
+                      deals: dealsArr,
+                      otherItems: otherItems,
+                      totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
                     }
-                    
-                    dealsArr.push(dealObject);
-                  })
-                  
-                }
 
-
-                let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
-                let returnObj = {
-                  deals: dealsArr,
-                  otherItems: otherItems,
-                  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
-                }
-
-                if (callback) {
-                  callback(returnObj);
-                }
-
-              });
-              
-            });
-          } else {
-              
-              this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
-                let valid = resp;
-                //console.log(465, valid);
-                if (!valid) {
-                  for (var i=0; i<deals[key].length; i++) {
-                    let dObj = deals[key][i];
-                    if (page != 'deal') {
-                      delete dObj.dealPrice;
-                      delete dObj.Product.dealId;
-                      delete dObj.Product.comboUniqueId;
-                      delete dObj.Product.position;
+                    if (callback) {
+                      callback(returnObj);
                     }
-                    
-                    otherItems.push(dObj);
-                  }
+
+                  });
                   
-                  delete deals[key];
-                } else {
-                  totPrice += deals[key][0].dealPrice;
-                  //console.log('totprice', totPrice);
-                  this.getDealTitle(dId, (titleText) => {
-                    let dealObject = {
-                      title: titleText,
-                      totalCostPrice: Number(totPrice.toFixed(2)),
-                      dealData: deals[key]
+                });
+              } else {
+                  
+                  this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
+                    let valid = resp;
+                    //console.log(465, valid);
+                    if (!valid) {
+                      for (var i=0; i<deals[key].length; i++) {
+                        let dObj = deals[key][i];
+                        if (page != 'deal') {
+                          delete dObj.dealPrice;
+                          delete dObj.Product.dealId;
+                          delete dObj.Product.comboUniqueId;
+                          delete dObj.Product.position;
+                        }
+                        
+                        otherItems.push(dObj);
+                      }
+                      
+                      delete deals[key];
+                    } else {
+                      totPrice += deals[key][0].dealPrice;
+                      //console.log('totprice', totPrice);
+                      this.getDealTitle(dId, (titleText) => {
+                        let dealObject = {
+                          title: titleText,
+                          totalCostPrice: Number(totPrice.toFixed(2)),
+                          dealData: deals[key]
+                        }
+                        
+                        dealsArr.push(dealObject);
+                      })
+                      
                     }
-                    
-                    dealsArr.push(dealObject);
-                  })
+
+                    let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+                    let returnObj = {
+                      deals: dealsArr,
+                      otherItems: otherItems,
+                      totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
+                    }
+
+                    if (callback) {
+                      callback(returnObj);
+                    }
+
+                  });
                   
-                }
+              }
 
-                let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
-                let returnObj = {
-                  deals: dealsArr,
-                  otherItems: otherItems,
-                  totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
-                }
-
-                if (callback) {
-                  callback(returnObj);
-                }
-
-              });
-              
+          
           }
+          
+          
+        }
 
-			
+    } else {
+      let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+      
+      let returnObj = {
+        deals: dealsArr,
+        otherItems: otherItems,
+        totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
       }
-      
-      
-	  }
+
+      if (callback) {
+        callback(returnObj);
+      }
+
+    }
+
+	  
 	  
 	  
     
