@@ -197,6 +197,7 @@ export class CheckoutComponent implements OnInit {
   payOnline(isValid) {
     
     if (isValid) {
+      
       this.showLoading = true;
       this.dataService.sendPaymentData(this.card)
       .subscribe(data => {

@@ -320,6 +320,10 @@ export class UtilService {
 
     totalCost = Number(totalCost.toFixed(2));
     
+    if (totalCost < 0) {
+      totalCost = 0;
+    }
+
     return totalCost;
     
   }
