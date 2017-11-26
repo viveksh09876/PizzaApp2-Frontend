@@ -73,6 +73,13 @@
                                 <td></td>
                                 <td>{{netCost}}</td>
                             </tr>
+                            <ng-container *ngFor="let vouch of addedVouchers">
+                                <tr>
+                                    <td>Voucher: [{{vouch.voucherCode}}]</td>
+                                    <td></td>
+                                    <td>{{vouch.balance}}</td>
+                                </tr>
+                            </ng-container>
                             <tr>
                                 <td>Taxes</td>
                                 <td></td>

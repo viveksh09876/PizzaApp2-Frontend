@@ -223,6 +223,20 @@
                                 </ng-container>
                             </ng-container>
                         </form>
+
+                        <form class="coupan_box" >
+                            <p class="danger" *ngIf="voucherMsg != ''">{{voucherMsg}}</p>
+                            
+                                <input type="text" [(ngModel)]="voucherCode" name="voucherCode" placeholder="Voucher code" autocomplete="off">
+                                <ng-container *ngIf="!showVoucherWait">
+                                    <input type="submit" value="Apply" (click)="checkVoucher()">
+                                </ng-container>
+                                <ng-container *ngIf="showVoucherWait">
+                                    <p>Please wait...</p>
+                                </ng-container>
+                            
+                        </form>
+
                     </ng-container>
                     <ul class="dotted-list">
                         <li>Coupon discount
@@ -231,6 +245,9 @@
                                 <a (click)="removeCoupon()">Remove</a>
                             </ng-container><span>{{couponDiscount}}</span></li>
                         <li>Sub total<span>{{netCost}}</span></li>
+                        <ng-container *ngFor="let vouch of addedVouchers; let i=index">
+                            <li>Voucher Applied: [<strong>{{vouch.voucherCode}}</strong>]<span>{{vouch.balance}}</span>&nbsp; <a (click)="removeVoucher(i)">Remove</a></li>
+                        </ng-container>
                         <li>VAT included<span>0.00</span></li>
                         <li *ngIf="order.order_type=='delivery'">Delivery charges <span>0.0</span></li>
                     </ul>
