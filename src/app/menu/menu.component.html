@@ -182,7 +182,7 @@
                      <ng-container *ngFor="let data of menuData">
                        <ng-container *ngFor="let prod of data.products">
                         <div class="col-md-4" *ngIf="data.type == 'deal'">
-                            <div class="createWrapper deals">
+                             <!--<div class="createWrapper deals">
                                   <div class="media">
                                     <div class="media-left">
                                       <div class="img-Wrapper"><a (click)="goToDeal(prod.id)"><img src="{{cmsApiPath + '/' + prod.listImage}}" alt="" ></a></div>
@@ -190,7 +190,7 @@
                                     <div class="media-body media-middle">
                                       <div class="description">
                                         <div class="leftSection">
-                                          <!-- <h4 class="media-heading">{{prod.Deal.title}}</h4> -->
+                                           <h4 class="media-heading">{{prod.Deal.title}}</h4>
                                           
                                           <p>{{prod.description}}</p>
                                         </div>
@@ -200,6 +200,15 @@
                                       </div>
                                     </div>
                                   </div>
+                                  </div>-->
+                                  <div class="desc-box">
+                                  <h4>{{prod.title}}</h4>
+                                  <p>{{prod.description}}</p>
+                              </div>
+                                  <div class="row">
+                                        <div class="col-md-12 col-xs-12">
+                                                <a class="btn btn-red" (click)="goToDeal(prod.id)">make the deal</a>
+                                        </div>
                                   </div>
                               </div>
                        </ng-container>
@@ -285,7 +294,7 @@
                                                             <!--<li *ngIf="option.Option.is_checked">Add {{option.Option.name}}</li>-->
                                                         </ng-container>                    
                                                     </ul>    
-                                                </ng-container>                      
+                                                </ng-container>                     
                                             </div>
                                             <div class="item_pic">
                                                 <div class="img-control">
@@ -293,11 +302,14 @@
                                                     <a *ngIf="item.ProductModifier.length > 0" (click)="editItem(i, item)"><span class="icon icon-edit"></span></a>
                                                 </div>
                                                 <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
-                                                    <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
-                                                    <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
+                                                    <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">       
                                             </div>
-
-
+                                            <div class="item-action">
+                                                <div class="col-md-12">
+                                                <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div> 
+                                                <div class="price">£12.99</div>
+                                            </div>
+                                            </div>
                                         </div>
 
                                     </ng-container>		

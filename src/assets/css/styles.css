@@ -1,6 +1,10 @@
 body, html {
 	height: 100%;
-	font-size: 16px
+	font-size: 16px;
+	-webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 ::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -1809,14 +1813,14 @@ button.close:hover,button.close:focus{opacity: 1;}
 .aside-wrapper .right-padd{ padding: 10px 0px;}
 .aside-wrapper .scroller{ height: 67vh; overflow: auto}
 .aside-wrapper .item_info{ font-family: "proxima_nova_rgregular"; float: left; width: 60%; padding-left: 1em;}
-.cartbox .item_info h4{ color: #5b5a56; font-size: 18px; line-height: 22px; margin: 0 0 10px;}
+.cartbox .item_info h4{ color: #5b5a56; font-size: 18px; line-height: 22px; margin: 0 0 5px;}
 .cartbox .item_info h5.space{ margin-top: 10px;}
 .cartbox .item_info h5{ font-family: 'proxima_nova_ltsemibold'; font-size: 15px; line-height: 20px; color: #5b5a56; margin: 0;}
 .cartbox .item_info h5 span{font-family: "proxima_nova_rgregular";}
-.cartbox .item_info ul{ list-style: none; padding: 0; margin: 0 0 10px; color: #5b5a56;}
+.cartbox .item_info ul{ list-style: none; padding: 0; margin:0px; color: #5b5a56;}
 .cartbox .item_info ul li{ font-size: 14px; line-height: 17px; font-family: 'proxima_nova_ltlight';}
 
-.cartbox .item_pic{ float: right; width: 40%; padding:0 0 0 10px; text-align: center;}
+.cartbox .item_pic{ float: right; width: 40%; padding:0 10px 0 0px;}
 .cartbox .item_pic .item{ min-width: 113px;
     margin: 10px 0;
     border-radius: 100%;
@@ -1826,13 +1830,17 @@ button.close:hover,button.close:focus{opacity: 1;}
     max-height: 113px;}
 .cartbox .item_pic .img-control a{ color: #bb0315; text-decoration:none;
     margin: 0 2px;
-    font-size: 26px; }
-.cartbox .item_pic .img-control a .icon-edit:before{font-size:22px;}
-.cartbox .item_pic .quantity{width:100%; float:right; text-align:center;}	
-.cartbox .item_pic .quantity a{ border: 1px solid #911c27;; color: #911c27;; width: 30px; height: 25px; line-height: 25px; display: inline-block;  text-decoration:none;}
-.cartbox .item_pic .quantity .num{ border-left: 0; border-right: 0; background: #911c27; color: #fff;  display: inline-block;  width: 30px; height: 25px; vertical-align: top;}
-.cartbox .item_pic .quantity a:first-child{ border-radius: 2px 0 0 2px;}
-.cartbox .item_pic .quantity a:last-child{ border-radius:0 2px 2px 0;}
+    font-size: 20px; }
+.cartbox .item_pic .img-control a .icon-edit:before{font-size:18px;}
+.cartbox .item-action{margin-top: 10px;display: inline-block;width: 100%;}
+.cartbox .quantity{float:left; text-align:center;}	
+.cartbox .quantity a{ border: 1px solid #911c27;; color: #911c27;; width: 25px; height: 20px; line-height: 20px; display: inline-block;  text-decoration:none;}
+.cartbox .quantity .num{ border-left: 0; border-right: 0; line-height: 22px; background: #911c27; color: #fff;  display: inline-block;  width: 25px; height: 20px; vertical-align: top;}
+.cartbox .quantity a:first-child{ border-radius: 2px 0 0 2px;}
+.cartbox .quantity a:last-child{ border-radius:0 2px 2px 0;}
+
+.cartbox .price{color: #636468; font-size: 18px; font-family: "bureaueaglebookregular"; line-height: 22px;
+    float: right;}
 
 .cartbox{border-bottom: 1px solid #cecece; width: 100%;
     display: inline-block;
@@ -2054,7 +2062,8 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (max-width: 1199px) {
-	.leftContent .tab-content{margin: 20px 0 0 0 !important;}
+.leftContent .tab-content{margin: 20px 0 0 0 !important;}
+.menu_innertabs{width: 62% !important;}
 .two-column-wrapper .inside-column-container.aside-wrapper {
 	width: 100%
 }
@@ -2138,10 +2147,12 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns h3 .down-nutri i{font-size: 16px; color: #333;}
 
 @media (max-width: 1199px) {
+
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns {
 	width: 100%;
 	display: none;
 }
+.two-column-wrapper .viewcart_sec.fixedsticky .inside-column-container.aside-wrapper.orderProcessIns{display: block; margin:0px;}
 .two-column-wrapper .inside-column-container.aside-wrapper.orderProcessIns {
 	margin-top: 2em;
 }
@@ -2289,6 +2300,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (min-width: 768px) {
+	.menulist-items .leftContent .tab-content{margin:0px !important;}
 .footer-wrapper {
 	text-align: left
 }
@@ -3135,7 +3147,7 @@ color:#fff
 .stepboxes .gray_box .scroller{height: 304px; overflow: auto;}
 .stepboxes .gray_box .item_info { float: left; font-family: "proxima_nova_rgregular"; width: 60%;}
 .cartbox .item_pic img{display: none;}
-.cartbox .item_pic .img-control{width:100%; text-align:center;}
+.cartbox .item_pic .img-control{width:100%; text-align:right;}
 .gray_box .cartbox .item_pic .img-control a{ float: none; display: inline-block}
 .gray_box .cartbox{ border: 0; padding-bottom: 0; margin-bottom: 0;} 
 .gray_box .cartbox .item_pic .item{ height: 120px; width: 120px;}
@@ -3676,7 +3688,7 @@ color:#fff
 
 
 /*======== Our Menu css start here======*/
-.secondary_menu{ position: fixed; left: 0; top: 63px; z-index: 9; width: 100%; background: #f4f4f4; border-bottom: 1px solid #d8d8d8; margin: 0 0 30px;}
+.secondary_menu{ position: fixed; left: 0; top: 63px; z-index: 999; width: 100%; background: #f4f4f4; border-bottom: 1px solid #d8d8d8; margin: 0 0 30px;}
 .secondary_menu:before{content: ''; border-bottom: 20px solid #fff; position: absolute; bottom: -20px; left: 0px; width: 100%;}
 .secondary_menu .container-fluid{padding-right: 30px; padding-left: 30px;}
 .secondary_menu .menutabs{ display: inline-block; list-style: none;}
@@ -3732,10 +3744,10 @@ color:#fff
 .menu_innertabs li a:hover{ color: #7a9c49; }
 
 .menulist-items .imgbox{ position: relative; height: 15.6em; overflow: hidden;}
-.menulist-items .imgbox img.info { position: absolute; top: 10px; right: 10px;}
+.menulist-items .imgbox img.info { position: absolute; top: 10px; right: 10px; cursor: pointer;}
 .menulist-items .imgbox p.active{display: block;}
 .menulist-items .imgbox p{position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background: rgba(0,0,0,.7); color: #fff; text-align: center; padding: 50px 10px; display: none; transition: .2s all;}
-.menulist-items .imgbox p span{position: absolute; top: 10px; right: 10px; height: 30px; width: 30px; background: #fff; color: #333; text-align: center; border-radius: 100%; font-size: 20px;  padding: 5px 0;}
+.menulist-items .imgbox p span{position: absolute; top: 10px; right: 10px; height: 30px; width: 30px; background: #fff; color: #333; text-align: center; border-radius: 100%; font-size: 20px;  padding: 5px 0; cursor: pointer;}
 .menulist-items .imgbox .nutrision{ position: absolute; bottom: -1px; left: 18px; background: #fff;
     border-radius: 10px 10px 0 0;  padding: 10px 10px 0;}
 .menulist-items .imgbox small{ position: absolute; right: 0; top:34px; background: url(../images/frock.png) no-repeat left center; line-height: 39px; padding: 10px 10px 10px 65px; color: #7a9c49; font-size: 20px; font-family: 'bureaueaglebookregular';}
@@ -3748,7 +3760,13 @@ color:#fff
 .menulist-items h4{ font-size: 26px; color: #646569; font-family: 'bureaueaglebookregular'; line-height: 30px; margin: 10px 0 5px; min-height: 60px;}
 .menulist-items p{ font-size: 15px; color: #646569; line-height: 20px; font-family: 'proxima_nova_ltlight'; margin: 0 0 10px; min-height: 66px;}
 .menulist-items h5{margin:0 0 12px 0; color: #646569;}
+.menulist-items #pizzas h5{min-height: 30px;}
 .menulist-items .columnsdivider .col-lg-4{ margin-bottom: 50px;}
+
+.menulist-items .dealtabcontent .col-md-4{margin-bottom: 20px;}
+.menulist-items .dealtabcontent .desc-box{display: table; width: 100%; background: #789c48; margin-bottom: 10px; min-height: 120px;}
+.menulist-items .dealtabcontent h4{display: table-cell; background: #5b5a56; color: #fff; width: 40%; font-size: 1.5em; line-height: normal; vertical-align: top; padding: 10px;}
+.menulist-items .dealtabcontent p{display: table-cell; color: #fff !important;  font-size: 1em !important; vertical-align: top; line-height: normal !important; padding: 10px;}
 
 .menulist-items .proinfo{ margin: 0 0 12px; display: inline-block; vertical-align: top;  width: 100%;}
 .menulist-items .proinfo select{ color: #646569; border: 1px solid #646569; font-family: 'proxima_nova_ltlight'; font-size: 12px; height: 30px; line-height: 30px; float: left; width: calc(100% - 100px); padding: 0 30px 0 5px; margin:0 8px 0 0; appearance:none; -webkit-appearance:none; -moz-appearance:none; background: url(../images/arrow-down.png) no-repeat 95% center; border-radius: 5px;}
@@ -3829,14 +3847,15 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
 	nav.main-navigation .nav-container ul li a {font-size: 1.5em;}
 	header.navigation .menu-button {width: 52px; line-height: 52px;}
 	header.navigation .logo img {width: 180px;}
-	.two-column-wrapper.ourmenu{ margin: 0 -15px; width: auto;}
+	.two-column-wrapper.ourmenu{ margin: 54px -15px 0; width: auto;}
 	.secondary_menu .menutabs ul{ padding: 0; margin: 15px 0 -1px;}
 	.menulist-items .btn{line-height: 20px;}
 	.menulist-items .columnsdivider .col-lg-4{ margin-bottom: 25px;}
+	.menulist-items .tab-content .menuTabdetails{margin: 0px;}
 	.menulist-items h2{ font-size: 25px; line-height: 30px; margin: 5px 0;}
-	.menulist-items h4{ font-size: 20px; line-height: 25px; margin: 5px 0;}
+	.menulist-items h4{ font-size: 20px; line-height: 25px; margin: 5px 0; min-height: 0px;}
 	.viewcart_sec h4{ font-size: 20px; line-height: 30px;}
-	.viewcart_sec{ min-height: 300px; position: static !important; width: 100% !important;}
+	.viewcart_sec{ min-height: 300px; position: static !important; width: 100% !important; display: none;}
 	.menulist-items p{ min-height: 10px;}
     
     
@@ -3850,8 +3869,9 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
 	.menulist-items .menu_type{ margin: 5px 0 15px; text-align: left; display: none;}
 	.menulist-items .menu_type li{ display: block; margin: 5px 0;}
     
+    .secondary_menu .container-fluid{padding-right: 15px; padding-left: 15px;}
 	.secondary_menu .dropdown_rightmenu{ position: fixed; width: 100%; left: 0; bottom: 0; z-index: 9; background: #911c28;}
-	.secondary_menu{ margin: 0 0 15px; position: static}
+	.secondary_menu{ margin: 0 0 15px; top: 54px; z-index: 999;}
 	.secondary_menu .dropdown_rightmenu ul{width: 100%; height: 60px; display: table;}
 	.secondary_menu .dropdown_rightmenu li{float: none; display: table-cell;}
 	.secondary_menu .dropdown_rightmenu li:last-child a{ border: none; padding: 10px;}
