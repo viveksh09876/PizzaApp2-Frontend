@@ -516,18 +516,5 @@ export class MenuComponent implements OnInit {
  
 }
 
-  getDropCustomizeDropDown(data){
-      let Crust_dropDown=[];
-      for (var i=0; i<data.length; i++) {
-        if(data[i].PriceSm!=0)
-         Crust_dropDown[data[i].PLU+'_PriceSm']=data[i].Name + ' - Small - '+ data[i].PriceSm;
-        if(data[i].PriceMed!=0)
-          Crust_dropDown[data[i].PLU+'_PriceMed']=data[i].Name + ' - Medium - '+ data[i].PriceMed;
-        if(data[i].PriceLg!=0)
-          Crust_dropDown[data[i].PLU+'_PriceLg']=data[i].Name + ' - Large - '+ data[i].PriceLg;
-       }
-       return Crust_dropDown;
-     } 
-
 
 }
