@@ -76,7 +76,8 @@ export class MenuComponent implements OnInit {
               this.netCost = 0;
             }
 
-            this.showViewCart = true;     
+            this.showViewCart = true;  
+             
         });
 
       }      

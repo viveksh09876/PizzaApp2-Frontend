@@ -308,4 +308,21 @@ export class UtilService {
   }
 
 
+  getTotalCost(totalCost, vouchers) {
+    if (vouchers != null && vouchers.length > 0) {
+      for (var i=0; i<vouchers.length; i++) {
+        if (totalCost > 0) {
+          totalCost = totalCost - Number(vouchers[i].balance);
+        }
+        
+      }
+    } 
+
+    totalCost = Number(totalCost.toFixed(2));
+    
+    return totalCost;
+    
+  }
+
+
 }
