@@ -64,8 +64,9 @@
       <div class="cube2 icon icon-pizza-icon"></div>
     </div>
 
-  <div class="two-column-wrapper" *ngIf="menuData != null && selectedMenuCat != null">
+  <div class="two-column-wrapper ourmenu" *ngIf="menuData != null && selectedMenuCat != null">
   <!--Left Panel Starts-->
+  <div class="col-md-8 col-sm-8 col-lg-9 menulist-items">
     <div class="inside-column-container leftContent"> 
       <!-- Nav tabs -->
       <!-- <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
@@ -80,13 +81,49 @@
           <a (click)="backToMenuPage()">Back to Menu</a>
           <p class="hidden540"><img src="{{cmsApiPath + '/'+ dealData.detailImage}}" alt="" ></p>
           <p class="visible540"><img src="{{cmsApiPath + '/'+ dealData.listImage}}" alt="" ></p>
-          <!-- <span>{{dealData.deal.Deal.description}}</span>
- -->
+          <!-- <span>{{dealData.deal.Deal.description}}</span> -->
         </div>
       
-      
+        <div class="panel-group deal-content" id="accordion">
+    <div class="panel-default">
+      <div class="panel-heading" id="headingOne">
+        <a role="button" href="#collapseOne">
+          select any large pizza
+        </a>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+          content here
+        </div>
+      </div>
+    </div>
+    <div class="panel-default">
+      <div class="panel-heading" id="headingOne">
+        <a role="button" href="#collapseOne">
+          select any large pizza
+        </a>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+          content here
+        </div>
+      </div>
+    </div>
+    <div class="panel-default">
+      <div class="panel-heading" id="headingOne">
+        <a role="button" href="#collapseOne">
+          select any large pizza
+        </a>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+          content here
+        </div>
+      </div>
+    </div>
+  </div>
       <!-- Tab panes -->
-      <div class="tab-content  deals-sub-menu">
+<!--       <div class="tab-content  deals-sub-menu">
         
         <ng-container *ngIf="selectedDealMenuCatId != null">
         <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.id == selectedDealMenuCatId)}"  class="tab-pane" id="{{data.name}}">
@@ -96,10 +133,10 @@
                     <div class="favSection">
                         <div class="row">
 
-                          <!--    Deal code -->
+                          
 
                           <div class="inside-column-container leftContent"> 
-                              <!-- Nav tabs -->
+                              
                               <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
                                
                                 <ng-container *ngFor="let cat of dealData.categories; let j = index;">
@@ -207,10 +244,13 @@
         </ng-container>
 
 
-      </div>
+      </div> -->
     </div>
+  </div>
     <!--Left Panel Ends-->
     <!--Right Panel Starts-->
+    <div _ngcontent-c1="" class="col-md-4 col-sm-4 col-lg-3">
+            <div _ngcontent-c1="" class="viewcart_sec fixedsticky">
     <div class="inside-column-container aside-wrapper orderProcessIns hidden-xs" *ngIf="showViewCart">
 
       <ng-container *ngIf="items.length == 0">  
@@ -225,7 +265,7 @@
       </ng-container>  
       <ng-container *ngIf="items.length > 0">  
           
-        <h3>view cart <!-- <a class="down-nutri" href="https://nkdpizza.com/uk/nkd-nutrition-information.pdf" target="_blank"><img src="assets/images/nutrition-info-icon.svg" height="50" width="50"></a> --></h3>
+        <h3>view cart <a class="clear-cart" (click)="clearCart();">Clear Cart</a><!-- <a class="down-nutri" href="https://nkdpizza.com/uk/nkd-nutrition-information.pdf" target="_blank"><img src="assets/images/nutrition-info-icon.svg" height="50" width="50"></a> --></h3>
         <div class="content-wrapper">
           <div class="right-padd">
               <div class="scroller">
@@ -298,10 +338,13 @@
                                         </div>
                                         <img *ngIf="item.Product.thumb_image == null" src="assets/images/pizza-images/2.jpg" alt="" class="item">
                                         <img *ngIf="item.Product.thumb_image != null" src="{{cmsApiPath + '/' + item.Product.thumb_image}}" alt="" class="item">
-                                        
-                                        <!-- <div class="quantity" *ngIf="item.Product.dealId == undefined"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div> -->
                                     </div>
-                                
+                                    <div class="item-action">
+                                      <div class="col-md-12">
+                                      <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div>
+                                      <div class="price">£12.99</div>
+                                    </div>
+                                    </div>
                         
                         </div>
                               
@@ -309,16 +352,18 @@
                   
               </div>
           </div>
-          <div class="sumarry-box">
-          <!-- <div class="total">
+          <!-- <div class="sumarry-box">
+          <div class="total">
           <label>Sub total</label>
           <span>{{currencyCode}}{{netCost}}</span>
-          </div> -->
+          </div> 
           <a (click)="backToMenuPage()">Back to Menu</a>
-          </div>
+          </div>-->
         </div>
       </ng-container>                
     </div>
+  </div>
+</div>
     <!--Right Panel Ends -->
   </div>
 </div>

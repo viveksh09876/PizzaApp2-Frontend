@@ -2267,7 +2267,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-size: 18px;
     white-space: inherit;}
 .deal-bar.full{width: 95.5%;}
-.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:64.3%; z-index: 98;}
+.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
 .deal-bar a{     background: #911c27;
     color: #ffffff;
     display: table-cell;
@@ -2286,6 +2286,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
 .customize-uk .deal-bar a{border:none;}
 
+.deal-content{margin-top: 86px; display: inline-block; width: 100%;}
 
 
 .footer-wrapper {
