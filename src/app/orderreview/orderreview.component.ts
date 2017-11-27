@@ -457,7 +457,7 @@ export class OrderreviewComponent implements OnInit {
         if(this.items.length > 0) {
 
             //check for minimum order for delivery
-            if (this.order.order_type == 'delivery' && this.totalCost < 12.99) {
+            if (this.order.order_type == 'delivery' && this.netCost < 12.99) {
 
               this.dialogService.addDialog(MessageComponent, { title: 'Alert', message: 'Minimum order should be ' + this.currencyCode + '12.99', buttonText: 'Continue', doReload: false }, { closeByClickingOutside:true });
 
