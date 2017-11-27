@@ -82,7 +82,6 @@ export class MenuComponent implements OnInit {
             }
 
             this.showViewCart = true;  
-             
         });
 
       }      
@@ -139,8 +138,7 @@ export class MenuComponent implements OnInit {
               }
             }
           });
-
-      }); 
+     }); 
 
       
   }
@@ -172,15 +170,19 @@ export class MenuComponent implements OnInit {
       
 
     } else {
-      if (modCount > 0) {
+      if (modCount > 0) { 
+       if(dipping_sauce_data_selected){
+        this.add_to_cart_dipping_sauce_data(slug,menuCountry,dipping_sauce_data_selected);
+       }else{
+    this.router.navigate(['/item', slug]);
+          }
         //navigate to customize page
-        this.router.navigate(['/item', slug]);        
+       // this.router.navigate(['/item', slug]);        
       } else {
          //add product to cart without page refresh
          
          this.dataService.getItemData(slug, menuCountry)
           .subscribe(data => {
-               
                 data.originalItemCost = data.Product.price;
                 data.totalItemCost = data.Product.price;
                 // code for add qty  
@@ -517,4 +519,78 @@ export class MenuComponent implements OnInit {
 }
 
 
+  add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier){
+     selected_modifier=selected_modifier?selected_modifier:262;
+     this.dataService.getItemData(slug, menuCountry)
+          .subscribe(data => { 
+               // code for set modifier values
+                if(data.ProductModifier.length > 0) {
+                for(var i = 0; i < data.ProductModifier.length; i++) {
+                    var ModifierOption=data.ProductModifier[i]['Modifier']['ModifierOption'];
+                    for(var j = 0; j < ModifierOption.length; j++) {
+                      if(ModifierOption[j]['Option']['plu_code']==selected_modifier){
+                        ModifierOption[j]['Option']['is_checked']=true;
+                        ModifierOption[j]['Option']['send_code']=1;
+                        }else{
+                        ModifierOption[j]['Option']['is_checked']=false;
+                        ModifierOption[j]['Option']['send_code']=0;
+                       }
+                          
+                    } 
+                   data.ProductModifier[i]['Modifier']['ModifierOption']=ModifierOption;
+                   data.Product.selected_modifier=selected_modifier;
+                }
+                // update price and qty for cart
+                data.originalItemCost = data.Product.price;
+                data.totalItemCost = data.Product.price;
+                // code for add qty  
+                if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
+                   data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
+                   data.totalItemCost = parseFloat(data.Product.price)*data.Product.qty;
+                   this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
+                }
+                /// end 
+                let temp = this.dataService.getLocalStorageData('allItems');
+                
+                if(temp == null || temp == 'null') {
+                  let allItems = [];
+                  allItems.push(data);
+                  this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+                }else{
+                  let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
+                  let isExist = false;
+                  for(var i=0; i<allItems.length; i++) { 
+                    // check product id and its modifier is already
+                    if(allItems[i].Product.id == data.Product.id && allItems[i].Product.selected_modifier==selected_modifier) {
+                      allItems[i].Product.qty += data.Product.qty;
+                      var total = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
+                      allItems[i].totalItemCost = Number(total.toFixed(2));
+                      isExist = true;
+                      break;
+                    }
+                  }         
+                  
+                  if(!isExist) {
+                    allItems.splice(0,0,data);
+                  }
+                    
+                  this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+
+                }
+
+                this.getCartItems();
+           } 
+          });
+        
+
+  }
+
+    updateDefaultValue(z,y,subcategories){
+       if(subcategories){
+         // this.menuData[z]['subCats']['products'][y]['crust_price_selected']='';
+       }else{
+         this.menuData[z]['products'][y]['dipping_sauce_data_selected']=262;
+       }
+       return true;
 }
+    }

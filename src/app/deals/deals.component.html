@@ -58,7 +58,6 @@
 
 <!--Inside Sections-->
 <div class="container-fluid">
-
     <div class="spinner" *ngIf="menuData == null">
       <div class="cube1 icon icon-pizza-icon"></div>
       <div class="cube2 icon icon-pizza-icon"></div>
@@ -79,51 +78,130 @@
       
         <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
           <a (click)="backToMenuPage()">Back to Menu</a>
-          <p class="hidden540"><img src="{{cmsApiPath + '/'+ dealData.detailImage}}" alt="" ></p>
-          <p class="visible540"><img src="{{cmsApiPath + '/'+ dealData.listImage}}" alt="" ></p>
+          <p class="hidden540">{{dealData.description}}<!--<img src="{{cmsApiPath + '/'+ dealData.detailImage}}" alt="" >--></p>
+          <p class="visible540">{{dealData.description}}<!--<img src="{{cmsApiPath + '/'+ dealData.listImage}}" alt="" >--></p>
           <!-- <span>{{dealData.deal.Deal.description}}</span> -->
         </div>
       
-        <div class="panel-group deal-content" id="accordion">
-    <div class="panel-default">
+  <div class="panel-group deal-content">
+     <ngb-accordion [closeOthers]="true"  #acc="ngbAccordion" activeIds="{{menuData[0]['name']}}">
+      <ngb-panel *ngFor="let data of menuData; let z=index;" id="{{data.name}}">
+      <ng-template ngbPanelTitle>
       <div class="panel-heading" id="headingOne">
-        <a role="button" href="#collapseOne">
-          select any large pizza
-        </a>
+         {{dealData.description}}
       </div>
-      <div id="collapseOne" class="panel-collapse collapse in">
-        <div class="panel-body">
-          content here
+     </ng-template>  
+     <ng-template ngbPanelContent >
+            <div class="menuTabdetails">
+                            <div class="row columnsdivider">
+                                <ng-container *ngFor="let prod of data.products; let y=index;">
+                                    <div class="col-md-6 col-sm-6 col-lg-4" *ngIf="prod.is_price_mapped==1">
+                                        <div class="imgbox">
+                                            <img src="{{cmsApiPath + '/' + prod.image}}" alt="" class="img-responsive">
+                                            <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
+                                            <img  class="nutrision" src="assets/images/hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
+                                            <img  class="nutrision" src="assets/images/gluten.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
+                                            <img  class="nutrision" src="assets/images/nuts.png" *ngIf="prod.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                            <img  height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info" (click)="nutritionInfo={};nutritionInfo['plu'+prod.plu_code]=true">
+                                            <p [ngClass]="{'active': (nutritionInfo['plu'+prod.plu_code])}">{{prod.short_description}} <span class="icon icon-close" (click)="nutritionInfo={}"></span></p>
+                                        </div>
+                                        <h4>{{prod.title}}</h4>
+                                        <h5>{{prod.price_title}}</h5>
+                                        <div class="proinfo" *ngIf="prod.plu_code != 999999">
+                                            <ng-container *ngIf=" prod.mod_count > 0">
+                                                <select *ngIf="prod.dipping_sauce_data" [(ngModel)]="prod.dipping_sauce_data_selected">
+                                                    <option *ngFor="let dipping_sauce_data of prod.dipping_sauce_data"  value="{{dipping_sauce_data.PLU}}">{{dipping_sauce_data.Name}}</option>
+                                                </select>
+                                                <!--<select  *ngIf="prod.crust_price">
+                                                 <ng-container *ngFor="let crust_price of prod.crust_price">
+                                                    <option *ngIf="crust_price.PriceSm!=0" >{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
+                                                    <option *ngIf="crust_price.PriceMed!=0">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
+                                                    <option *ngIf="crust_price.PriceLg!=0">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
+                                                 </ng-container>
+                                                </select>--> 
+                                            </ng-container>    
+                                            <span ><a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a></span>
+                                           <!-- <span >
+                                                <a _ngcontent-c0>-</a>
+                                                <a _ngcontent-c0>1</a>
+                                                <a _ngcontent-c0>+</a>
+                                            </span>-->
+                                        </div>
+                                        <div class="row" *ngIf="prod.plu_code != 999999 && prod.mod_count > 0 && prod.crust_price">
+                                            <div class="col-md-6 col-xs-6">
+                                                <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
+                                            </div>
+                                            <div class="col-md-6 col-xs-6">
+                                                <a  (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-green">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="prod.plu_code == 999999">
+                                            <div class="col-md-12 col-xs-12">
+                                                <a (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf=" prod.mod_count==0 || prod.dipping_sauce_data">
+                                            <div class="col-md-12 col-xs-12">
+                                                 <a  (click)="goToCustomize(prod.slug, prod.mod_count, prod.dipping_sauce_data_selected)" class="btn btn-green">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <ng-container *ngIf="prod.plu_code == 999999 && data.subCatsName.length > 0" >
+                                        <ng-container  *ngFor="let subCt of data.subCats | keysPipe; let r=index;" >
+                                            <div class="col-md-6 col-sm-6 col-lg-4"  *ngFor="let subProducts of subCt.value">
+                                             <ng-container *ngFor="let subProd of subProducts.products">
+                                                    <div class="imgbox">
+                                                        <img src="{{cmsApiPath + '/' + subProd.image}}" alt="" class="img-responsive">
+                                                        <small *ngIf="subCt.key!='signature'">{{subCt.key}}</small> 
+                                                        <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="subProd.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
+                                                        <img  class="nutrision" src="assets/images/hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
+                                                        <img  class="nutrision" src="assets/images/gluten.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
+                                                        <img  class="nutrision" src="assets/images/nuts.png" *ngIf="subProd.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                                        <img  height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info" (click)="nutritionInfo={};nutritionInfo['plu'+subProd.plu_code]=true">
+                                                        <p [ngClass]="{'active': (nutritionInfo['plu'+subProd.plu_code])}">{{subProd.short_description}} <span class="icon icon-close" (click)="nutritionInfo={}"></span></p>
+                                                    </div>
+                                                    <h4>{{subProd.title}}</h4>
+                                                    
+                                                    <div class="proinfo">
+                                                      <ng-container *ngIf=" subProd.mod_count > 0">
+                                                       <select  *ngIf="subProd.crust_price  && updateDefaultValue(z,r,true,'crust_price')" [ngModel]="subProd.crust_price_selected">
+                                                           <ng-container *ngFor="let crust_price of subProd.crust_price">
+                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - small - {{crust_price.PriceSm}}" selected="selected">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
+                                                             <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - medium - {{crust_price.PriceMed}}">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
+                                                             <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - large - {{crust_price.PriceLg}}">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
+                                                           </ng-container>
+                                                       </select> 
+                                                          
+                                                          
+                                                          
+                                                      </ng-container>
+                                                        <span><a (click)="updateQuantityBeforeCart(0, subProd.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+subProd.plu_code]?itemsQtyBeforeCart['qty_'+subProd.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, subProd.plu_code)">+</a></span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-xs-6">
+                                                            <a *ngIf="subProd.mod_count > 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-red">Customise</a>
+                                                        </div>
+                                                        <div class="col-md-6 col-xs-6">
+                                                            <a  (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-green">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                       </ng-container>
+                                </ng-container>
+                            </div>
+                        
+                    </div>
+     </ng-template>
+   </ngb-panel>
+  </ngb-accordion>
         </div>
-      </div>
-    </div>
-    <div class="panel-default">
-      <div class="panel-heading" id="headingOne">
-        <a role="button" href="#collapseOne">
-          select any large pizza
-        </a>
-      </div>
-      <div id="collapseOne" class="panel-collapse collapse in">
-        <div class="panel-body">
-          content here
-        </div>
-      </div>
-    </div>
-    <div class="panel-default">
-      <div class="panel-heading" id="headingOne">
-        <a role="button" href="#collapseOne">
-          select any large pizza
-        </a>
-      </div>
-      <div id="collapseOne" class="panel-collapse collapse in">
-        <div class="panel-body">
-          content here
-        </div>
-      </div>
-    </div>
-  </div>
+  
       <!-- Tab panes -->
-<!--       <div class="tab-content  deals-sub-menu">
+<!--      <div class="tab-content  deals-sub-menu">
         
         <ng-container *ngIf="selectedDealMenuCatId != null">
         <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.id == selectedDealMenuCatId)}"  class="tab-pane" id="{{data.name}}">

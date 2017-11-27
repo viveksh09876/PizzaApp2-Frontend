@@ -7,6 +7,8 @@ import { OrdernowmodalComponent } from '../ordernowmodal/ordernowmodal.component
 import { MessageComponent } from '../message/message.component';
 import { DataService } from '../data.service';
 import { UtilService } from '../util.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-deals',
@@ -45,7 +47,8 @@ export class DealsComponent implements OnInit {
   showLoading = false;
   formattedItems = null;
   orderNowDetails=null;
-
+itemsQtyBeforeCart={};
+nutritionInfo={};
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -690,6 +693,13 @@ export class DealsComponent implements OnInit {
     backToMenuPage() {
       this.router.navigate(['/menu', 'meal deals']); 
     }
-  
+    updateDefaultValue(z,y,subcategories){
+       if(subcategories){
+         // this.menuData[z]['subCats']['products'][y]['crust_price_selected']='';
+       }else{
+         this.menuData[z]['products'][y]['dipping_sauce_data_selected']=262;
+       }
+       return true;
+}
 
 }

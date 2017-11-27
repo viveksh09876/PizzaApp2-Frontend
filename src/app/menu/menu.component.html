@@ -106,13 +106,13 @@
                                                 <select *ngIf="prod.dipping_sauce_data" [(ngModel)]="prod.dipping_sauce_data_selected">
                                                     <option *ngFor="let dipping_sauce_data of prod.dipping_sauce_data"  value="{{dipping_sauce_data.PLU}}">{{dipping_sauce_data.Name}}</option>
                                                 </select>
-                                                <select  *ngIf="prod.crust_price">
+                                                <!--<select  *ngIf="prod.crust_price">
                                                  <ng-container *ngFor="let crust_price of prod.crust_price">
                                                     <option *ngIf="crust_price.PriceSm!=0" >{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
                                                     <option *ngIf="crust_price.PriceMed!=0">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
                                                     <option *ngIf="crust_price.PriceLg!=0">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
                                                  </ng-container>
-                                                </select> 
+                                                </select>--> 
                                             </ng-container>    
                                             <span ><a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a></span>
                                            <!-- <span >
@@ -160,13 +160,9 @@
                                                     
                                                     <div class="proinfo">
                                                       <ng-container *ngIf=" subProd.mod_count > 0">
-                                                        <select *ngIf="subProd.dipping_sauce_data">
-                                                           <option *ngFor="let dipping_sauce_data of subProd.dipping_sauce_data">{{dipping_sauce_data.Name}}</option>
-                                                        </select>
-                                                      
-                                                       <select  *ngIf="subProd.crust_price" [ngModel]="subProd.crust_price_selected">
+                                                       <select  *ngIf="subProd.crust_price  && updateDefaultValue(z,r,true,'crust_price')" [ngModel]="subProd.crust_price_selected">
                                                            <ng-container *ngFor="let crust_price of subProd.crust_price">
-                                                              <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - small - {{crust_price.PriceSm}}">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
+                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - small - {{crust_price.PriceSm}}" selected="selected">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
                                                              <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - medium - {{crust_price.PriceMed}}">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
                                                              <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - large - {{crust_price.PriceLg}}">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
                                                            </ng-container>
@@ -329,7 +325,7 @@
                                             <div class="item-action">
                                                 <div class="col-md-12">
                                                 <div class="quantity"><a (click)="updateQuantity(0, item.Product.plu_code, i)">-</a><span class="num">{{item.Product.qty}}</span><a (click)="updateQuantity(1, item.Product.plu_code, i)">+</a></div> 
-                                                <div class="price">{{currencyCode}}{{item.totalItemCost}}</div>
+                                                <div class="price">{{currencyCode}}{{item.totalItemCost }}</div>
                                             </div>
                                             </div>
                                         </div>

@@ -44,6 +44,7 @@ import { ForgotComponent } from './forgot/forgot.component';
 import { ResetComponent } from './reset/reset.component';
 import { SuggestionmodalComponent } from './suggestionmodal/suggestionmodal.component';
 import { DealsComponent } from './deals/deals.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { DealsComponent } from './deals/deals.component';
     NguiDatetimePickerModule,
     CustomFormsModule,
     Ng2UploaderModule,
-    PopoverModule
+    PopoverModule,
+    NgbModule.forRoot()
   ],
   entryComponents: [LoginComponent, RegisterComponent, OrdernowmodalComponent, MessageComponent, FavmodalComponent, ContactUsComponent, RegisterConfirmationComponent, ApplynowComponent, ForgotComponent, ResetComponent, SuggestionmodalComponent],
   schemas:  [CUSTOM_ELEMENTS_SCHEMA],
