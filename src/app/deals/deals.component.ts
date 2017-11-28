@@ -71,11 +71,12 @@ export class DealsComponent implements OnInit {
 
 
   getDealData(dealId) {
-    this.dataService.getDealTypeData(dealId).subscribe(data => {
-      this.dealData = data[0];
-      this.dealCode = data[0]['code'];
+    //this.dataService.getDealTypeData(dealId).subscribe(data => {
+      let data = this.dataService.getDealTypeData(dealId);
+      this.dealData = data;
+      this.dealCode = data['code'];
       this.getAllCategories();
-    }); 
+    //}); 
   }
 
   validateDealItems(allItems) {
@@ -113,7 +114,7 @@ export class DealsComponent implements OnInit {
 			}
 		}
 		
-		//console.log('keepCats', keepCats);
+		////console.log('keepCats', keepCats);
 		
 
       for (var i=0; i<categoriesArr.length; i++) {
@@ -138,40 +139,43 @@ export class DealsComponent implements OnInit {
         //this.selectedDealMenuCatId = null;
         
         //calculate discount
-    this.showLoading = true;	
-    //console.log('dealcode', this.dealCode, 'dealdi', this.dealId);
-		let thisDealItems = this.getThisDealItems(this.dealCode, allItems, this.comboUniqueId);
-		
-		
-		let orderDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
-		let orderObj = {
-		  storeId: orderDetails.selectedStore.Store.store_id,
-		  coupon: '',
-		  order_type: orderDetails.type,
-		  order_details: this.prepareFinalOrderData(thisDealItems),
-		  is_meal_deal: 'MEALDEAL'
-		}
-		//console.log('orderObj', orderObj);
-		let discount = 0;
-		this.dataService.applyCoupon(orderObj)
-              .subscribe(data => {
-			  let resp = data;
-				//console.log('discount', data);
-			  if(resp.Status == 'Error') {
-				discount = 0;
-			  }else if(resp.Status == 'OK') {
-				discount = Number(parseFloat(resp.Discount).toFixed(2));
-			  }
+		this.showLoading = true;	
+    ////console.log('dealcode', this.dealCode, 'dealdi', this.dealId);
+		  let thisDealItems = this.getThisDealItems(this.dealCode, allItems, this.comboUniqueId);
 			
-				let updatedItems = this.mapDealItemPrices(allItems, this.dealId, this.comboUniqueId, discount);
-				this.dataService.setLocalStorageData('allItems', JSON.stringify(updatedItems));
-			  
-		  }); 
-		
-		
+			//console.log('dealcode', thisDealItems);	
+			let orderDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
+			let orderObj = {
+			  storeId: orderDetails.selectedStore.Store.store_id,
+			  coupon: '',
+			  order_type: orderDetails.type,
+			  order_details: this.prepareFinalOrderData(thisDealItems),
+			  is_meal_deal: 'MEALDEAL'
+			}
+			////console.log('orderObj', orderObj);
+			let discount = 0;
+			this.dataService.applyCoupon(orderObj)
+				  .subscribe(data => {
+				  let resp = data;
+					////console.log('discount', data);
+				  if(resp.Status == 'Error') {
+					discount = 0;
+				  }else if(resp.Status == 'OK') {
+					discount = Number(parseFloat(resp.Discount).toFixed(2));
+				  }
+				
+					let updatedItems = this.mapDealItemPrices(allItems, this.dealId, this.comboUniqueId, discount);
+					this.dataService.setLocalStorageData('allItems', JSON.stringify(updatedItems));
+				  
+			  }); 
+			
+			
 		
 
 		    this.router.navigate(['/menu', 'meal deals']);
+		//});
+		
+		
       }
 
       this.dealData.categories = categoriesArr;
@@ -205,10 +209,10 @@ export class DealsComponent implements OnInit {
 		
 	}
 	
-	//console.log(discount);
+	////console.log(discount);
 	let discountPrice = Number(parseFloat(discount).toFixed(2));
 	totalPrice = totalPrice - discountPrice;
-	//console.log(totalPrice, discountPrice);
+	////console.log(totalPrice, discountPrice);
 	
 	for (var i=0; i<allItems.length; i++) {
 		for (var j=0; j<curDealItems.length; j++) {
@@ -235,11 +239,11 @@ export class DealsComponent implements OnInit {
 		  order_details: this.prepareFinalOrderData(dealItems),
 		  is_meal_deal: 'MEALDEAL'
 		}
-		//console.log('orderObj', orderObj);
+		////console.log('orderObj', orderObj);
 		this.dataService.applyCoupon(orderObj)
               .subscribe(data => {
                   let resp = data;
-					//console.log('discount', data);
+					////console.log('discount', data);
                   if(resp.Status == 'Error') {
                     return 0;
                   }else if(resp.Status == 'OK') {
@@ -254,21 +258,33 @@ export class DealsComponent implements OnInit {
   
   getThisDealItems(dealId, allItems, comboUniqueId) {
 	  let itemsArr = [];
+	  var j=1;
 	  
 	  for(var i=0; i<allItems.length; i++) {
-      let dId = allItems[i].Product.dealId;
-      if (!isNaN(dId)) {
-        dId = this.dataService.getDealCode(dId);
-      } 
+		  let dId = allItems[i].Product.dealId;
+		  if (!isNaN(dId)) {
+			
+			//this.dataService.getDealCode(dId, (deId) => {
+        let deId = this.dataService.getDealCode(dId);
+				
+				dId = deId;	
+			 
+				if (allItems[i] != undefined && allItems[i].Product.dealId != undefined && dId == dealId && allItems[i].Product.comboUniqueId == comboUniqueId) {
+					  let itemObj = allItems[i];
+					  itemObj.Product.dealId = this.dealCode;
+					  itemsArr.push(itemObj);
+				  }	
+				  
+				
+			//});
+		  } 
 
-		  if (allItems[i].Product.dealId != undefined && dId == dealId && allItems[i].Product.comboUniqueId == comboUniqueId) {
-			  let itemObj = allItems[i];
-			  itemObj.Product.dealId = this.dealCode;
-			  itemsArr.push(itemObj);
-		  }
-	  }
+    }
+    
+
+    return itemsArr;
 	  
-	  return itemsArr;
+	  //return itemsArr;
   }
   
   
@@ -287,7 +303,7 @@ export class DealsComponent implements OnInit {
 				product.dealId = products.Product.dealId;
 				product.comboUniqueId = products.Product.comboUniqueId;
 				
-			  // //console.log(products);
+			  // ////console.log(products);
 				if(products.ProductModifier.length > 0) {
 				  
 				  for(var i = 0; i<products.ProductModifier.length; i++) {
@@ -299,7 +315,7 @@ export class DealsComponent implements OnInit {
 					   
 						  if((opt.plu_code == '217' || opt.plu_code == 'I100' || opt.plu_code == 'I101') && opt.is_checked) {
 							  opt.send_code = 1;
-							  ////console.log('fix', opt.name);
+							  //////console.log('fix', opt.name);
 						  }
 
 						if((opt.send_code == 1) 
@@ -433,12 +449,12 @@ export class DealsComponent implements OnInit {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
         
-		    this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+		    let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
             this.formattedItems = formattedItemsData;
             this.totalCost =  formattedItemsData.totalPrice;
             this.netCost = this.totalCost;
             //this.loadAddedCategories();
-        });
+        //});
         
 		    
       }      
@@ -462,7 +478,7 @@ export class DealsComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
-          //console.log(this.menuData[0].name);
+          ////console.log(this.menuData[0].name);
           this.selectedMenuCat = 'meal deals';  
           
 
@@ -604,11 +620,11 @@ export class DealsComponent implements OnInit {
               this.items = allItems;
               this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
               
-              this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+              let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
                 this.formattedItems = formattedItemsData;
                 this.totalCost =  formattedItemsData['totalPrice'];
                 this.netCost = this.totalCost;
-              });    
+              //});    
               
   
             }else{
@@ -640,11 +656,11 @@ export class DealsComponent implements OnInit {
         if(remainingItems.length > 0) {
           this.items = remainingItems;    
           this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-          this.dataService.formatCartData(this.items, 'deal', (formattedItemsData) => {
+          let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
             this.formattedItems = formattedItemsData;
             this.totalCost =  formattedItemsData.totalPrice;
             this.netCost = this.totalCost;
-          });    
+          //});    
           
         } else {
           this.items = [];

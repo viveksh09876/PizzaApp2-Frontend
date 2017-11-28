@@ -50,8 +50,10 @@ export class MenuComponent implements OnInit {
     this.dataService.setLocalStorageData('confirmationFinalOrder', null);
 
     this.currencyCode = this.utilService.currencyCode;
-    this.getAllCategories();
-    this.getCartItems();        
+    this.getAllCategories(() => {
+      this.getCartItems();        
+    });
+    
     
   }
 
@@ -63,10 +65,10 @@ export class MenuComponent implements OnInit {
       
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
-        
-		    this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+        console.log('deals', JSON.parse(this.dataService.getLocalStorageData('allDealsData')));
+		    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
             this.formattedItems = formattedItemsData;
-            //console.log('formatted', this.formattedItems);
+            console.log('formatted', this.formattedItems);
             //let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
             this.totalCost =  formattedItemsData.totalPrice;
             
@@ -78,7 +80,7 @@ export class MenuComponent implements OnInit {
 
             this.showViewCart = true;  
              
-        });
+        //});
 
       }      
       
@@ -102,7 +104,7 @@ export class MenuComponent implements OnInit {
 
 
 
-  getAllCategories(){
+  getAllCategories(callback){
 
       let storeId = 1;
       let menuCountry = 'UK';
@@ -128,11 +130,14 @@ export class MenuComponent implements OnInit {
           });    
           
           this.dataService.getAllDeals().subscribe(data => {
+            this.dataService.setAllDealsData(data);
             for (var i=0; i<this.menuData.length; i++) {
               if (this.menuData[i].type == 'deal') {
                   this.menuData[i].products = data;
               }
             }
+            
+            callback();
           });
 
       }); 
@@ -241,11 +246,11 @@ export class MenuComponent implements OnInit {
       }
     }
 
-    this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
       this.formattedItems = formattedItemsData;
       this.totalCost =  formattedItemsData.totalPrice;
       this.netCost = this.totalCost;
-    });    
+    //});    
     
   }
 
@@ -263,11 +268,11 @@ export class MenuComponent implements OnInit {
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
             
-            this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+            let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
               this.formattedItems = formattedItemsData;
               this.totalCost =  formattedItemsData.totalPrice;
               this.netCost = this.totalCost;
-            });    
+            //});    
             
 
           }else{
@@ -297,11 +302,11 @@ export class MenuComponent implements OnInit {
       if(remainingItems.length > 0) {
         this.items = remainingItems;    
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-        this.dataService.formatCartData(this.items, 'menu', (formattedItemsData) => {
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
           this.formattedItems = formattedItemsData;
           this.totalCost =  formattedItemsData.totalPrice;
           this.netCost = this.totalCost;
-        });    
+        //});    
         
       } else {
         this.items = [];

@@ -85,7 +85,7 @@ export class CheckoutComponent implements OnInit {
           this.addedVouchers = vouchers;
         }
 
-        this.dataService.formatCartData(this.items, 'checkout', (formattedItemsData) => {
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'checkout');
             
         this.formattedItems = formattedItemsData;
         
@@ -127,7 +127,7 @@ export class CheckoutComponent implements OnInit {
               favOrdArr.push(favDataObj);
             }
             this.orderData['customData'] = favOrdArr;
-        });
+        //});
         
 
     } else {

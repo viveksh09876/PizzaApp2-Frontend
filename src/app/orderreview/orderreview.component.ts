@@ -243,7 +243,7 @@ export class OrderreviewComponent implements OnInit {
                 this.addedVouchers = vouchers;
               }
 
-              this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+              let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
                     if (formattedItemsData.deals.length > 0) {
                       this.isMealDeal = true;
                     }
@@ -251,7 +251,7 @@ export class OrderreviewComponent implements OnInit {
                   
                       this.netCost =  formattedItemsData.totalPrice;
                       this.totalCost = this.utilService.getTotalCost(this.netCost, vouchers);
-              });
+              //});
              
               
     }else{
@@ -294,13 +294,13 @@ export class OrderreviewComponent implements OnInit {
       }
     }
 
-    this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+    let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
       this.formattedItems = formattedItemsData;
       
       this.netCost = formattedItemsData.totalPrice;
       this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
      // //console.log(type, this.totalCost, this.items.Product.qty);
-    });    
+    //});    
     
   }
 
@@ -363,12 +363,12 @@ export class OrderreviewComponent implements OnInit {
             
             this.items = allItems;
             this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-            this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+            let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
               this.formattedItems = formattedItemsData;
               this.netCost =  formattedItemsData.totalPrice;
               
               this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
-            });    
+            //});    
             
 
           }else{
@@ -400,11 +400,11 @@ export class OrderreviewComponent implements OnInit {
       if(remainingItems.length > 0) {
         this.items = remainingItems;    
         this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-        this.dataService.formatCartData(this.items, 'orderreview', (formattedItemsData) => {
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'orderreview');
           this.formattedItems = formattedItemsData;
           this.netCost =  formattedItemsData.totalPrice;
           this.totalCost = this.utilService.getTotalCost(this.netCost, this.addedVouchers);
-        });    
+        //});    
         
       } else {
         this.items = [];
@@ -543,7 +543,9 @@ export class OrderreviewComponent implements OnInit {
               let dCode = products.Product.dealId;
               //console.log('dcode', dCode);
               if(!isNaN(products.Product.dealId)) {
-                product.dealId = this.dataService.getDealCode(products.Product.dealId);
+                let deId = this.dataService.getDealCode(products.Product.dealId);
+			      		product.dealId = deId;		
+			
               } else {
                 product.dealId = products.Product.dealId;
               }
