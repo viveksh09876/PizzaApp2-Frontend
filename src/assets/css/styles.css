@@ -2274,21 +2274,21 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .customize-uk .deal-bar a{border:none;}
 
 .deal-content{margin-top: 86px; display: inline-block; width: 100%;}
-.deal-content .card{display: block;}
-.deal-content .card .card-header{background: #f4f4f4; border-color: currentcolor currentcolor #d8d8d8;
+.card{display: block;}
+.card .card-header{background: #f4f4f4; border-color: currentcolor currentcolor #d8d8d8;
     border-image: none;
     border-radius: 3px;
     border-style: none none solid;
     border-width: medium medium 2px; display: block; padding: 10px; margin-bottom: 10px;}
-.deal-content .card .card-header a{color: #acadaf; font-size: 1.2em; text-decoration: none; font-family: "bureaueaglebookregular";}
-.deal-content .card .card-header a .panel-heading{border: none; padding: 0px; border-radius: 0px;}
-.deal-content .card .card-header a .panel-heading i{font-size: 1em;  color: #acadaf; vertical-align: middle; margin: 0 10px 0 0;}
-.deal-content .card .card-header a .panel-heading i.fa-minus,.deal-content .card .card-header.active a .panel-heading i.fa-check{display: inline-block;}
-.deal-content .card .card-header a .panel-heading i.fa-check{ color: #7a9c49;}
-.deal-content .card .card-header a .panel-heading i.fa-check,.deal-content .card .card-header.active a .panel-heading i.fa-minus{display: none;}
-.deal-content .card .card-header a .panel-heading span{float: right; font-size: 1.6em; color: #911c27;}
-.deal-content .card .card-header a .panel-heading span.icon-keyboard_arrow_down,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_up{display: inline-block;}
-.deal-content .card .card-header a .panel-heading span.icon-keyboard_arrow_up,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_down{display: none;}
+.card .card-header a{color: #acadaf; font-size: 1.2em; text-decoration: none; font-family: "bureaueaglebookregular";}
+.card .card-header a .panel-heading{border: none; padding: 0px; border-radius: 0px;}
+.card .card-header a .panel-heading i{font-size: 1em;  color: #acadaf; vertical-align: middle; margin: 0 10px 0 0;}
+.card .card-header a .panel-heading i.fa-minus,.deal-content .card .card-header.active a .panel-heading i.fa-check{display: inline-block;}
+.card .card-header a .panel-heading i.fa-check{ color: #7a9c49;}
+.card .card-header a .panel-heading i.fa-check,.deal-content .card .card-header.active a .panel-heading i.fa-minus{display: none;}
+.card .card-header a .panel-heading span{float: right; font-size: 1.6em; color: #911c27;}
+.card .card-header a .panel-heading span.icon-keyboard_arrow_down,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_up{display: inline-block;}
+.card .card-header a .panel-heading span.icon-keyboard_arrow_up,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_down{display: none;}
 
 .footer-wrapper {
 	background-color: #5b5a56;

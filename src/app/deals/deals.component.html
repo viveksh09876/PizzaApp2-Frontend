@@ -77,10 +77,10 @@
 
       
         <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
-          <a (click)="backToMenuPage()">Back to Menu</a>
+          <a (click)="backToMenuPage()"><span class="icon icon-keyboard_arrow_left"></span></a>
           <p><strong>{{dealData.title}}</strong><span>{{dealData.description}}</span></p>
         </div>
-        <br><br><br><br><br><br><br>
+        <div class="deal-content">
             <ngb-accordion [closeOthers]="true"  #acc="ngbAccordion"  activeIds="{{selectedDealMenuCatIndex}}">
            <!--     
              <span *ngIf="!cat.isEnable || j != selectedDealMenuCatIndex">{{cat.catText}}</span>
@@ -182,7 +182,7 @@
                     </div></ng-container></ng-template>
               </ngb-panel>
             </ngb-accordion> 
-
+          </div>
 
            
 
