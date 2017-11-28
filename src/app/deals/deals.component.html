@@ -78,9 +78,7 @@
       
         <div class="col-md-12 deal-bar" [ngClass]="{'full': showViewCart ==  false}">
           <a (click)="backToMenuPage()">Back to Menu</a>
-          <p class="hidden540">{{dealData.description}}<!--<img src="{{cmsApiPath + '/'+ dealData.detailImage}}" alt="" >--></p>
-          <p class="visible540">{{dealData.description}}<!--<img src="{{cmsApiPath + '/'+ dealData.listImage}}" alt="" >--></p>
-          <!-- <span>{{dealData.deal.Deal.description}}</span> -->
+          <p><strong>{{dealData.title}}</strong><span>{{dealData.description}}</span></p>
         </div>
         <br><br><br><br><br><br><br>
             <ngb-accordion [closeOthers]="true"  #acc="ngbAccordion"  activeIds="{{selectedDealMenuCatIndex}}">
@@ -92,7 +90,7 @@
                   
                   <ng-template ngbPanelTitle>
                     <div class="panel-heading">
-                       {{cat.catText}}
+                       <i class="fa fa-minus"></i><i class="fa fa-check"></i>{{cat.catText}}<span class="icon icon-keyboard_arrow_down"></span><span class="icon icon-keyboard_arrow_up"></span>
                     </div>
                   </ng-template>  
                 <ng-template ngbPanelContent > <ng-container *ngFor="let data of menuData; let z=index;" >
