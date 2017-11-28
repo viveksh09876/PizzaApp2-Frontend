@@ -620,7 +620,7 @@ header.navigation ul.links li.eclub-btn ul li a i{min-width: 16px;}
 
 
 @media (max-width: 767px) {
-
+header.navigation ul.links li{padding: 0 0 0 10px;}
 header.navigation ul.links li a {
 	line-height: 52px;
 	padding: 0px 5px
@@ -1214,14 +1214,8 @@ header.navigation{z-index: 9999;}
 
 @media (max-width: 540px) {
 	.deal-bar a {
-        font-size: 14px !important;
-    padding: 0px;
-    vertical-align: middle;
-    border-right: 0px !important;
-    min-width: 84px !important;
+        
 }
-.deal-bar p.hidden540{display: none;}
-.deal-bar p.visible540{display: block !important;}
 	.mapboxgl-popup{max-width: 200px !important;}
 	.inside-column-container.thirdCol .control-group .control.checkbox{padding-right: 95px;}
 .banner-wrapper .leftButtons.buttons {
@@ -2266,28 +2260,35 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     text-align: center;
     font-size: 18px;
     white-space: inherit;}
-.deal-bar.full{width: 95.5%;}
-.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
-.deal-bar a{     background: #911c27;
-    color: #ffffff;
-    display: table-cell;
-    font-family: "proxima_nova_ltsemibold";
-    font-size: 18px;
-    border-right: 10px solid #fff;
-    text-align: center; min-width: 146px;}
-.deal-bar p{background: #f4f4f4;
-    display: table-cell;
-    text-align: center;
-    color: #fff;font-family: "bureaueaglebookregular";
-	font-size: 1.500em;}
-	.deal-bar p.visible540{display: none;}
-.deal-bar p img{max-width: 100%; max-height: 64px; min-height: 32px;}
-
+.menulist-items.fullview .deal-bar{width: 95.5%;}
+.menulist-items .deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
+.menulist-items .deal-bar a{ background: #911c27;  vertical-align: middle;  color: #ffffff;  display: table-cell;  border-right: 10px solid #fff;
+    text-align: center; max-width: 20px;}
+.menulist-items .deal-bar a span{font-size: 46px;}  
+.menulist-items .deal-bar p{background: #5b5a56; display: table-cell;  text-align: left;
+    color: #fff; padding:10px; vertical-align: middle;}
+.menulist-items .deal-bar p strong{display: block; font-family: "bureaueaglebookregular"; font-size: 1.2em; text-transform: lowercase;
+    font-weight: 400;}
+.menulist-items .deal-bar p span{display: block; font-size: 1em;}
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
 .customize-uk .deal-bar a{border:none;}
 
 .deal-content{margin-top: 86px; display: inline-block; width: 100%;}
-
+.deal-content .card{display: block;}
+.deal-content .card .card-header{background: #f4f4f4; border-color: currentcolor currentcolor #d8d8d8;
+    border-image: none;
+    border-radius: 3px;
+    border-style: none none solid;
+    border-width: medium medium 2px; display: block; padding: 10px; margin-bottom: 10px;}
+.deal-content .card .card-header a{color: #acadaf; font-size: 1.2em; text-decoration: none; font-family: "bureaueaglebookregular";}
+.deal-content .card .card-header a .panel-heading{border: none; padding: 0px; border-radius: 0px;}
+.deal-content .card .card-header a .panel-heading i{font-size: 1em;  color: #acadaf; vertical-align: middle; margin: 0 10px 0 0;}
+.deal-content .card .card-header a .panel-heading i.fa-minus,.deal-content .card .card-header.active a .panel-heading i.fa-check{display: inline-block;}
+.deal-content .card .card-header a .panel-heading i.fa-check{ color: #7a9c49;}
+.deal-content .card .card-header a .panel-heading i.fa-check,.deal-content .card .card-header.active a .panel-heading i.fa-minus{display: none;}
+.deal-content .card .card-header a .panel-heading span{float: right; font-size: 1.6em; color: #911c27;}
+.deal-content .card .card-header a .panel-heading span.icon-keyboard_arrow_down,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_up{display: inline-block;}
+.deal-content .card .card-header a .panel-heading span.icon-keyboard_arrow_up,.deal-content .card .card-header.active a .panel-heading span.icon-keyboard_arrow_down{display: none;}
 
 .footer-wrapper {
 	background-color: #5b5a56;
@@ -3872,7 +3873,7 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
     
     .secondary_menu .container-fluid{padding-right: 15px; padding-left: 15px;}
 	.secondary_menu .dropdown_rightmenu{ position: fixed; width: 100%; left: 0; bottom: 0; z-index: 9; background: #911c28;}
-	.secondary_menu{ margin: 0 0 15px; top: 54px; z-index: 999;}
+	.secondary_menu{ margin: 0 0 15px; top: 53px; z-index: 999;}
 	.secondary_menu .dropdown_rightmenu ul{width: 100%; height: 60px; display: table;}
 	.secondary_menu .dropdown_rightmenu li{float: none; display: table-cell;}
 	.secondary_menu .dropdown_rightmenu li:last-child a{ border: none; padding: 10px;}
@@ -3935,5 +3936,7 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
 .menulist-items .columnsdivider .col-lg-4{float: none; text-align: center;}
 }
 @media (max-width: 360px) {
+	header.navigation ul.links li{padding: 0px;}
+	header.navigation ul.links li a span.icon{font-size: 1em;}
 .secondary_menu .dropdown_rightmenu li a{font-size:10px; }
 }
