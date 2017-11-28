@@ -47,8 +47,8 @@ export class DealsComponent implements OnInit {
   showLoading = false;
   formattedItems = null;
   orderNowDetails=null;
-itemsQtyBeforeCart={};
-nutritionInfo={};
+  itemsQtyBeforeCart={};
+  nutritionInfo={};
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
