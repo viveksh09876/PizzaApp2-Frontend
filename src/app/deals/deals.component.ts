@@ -49,6 +49,7 @@ export class DealsComponent implements OnInit {
   orderNowDetails=null;
   itemsQtyBeforeCart={};
   nutritionInfo={};
+ 
 
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -454,10 +455,9 @@ export class DealsComponent implements OnInit {
     let items = this.dataService.getLocalStorageData('allItems');
     let orderNowDetails = this.dataService.getLocalStorageData('order-now'); 
     if((items != null && items != 'null') || (orderNowDetails != null && orderNowDetails != 'null')) {
-      
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
-        
+        console.log(items);console.log('console.log(items)');  
 		    let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
             this.formattedItems = formattedItemsData;
             this.totalCost =  formattedItemsData.totalPrice;
@@ -709,6 +709,17 @@ export class DealsComponent implements OnInit {
     backToMenuPage() {
       this.router.navigate(['/menu', 'meal deals']); 
     }
+
+    clearCart() {
+      this.dataService.clearCart();
+      this.items = [];
+      this.showViewCart = false;
+      this.formattedItems.deals = [];
+      this.formattedItems.otherItems = [];
+            this.netCost = 0;
+    }
+
+
     updateDefaultValue(z,y,subcategories){
        if(subcategories){
          // this.menuData[z]['subCats']['products'][y]['crust_price_selected']='';
@@ -716,6 +727,22 @@ export class DealsComponent implements OnInit {
          this.menuData[z]['products'][y]['dipping_sauce_data_selected']=262;
        }
        return true;
+}
+
+updateQuantityBeforeCart(type, plu_code) {
+  var qty_key='qty_'+plu_code; 
+  if(!this.itemsQtyBeforeCart[qty_key]){
+         this.itemsQtyBeforeCart[qty_key]=1;
+     }
+  if(type == 1) {
+       this.itemsQtyBeforeCart[qty_key] += 1;    
+     }else{
+       this.itemsQtyBeforeCart[qty_key] = this.itemsQtyBeforeCart[qty_key] - 1;
+       if(this.itemsQtyBeforeCart[qty_key] <= 0) {
+         this.itemsQtyBeforeCart[qty_key] = 1;
+       }
+  }
+ //this.dataService.setLocalStorageData('itemsQtyBeforeCart',  JSON.stringify(this.itemsQtyBeforeCart));
 }
 
 }

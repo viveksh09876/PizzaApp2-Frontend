@@ -144,8 +144,9 @@
                                     
                                     <ng-container *ngIf="prod.plu_code == 999999 && data.subCatsName.length > 0" >
                                         <ng-container  *ngFor="let subCt of data.subCats | keysPipe; let r=index;" >
-                                            <div class="col-md-6 col-sm-6 col-lg-4"  *ngFor="let subProducts of subCt.value">
-                                             <ng-container *ngFor="let subProd of subProducts.products">
+                                            <ng-container  *ngFor="let subProducts of subCt.value">
+                                              <ng-container *ngFor="let subProd of subProducts.products">
+                                                <div class="col-md-6 col-sm-6 col-lg-4"  *ngIf="subProducts.is_price_mapped==1">
                                                     <div class="imgbox">
                                                         <img src="{{cmsApiPath + '/' + subProd.image}}" alt="" class="img-responsive">
                                                         <small *ngIf="subCt.key!='signature'">{{subCt.key}}</small> 
@@ -181,9 +182,11 @@
                                                             <a  (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-green">Add to Cart</a>
                                                         </div>
                                                     </div>
+                                                   </div> 
                                                 </ng-container>
-                                            </div>
+                                           
                                         </ng-container>
+                                    </ng-container>
                                        </ng-container>
                                 </ng-container>
                             </div>
