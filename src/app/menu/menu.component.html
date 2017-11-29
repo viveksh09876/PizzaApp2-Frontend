@@ -136,7 +136,7 @@
                                         </div>
                                         <div class="row" *ngIf=" prod.mod_count==0 || prod.dipping_sauce_data">
                                             <div class="col-md-12 col-xs-12">
-                                                 <a  (click)="goToCustomize(prod.slug, prod.mod_count, prod.dipping_sauce_data_selected)" class="btn btn-green">Add to Cart</a>
+                                                 <a  (click)="goToCustomize(prod.slug, prod.mod_count,'others' ,prod.dipping_sauce_data_selected)" class="btn btn-green">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -144,9 +144,8 @@
                                     
                                     <ng-container *ngIf="prod.plu_code == 999999 && data.subCatsName.length > 0" >
                                         <ng-container  *ngFor="let subCt of data.subCats | keysPipe; let r=index;" >
-                                            <ng-container  *ngFor="let subProducts of subCt.value">
-                                              <ng-container *ngFor="let subProd of subProducts.products">
-                                                <div class="col-md-6 col-sm-6 col-lg-4"  *ngIf="subProducts.is_price_mapped==1">
+                                            <div class="col-md-6 col-sm-6 col-lg-4"  *ngFor="let subProducts of subCt.value">
+                                             <ng-container *ngFor="let subProd of subProducts.products">
                                                     <div class="imgbox">
                                                         <img src="{{cmsApiPath + '/' + subProd.image}}" alt="" class="img-responsive">
                                                         <small *ngIf="subCt.key!='signature'">{{subCt.key}}</small> 
@@ -161,11 +160,11 @@
                                                     
                                                     <div class="proinfo">
                                                       <ng-container *ngIf=" subProd.mod_count > 0">
-                                                       <select  *ngIf="subProd.crust_price  && updateDefaultValue(z,r,true,'crust_price')" [ngModel]="subProd.crust_price_selected">
+                                                       <select  *ngIf="subProd.crust_price  && updateDefaultValue(z,r,true,'crust_price')" [(ngModel)]="subProd.crust_price_selected">
                                                            <ng-container *ngFor="let crust_price of subProd.crust_price">
-                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - small - {{crust_price.PriceSm}}" selected="selected">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
-                                                             <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - medium - {{crust_price.PriceMed}}">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
-                                                             <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-{{crust_price.Name}} - large - {{crust_price.PriceLg}}">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
+                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-999991" selected="selected">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
+                                                             <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-999992">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
+                                                             <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-999993">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
                                                            </ng-container>
                                                        </select> 
                                                           
@@ -179,14 +178,12 @@
                                                             <a *ngIf="subProd.mod_count > 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-red">Customise</a>
                                                         </div>
                                                         <div class="col-md-6 col-xs-6">
-                                                            <a  (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-green">Add to Cart</a>
+                                                            <a  (click)="goToCustomize(subProd.slug, subProd.mod_count,'pizza',subProd.crust_price_selected)" class="btn btn-green">Add to Cart</a>
                                                         </div>
                                                     </div>
-                                                   </div> 
                                                 </ng-container>
-                                           
+                                            </div>
                                         </ng-container>
-                                    </ng-container>
                                        </ng-container>
                                 </ng-container>
                             </div>

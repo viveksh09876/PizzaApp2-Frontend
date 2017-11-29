@@ -43,6 +43,7 @@ export class MenuComponent implements OnInit {
   suggestionProducts = [];
   formattedItems = null;
   nutritionInfo={};
+  item=null;// this is for calculation function only 
 
 
   ngOnInit() {
@@ -72,10 +73,10 @@ export class MenuComponent implements OnInit {
       
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
-        console.log('deals', JSON.parse(this.dataService.getLocalStorageData('allDealsData')));
+        //console.log('deals', JSON.parse(this.dataService.getLocalStorageData('allDealsData')));
 		    let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
             this.formattedItems = formattedItemsData;
-            console.log('formatted', this.formattedItems);
+           // console.log('formatted', this.formattedItems);
             //let getTCost = Number(this.utilService.calculateOverAllCost(this.items).toFixed(2));
             this.totalCost =  formattedItemsData.totalPrice;
             
@@ -152,7 +153,7 @@ export class MenuComponent implements OnInit {
   }
 
 
-  goToCustomize(slug, modCount,dipping_sauce_data_selected) {
+  goToCustomize(slug, modCount,cType,modifer_selected) {
 
     // this.dialogService.addDialog(MessageComponent, { title: 'block', message: 'In Store pickup only. Online ordering will be active from October 2nd onwards.', buttonText: 'OK', doReload: false }, { closeByClickingOutside:true }); 
     
@@ -179,13 +180,12 @@ export class MenuComponent implements OnInit {
 
     } else {
       if (modCount > 0) { 
-       if(dipping_sauce_data_selected){
-        this.add_to_cart_dipping_sauce_data(slug,menuCountry,dipping_sauce_data_selected);
-       }else{
-    this.router.navigate(['/item', slug]);
-          }
+        if(cType){
+         this.addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected);
+        }else{
         //navigate to customize page
-       // this.router.navigate(['/item', slug]);        
+        this.router.navigate(['/item', slug]);      
+        }  
       } else {
          //add product to cart without page refresh
          
@@ -527,71 +527,82 @@ export class MenuComponent implements OnInit {
 }
 
 
-  add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier){
-     selected_modifier=selected_modifier?selected_modifier:262;
-     this.dataService.getItemData(slug, menuCountry)
-          .subscribe(data => { 
-               // code for set modifier values
-                if(data.ProductModifier.length > 0) {
-                for(var i = 0; i < data.ProductModifier.length; i++) {
-                    var ModifierOption=data.ProductModifier[i]['Modifier']['ModifierOption'];
-                    for(var j = 0; j < ModifierOption.length; j++) {
-                      if(ModifierOption[j]['Option']['plu_code']==selected_modifier){
-                        ModifierOption[j]['Option']['is_checked']=true;
-                        ModifierOption[j]['Option']['send_code']=1;
-                        }else{
-                        ModifierOption[j]['Option']['is_checked']=false;
-                        ModifierOption[j]['Option']['send_code']=0;
-                       }
-                          
-                    } 
-                   data.ProductModifier[i]['Modifier']['ModifierOption']=ModifierOption;
-                   data.Product.selected_modifier=selected_modifier;
-                }
-                // update price and qty for cart
-                data.originalItemCost = data.Product.price;
-                data.totalItemCost = data.Product.price;
-                // code for add qty  
-                if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
-                   data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
-                   data.totalItemCost = parseFloat(data.Product.price)*data.Product.qty;
-                   this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
-                }
-                /// end 
-                let temp = this.dataService.getLocalStorageData('allItems');
-                
-                if(temp == null || temp == 'null') {
-                  let allItems = [];
-                  allItems.push(data);
-                  this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-                }else{
-                  let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
-                  let isExist = false;
-                  for(var i=0; i<allItems.length; i++) { 
-                    // check product id and its modifier is already
-                    if(allItems[i].Product.id == data.Product.id && allItems[i].Product.selected_modifier==selected_modifier) {
-                      allItems[i].Product.qty += data.Product.qty;
-                      var total = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
-                      allItems[i].totalItemCost = Number(total.toFixed(2));
-                      isExist = true;
-                      break;
-                    }
-                  }         
-                  
-                  if(!isExist) {
-                    allItems.splice(0,0,data);
-                  }
-                    
-                  this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+  addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected){
+    //selected_modifier=selected_modifier?selected_modifier:262;
+    console.log(modifer_selected);
+    let list=modifer_selected.split('-');
+    //these are like a radio for pizza 
+    let Pizzalist=['999991','999992','999993','I100','I101','217'];
+    console.log(list);
+    this.dataService.getItemData(slug, menuCountry)
+         .subscribe(data => { 
+              // code for set modifier values
+               if(data.ProductModifier.length > 0) {
+               for(var i = 0; i < data.ProductModifier.length; i++) {
+                   var ModifierOption=data.ProductModifier[i]['Modifier']['ModifierOption'];
+                   for(var j = 0; j < ModifierOption.length; j++) {
+                     if(list.indexOf(ModifierOption[j]['Option']['plu_code']) !== -1){
+                       ModifierOption[j]['Option']['is_checked']=true;
+                       ModifierOption[j]['Option']['send_code']=1;
+                       }else if(cType!='pizza' || Pizzalist.indexOf(ModifierOption[j]['Option']['plu_code']) !== -1){
+                       ModifierOption[j]['Option']['is_checked']=false;
+                       ModifierOption[j]['Option']['send_code']=0;
+                      }
+                         
+                   } 
+                  data.ProductModifier[i]['Modifier']['ModifierOption']=ModifierOption;
+                  data.Product.modifer_selected=modifer_selected;
+               }
+               // update price and qty for cart
+               this.item=data;
+               let totalPriceOnBasisOfModifier=this.calculateTotalCost();
+               data.originalItemCost = totalPriceOnBasisOfModifier;
+               data.totalItemCost = totalPriceOnBasisOfModifier;
+               // code for add qty  
+               if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
+                  data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
+                  data.totalItemCost = parseFloat(data.totalItemCost)*data.Product.qty;
+                  this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
+               }
 
-                }
+               /// end 
+               let temp = this.dataService.getLocalStorageData('allItems');
+               if(temp == null || temp == 'null') {
+                 let allItems = [];
+                 allItems.push(data);
+                 this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+               }else{
+                 let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
+                 let isExist = false;
+                 for(var i=0; i<allItems.length; i++) { 
+                   // check product id and its modifier is already
+                   if(allItems[i].Product.id == data.Product.id && allItems[i].Product.modifer_selected==modifer_selected) {
+                     allItems[i].Product.qty += data.Product.qty;
+                     this.item=allItems[i];
+                     var total=this.calculateTotalCost();// for get pizza and ther iten price 
+                     total = total*allItems[i].Product.qty;
+                     allItems[i].totalItemCost = Number(total.toFixed(2));
+                     isExist = true;
+                     break;
+                   }
+                 }         
+                 
+                 if(!isExist) {
+                   allItems.splice(0,0,data);
+                 }
+                   
+                 this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
 
-                this.getCartItems();
-           } 
-          });
-        
+               }
 
-  }
+               this.getCartItems();
+          } 
+         });
+       
+
+ }
+
+
 
     updateDefaultValue(z,y,subcategories){
        if(subcategories){
@@ -601,4 +612,410 @@ export class MenuComponent implements OnInit {
        }
        return true;
 }
+
+
+getTotalCost() {
+  
+      let total = 0;
+  
+      // if (this.isDeal) {
+      //   this.totalCost = Number(parseFloat(this.dealItem.price).toFixed(2));
+      //   this.item.originalItemCost = this.totalCost;
+      //   this.item.totalItemCost = this.totalCost;
+      // } else {
+       
+        total = this.calculateTotalCost();
+        this.totalCost = +total.toFixed(2);
+        this.item.originalItemCost = this.totalCost;
+        this.item.totalItemCost = this.totalCost;
+  return total;
+      //}
+     
+    }
+
+calculateTotalCost() {
+  
+      let total = 0;
+      let defaultSize = 'small';
+    
+      if(this.item.Product.category_id == 1) {
+  
+        let itemBasePrice = false;
+        let itemSizePrice = '';
+        let is_crust_size_price_added = false;
+        let priceBinding = false;
+        
+  
+        if(this.item.ProductModifier.length > 0) {
+          
+          for(var h = 0; h < this.item.ProductModifier.length; h++) {
+            let defoptions = this.item.ProductModifier[h].Modifier.ModifierOption;
+            
+            for(var v = 0; v < defoptions.length; v++) {
+              if(defoptions[v].Option.is_checked) {
+                if(defoptions[v].Option.plu_code == 999991) {
+                  //////console.log('def1');
+                  defaultSize = 'small'; break;
+                } else if (defoptions[v].Option.plu_code == 999992) {
+                  //////console.log('def2');
+                  defaultSize = 'medium'; break;
+                } else if (defoptions[v].Option.plu_code == 999993) {
+                  //////console.log('def3');
+                  defaultSize = 'large'; break;
+                }
+              }
+            }
+          }
+          //////console.log('def init', defaultSize, itemSizePrice);
+          for(var i = 0; i < this.item.ProductModifier.length; i++) {
+            let options = this.item.ProductModifier[i].Modifier.ModifierOption;
+  
+            for(var j = 0; j < options.length; j++) {
+                
+                if(options[j].Option.is_checked || options[j].Option.is_included_mod) {                
+                  if(options[j].Option.price) {
+                    
+                    let addPrice = 0;
+                    if(!options[j].Option.is_included_mod && options[j].Option.is_checked) {
+                      
+                      if(typeof options[j].Option.price[defaultSize] == 'string') {
+                        //////console.log('def', defaultSize, is_crust_size_price_added);
+                        if(is_crust_size_price_added == true) {
+                          priceBinding = true;
+                          addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                          itemBasePrice = true;
+                          //////console.log('checkbaseprice1', itemBasePrice, addPrice);
+                        }else if(itemSizePrice == 'true' || itemSizePrice == '') {
+  
+                          if(this.item.Product.plu_code != 999999) {
+                            priceBinding = true;
+                            
+                            addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                            if (addPrice > 0) {
+                              itemBasePrice = true;
+                            }
+                            
+                            //////console.log(1230, defaultSize, options[j].Option.price[defaultSize], addPrice, itemBasePrice);
+                          }else{
+                            //////console.log(123, defaultSize);
+                              if(itemSizePrice != '' || options[j].Option.plu_code == 'I101') {
+                               priceBinding = true;
+                                addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                                itemBasePrice = true;
+                              }
+                              
+                            
+                          }
+                          
+                        }else if((itemSizePrice == 'large' || itemSizePrice == 'medium' || itemSizePrice == 'small') && total != 0) {
+                         priceBinding = true;
+                          addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                          itemBasePrice = true;
+                        }
+                        
+                      }else{
+                        if(itemBasePrice && itemSizePrice != '' && !options[j].Option.is_included_mod && total == 0) {
+                          
+                        }else{
+                          
+                          if(itemSizePrice != '') {
+                            
+                            addPrice = parseFloat(options[j].Option.price);
+                          }
+                         
+                        }
+                      
+                      }
+                      
+                    }else{
+  
+                      if((options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101' || options[j].Option.plu_code == '217') && options[j].Option.is_checked) {
+                        if(typeof options[j].Option.price[defaultSize] == 'string') {
+                          
+                          addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                          itemBasePrice = true;
+                          priceBinding = true;
+                          itemSizePrice = defaultSize;
+                          //////console.log('plu', defaultSize, options[j].Option.price[defaultSize], itemSizePrice);
+                        }
+                      }
+                    }
+                    
+                    //////console.log('initial add price', addPrice);
+                    if(options[j].Option.price.small && options[j].Option.is_topping == undefined) {
+                      //////console.log('obj', options[j].Option);
+                      
+                      for(var x = 0; x < this.item.ProductModifier.length; x++) {
+                        let p_op = this.item.ProductModifier[x].Modifier.ModifierOption;
+                        for(var y = 0; y < p_op.length; y++) {
+                          //////////console.log('new', p_op[y].Option);
+  
+                          if(p_op[y].Option.default_checked && p_op[y].Option.plu_code == 999991 && p_op[y].Option.is_checked) {
+                            defaultSize = 'small';
+                          } else if(p_op[y].Option.default_checked && p_op[y].Option.plu_code == 999992 && p_op[y].Option.is_checked) {
+                           
+                            defaultSize = 'medium';
+                          } else if(p_op[y].Option.default_checked && p_op[y].Option.plu_code == 999993 && p_op[y].Option.is_checked) {
+                            defaultSize = 'large';
+                          }
+                          
+                          if(options[j].Option.dependent_modifier_option_id == p_op[y].Option.id) {
+                            if(p_op[y].Option.is_checked && options[j].Option.is_checked) {
+                              
+                              addPrice = parseFloat(options[j].Option.price[defaultSize]);
+                              itemBasePrice = true;
+                              itemSizePrice = defaultSize;
+                              if(options[j].Option.price[defaultSize] != 0) {
+                                  is_crust_size_price_added = true;
+                                } 
+  
+                                //////console.log('plu', defaultSize, options[j].Option.price[defaultSize], 'itembaseprice',itemBasePrice, addPrice);  
+                              
+                            }
+                            //////console.log('check',defaultSize, options[j].Option.dependent_modifier_id, p_op[y].Option);
+                          }
+  
+                          if(p_op[y].Option.is_checked && options[j].Option.is_checked && (options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101')) {
+                            
+                            itemSizePrice = 'true';
+                          }
+                          
+                          
+                          if(p_op[y].Option.is_checked && p_op[y].Option.is_included_mod == false && options[j].Option.is_checked) {
+                            
+                            if(p_op[y].Option.plu_code == 999991) {  //small
+  
+                              if(typeof options[j].Option.price.small == 'string') {
+                                
+                                addPrice = parseFloat(options[j].Option.price.small);
+                                
+                                itemSizePrice = 'small';
+                                defaultSize = 'small';
+                                if(options[j].Option.price.small == 0) {
+                                  is_crust_size_price_added = false;
+                                  priceBinding = false;
+                                }else{
+                                  priceBinding = true;
+                                }
+                              }
+                              
+                            }else if(p_op[y].Option.plu_code == 999992) {
+                              if(typeof options[j].Option.price.medium == 'string') {
+                                
+                                addPrice = parseFloat(options[j].Option.price.medium);
+                                itemSizePrice = 'medium';
+                                defaultSize = 'medium';
+                                if (addPrice > 0) {
+                                  itemBasePrice = true;
+                                }
+                                
+                                if(options[j].Option.price.medium == 0) {
+                                  is_crust_size_price_added = false;
+                                  priceBinding = false;
+                                }else{
+                                  priceBinding = true;
+                                } 
+  
+                                //////console.log('med', options[j].Option.price.medium,  options[j].Option.name , options[j].Option.is_checked, options[j].Option.is_included_mod, p_op[y].Option.is_included_mod, itemBasePrice, priceBinding);
+                              }
+                              
+                            }else if(p_op[y].Option.plu_code == 999993) {
+                              if(typeof options[j].Option.price.large == 'string') {
+                                
+                                
+                                addPrice = parseFloat(options[j].Option.price.large);
+                                itemSizePrice = 'large';
+                                defaultSize = 'large';
+                                if(options[j].Option.price.large == 0) {
+                                  priceBinding = false;
+                                  is_crust_size_price_added = false;
+                                }else{
+                                  priceBinding = true;
+                                } 
+                                
+                                //////console.log('large: ', options[j].Option.price.large,  options[j].Option.name , options[j].Option.is_checked, options[j].Option.is_included_mod, p_op[y].Option.is_included_mod, 'itembaseprice: ',itemBasePrice, 'pricebinding:',priceBinding);
+  
+                              }
+                              
+                            }
+                          }
+                                                  
+                        }
+                      }
+  
+                      //////console.log('addPrice', addPrice);
+                    }else if(options[j].Option.price.small && options[j].Option.is_topping != undefined && options[j].Option.is_included_mod == false && defaultSize != 'true' && is_crust_size_price_added == true){
+                      
+                      
+                      addPrice = parseFloat(options[j].Option.price[defaultSize]);   
+                                  
+                    }else if(options[j].Option.price != null && options[j].Option.is_included_mod == false && options[j].Option.price.small == undefined){
+                      
+                      addPrice = parseFloat(options[j].Option.price);   
+                                       
+                    }
+  
+                    
+                   
+                    
+                    if(options[j].Option.is_checked && options[j].Option.default_checked == false) {      
+                           
+                      options[j].Option.send_code = 1;                                  
+                    }else if(options[j].Option.is_checked == false && options[j].Option.default_checked == true) {
+                     
+                      options[j].Option.send_code = 1;
+                    }else if(options[j].Option.is_checked == true && options[j].Option.default_checked == true) {
+                      
+                      options[j].Option.send_code = 0;                    
+                    }
+  
+                    if(options[j].Option.is_checked == false && options[j].Option.is_included_mod == true) {                   
+                      options[j].Option.send_code = 1;
+                    }
+  
+                    if(options[j].Option.is_checked == false && options[j].Option.is_included_mod == false) {                   
+                      options[j].Option.send_code = 0;
+                    }
+  
+                    if(options[j].Option.plu_code == '217' || options[j].Option.plu_code == 'I100' || options[j].Option.plu_code == 'I101') {
+                      if(options[j].Option.is_checked == true) {
+                        options[j].Option.send_code = 1;
+                      }else{
+                        options[j].Option.send_code = 0;
+                      }
+                      
+                    }
+                    
+  
+                    //////console.log('check',options[j].Option.name, options[j].Option.send_code, options[j].Option.is_checked, itemBasePrice, itemSizePrice, defaultSize, options[j].Option.is_topping, is_crust_size_price_added, 'priceBinding =', priceBinding, 'includedMod', options[j].Option.is_included_mod, options[j].Option.add_extra);
+  
+                    if(options[j].Option.is_checked && options[j].Option.add_extra && priceBinding == true) {   
+                        
+                        if(options[j].Option.price[defaultSize]) {
+                          //////console.log(123);
+                          addPrice += parseFloat(options[j].Option.price[defaultSize]);   
+                        }else{
+                          
+                          addPrice += parseFloat(options[j].Option.price);   
+                        }                           
+                        options[j].Option.send_code = 1;             
+                    }
+  
+  
+                    if(this.item.Product.plu_code == 999999) {
+                      if(!isNaN(addPrice)) {
+                        
+                        total += addPrice;
+                      }
+                      
+                    }else{
+                      
+                      if(!isNaN(addPrice)) {
+                        total += addPrice;
+                      }
+                    }                                   
+                  }               
+                }
+            }
+          }
+        }
+  
+       
+        if(this.item.Product.price && this.item.Product.price[defaultSize] != undefined) {
+          total += parseFloat(this.item.Product.price[defaultSize]);        
+        }
+        //////console.log('total', total, itemBasePrice, itemSizePrice);
+        if(!itemBasePrice) {
+          total = 0;
+        }
+        if(!itemBasePrice && this.item.Product.plu_code == 999999) {
+         //////console.log(12345);
+          total = 0;
+        }
+  
+        if(this.item.Product.plu_code != 999999 && total == 10) {
+         //////console.log(1234);
+          total = 0;
+        }
+  
+        if(this.item.Product.plu_code != 999999 && itemSizePrice == '') {
+          //////console.log(123, itemSizePrice);
+          total = 0;
+        }
+          
+  
+      }else{
+  
+  
+          if(this.item.ProductModifier.length > 0) {
+            let defaultSize = 'small';
+            let totalModCount = this.item.ProductModifier.length;
+  
+            for(var i = 0; i < this.item.ProductModifier.length; i++) {
+  
+              let options = this.item.ProductModifier[i].Modifier.ModifierOption;
+              let freeOptionCount = this.item.ProductModifier[i].free;
+  
+              for(var j = 0; j < options.length; j++) {
+  
+                  if(options[j].Option.is_checked && options[j].Option.default_checked == false) { 
+                    options[j].Option.send_code = 1;
+                    
+                    if(options[j].Option.is_included_mod == false) {
+                      
+                      if(freeOptionCount == 0) {
+                        if(typeof options[j].Option.price.small == 'string') {
+                          total += parseFloat(options[j].Option.price[defaultSize]);
+                        }else{
+                          total += parseFloat(options[j].Option.price); 
+                        }
+                      } else {
+                        freeOptionCount = parseInt(freeOptionCount) - 1;
+                      }  
+  
+                    }
+  
+  
+                  }else if(options[j].Option.is_checked == false && options[j].Option.default_checked == true) {
+                    options[j].Option.send_code = 0;
+                  }else if(options[j].Option.is_checked == true && options[j].Option.default_checked == true) {
+                    options[j].Option.send_code = 1;
+                    if(options[j].Option.is_included_mod == false) {
+                      if(typeof options[j].Option.price.small == 'string') {
+                        total += parseFloat(options[j].Option.price[defaultSize]);
+                      }else{
+                        total += parseFloat(options[j].Option.price); 
+                      } 
+                    }                  
+                  }
+  
+                  if(options[j].Option.default_checked && options[j].Option.plu_code == 999991) {
+                    defaultSize = 'small';
+                  } else if(options[j].Option.default_checked && options[j].Option.plu_code == 999992) {
+                    defaultSize = 'medium';
+                  } else if(options[j].Option.default_checked && options[j].Option.plu_code == 999993) {
+                    defaultSize = 'large';
+                  }
+  
+                  if(options[j].Option.add_extra) {  
+                    //////////console.log(defaultSize, options[j].Option.price);
+                    if(typeof options[j].Option.price.small == 'string') {
+                      total += parseFloat(options[j].Option.price[defaultSize]);
+                    }else{
+                      total += parseFloat(options[j].Option.price); 
+                    }
+                                        
+                  }
+  
+              }
+            }
+          }
+          total += parseFloat(this.item.Product.price);
+      }
+      total = Number(total.toFixed(2));
+        return total;
+  
+    }
+
+
     }

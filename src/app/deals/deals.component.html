@@ -138,8 +138,8 @@
             <!--     
              <span *ngIf="!cat.isEnable || j != selectedDealMenuCatIndex">{{cat.catText}}</span>
              <a *ngIf="cat.isEnable && j == selectedDealMenuCatIndex"  aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.catText}}</a> 
-            </li>
-          [disabled]="cat.isEnable && j == selectedDealMenuCatIndex ? false: true"
+            </li>[disabled]="cat.isEnable && j == selectedDealMenuCatIndex ? false: true"
+          
           -->
             <ngb-panel *ngFor="let cat of dealData.categories; let j = index;" id="{{cat.pos}}">
 
@@ -158,6 +158,7 @@
                       <div class="menuTabdetails">
                         <div class="row columnsdivider">
                           <ng-container *ngFor="let prod of data.products; let y=index;">
+                          <ng-container *ngIf="data.subCatsName.length == 0">
                             <div class="col-md-6 col-sm-6 col-lg-4" *ngIf="prod.is_price_mapped==1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)">
                               <div class="imgbox">
                                 <img src="{{cmsApiPath + '/' + prod.image}}" alt="" class="img-responsive">
@@ -187,17 +188,13 @@
                                                          </ng-container>
                                                         </select>-->
                                 </ng-container>
-                                <span>
+                              <!--  <span>
                                   <a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a>
                                   <a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1
                                     }}</a>
                                   <a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a>
-                                </span>
-                                <!-- <span >
-                                                        <a _ngcontent-c0>-</a>
-                                                        <a _ngcontent-c0>1</a>
-                                                        <a _ngcontent-c0>+</a>
-                                                    </span>-->
+                                </span>-->
+                         
                               </div>
                               <div class="row" *ngIf="prod.plu_code != 999999 && prod.mod_count > 0 && prod.crust_price">
                                 <div class="col-md-6 col-xs-6">
@@ -218,7 +215,7 @@
                                 </div>
                               </div>
                             </div>
-
+                          </ng-container>
 
                             <ng-container *ngIf="data.subCatsName.length > 0">
                               <ng-container *ngFor="let subCt of data.subCats | keysPipe; let r=index;">
@@ -255,12 +252,12 @@
 
 
                                         </ng-container>
-                                        <span>
+                                        <!--<span>
                                           <a (click)="updateQuantityBeforeCart(0, subProd.plu_code)">-</a>
                                           <a>{{ itemsQtyBeforeCart['qty_'+subProd.plu_code]?itemsQtyBeforeCart['qty_'+subProd.plu_code]:1
                                             }}</a>
                                           <a (click)="updateQuantityBeforeCart(1, subProd.plu_code)">+</a>
-                                        </span>
+                                        </span>-->
                                       </div>
                                       <div class="row">
                                         <div class="col-md-6 col-xs-6">
