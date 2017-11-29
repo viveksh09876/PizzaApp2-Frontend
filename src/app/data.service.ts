@@ -15,6 +15,7 @@ export class DataService {
 
   domain = environment.cmsApiPath;
   selectedFavItemData = null;
+  allDealsData = null;
 
   
   getSlides(lang_id): Observable<any>{
@@ -438,10 +439,19 @@ export class DataService {
 
 
   getDealTypeData(id) {
-    //console.log('id', id);
-    return this.http.get( this.domain + '/webservice/getDealItemList/'+id)
-    .map( (res: Response) => res.json() )
-    .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+    let allDealsData = JSON.parse(this.getLocalStorageData('allDealsData'));
+    if (allDealsData != null) {
+      for (var i=0; i<allDealsData.length; i++) {
+          if (allDealsData[i]['id'] == id) {
+            return allDealsData[i];
+          }
+       }
+    }
+
+    ////console.log('id', id);
+    // return this.http.get( this.domain + '/webservice/getDealItemList/'+id)
+    // .map( (res: Response) => res.json() )
+    // .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
 
   }
   
@@ -452,8 +462,12 @@ export class DataService {
     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
     
   }
+
+  setAllDealsData(data) {
+    this.setLocalStorageData('allDealsData', JSON.stringify(data));
+  }
   
-  formatCartData(allItems, page, callback) {
+  formatCartData(allItems, page) {
 	  
 	  let deals = {};
 	  let otherItems = [];
@@ -470,7 +484,7 @@ export class DataService {
 			  otherItems.push(allItems[i]);
 		  }
 	  }
-	  //console.log('ch', deals, otherItems, page);
+	  ////console.log('ch', deals, otherItems, page);
 	  let totPrice = 0;
 	  let dealsArr = [];
     
@@ -481,14 +495,17 @@ export class DataService {
           if (deals.hasOwnProperty(key)) {
 
               let dId = deals[key][0].Product.dealId;
+              //console.log(dId);
               //TODO: Optimise this dirty code
-              dId = +dId;
-              //console.log('did=', dId, typeof dId);
+              //dId = +dId;
+              ////console.log('did=', dId, typeof dId);
               if (isNaN(dId)) {
-                
-                dId = this.getDealIdFromCode(dId).subscribe(data => {
-                  this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
-                    let valid = resp;
+                //console.log('before did', dId);
+               // dId = this.getDealIdFromCode(dId).subscribe(data => {
+                 dId = this.getDealIdFromCode(dId);
+                 //console.log('did', dId, deals);
+                  let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
+                   
                     if (!valid) {
                       for (var i=0; i<deals[key].length; i++) {
                         let dObj = deals[key][i];
@@ -506,7 +523,7 @@ export class DataService {
                     } else {
                       totPrice += deals[key][0].dealPrice;
                       
-                      this.getDealTitle(dId, (titleText) => {
+                      let titleText = this.getDealTitle(dId);
                         let dealObject = {
                           title: titleText,
                           totalCostPrice: Number(totPrice.toFixed(2)),
@@ -514,7 +531,7 @@ export class DataService {
                         }
                         
                         dealsArr.push(dealObject);
-                      })
+                      //})
                       
                     }
 
@@ -526,18 +543,16 @@ export class DataService {
                       totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
                     }
 
-                    if (callback) {
-                      callback(returnObj);
-                    }
+                    return returnObj;
 
-                  });
+                  //});
                   
-                });
+                //});
               } else {
                   
-                  this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId, (resp) => {
-                    let valid = resp;
-                    //console.log(465, valid);
+                  let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
+                  
+                    ////console.log(465, valid);
                     if (!valid) {
                       for (var i=0; i<deals[key].length; i++) {
                         let dObj = deals[key][i];
@@ -554,8 +569,8 @@ export class DataService {
                       delete deals[key];
                     } else {
                       totPrice += deals[key][0].dealPrice;
-                      //console.log('totprice', totPrice);
-                      this.getDealTitle(dId, (titleText) => {
+                      ////console.log('totprice', totPrice);
+                      let titleText = this.getDealTitle(dId);
                         let dealObject = {
                           title: titleText,
                           totalCostPrice: Number(totPrice.toFixed(2)),
@@ -563,7 +578,7 @@ export class DataService {
                         }
                         
                         dealsArr.push(dealObject);
-                      })
+                      //})
                       
                     }
 
@@ -574,11 +589,11 @@ export class DataService {
                       totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
                     }
 
-                    if (callback) {
-                      callback(returnObj);
-                    }
+                    return returnObj;
 
-                  });
+                   
+
+                  //});
                   
               }
 
@@ -597,10 +612,8 @@ export class DataService {
         totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
       }
 
-      if (callback) {
-        callback(returnObj);
-      }
-
+      return returnObj;
+     
     }
 
 	  
@@ -613,12 +626,14 @@ export class DataService {
   }
   
   
-	validateDealItems(allItems, dealCode, comboUniqueId, callback) {
+	validateDealItems(allItems, dealCode, comboUniqueId) {
 		  let type = dealCode;
 		
-      this.getDealTypeData(type).subscribe(dealData => {
-        //console.log('deeldata', dealData, comboUniqueId);
-        dealData = dealData[0];
+      //this.getDealTypeData(type).subscribe(dealData => {
+        let dealData = this.getDealTypeData(type);
+        //console.log('deeldata', dealData, comboUniqueId, type);
+        //dealData = dealData[0];
+        //console.log('dealData', dealData);
         let categoriesArr = dealData['categories'];
         let keepCats = [];      //cats for which products added
         let atLeastoneEnable = false;
@@ -633,9 +648,9 @@ export class DataService {
             if (allItems[j].Product.dealId != undefined) {
               
               
-              //console.log('ct', allItems[j].Product.position, categoriesArr[i].pos, allItems[j].Product.comboUniqueId);
+              ////console.log('ct', allItems[j].Product.position, categoriesArr[i].pos, allItems[j].Product.comboUniqueId);
               if (allItems[j].Product.position == +categoriesArr[i].pos && allItems[j].Product.comboUniqueId == comboUniqueId) {
-                //console.log('ct-count: ', count);
+                ////console.log('ct-count: ', count);
                 count++;
               }
               
@@ -652,14 +667,14 @@ export class DataService {
         }
         
         for (var i=0; i<categoriesArr.length; i++) {
-          //console.log('keepcats', keepCats, 'pos: ', categoriesArr[i].pos);
+          ////console.log('keepcats', keepCats, 'pos: ', categoriesArr[i].pos);
           if (keepCats.indexOf(categoriesArr[i].pos.toString()) < 0) {
             categoriesArr[i].isEnable = true;
           } else {
             categoriesArr[i].isEnable = false;
           }
         }
-        //console.log('catArr: ', categoriesArr);
+        ////console.log('catArr: ', categoriesArr);
         for(var i=0; i<categoriesArr.length; i++) {
           if (categoriesArr[i].isEnable) {
             
@@ -669,48 +684,57 @@ export class DataService {
         }
 
         let resp = false;
-        //console.log('atleasr', atLeastoneEnable);
+        ////console.log('atleasr', atLeastoneEnable);
         if (!atLeastoneEnable) {
           resp = true;
         }         
         
-        if (callback) {
-          //console.log('asd');
-          callback(resp);
-        }
-      });
+
+        return resp;
+        
+      //});
       
 		  
 	}
 	
 	
-	getDealTitle(dealCode, callback) {
+	getDealTitle(dealCode) {
 		let type = dealCode;
 		
-    let deal = this.getDealTypeData(type).subscribe(data => {
-      deal = data[0];
-      //console.log('deal-title', deal['title']);
-
-      callback(deal['title']);
-    });
+    //let deal = this.getDealTypeData(type).subscribe(data => {
+      let deal = this.getDealTypeData(type);
+      //deal = data[0];
+      ////console.log('deal-title', deal['title']);
+      return deal['title'];
+     
+    //});
     
   }
   
   getDealCode(dealId) {
-		let type = dealId;
-		
-    let deal = this.getDealTypeData(type).subscribe(deal => {
-      deal = deal[0];
-      return deal['code'];
-    });
-    
+	  let type = dealId;
+	
+
+    let deal = this.getDealTypeData(type);
+    return deal['code'];
   }
   
   getDealIdFromCode(code) {
 
-    return this.http.get( this.domain + '/webservice/getDealIdFromCode/'+code)
-    .map( (res: Response) => res.json() )
-    .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
+    let dealData = JSON.parse(this.getLocalStorageData('allDealsData'));
+
+    if (dealData != null) {
+      for (var i=0; i<dealData.length; i++) {
+        if (dealData[i]['code'] == code) {
+          return dealData[i]['id'];
+        }
+      }
+    }
+    
+
+    // return this.http.get( this.domain + '/webservice/getDealIdFromCode/'+code)
+    // .map( (res: Response) => res.json() )
+    // .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
     
 
     // if (code == 'CPLNIGHT') {

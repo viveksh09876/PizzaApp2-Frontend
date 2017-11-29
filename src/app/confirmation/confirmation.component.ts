@@ -55,7 +55,7 @@ export class ConfirmationComponent implements OnInit {
 
         this.dataService.setLocalStorageData('vouchers', null);
 
-        this.dataService.formatCartData(this.items, 'confirmation', (formattedItemsData) => {
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'confirmation');
           this.formattedItems = formattedItemsData;
           //console.log('this.formattedItems', this.formattedItems);
           this.netCost =  formattedItemsData.totalPrice;
@@ -70,7 +70,7 @@ export class ConfirmationComponent implements OnInit {
           // } 
 
 
-        });
+        //});
         
         
 
