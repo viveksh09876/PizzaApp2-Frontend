@@ -40,8 +40,9 @@ style="background-image:url(assets/images/banner-inside/4.jpg)"-->
         
         <ng-container *ngIf="isDeal">
             <div class="col-md-12 deal-bar">
-                <a (click)="backToDealPage()">Back to Menu</a>
-                <p><img src="{{cmsApiPath + '/' + dealData.detailImage}}" alt="" ></p>
+                <a (click)="backToDealPage()"><span class="icon icon-keyboard_arrow_left"></span></a>
+                <p><strong>{{dealData.title}}</strong>
+            <span>{{dealData.description}}</span></p>
                 <!-- <span>{{dealData.deal.Deal.description}}</span>
        -->
               </div>

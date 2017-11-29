@@ -2046,7 +2046,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 .two-column-wrapper .inside-column-container.aside-wrapper .content-wrapper {
 	margin: 0 -15px;
-	min-height: calc(100vh - 34vh);
+	max-height: calc(100vh - 34vh);
 }
 .two-column-wrapper .inside-column-container.aside-wrapper .content-wrapper .content-container {
 	padding: 2em 15px
@@ -2261,15 +2261,15 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-size: 18px;
     white-space: inherit;}
 .menulist-items.fullview .deal-bar{width: 95.5%;}
-.menulist-items .deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
-.menulist-items .deal-bar a{ background: #911c27;  vertical-align: middle;  color: #ffffff;  display: table-cell;  border-right: 10px solid #fff;
-    text-align: center; max-width: 20px;}
-.menulist-items .deal-bar a span{font-size: 46px;}  
-.menulist-items .deal-bar p{background: #5b5a56; display: table-cell;  text-align: left;
-    color: #fff; padding:10px; vertical-align: middle;}
-.menulist-items .deal-bar p strong{display: block; font-family: "bureaueaglebookregular"; font-size: 1.2em; text-transform: lowercase;
+.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
+.deal-bar a{ background: #911c27;  vertical-align: middle;  color: #ffffff;  display: table-cell;  border-right: 10px solid #fff;
+    text-align: center; width: 45px;}
+.deal-bar a span{font-size: 46px;}  
+.deal-bar p{background: #5b5a56; display: table-cell;  text-align: left;
+    color: #fff !important; padding:10px; vertical-align: middle;}
+.deal-bar p strong{display: block; font-family: "bureaueaglebookregular"; font-size: 1.2em; text-transform: lowercase;
     font-weight: 400;}
-.menulist-items .deal-bar p span{display: block; font-size: 1em;}
+.deal-bar p span{display: block; font-size: 1em;}
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
 .customize-uk .deal-bar a{border:none;}
 
@@ -3781,7 +3781,7 @@ color:#fff
 .menulist-items .btn.btn-green{ background: #7a9c49;}
 .menulist-items .btn.btn-red{ background: #911c28;}
 
-.viewcart_sec{ background: #ffffff; min-height: 76vh; width:100%; display: block;}
+.viewcart_sec{ background: #ffffff; min-height: 76vh; width:100%; display: block; margin: 0px !important;}
 .viewcart_sec.fixedsticky{position: fixed;top: 153px; width: 22%;}
 .newaddress span{ color: #fff; font-size: 14px; line-height: 22px; text-align: center; display: block}
 .newaddress span.green{ color: #7a994a;}
