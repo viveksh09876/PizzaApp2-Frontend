@@ -10,7 +10,7 @@
         <div class="dropdown_rightmenu">
             <ul>
                 <li>
-                    <a (click)="updateStoreAndTime()">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
+                    <a (click)="updateStoreAndTime('location')">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Store location 1</a></li>
                         <li><a _ngcontent-c0>Store location 2</a></li>
@@ -19,7 +19,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a (click)="updateStoreAndTime()">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
+                    <a (click)="updateStoreAndTime('time')">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
                     <ul>
                         <li><a _ngcontent-c0>Date & Time 1</a></li>
                         <li><a _ngcontent-c0>Date & Time 2</a></li>
@@ -27,7 +27,7 @@
                         <li><a _ngcontent-c0>Date & Time 4</a></li>
                     </ul>
                 </li>
-                <li><a (click)="updateStoreAndTime()">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
+                <li><a (click)="updateStoreAndTime('postcode')">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
                 <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
             </ul>
         </div>

@@ -56,6 +56,7 @@ export class MenuComponent implements OnInit {
       this.getCartItems();        
     });
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+    //this.orderNowDetails = this.orderNowDetails.length?this.orderNowDetails:null;// for empty check 
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
       //this.updateStoreAndTime();
      }
@@ -515,13 +516,16 @@ export class MenuComponent implements OnInit {
           this.netCost = 0;
   }
 
-  updateStoreAndTime(){
-      this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutside:true }).subscribe((data)=>{ 
+  updateStoreAndTime(whichEvn){
+      // for check on modal which button was click on this page
+      this.dataService.setLocalStorageData('timeselector-click', JSON.stringify(whichEvn));
+      this.dialogService.addDialog(OrdernowmodalComponent, {}, { closeByClickingOutside:true }).subscribe((data)=>{ 
         if (data) {
                      this.getCartItems();
          }
       this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
-      }); 
+      
+    }); 
  
 }
 
