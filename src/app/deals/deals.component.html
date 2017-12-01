@@ -22,7 +22,7 @@
     <div class="dropdown_rightmenu">
       <ul>
         <li>
-          <a (click)="updateStoreAndTime()">Store location
+          <a (click)="updateStoreAndTime('location')">Store location
             <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span>
           </a>
           <ul>
@@ -41,7 +41,7 @@
           </ul>
         </li>
         <li>
-          <a (click)="updateStoreAndTime()">Order time
+          <a (click)="updateStoreAndTime('time')">Order time
             <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select
               Time'}}</span>
           </a>
@@ -61,7 +61,7 @@
           </ul>
         </li>
         <li>
-          <a (click)="updateStoreAndTime()">postcode
+          <a (click)="updateStoreAndTime('pincode')">postcode
             <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span>
           </a>
         </li>

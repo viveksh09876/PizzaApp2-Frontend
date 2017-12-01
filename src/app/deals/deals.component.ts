@@ -745,15 +745,19 @@ updateQuantityBeforeCart(type, plu_code) {
  //this.dataService.setLocalStorageData('itemsQtyBeforeCart',  JSON.stringify(this.itemsQtyBeforeCart));
 }
 */
-updateStoreAndTime(){
-  this.dialogService.addDialog(OrdernowmodalComponent, { }, { closeByClickingOutside:true }).subscribe((data)=>{ 
+updateStoreAndTime(whichEvn){
+  // for check on modal which button was click on this page
+  this.dataService.setLocalStorageData('timeselector-click', JSON.stringify(whichEvn));
+  this.dialogService.addDialog(OrdernowmodalComponent, {}, { closeByClickingOutside:true }).subscribe((data)=>{ 
     if (data) {
                  this.getCartItems();
      }
   this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
-  }); 
+  
+}); 
 
 }
+
 
 
 add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier){
