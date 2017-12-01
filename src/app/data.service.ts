@@ -484,7 +484,7 @@ export class DataService {
 			  otherItems.push(allItems[i]);
 		  }
 	  }
-	  ////console.log('ch', deals, otherItems, page);
+	 
 	  let totPrice = 0;
 	  let dealsArr = [];
     
@@ -493,115 +493,52 @@ export class DataService {
         //validate deal items
         for (var key in deals) {
           if (deals.hasOwnProperty(key)) {
-
               let dId = deals[key][0].Product.dealId;
-              //console.log(dId);
-              //TODO: Optimise this dirty code
-              //dId = +dId;
-              ////console.log('did=', dId, typeof dId);
+
               if (isNaN(dId)) {
-                //console.log('before did', dId);
-               // dId = this.getDealIdFromCode(dId).subscribe(data => {
                  dId = this.getDealIdFromCode(dId);
-                 //console.log('did', dId, deals);
-                  let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
-                   
-                    if (!valid) {
-                      for (var i=0; i<deals[key].length; i++) {
-                        let dObj = deals[key][i];
-                        if (page != 'deal') {
-                          delete dObj.dealPrice;
-                          delete dObj.Product.dealId;
-                          delete dObj.Product.comboUniqueId;
-                          delete dObj.Product.position;
-                        }
-                        
-                        otherItems.push(dObj);
-                      }
-                      
-                      delete deals[key];
-                    } else {
-                      totPrice += deals[key][0].dealPrice;
-                      
-                      let titleText = this.getDealTitle(dId);
-                        let dealObject = {
-                          title: titleText,
-                          totalCostPrice: Number(totPrice.toFixed(2)),
-                          dealData: deals[key]
-                        }
-                        
-                        dealsArr.push(dealObject);
-                      //})
-                      
-                    }
-
-
-                    let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
-                    let returnObj = {
-                      deals: dealsArr,
-                      otherItems: otherItems,
-                      totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
-                    }
-
-                    return returnObj;
-
-                  //});
-                  
-                //});
-              } else {
-                  
-                  let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
-                  
-                    ////console.log(465, valid);
-                    if (!valid) {
-                      for (var i=0; i<deals[key].length; i++) {
-                        let dObj = deals[key][i];
-                        if (page != 'deal') {
-                          delete dObj.dealPrice;
-                          delete dObj.Product.dealId;
-                          delete dObj.Product.comboUniqueId;
-                          delete dObj.Product.position;
-                        }
-                        
-                        otherItems.push(dObj);
-                      }
-                      
-                      delete deals[key];
-                    } else {
-                      totPrice += deals[key][0].dealPrice;
-                      ////console.log('totprice', totPrice);
-                      let titleText = this.getDealTitle(dId);
-                        let dealObject = {
-                          title: titleText,
-                          totalCostPrice: Number(totPrice.toFixed(2)),
-                          dealData: deals[key]
-                        }
-                        
-                        dealsArr.push(dealObject);
-                      //})
-                      
-                    }
-
-                    let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
-                    let returnObj = {
-                      deals: dealsArr,
-                      otherItems: otherItems,
-                      totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
-                    }
-
-                    return returnObj;
-
-                   
-
-                  //});
-                  
               }
+                
+                  let valid = this.validateDealItems(deals[key], dId, deals[key][0].Product.comboUniqueId);
+                   
+                    if (!valid) {
+                      for (var i=0; i<deals[key].length; i++) {
+                        let dObj = deals[key][i];
+                        if (page != 'deal') {
+                          delete dObj.dealPrice;
+                          delete dObj.Product.dealId;
+                          delete dObj.Product.comboUniqueId;
+                          delete dObj.Product.position;
+                        }
+                        
+                        otherItems.push(dObj);
+                      }
+                      
+                      delete deals[key];
+                    } else {
+                      totPrice += deals[key][0].dealPrice;
+                      
+                      let titleText = this.getDealTitle(dId);
+                        let dealObject = {
+                          title: titleText,
+                          totalCostPrice: Number(totPrice.toFixed(2)),
+                          dealData: deals[key]
+                        }
+                        
+                        dealsArr.push(dealObject);
+                      
+                    }
 
-          
-          }
-          
-          
+          }          
         }
+
+        let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
+        let returnObj = {
+          deals: dealsArr,
+          otherItems: otherItems,
+          totalPrice: Number((totPrice + otherItemsPrice).toFixed(2))
+        }
+        return returnObj;
 
     } else {
       let otherItemsPrice = Number(this.utilService.calculateOverAllCost(otherItems).toFixed(2));
@@ -616,13 +553,6 @@ export class DataService {
      
     }
 
-	  
-	  
-	  
-    
-	  //return returnObj;
-	  
-	  
   }
   
   
@@ -732,28 +662,6 @@ export class DataService {
     }
     
 
-    // return this.http.get( this.domain + '/webservice/getDealIdFromCode/'+code)
-    // .map( (res: Response) => res.json() )
-    // .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
-    
-
-    // if (code == 'CPLNIGHT') {
-    //   return 1;
-    // } else if (code == 'DOUBLEUP7') {
-    //   return 5;
-    // } else if(code == 'LRGNIGHT') {
-    //   return 3;
-    // } else if(code == 'SKINNYIT') {
-    //   return 4;
-    // } else if (code == 'KIDSMEAL') {
-    //   return 2;
-    // } else if (code == 'MEDNIGHT') {
-    //   return 6;
-    // } else if (code == 'BITSIDE') {
-    //   return 7;
-    // } else if (code == 'PIZZA1299') {
-    //   return 8;
-    // }
   }
   
 
