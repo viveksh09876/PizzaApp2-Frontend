@@ -48,6 +48,7 @@ export class DealsComponent implements OnInit {
     formattedItems = null;
     orderNowDetails=null;
     nutritionInfo={};
+    customizeDropdown={};
  
 
   ngOnInit() {
@@ -454,8 +455,7 @@ export class DealsComponent implements OnInit {
     if((items != null && items != 'null') || (orderNowDetails != null && orderNowDetails != 'null')) {
       if(items != 'null' && items != null) {
         this.items = JSON.parse(items);
-        console.log(items);console.log('console.log(items)');  
-		    let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'deal');
             this.formattedItems = formattedItemsData;
             this.totalCost =  formattedItemsData.totalPrice;
             this.netCost = this.totalCost;
@@ -762,32 +762,6 @@ export class DealsComponent implements OnInit {
     }
 
 
-    updateDefaultValue(z,y,subcategories){
-       if(subcategories){
-         // this.menuData[z]['subCats']['products'][y]['crust_price_selected']='';
-       }else{
-         this.menuData[z]['products'][y]['dipping_sauce_data_selected']=262;
-       }
-       return true;
-}
-
-/*
-updateQuantityBeforeCart(type, plu_code) {
-  var qty_key='qty_'+plu_code; 
-  if(!this.itemsQtyBeforeCart[qty_key]){
-         this.itemsQtyBeforeCart[qty_key]=1;
-     }
-  if(type == 1) {
-       this.itemsQtyBeforeCart[qty_key] += 1;    
-     }else{
-       this.itemsQtyBeforeCart[qty_key] = this.itemsQtyBeforeCart[qty_key] - 1;
-       if(this.itemsQtyBeforeCart[qty_key] <= 0) {
-         this.itemsQtyBeforeCart[qty_key] = 1;
-       }
-  }
- //this.dataService.setLocalStorageData('itemsQtyBeforeCart',  JSON.stringify(this.itemsQtyBeforeCart));
-}
-*/
 updateStoreAndTime(whichEvn){
   // for check on modal which button was click on this page
   this.dataService.setLocalStorageData('timeselector-click', JSON.stringify(whichEvn));
@@ -871,11 +845,9 @@ add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier){
 
 addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected){
   //selected_modifier=selected_modifier?selected_modifier:262;
-  console.log(modifer_selected);
   let list=modifer_selected.split('-');
   //these are like a radio for pizza 
   let Pizzalist=['999991','999992','999993','I100','I101','217'];
-  console.log(list);
   this.dataService.getItemData(slug, menuCountry)
        .subscribe(data => { 
             // code for set modifier values
@@ -948,5 +920,16 @@ addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected){
        });
   }
 
+
+  /**
+ * only for default value selection
+ */
+
+ updateDefaultValue(plu_code,modifier){
+  if(!this.customizeDropdown['_'+plu_code]){
+    this.customizeDropdown['_'+plu_code]=modifier;
+  }
+  return true;
+}
 
 }

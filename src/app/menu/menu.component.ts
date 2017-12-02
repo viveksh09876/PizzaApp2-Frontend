@@ -43,6 +43,7 @@ export class MenuComponent implements OnInit {
   suggestionProducts = [];
   formattedItems = null;
   nutritionInfo={};
+  customizeDropdown={};
 
 
   ngOnInit() {
@@ -53,13 +54,13 @@ export class MenuComponent implements OnInit {
 
     this.currencyCode = this.utilService.currencyCode;
     this.getAllCategories(() => {
-      this.getCartItems();        
+      this.getCartItems();
     });
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
-    //this.orderNowDetails = this.orderNowDetails.length?this.orderNowDetails:null;// for empty check 
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
-      //this.updateStoreAndTime();
+      this.updateStoreAndTime('location');
      }
+     
     
     
     
@@ -127,6 +128,7 @@ export class MenuComponent implements OnInit {
             .subscribe(data => {
                         
           this.menuData = data;
+          //this.customizeDropdown=this.utilService.customizeDropdown(data,null);
           ////console.log(this.menuData[0].name);
           this.selectedMenuCat = this.menuData[0].name;  
 
@@ -605,15 +607,15 @@ export class MenuComponent implements OnInit {
 
  }
 
+/**
+ * only for default value selection
+ */
 
-
-    updateDefaultValue(z,y,subcategories){
-       if(subcategories){
-         // this.menuData[z]['subCats']['products'][y]['crust_price_selected']='';
-       }else{
-         this.menuData[z]['products'][y]['dipping_sauce_data_selected']=262;
-       }
-       return true;
-}
+    updateDefaultValue(plu_code,modifier){
+      if(!this.customizeDropdown['_'+plu_code]){
+        this.customizeDropdown['_'+plu_code]=modifier;
+      }
+      return true;
+    }
 
     }
