@@ -90,7 +90,6 @@ export class DealsComponent implements OnInit {
 
   validateDealItems(allItems) {
     allItems = JSON.parse(allItems);
-    
     if (allItems != null) {
 
       let categoriesArr = this.dealData.categories;
@@ -172,8 +171,7 @@ export class DealsComponent implements OnInit {
 				  }else if(resp.Status == 'OK') {
 					discount = Number(parseFloat(resp.Discount).toFixed(2));
 				  }
-				
-					let updatedItems = this.mapDealItemPrices(allItems, this.dealId, this.comboUniqueId, discount);
+          let updatedItems = this.mapDealItemPrices(allItems, this.dealId, this.comboUniqueId, discount);
 					this.dataService.setLocalStorageData('allItems', JSON.stringify(updatedItems));
 				  
 			  }); 
@@ -464,12 +462,53 @@ export class DealsComponent implements OnInit {
             //this.loadAddedCategories();
         //});
         
-		    
+		  this.showViewCart = true; 
+      }else{
+        this.showViewCart = false;
       }      
-      this.showViewCart = true;      
+           
     }
   }
 
+  /**
+   * @description NEED TO MAKE THIS METHOD COMMON 
+   * @param type 
+   * @param plu 
+   * @param index 
+   */
+  updateQuantity(type, plu, index) {
+    
+        let total = 0;
+    
+        for(var i=0; i<this.items.length; i++) {
+          if(this.items[i].Product.plu_code == plu && i == index) {
+    
+              //increase
+              if(type == 1) {
+                this.items[i].Product.qty += 1;      
+              }else{
+               
+                this.items[i].Product.qty = this.items[i].Product.qty - 1;
+                if(this.items[i].Product.qty <= 0) {
+                  this.items[i].Product.qty = 1;
+                }
+              }
+    
+              let getOICost = Number(parseFloat(this.items[i].originalItemCost).toFixed(2));
+              total =  getOICost*this.items[i].Product.qty;
+              this.items[i].totalItemCost = total;
+    
+              break;
+          }
+        }
+    
+        let formattedItemsData = this.dataService.formatCartData(this.items, 'menu');
+          this.formattedItems = formattedItemsData;
+          this.totalCost =  formattedItemsData.totalPrice;
+          this.netCost = this.totalCost;
+        //});    
+        
+      }
 
   getAllCategories(){
     
@@ -516,7 +555,7 @@ export class DealsComponent implements OnInit {
     this.selectedDealMenuCatId = catId;
   }
 
-  addToCart(slug, modCount,selected_modifier) {
+  addToCart(slug, modCount,cType,modifer_selected) {
     
         let orderNow = this.dataService.getLocalStorageData('order-now');
         let menuCountry = this.dataService.getLocalStorageData('menuCountry');
@@ -546,10 +585,12 @@ export class DealsComponent implements OnInit {
           
     
         } else {
-          if (modCount > 0 && slug != 'chicken-tenders-2-2-2') {
+          if (modCount > 0 && slug != 'chicken-tenders-2-2-2') { 
+            if(modifer_selected){
+             this.addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected);
             //navigate to customize page
            // this.add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier);
-            this.router.navigate(['/item/deal/', this.dealId, this.comboUniqueId, this.selectedDealMenuCatIndex, slug]);        
+              }else{  this.router.navigate(['/item/deal/', this.dealId, this.comboUniqueId, this.selectedDealMenuCatIndex, slug]);        }
           } else {
              //add product to cart without page refresh
              
@@ -595,8 +636,8 @@ export class DealsComponent implements OnInit {
 					  
 					  */
                         
-                      this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems));   
                       var addedItems = JSON.stringify(allItems);
+                      this.dataService.setLocalStorageData('allItems', addedItems);   
                       this.validateDealItems(addedItems); 
                     }
                     this.getCartItems();
@@ -689,8 +730,10 @@ export class DealsComponent implements OnInit {
         } else {
           return false;
         }
-      } else {
+      } else if(this.dealData.categories[this.selectedDealMenuCatIndex].id==catId) {
         return true;
+      }else{
+        return false;
       }
     }
 
@@ -715,7 +758,7 @@ export class DealsComponent implements OnInit {
       this.showViewCart = false;
       this.formattedItems.deals = [];
       this.formattedItems.otherItems = [];
-            this.netCost = 0;
+      this.netCost = 0;
     }
 
 
@@ -824,6 +867,86 @@ add_to_cart_dipping_sauce_data(slug,menuCountry,selected_modifier){
      
 
 }
+
+
+addToCartCustomizeItem(slug,menuCountry,cType,modifer_selected){
+  //selected_modifier=selected_modifier?selected_modifier:262;
+  console.log(modifer_selected);
+  let list=modifer_selected.split('-');
+  //these are like a radio for pizza 
+  let Pizzalist=['999991','999992','999993','I100','I101','217'];
+  console.log(list);
+  this.dataService.getItemData(slug, menuCountry)
+       .subscribe(data => { 
+            // code for set modifier values
+             if(data.ProductModifier.length > 0) {
+             for(var i = 0; i < data.ProductModifier.length; i++) {
+                 var ModifierOption=data.ProductModifier[i]['Modifier']['ModifierOption'];
+                 for(var j = 0; j < ModifierOption.length; j++) {
+                   if(list.indexOf(ModifierOption[j]['Option']['plu_code']) !== -1){
+                     ModifierOption[j]['Option']['is_checked']=true;
+                     ModifierOption[j]['Option']['send_code']=1;
+                     }else if(cType!='pizza' || Pizzalist.indexOf(ModifierOption[j]['Option']['plu_code']) !== -1){
+                     ModifierOption[j]['Option']['is_checked']=false;
+                     ModifierOption[j]['Option']['send_code']=0;
+                    }
+                       
+                 } 
+                data.ProductModifier[i]['Modifier']['ModifierOption']=ModifierOption;
+                data.Product.modifer_selected=modifer_selected;
+             }
+             // update price and qty for cart
+             let totalPriceOnBasisOfModifier=this.utilService.calculateTotalCost(data);
+             data.originalItemCost = totalPriceOnBasisOfModifier;
+             data.totalItemCost = totalPriceOnBasisOfModifier;
+             data.Product['dealId'] = this.dealId;
+             data.Product['comboUniqueId'] = this.comboUniqueId;
+             data.Product['position'] = this.selectedDealMenuCatIndex;
+             
+             // code for add qty  
+             //if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
+             //   data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
+             //   data.totalItemCost = parseFloat(data.totalItemCost)*data.Product.qty;
+             //   this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
+            // }
+
+             /// end 
+             let temp = this.dataService.getLocalStorageData('allItems');
+             if(temp == null || temp == 'null') {
+               let allItems = [];
+               allItems.push(data);
+               this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+               var addedItems = JSON.stringify(allItems);
+               this.validateDealItems(addedItems);
+
+             }else{
+               let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
+               allItems.push(data);
+/*let isExist = false;
+               for(var i=0; i<allItems.length; i++) { 
+                 // check product id and its modifier is already
+                 if(allItems[i].Product.id == data.Product.id && allItems[i].Product.modifer_selected==modifer_selected) {
+                   allItems[i].Product.qty += data.Product.qty;
+                   var total=this.utilService.calculateTotalCost(allItems[i]);// for get pizza and ther iten price 
+                   total = total*allItems[i].Product.qty;
+                   allItems[i].totalItemCost = Number(total.toFixed(2));
+                   isExist = true;
+                   break;
+                 }
+               }         
+               
+               if(!isExist) {
+                 allItems.splice(0,0,data);
+               }
+  */               
+               this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems));   
+               var addedItems = JSON.stringify(allItems);
+               this.validateDealItems(addedItems); 
+              }
+             this.getCartItems();
+        } 
+       });
+  }
 
 
 }

@@ -196,7 +196,8 @@ export class MenuComponent implements OnInit {
                 // code for add qty  
                 if(this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]){
                    data.Product.qty = this.itemsQtyBeforeCart['qty_'+data.Product.plu_code];
-                   data.totalItemCost = parseFloat(data.Product.price)*data.Product.qty;
+                   data.totalItemCost = data.Product.price*data.Product.qty;
+                   data.totalItemCost=Number(parseFloat(data.totalItemCost).toFixed(2));
                    this.itemsQtyBeforeCart['qty_'+data.Product.plu_code]=1;
                 }
                 /// end 
@@ -216,11 +217,12 @@ export class MenuComponent implements OnInit {
                     if(allItems[i].Product.id == data.Product.id) {
                       allItems[i].Product.qty += data.Product.qty;
                       allItems[i].totalItemCost = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
+                      allItems[i].totalItemCost=Number(parseFloat(allItems[i].totalItemCost).toFixed(2));
                       isExist = true;
                       break;
                     }
-                  }         
-                  
+                  }   
+
                   if(!isExist) {
                     allItems.splice(0,0,data);
                   }
@@ -513,7 +515,7 @@ export class MenuComponent implements OnInit {
 	  this.showViewCart = false;
 	  this.formattedItems.deals = [];
 	  this.formattedItems.otherItems = [];
-          this.netCost = 0;
+    this.netCost = 0;
   }
 
   updateStoreAndTime(whichEvn){

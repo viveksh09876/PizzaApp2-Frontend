@@ -11,21 +11,9 @@
             <ul>
                 <li>
                     <a (click)="updateStoreAndTime('location')">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
-                    <ul>
-                        <li><a _ngcontent-c0>Store location 1</a></li>
-                        <li><a _ngcontent-c0>Store location 2</a></li>
-                        <li><a _ngcontent-c0>Store location 3</a></li>
-                        <li><a _ngcontent-c0>Store location 4</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a (click)="updateStoreAndTime('time')">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
-                    <ul>
-                        <li><a _ngcontent-c0>Date & Time 1</a></li>
-                        <li><a _ngcontent-c0>Date & Time 2</a></li>
-                        <li><a _ngcontent-c0>Date & Time 3</a></li>
-                        <li><a _ngcontent-c0>Date & Time 4</a></li>
-                    </ul>
                 </li>
                 <li><a (click)="updateStoreAndTime('postcode')">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
                 <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
@@ -148,7 +136,7 @@
                                              <ng-container *ngFor="let subProd of subProducts.products">
                                                     <div class="imgbox">
                                                         <img src="{{cmsApiPath + '/' + subProd.image}}" alt="" class="img-responsive">
-                                                        <small *ngIf="subCt.key!='signature'">{{subCt.key}}</small> 
+                                                        <!--<small *ngIf="subCt.key!='signature'">{{subCt.key}}</small> -->
                                                         <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="subProd.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
                                                         <img  class="nutrision" src="assets/images/hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                                         <img  class="nutrision" src="assets/images/gluten.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
