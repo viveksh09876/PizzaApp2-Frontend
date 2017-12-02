@@ -193,6 +193,7 @@ body {
 .leftContent .tab-content.deals-sub-menu{width: 99%;}
 .deal-content{margin: 85px 1%; width: 97%;}
 .menutabcontent{width: 98%;}
+.secondary_menu:before{bottom: -21px;}
 }
 @media (min-width: 2560px) {
 	.deal-content{margin: 85px 1%; width: 96%;}
