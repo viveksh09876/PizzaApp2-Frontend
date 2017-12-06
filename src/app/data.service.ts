@@ -443,7 +443,14 @@ export class DataService {
     if (allDealsData != null) {
       for (var i=0; i<allDealsData.length; i++) {
           if (allDealsData[i]['id'] == id) {
-            return allDealsData[i];
+             for(var j=0;j<allDealsData[i].categories.length;j++){
+               if(allDealsData[i].categories[j].isEnable==false || allDealsData[i].categories[j].isEnable=="false"){
+                allDealsData[i].categories.splice(j, 1);
+               }
+             }
+             return allDealsData[i];
+            // filter enable deal categories only
+
           }
        }
     }

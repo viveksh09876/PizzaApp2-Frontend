@@ -83,6 +83,7 @@ export class DealsComponent implements OnInit {
   getDealData(dealId) {
     //this.dataService.getDealTypeData(dealId).subscribe(data => {
     let data = this.dataService.getDealTypeData(dealId);
+    console.log('deallllllll',data);
     this.dealData = data;
     this.dealCode = data['code'];
     this.getAllCategories();
@@ -954,4 +955,11 @@ export class DealsComponent implements OnInit {
       }
     }
   }
+
+  parseFloatCustome(price,price1,action){
+    switch(action){
+      case 'add':
+      return (parseFloat(price)+parseFloat(price1)).toFixed(2);
+    }
+}
 }

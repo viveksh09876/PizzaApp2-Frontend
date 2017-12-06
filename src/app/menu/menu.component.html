@@ -25,7 +25,7 @@
                 <li><a _ngcontent-c0><img src="assets/images/vegeterian.png" alt="">Vegetarian</a></li>
                 <li><a _ngcontent-c0><img src="assets/images/gluten.png" alt="">Gluten Free</a></li>
                 <li><a _ngcontent-c0><img src="assets/images/hot.png" alt="">Hot</a></li>
-                <li><a _ngcontent-c0><img src="assets/images/nuts.png" alt="">Nuts</a></li>
+                <!--<li><a _ngcontent-c0><img src="assets/images/nuts.png" alt="">Nuts</a></li>-->
             </ul>
         </div>
     </div>
@@ -70,7 +70,7 @@
                                         <li><img src="assets/images/vegeterian.png" alt="">Vegetarian</li>
                                         <li><img src="assets/images/gluten.png" alt="">Gluten Free</li>
                                         <li><img src="assets/images/hot.png" alt="">Hot</li>
-                                        <li><img src="assets/images/nuts.png" alt="">Nuts</li>
+                                        <!--<li><img src="assets/images/nuts.png" alt="">Nuts</li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                             <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
                                             <img  class="nutrision" src="assets/images/hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                             <img  class="nutrision" src="assets/images/gluten.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
-                                            <img  class="nutrision" src="assets/images/nuts.png" *ngIf="prod.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                            <!--<img  class="nutrision" src="assets/images/nuts.png" *ngIf="prod.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>-->
                                             <img  height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info" (click)="nutritionInfo={};nutritionInfo['plu'+prod.plu_code]=true">
                                             <p [ngClass]="{'active': (nutritionInfo['plu'+prod.plu_code])}">{{prod.short_description}} <span class="icon icon-close" (click)="nutritionInfo={}"></span></p>
                                         </div>
@@ -140,7 +140,7 @@
                                                         <img  class="nutrision" src="assets/images/vegeterian.png" *ngIf="subProd.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
                                                         <img  class="nutrision" src="assets/images/hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
                                                         <img  class="nutrision" src="assets/images/gluten.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
-                                                        <img  class="nutrision" src="assets/images/nuts.png" *ngIf="subProd.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>
+                                                        <!--<img  class="nutrision" src="assets/images/nuts.png" *ngIf="subProd.groupvh == 1" popover="Nuts" [popoverOnHover]="true"/>-->
                                                         <img  height="30" src="assets/images/nutrition-info-icon.svg" width="30" class="info" (click)="nutritionInfo={};nutritionInfo['plu'+subProd.plu_code]=true">
                                                         <p [ngClass]="{'active': (nutritionInfo['plu'+subProd.plu_code])}">{{subProd.short_description}} <span class="icon icon-close" (click)="nutritionInfo={}"></span></p>
                                                     </div>
@@ -150,9 +150,9 @@
                                                       <ng-container *ngIf="subProd.mod_count > 0 && updateDefaultValue(subProd.plu_code,'I100-999993')">
                                                        <select  *ngIf="subProd.crust_price" [(ngModel)]="customizeDropdown['_'+subProd.plu_code]">
                                                            <ng-container *ngFor="let crust_price of subProd.crust_price">
-                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-999991">{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
-                                                             <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-999992">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
-                                                             <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-999993">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
+                                                               <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-999991">Small 9" - {{crust_price.Name}} - {{parseFloatCustome(crust_price.PriceSm,subProd['price']['small'],'add')}}</option>
+                                                             <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-999992">Medium 11.5" - {{crust_price.Name}} - {{parseFloatCustome(crust_price.PriceMed,subProd['price']['medium'],'add')}}</option>
+                                                             <option *ngIf="crust_price.PriceLg!=0" value="{{crust_price.PLU}}-999993">Large 13.5" - {{crust_price.Name}} - {{parseFloatCustome(crust_price.PriceLg,subProd['price']['large'],'add')}}</option>
                                                            </ng-container>
                                                        </select> 
                                                       </ng-container>

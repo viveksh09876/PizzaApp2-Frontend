@@ -618,4 +618,11 @@ export class MenuComponent implements OnInit {
       return true;
     }
 
+    parseFloatCustome(price,price1,action){
+        switch(action){
+          case 'add':
+          return (parseFloat(price)+parseFloat(price1)).toFixed(2);
+        }
+    }
+
     }
