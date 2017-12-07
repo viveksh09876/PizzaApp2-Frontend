@@ -191,13 +191,13 @@ body {
 }
 @media (min-width: 1400px) {
 .leftContent .tab-content.deals-sub-menu{width: 99%;}
-.deal-content{margin: 85px 1%; width: 97%;}
-.menutabcontent{width: 98%;}
+.deal-content{margin: 85px 1%; width: 97% !important;}
+.menutabcontent{width: 98% !important;}
 .secondary_menu:before{bottom: -21px;}
 }
 @media (min-width: 2560px) {
-	.deal-content{margin: 85px 1%; width: 96%;}
-	.menutabcontent{width: 97%;}
+	.deal-content{margin: 85px 1%; width: 96% !important;}
+	.menutabcontent{width: 97% !important;}
 .container {
 	width: 1480px
 }
@@ -2266,7 +2266,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
     font-size: 18px;
     white-space: inherit;}
 .menulist-items.fullview .deal-bar{width: 95.7%;}
-.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; position: fixed; width:71.2%; z-index: 98;}
+.deal-bar{padding: 0px 0 22px 0; background: #fff; display: table; margin: 0px; height: 100px; position: fixed; width:71.2%; z-index: 98;}
 .deal-bar a{ background: #911c27;  vertical-align: middle;  color: #ffffff;  display: table-cell;  border-right: 10px solid #fff;
     text-align: center; width: 45px;}
 .deal-bar a span{font-size: 46px;}  
@@ -2278,7 +2278,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 .customize-uk .deal-bar{position: static; padding: 0px; width: 100%; margin: 0 0 10px 0;}
 .customize-uk .deal-bar a{border:none;}
 
-.deal-content{margin-top: 86px; display: inline-block; width: 100%;}
+.deal-content{margin-top: 104px; display: inline-block; width: 100%;}
 .card{display: block;}
 .card .card-header{background: #f4f4f4; border-color: currentcolor currentcolor #d8d8d8;
     border-image: none;
@@ -2337,7 +2337,8 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 }
 
 @media (max-width: 767px) {
-	.deal-bar{margin: 25px 0 0 0;}
+	.deal-bar{margin: 25px 0 0 0; height: auto;}
+	.deal-content{margin-top: 10px}
 .footer-wrapper ul.nav-links {
 	padding: 0
 }
@@ -2834,7 +2835,7 @@ color:#fff
 }
 .three-column-wrapper .inside-column-container .content-wrapper .content-container .control-group .control h4{
 
-	font: 1em "proxima_nova_ltsemibold";
+	font: .8em "proxima_nova_ltsemibold";
 	cursor: pointer;
 }
 
@@ -3035,7 +3036,8 @@ color:#fff
 
 .three-column-wrapper .inside-column-container.thirdCol .content-wrapper{
 	background: #f4f4f4;
-	max-height: 370px;
+	min-height: 270px;
+    max-height: 270px;
     overflow-y: auto;
     text-align: left;
     overflow-x: hidden;
@@ -3775,7 +3777,7 @@ color:#fff
 .menulist-items .columnsdivider .col-lg-4{ margin-bottom: 50px;}
 
 .menulist-items .dealtabcontent .col-md-4{margin-bottom: 20px;}
-.menulist-items .dealtabcontent .desc-box{display: table; width: 100%; background: #789c48; margin-bottom: 10px; min-height: 120px;}
+.menulist-items .dealtabcontent .desc-box{display: table; width: 100%; background: #789c48; margin-bottom: 10px; min-height: 154px;}
 .menulist-items .dealtabcontent h4{display: table-cell; background: #5b5a56; color: #fff; width: 40%; font-size: 1.5em; line-height: normal; vertical-align: top; padding: 10px;}
 .menulist-items .dealtabcontent p{display: table-cell; color: #fff !important;  font-size: 1em !important; vertical-align: top; line-height: normal !important; padding: 10px;}
 
@@ -3898,10 +3900,10 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
     
     .mobileallergens{ position: relative; overflow: hidden; margin: 15px -15px 0 0; float: right; z-index: 99;}
     .mobileallergens.visi{ overflow: visible}
-    .mobileallergens span{ border:1px solid #a6a6a6; border-right: 0; border-radius: 5px 0 0 5px; background: #fff; color: #646569; font-size: 16px; line-height: 20px; padding: 5px 10px; display: inline-block; font-family: "proxima_nova_ltsemibold"; float: right; }
-    .mobileallergens span i{ color: #7a9c49; margin-right: 5px;}
-    .mobileallergens span .fa-close, 
-    .mobileallergens.visi span .fa-chevron-left{ display: none;}
+    .mobileallergens span,.mobileallergens a{ border:1px solid #a6a6a6; border-right: 0; border-radius: 5px 0 0 5px; background: #fff; color: #646569; font-size: 16px; line-height: 20px; padding: 5px 10px; display: inline-block; font-family: "proxima_nova_ltsemibold"; float: right; }
+    .mobileallergens span i,.mobileallergens a i{ color: #7a9c49; margin-right: 5px;}
+    .mobileallergens span .fa-close,.mobileallergens a .fa-close, 
+    .mobileallergens.visi span .fa-chevron-left,.mobileallergens.visi a .fa-chevron-left{ display: none;}
     .mobileallergens.visi .fa-close{ display: inline-block}
     
     .mobileallergens .menu_type{ list-style: none; padding: 0; margin:0; background: #fff; border: 1px solid #ccc; border-right: 0; position: absolute; right: -15px; transform: translateX(260px); top: 40px; width: 260px; z-index: 9; transition: .5s;}
@@ -3910,7 +3912,7 @@ header.navigation ul.links.mobile li a img {width: 25px;margin-right: 5px;}
     .mobileallergens .menu_type li:last-child a{ border: none;}
     .mobileallergens .menu_type li a img{ margin-right: 10px;}
     
-    .footer-wrapper{ padding: 2.813em 0 58px;}
+    .footer-wrapper{ padding: 2.813em 0 80px;}
     .footer-wrapper ul.social-links {padding: 0}
     .footer-wrapper ul.nav-links {padding: 0}
     body.overly{ overflow: hidden; position: relative}

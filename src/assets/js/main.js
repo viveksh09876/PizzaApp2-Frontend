@@ -261,12 +261,12 @@ function getStoreTimings() {
 
    
 
-    $(document).ready(function(){
+    /*$(document).ready(function(){
         $('.mobileallergens span').click(function(){
             $('body').toggleClass('overly');
             $('.mobileallergens').toggleClass('visi');
             $(this).next().toggleClass('slide');
-        });
+        });*/
 //        
 //        
 //        
