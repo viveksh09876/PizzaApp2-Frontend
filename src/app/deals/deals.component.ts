@@ -74,7 +74,7 @@ export class DealsComponent implements OnInit {
     this.getCartItems();
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
     if (this.orderNowDetails == null || this.orderNowDetails == 'null') {
-      //this.updateStoreAndTime();
+      //this.updateStoreAndTime('location');
     }
 
   }
@@ -83,7 +83,7 @@ export class DealsComponent implements OnInit {
   getDealData(dealId) {
     //this.dataService.getDealTypeData(dealId).subscribe(data => {
     let data = this.dataService.getDealTypeData(dealId);
-    console.log('deallllllll',data);
+   // console.log('deallllllll',data);
     this.dealData = data;
     this.dealCode = data['code'];
     this.getAllCategories();

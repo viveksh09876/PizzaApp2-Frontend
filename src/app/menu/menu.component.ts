@@ -44,8 +44,7 @@ export class MenuComponent implements OnInit {
   formattedItems = null;
   nutritionInfo={};
   customizeDropdown={};
-
-
+  
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
     this.dataService.setLocalStorageData('favOrdersFetched', null); 
@@ -58,7 +57,7 @@ export class MenuComponent implements OnInit {
     });
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
-      this.updateStoreAndTime('location');
+      //this.updateStoreAndTime('location');
      }
      
     
@@ -540,7 +539,7 @@ export class MenuComponent implements OnInit {
     let list=modifer_selected.split('-');
     //these are like a radio for pizza 
     let Pizzalist=['999991','999992','999993','I100','I101','217'];
-    console.log(list);
+    //console.log(list);
     this.dataService.getItemData(slug, menuCountry)
          .subscribe(data => { 
               // code for set modifier values

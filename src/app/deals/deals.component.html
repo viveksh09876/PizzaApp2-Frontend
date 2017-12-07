@@ -28,8 +28,7 @@
         </li>
         <li>
           <a (click)="updateStoreAndTime('time')">Order time
-            <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select
-              Time'}}
+            <span>{{ orderNowDetails?orderNowDetails.delivery_time:'Select Time'}}
             </span>
           </a>
         </li>

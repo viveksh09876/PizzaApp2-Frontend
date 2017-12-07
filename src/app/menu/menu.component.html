@@ -12,8 +12,8 @@
                 <li>
                     <a (click)="updateStoreAndTime('location')">Store location <span>{{ orderNowDetails?orderNowDetails.selectedStore.Store.store_name:'Select Store'}}</span></a>
                 </li>
-                <li>
-                    <a (click)="updateStoreAndTime('time')">Order time <span>{{ orderNowDetails?(orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type):'Select Time'}}</span></a>
+                <li><!-- (orderNowDetails.delivery_time_type=='pickup'?orderNowDetails.delivery_time:orderNowDetails.delivery_time_type)-->
+                    <a (click)="updateStoreAndTime('time')">Order time <span>{{ orderNowDetails?orderNowDetails.delivery_time:'Select Time'}}</span></a>
                 </li>
                 <li><a (click)="updateStoreAndTime('postcode')">postcode <span>{{ orderNowDetails?orderNowDetails.address.postal_code:'Select Postcode'}}</span></a></li>
                 <li class="checkout" *ngIf="netCost != 0"><a (click)="checkout()"><strong>checkout</strong> <small>{{currencyCode}}{{netCost}}</small></a></li>
