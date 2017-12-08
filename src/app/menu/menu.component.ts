@@ -57,7 +57,7 @@ export class MenuComponent implements OnInit {
     });
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
-      //this.updateStoreAndTime('location');
+      this.updateStoreAndTime('location');
      }
      
     

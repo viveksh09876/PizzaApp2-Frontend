@@ -74,7 +74,7 @@ export class DealsComponent implements OnInit {
     this.getCartItems();
     this.orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now'));
     if (this.orderNowDetails == null || this.orderNowDetails == 'null') {
-      //this.updateStoreAndTime('location');
+      this.updateStoreAndTime('location');
     }
 
   }
