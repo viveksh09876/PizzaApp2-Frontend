@@ -27,7 +27,7 @@ export class DataService {
   
   getMenuData(storeId, country): Observable<any>{
 
-    return this.http.get( this.domain + '/webservice/get_all_categories_data/'+storeId+ '/'+country)
+    return this.http.get( this.domain + '/webservice/get_all_categories_data_full/'+storeId+ '/'+country)
                     .map( (res: Response) => res.json() )
                     .catch( (error: any) => Observable.throw(error.json().error || 'server error') );
   }
@@ -443,7 +443,15 @@ export class DataService {
     if (allDealsData != null) {
       for (var i=0; i<allDealsData.length; i++) {
           if (allDealsData[i]['id'] == id) {
-            return allDealsData[i];
+             for(var j=0;j<allDealsData[i].categories.length;j++){
+               if(allDealsData[i].categories[j].isEnable==false || allDealsData[i].categories[j].isEnable=="false"){
+                allDealsData[i].categories.splice(j, 1);
+               }
+             }
+             // sort acording to postion
+             return allDealsData[i];
+            // filter enable deal categories only
+
           }
        }
     }
@@ -674,7 +682,7 @@ export class DataService {
   
 	clearCart(): Observable<any> {
 		this.setLocalStorageData('allItems', null);
-		this.setLocalStorageData('order-now', null);
+		//this.setLocalStorageData('order-now', null);
 		this.setLocalStorageData('finalOrder', null);
 		this.setLocalStorageData('favItemFetched', null);
 		this.setLocalStorageData('favOrdersFetched', null); 

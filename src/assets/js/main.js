@@ -244,3 +244,68 @@ function getStoreTimings() {
   }
 
 
+
+    
+    $(window).scroll(function() {
+        if ($(window).width() >= 768) {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 250) {
+    $('.viewcart_sec').css("margin-top", $("footer").offset().top - $('.viewcart_sec').height() - 230)
+       $('.viewcart_sec').removeClass('fixedsticky');
+   }
+   else{
+    $('.viewcart_sec').css("margin-top", 0);
+    $('.viewcart_sec').addClass('fixedsticky');
+   }
+}
+});
+
+   
+
+    /*$(document).ready(function(){
+        $('.mobileallergens span').click(function(){
+            $('body').toggleClass('overly');
+            $('.mobileallergens').toggleClass('visi');
+            $(this).next().toggleClass('slide');
+        });*/
+//        
+//        
+//        
+//        $('header .menu-button').click(function(){
+//            $(this).toggleClass('reverse');
+//            $('.main-navigation').toggleClass('moveslide');
+//            $('body').toggleClass('blackoverly');
+//        });
+//        $('.secondary_menu .dropdown_rightmenu li a').click(function(){
+//            $('.secondary_menu .dropdown_rightmenu li a').next().removeClass('shownow');
+//            $(this).next().toggleClass('shownow');
+//        });
+//       
+//         $('.secondary_menu .dropdown_rightmenu li a').click(function(){
+//              if($(this).next().is(":visible") == true) {
+//                $('.secondary_menu .dropdown_rightmenu li ul').hide();
+//              }
+//              else{
+//                $('.secondary_menu .dropdown_rightmenu li ul').hide();
+//                $(this).next().toggle();
+//              }
+//        });
+//        
+//         $(".menutabs li").click(function(){
+//            var xyz = $(this).index();
+//            $(".menutabs li").removeClass('active');
+//            $(this).addClass('active');
+//            $(".menulist-items .tab-content > div").hide();
+//            $(".menulist-items .tab-content > div").eq(xyz).show();
+//        });
+//        
+//        $(".menu_innertabs li").click(function(){
+//            var xyz = $(this).index();
+//            $(".menu_innertabs li").removeClass('active');
+//            $(".menu_innertabs li").eq(xyz).addClass('active');
+//            $(".menuTabdetails .tab_content").removeClass('active');
+//            $(".menuTabdetails .tab_content").eq(xyz).addClass('active');
+//        });
+//        
+//        
+ //   });
+

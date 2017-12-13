@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
         this.router.events.subscribe((e) => {
           if (e instanceof NavigationEnd) {
             let urlArr = e.url.split('/');
-            if(urlArr.indexOf('menu') > -1 || urlArr.indexOf('item') > -1 || urlArr.indexOf('deals') > -1) {
+            if(urlArr.indexOf('item') > -1) {
               this.showFooter = false;
             }else{
               this.showFooter = true;

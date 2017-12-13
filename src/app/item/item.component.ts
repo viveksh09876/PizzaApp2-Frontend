@@ -277,7 +277,7 @@ export class ItemComponent implements OnInit {
     //   this.item.totalItemCost = this.totalCost;
     // } else {
      
-      total = this.calculateTotalCost();
+      total = this.utilService.calculateTotalCost(this.item);
       this.totalCost = +total.toFixed(2);
       this.item.originalItemCost = this.totalCost;
       this.item.totalItemCost = this.totalCost;
@@ -395,7 +395,7 @@ export class ItemComponent implements OnInit {
 
     }
     
-    let total = this.calculateTotalCost();
+    let total = this.utilService.calculateTotalCost(this.item);
     
     if(total == 0 || isNaN(total)) {
 
@@ -470,7 +470,7 @@ export class ItemComponent implements OnInit {
         this.item.originalItemCost = this.totalCost;
         this.item.totalItemCost = this.totalCost;
       } else { */
-        let total = this.calculateTotalCost();
+        let total = this.utilService.calculateTotalCost(this.item);
         
         this.totalCost = total;
         this.item.originalItemCost = this.totalCost;
@@ -516,7 +516,7 @@ export class ItemComponent implements OnInit {
   }
 
 
-
+/*
   calculateTotalCost() {
 
     let total = 0;
@@ -899,7 +899,7 @@ export class ItemComponent implements OnInit {
     total = Number(total.toFixed(2));
       return total;
 
-  }
+  }*/
 
   updateQuantity(type) {
 
