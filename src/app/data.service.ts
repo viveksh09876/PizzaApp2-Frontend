@@ -448,6 +448,7 @@ export class DataService {
                 allDealsData[i].categories.splice(j, 1);
                }
              }
+             // sort acording to postion
              return allDealsData[i];
             // filter enable deal categories only
 

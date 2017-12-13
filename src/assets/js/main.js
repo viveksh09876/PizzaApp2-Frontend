@@ -307,5 +307,5 @@ function getStoreTimings() {
 //        });
 //        
 //        
-    });
+ //   });
 
