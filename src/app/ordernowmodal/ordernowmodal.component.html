@@ -191,6 +191,7 @@
                                         name="dateTime"
                                         [(ngModel)]="delivery_time"
                                         [options]="pickerOptions" type="text"
+                                        (selected)="updateTime()"
                                         class="form-control" readonly id="DateTimeDel" />
                                 <input *ngIf="order.delivery_time_type == 'asap'" 
                                         name="dateTime"
