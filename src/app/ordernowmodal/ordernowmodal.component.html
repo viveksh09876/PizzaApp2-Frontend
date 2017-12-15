@@ -199,9 +199,13 @@
                                         class="form-control" readonly id="DateTimeDel" />                                        
                             </div>                                                                                               
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-danger btn-block continue-btn" (click)="goToMenu()">Start Ordering</button>  
+                        <p class="text-danger" *ngIf="!isInTimeRange">This store is currently closed. Why not order your awesome pizza for later?</p>  
+                        <div class="row btn-row">
+                            <div class="col-md-6">
+                                <button class="btn btn-danger btn-block continue-btn" [ngClass]="{'disabled': isInTimeRange == false}"  (click)="goToMenu(1)">Start Ordering</button>  
+                            </div>
+                            <div class="col-md-6" *ngIf="!isInTimeRange">
+                                <button class="btn btn-danger btn-block continue-btn" (click)="goToMenu(0)">Browse our menu</button>  
                             </div>
                         </div>
                     </div>                    
