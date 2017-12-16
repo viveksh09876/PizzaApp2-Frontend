@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import * as moment from "moment";
+import {extendMoment} from "moment-range";
+const rangeMoment = extendMoment(moment);
 
 @Injectable()
 export class UtilService {
@@ -280,6 +283,72 @@ export class UtilService {
     var n = weekday[d.getDay()];
     return n;
   }
+
+  inTimeRange(time, startTime, endTime) {
+    //Setup today vars
+    var today =  moment(new Date());
+    var ayear   = today.year();
+    let amonth = null;
+    let adate = null;
+    amonth  = today.month() + 1;  // 0 to 11
+    adate   = today.date();
+    amonth  = String(amonth).length < 2 ? "0" + amonth : amonth;
+    adate   = String(adate).length < 2 ? "0" + adate : adate;
+    
+    //Create moment objects
+    var moment1, moment2;
+    var temp = endTime.split(" ");
+    if(temp[1].toLowerCase() == "am")
+    {
+        var test1 = ayear + "-" + amonth + "-" + adate + " " + startTime;
+        var test2 = ayear + "-" + amonth + "-" + adate + " " + endTime;
+       
+        //Make sure that both times aren't morning times
+        if(moment(test2).isAfter(test1))
+        {
+            var moment1String = ayear + "-" + amonth + "-" + adate + " " + startTime;
+            var moment2String = ayear + "-" + amonth + "-" + adate + " " + endTime;
+        }
+        else
+        { 
+            var moment1String = ayear + "-" + amonth + "-" + adate + " " + startTime;
+            var moment2String = moment(moment1String, "YYYY-MM-DD").add('days', 1).format('YYYY-MM-DD');
+            moment2String = moment2String + " " + endTime;
+            //var moment2String = ayear + "-" + amonth + "-" + (adate + 1) + " " + endTime;
+            
+        }
+    
+        moment1 = moment(moment1String,       "YYYY-MM-DD HH:mm A");
+        moment2 = moment(moment2String,       "YYYY-MM-DD HH:mm A");
+    }
+    else 
+    {
+        var moment1String = ayear + "-" + amonth + "-" + adate + " " + startTime;
+        var moment2String = ayear + "-" + amonth + "-" + adate + " " + endTime;
+        moment1 = moment(moment1String,       "YYYY-MM-DD HH:mm A");
+        moment2 = moment(moment2String,       "YYYY-MM-DD HH:mm A");
+    }
+    
+    //Run check
+    var start = moment1.toDate();
+    var end   = moment2.toDate();
+    
+    var when;
+    if(String(time).toLowerCase() == "now")
+    {
+        when = moment(new Date());
+    }
+    else
+    {
+        var timeMoment1String = ayear + "-" + amonth + "-" + adate + " " + time;
+        when = moment(timeMoment1String);
+    }
+    
+    var range = rangeMoment.range(start, end);
+    //var range = moment.range(start, end);
+    return when.within(range);
+  }
+
   
   generateUniqueId() {
 	 
