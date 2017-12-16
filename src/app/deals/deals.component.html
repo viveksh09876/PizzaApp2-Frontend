@@ -148,32 +148,19 @@
                                 <h4>{{prod.title}}</h4>
                                 <h5>{{prod.price_title}}</h5>
                                 <div class="proinfo" *ngIf="prod.plu_code != 999999">
-                                  <ng-container *ngIf=" prod.mod_count > 0 &&  updateDefaultValue(prod.plu_code,'262')">
-                                    <select class="full" *ngIf="prod.dipping_sauce_data" [(ngModel)]="customizeDropdown['_'+prod.plu_code]">
+                                  <ng-container *ngIf=" prod.mod_count > 0">
+                                    <select class="full" *ngIf="prod.dipping_sauce_data" [(ngModel)]="prod.dd_default_selection">
                                       <option *ngFor="let dipping_sauce_data of prod.dipping_sauce_data" value="{{dipping_sauce_data.PLU}}">{{dipping_sauce_data.Name}}</option>
                                     </select>
-                                    <!--<select  *ngIf="prod.crust_price">
-                                                         <ng-container *ngFor="let crust_price of prod.crust_price">
-                                                            <option *ngIf="crust_price.PriceSm!=0" >{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
-                                                            <option *ngIf="crust_price.PriceMed!=0">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
-                                                            <option *ngIf="crust_price.PriceLg!=0">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
-                                                         </ng-container>
-                                                        </select>-->
-                                  </ng-container>
-                                  <!--  <span>
-                                  <a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a>
-                                  <a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1
-                                    }}</a>
-                                  <a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a>
-                                </span>-->
-
+                                   </ng-container>
+                            
                                 </div>
                                 <div class="row" *ngIf="prod.plu_code != 999999 && prod.mod_count > 0 && prod.crust_price">
                                   <div class="col-md-6 col-xs-6">
                                     <a *ngIf="prod.mod_count > 0" (click)="addToCart(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
                                   </div>
                                   <div class="col-md-6 col-xs-6">
-                                    <a (click)="addToCart(prod.slug, prod.mod_count,'others' ,customizeDropdown['_'+prod.plu_code])" class="btn btn-green">Add to Cart</a>
+                                    <a (click)="addToCart(prod.slug, prod.mod_count,'others' ,prod.dd_default_selection)" class="btn btn-green">Add to Cart</a>
                                   </div>
                                 </div>
                                 <div class="row" *ngIf="prod.plu_code == 999999">
@@ -181,11 +168,20 @@
                                     <a (click)="addToCart(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
                                   </div>
                                 </div>
-                                <div class="row" *ngIf=" prod.mod_count==0 || prod.dipping_sauce_data">
+                                <div class="row" *ngIf="prod.mod_count==0 || (prod.mod_count==1 && prod.dipping_sauce_data)">
                                   <div class="col-md-12 col-xs-12">
-                                    <a (click)="addToCart(prod.slug, prod.mod_count,'others' ,customizeDropdown['_'+prod.plu_code])" class="btn btn-green">Add to Cart</a>
+                                    <a (click)="addToCart(prod.slug, prod.mod_count,'others' ,prod.dd_default_selection)" class="btn btn-green">Add to Cart</a>
                                   </div>
                                 </div>
+                                <div class="row" *ngIf="prod.mod_count>1 && prod.dipping_sauce_data">
+                                  <div class="col-md-6 col-xs-6">
+                                    <a *ngIf="prod.mod_count > 0" (click)="addToCart(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
+                                  </div>
+                                  <div class="col-md-6 col-xs-6">
+                                    <a (click)="addToCart(prod.slug, prod.mod_count,'others' ,prod.dd_default_selection)" class="btn btn-green">Add to Cart</a>
+                                  </div>
+                                </div>
+                                
                               </div>
                             </ng-container>
 
@@ -258,129 +254,6 @@
 
 
 
-        <!-- Tab panes -->
-        <!--      <div class="tab-content  deals-sub-menu">
-        
-        <ng-container *ngIf="selectedDealMenuCatId != null">
-        <div role="tabpanel" *ngFor="let data of menuData; let z=index;" [ngClass]="{'active': (data.id == selectedDealMenuCatId)}"  class="tab-pane" id="{{data.name}}">
-           
-            <div class="content-wrapper">
-                <div class="content-container">
-                    <div class="favSection">
-                        <div class="row">
-
-                          
-
-                          <div class="inside-column-container leftContent"> 
-                              
-                              <ul class="nav nav-tabs hidden-xs  orderTabs" role="tablist" id="tabSwitch" [ngClass]="{'full': showViewCart ==  false}">
-                               
-                                <ng-container *ngFor="let cat of dealData.categories; let j = index;">
-                                   
-                                      <li role="presentation" [ngClass]="(j == selectedDealMenuCatIndex)? 'active': ''"><span *ngIf="!cat.isEnable || j != selectedDealMenuCatIndex">{{cat.catText}}</span><a *ngIf="cat.isEnable && j == selectedDealMenuCatIndex"  aria-controls="applyNow" role="tab" data-toggle="tab">{{cat.catText}}</a> </li>
-                                  
-                                </ng-container>
-                              </ul>
-                              <select class="custom-select visible-xs" [(ngModel)]="selectedDealMenuCatIndex" target="#tabSwitch">
-                                  <option *ngFor="let cat of dealData.categories; let j = index;"  value="{{j}}">{{cat.catText}}</option>
-                                </select>
-
-                                
-                              </div>
-
-
-                            <div class="sub-cat-section" *ngIf="data.subCatsName.length > 0">
-                              
-                              <div class="col-md-6" *ngFor="let subCt of data.subCats | keysPipe; let r=index;">
-                                <h3 class="sub-head">{{subCt.key}}<br/>
-                                <small>{{data.subCatsPrice[r]}}</small></h3>
-                                <div class="row">
-                                  
-                                <div *ngFor="let subProducts of subCt.value" class="col-md-12">
-                                  <ng-container *ngFor="let subProd of subProducts.products">
-                                  <ng-container *ngIf="subProd.is_price_mapped == 1 && checkForDealArray(subProd.id, subProd.plu_code, subProd.category_id)">
-                                  
-                                  <div class="createWrapper">
-                                    <div class="media">
-                                      <div class="media-left">
-                                        <div class="img-Wrapper" *ngIf="subProd.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
-                                        <div class="img-Wrapper" *ngIf="subProd.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + subProd.thumb_image + ')'}"> </div>
-                                        <a (click)="addToCart(subProd.slug, subProd.mod_count)" class="addBtn cta-btn">Add to Cart</a>
-                                      </div>
-                                      <div class="media-body media-middle">
-                                        <div class="description">
-                                          <div class="leftSection">
-                                            <h4 class="media-heading">{{subProd.title}}</h4>
-                                            
-                                            <h5>{{subProd.price_title}}</h5>
-                                            <div class="nutrition-icons">
-                                              <img src="assets/images/nutrition-icon-vegan.png" *ngIf="subProd.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
-                                              <img src="assets/images/nutrition-icon-hot.png" *ngIf="subProd.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
-                                              <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="subProd.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
-                                            </div>
-                                            <p>{{subProd.short_description}}</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  </ng-container>
-                                  </ng-container>
-                                </div>
-                                                               
-                                </div>
-                              </div>                             
-               
-                            </div> 
-                            
-                            <ng-container *ngIf="data.subCatsName.length == 0">
-                              <div class="sub-deal-list">
-                            <div  class="col-md-6 " *ngFor="let prod of data.products">
-                              
-                              <div class="createWrapper" *ngIf="prod.is_price_mapped == 1 && checkForDealArray(prod.id, prod.plu_code, prod.category_id)"> 
-                                  <ng-container>
-                                  <div class="media">
-                                    <div class="media-left">
-                                      <div class="img-Wrapper" *ngIf="prod.thumb_image == null" style="background-image:url(assets/images/pizza-images/2.jpg)"> </div>
-                                        <div class="img-Wrapper" *ngIf="prod.thumb_image != null" [ngStyle]="{'background-image': 'url(' + cmsApiPath + '/' + prod.thumb_image + ')'}"> </div>
-                                        <a (click)="addToCart(prod.slug, prod.mod_count)" class="addBtn cta-btn">Add to Cart</a>
-                                    </div>
-                                    <div class="media-body media-middle">
-                                      <div class="description">
-                                        <div class="leftSection">
-                                          <h4 class="media-heading">{{prod.title}}</h4>
-                      
-                                          <h5>{{prod.price_title}} </h5> 
-                                           <div class="nutrition-icons">
-                                            <img src="assets/images/nutrition-icon-vegan.png" *ngIf="prod.groupv == 1" popover="Vegetarian" [popoverOnHover]="true" />
-                                            <img src="assets/images/nutrition-icon-hot.png" *ngIf="prod.grouph == 1" popover="Hot" [popoverOnHover]="true"/>
-                                            <img src="assets/images/nutrition-icon-gluten-free.png" *ngIf="prod.groupvh == 1" popover="Gluten Free" [popoverOnHover]="true"/>
-                                          </div>
-                                          <p>{{prod.short_description}}</p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  </ng-container>
-                              </div> 
-                            </div>
-                          </div>
-                              
-
-                            </ng-container>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </ng-container>
-
-        <ng-container *ngIf="selectedDealMenuCatId == null"> 
-          All deal items added. Please click on proceed to checkout.
-        </ng-container>
-
-
-      </div> -->
       </div>
     </div>
     <!--Left Panel Ends-->

@@ -90,25 +90,13 @@
                                         <h4>{{prod.title}}</h4>
                                         <h5>{{prod.price_title}}</h5>
                                         <div class="proinfo" *ngIf="prod.plu_code != 999999">
-                                            <ng-container *ngIf=" prod.mod_count > 0 && updateDefaultValue(prod.plu_code,'262')">
-                                                <select *ngIf="prod.dipping_sauce_data" [(ngModel)]="customizeDropdown['_'+prod.plu_code]">
+                                            <ng-container *ngIf=" prod.mod_count > 0">
+                                                <select *ngIf="prod.dipping_sauce_data" [(ngModel)]="prod.dd_default_selection">
                                                     <option *ngFor="let dipping_sauce_data of prod.dipping_sauce_data"  value="{{dipping_sauce_data.PLU}}">{{dipping_sauce_data.Name}}</option>
                                                 </select>
-                                                <!--<select  *ngIf="prod.crust_price">
-                                                 <ng-container *ngFor="let crust_price of prod.crust_price">
-                                                    <option *ngIf="crust_price.PriceSm!=0" >{{crust_price.Name}} - small - {{crust_price.PriceSm}}</option>
-                                                    <option *ngIf="crust_price.PriceMed!=0">{{crust_price.Name}} - medium - {{crust_price.PriceMed}}</option>
-                                                    <option *ngIf="crust_price.PriceLg!=0">{{crust_price.Name}} - large - {{crust_price.PriceLg}}</option>
-                                                 </ng-container>
-                                                </select>--> 
-                                            </ng-container>    
+                                             </ng-container>    
                                             <span ><a (click)="updateQuantityBeforeCart(0, prod.plu_code)">-</a><a>{{ itemsQtyBeforeCart['qty_'+prod.plu_code]?itemsQtyBeforeCart['qty_'+prod.plu_code]:1 }}</a><a (click)="updateQuantityBeforeCart(1, prod.plu_code)">+</a></span>
-                                           <!-- <span >
-                                                <a _ngcontent-c0>-</a>
-                                                <a _ngcontent-c0>1</a>
-                                                <a _ngcontent-c0>+</a>
-                                            </span>-->
-                                        </div>
+                                          </div>
                                         <div class="row" *ngIf="prod.plu_code != 999999 && prod.mod_count > 0 && prod.crust_price">
                                             <div class="col-md-6 col-xs-6">
                                                 <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
@@ -122,9 +110,17 @@
                                                 <a (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
                                             </div>
                                         </div>
-                                        <div class="row" *ngIf=" prod.mod_count==0 || prod.dipping_sauce_data">
+                                        <div class="row" *ngIf="prod.mod_count==0 || (prod.mod_count==1 && prod.dipping_sauce_data)">
                                             <div class="col-md-12 col-xs-12">
-                                                 <a  (click)="goToCustomize(prod.slug, prod.mod_count,'others' ,customizeDropdown['_'+prod.plu_code])" class="btn btn-green">Add to Cart</a>
+                                                 <a  (click)="goToCustomize(prod.slug, prod.mod_count,'others' ,prod.dd_default_selection)" class="btn btn-green">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="prod.mod_count>1 && prod.dipping_sauce_data">
+                                            <div class="col-md-6 col-xs-6">
+                                                <a *ngIf="prod.mod_count > 0" (click)="goToCustomize(prod.slug, prod.mod_count)" class="btn btn-red">Customise</a>
+                                            </div>
+                                            <div class="col-md-6 col-xs-6">
+                                                <a  (click)="goToCustomize(prod.slug, prod.mod_count,'others' ,prod.dd_default_selection)" class="btn btn-green">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>
@@ -147,8 +143,8 @@
                                                     <h4>{{subProd.title}}</h4>
                                                     
                                                     <div class="proinfo">
-                                                      <ng-container *ngIf="subProd.mod_count > 0 && updateDefaultValue(subProd.plu_code,'I100-999993')">
-                                                       <select  *ngIf="subProd.crust_price" [(ngModel)]="customizeDropdown['_'+subProd.plu_code]">
+                                                      <ng-container *ngIf="subProd.mod_count > 0">
+                                                       <select  *ngIf="subProd.crust_price" [(ngModel)]="subProd.dd_default_selection">
                                                            <ng-container *ngFor="let crust_price of subProd.crust_price">
                                                                <option *ngIf="crust_price.PriceSm!=0" value="{{crust_price.PLU}}-999991">Small 9" - {{crust_price.Name}} - {{parseFloatCustome(crust_price.PriceSm,subProd['price']['small'],'add')}}</option>
                                                              <option *ngIf="crust_price.PriceMed!=0" value="{{crust_price.PLU}}-999992">Medium 11.5" - {{crust_price.Name}} - {{parseFloatCustome(crust_price.PriceMed,subProd['price']['medium'],'add')}}</option>
@@ -163,7 +159,7 @@
                                                             <a *ngIf="subProd.mod_count > 0" (click)="goToCustomize(subProd.slug, subProd.mod_count)" class="btn btn-red">Customise</a>
                                                         </div>
                                                         <div class="col-md-6 col-xs-6">
-                                                            <a  (click)="goToCustomize(subProd.slug, subProd.mod_count,'pizza',customizeDropdown['_'+subProd.plu_code])" class="btn btn-green">Add to Cart</a>
+                                                            <a  (click)="goToCustomize(subProd.slug, subProd.mod_count,'pizza',subProd.dd_default_selection)" class="btn btn-green">Add to Cart</a>
                                                         </div>
                                                     </div>
                                                 </ng-container>
@@ -184,7 +180,7 @@
                         <div class="row">
                      <ng-container *ngFor="let data of menuData">
                        <ng-container *ngFor="let prod of data.products">
-                        <div class="col-md-4" *ngIf="data.type == 'deal'">
+                        <div class="col-md-4"  *ngIf="data.type == 'deal'">
                              <!--<div class="createWrapper deals">
                                   <div class="media">
                                     <div class="media-left">
