@@ -43,7 +43,7 @@ export class MenuComponent implements OnInit {
   suggestionProducts = [];
   formattedItems = null;
   nutritionInfo={};
-  customizeDropdown={};
+  //customizeDropdown={};
   
   ngOnInit() {
     this.dataService.setLocalStorageData('favItemFetched', null);
@@ -59,7 +59,6 @@ export class MenuComponent implements OnInit {
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
       this.updateStoreAndTime('location');
      }
-     
     
     
     
@@ -606,15 +605,17 @@ export class MenuComponent implements OnInit {
 
  }
 
-/**
- * only for default value selection
- */
-
-    updateDefaultValue(plu_code,modifier){
-      if(!this.customizeDropdown['_'+plu_code]){
-        this.customizeDropdown['_'+plu_code]=modifier;
+    validateDeal(allowDays,allowType){
+      var currentDay= (new Date()).getDay()+1;
+      var currentType='';
+      if(!(this.orderNowDetails == null || this.orderNowDetails == 'null' || this.orderNowDetails.type == null)) {
+        currentType=this.orderNowDetails.type;
       }
-      return true;
+
+      if((allowType==currentType || allowType==0 || allowType==null) && (allowDays==0 ||allowDays==null || allowDays.search(currentDay)!=-1)){
+        return true;
+      }
+      return false;
     }
 
     parseFloatCustome(price,price1,action){

@@ -6,10 +6,7 @@ import { UtilService } from '../util.service';
 import {DateRangePickDirective} from '../date-range-pick.directive';
 import { DateRange } from '../date-range';
 import { environment } from '../../environments/environment';
-
-declare var moment: any;
 declare var $: any;
-
 @Component({
   selector: 'app-ordernowmodal',
   templateUrl: './ordernowmodal.component.html',
@@ -58,18 +55,12 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
   hours = [];
   minutes = this.utilService.getMinutes();
-  isInTimeRange = true;
 
   order = {
     orderType: 'pickup',
     delivery_time_type: 'asap',
     selectedStore: this.selectedStore
   };
-
-  storeTimeObj = {
-    fromTime: null,
-    toTime: null
-  }
 
   isValidPostalFlag = true;
 
@@ -277,43 +268,12 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
   }
 
 
-
   setSelectedStore(id) {    
     if(id != '') { 
-
-      let cDate = new Date();
-      let cDay = cDate.getDay();
-      let storeTime = null;
-      let stores = this.storeList;    
-      let storeFromTime = null;
-      let storeToTime = null; 
-      
-      let cTime = moment().format('hh:mm a');
-
+      let stores = this.storeList;     
       for(var i=0; i<stores.length; i++) {
          if(stores[i].Store.id == id) {
            this.selectedStore.info = stores[i];
-
-           if (stores[i].StoreTime != undefined) {
-              for (var j=0; j < stores[i].StoreTime.length; j++) {
-                  if (stores[i].StoreTime[j].from_day == cDay) {
-                    storeTime = stores[i].StoreTime[j];
-                  }
-              } 
-
-              storeFromTime = storeTime.from_time + ":" + storeTime.from_minutes;
-              storeFromTime = moment(storeFromTime, 'HH:mm').format('hh:mm a');
-
-              storeToTime = storeTime.to_time + ":" + storeTime.to_minutes;
-              storeToTime = moment(storeToTime, 'HH:mm').format('hh:mm a');
-              
-              this.storeTimeObj.fromTime = storeFromTime;
-              this.storeTimeObj.toTime = storeToTime;
-           }
-           
-
-           //inTimeRange = this.utilService.inTimeRange(cTime, storeFromTime, storeToTime);
-
            this.storeImg = environment.cmsApiPath + '/' + stores[i].Store.store_image;
            this.order['delivery_state'] = stores[i].Store.state;
            break;
@@ -326,39 +286,11 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     }
   }
 
-
-  checkTimeRange(delivery_time) {
-    
-      let inTimeRange = true;
-      
-      let cTime = moment(delivery_time, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
-      
-      if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined) {
-          inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
-          this.isInTimeRange = inTimeRange;
-      }
-
-      return inTimeRange;
-  }
-
-
-  updateTime() {
-    var self = this;
-    setTimeout(function() {
-      this.delivery_time = $('#DateTimeDel').val(); 
-      this.isInTimeRange = self.checkTimeRange(this.delivery_time);
-      
-    }, 800);
-    
-  }
-
-
   goTotimeModal() {
     //this.getCurrentDateTime();
     if(this.selectedStore.val == '') {
       this.showOutletError = true;
     }else{
-        this.isInTimeRange = this.checkTimeRange(this.delivery_time);
         if (this.order.orderType == 'delivery') {
           let code = this.postalCode.trim().toUpperCase();
           this.isValidPostalFlag = this.dataService.isValidPostalCode(code);
@@ -378,127 +310,111 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     this.order.delivery_time_type = type;
     this.showOutletError = false;
     this.time.hour = '01';
-    this.isInTimeRange = this.checkTimeRange(this.delivery_time);
     if (type == 'asap') {
       this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(35));
     }
   }
 
-  goToMenu(checkValidation) {
+  goToMenu() {
     if(this.selectedStore.info != '') {
         this.delivery_time = $("#DateTimeDel").val();
-
-        let cTime = moment(this.delivery_time, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
-        
-        //let cTime = moment().format('hh:mm a');
-        let inTimeRange  = true;
-  
-        if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined && checkValidation == 1) {
-            inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
-            this.isInTimeRange = inTimeRange;
+        let orderDetails = {
+            
+              type: this.order.orderType,
+              delivery_time_type: this.order.delivery_time_type,
+              delivery_time: this.delivery_time,
+              selectedStore: this.order.selectedStore,
+              address: {
+                apartment: this.delivery_apartment,
+                streetNo: this.delivery_streetno,
+                street: this.delivery_street,
+                city: this.cityVal,
+                state: this.delivery_state,
+                postal_code: this.postalCode
+              
+            }
         }
 
-        if (inTimeRange) {
-          
-            let orderDetails = {
-                  type: this.order.orderType,
-                  delivery_time_type: this.order.delivery_time_type,
-                  delivery_time: this.delivery_time,
-                  selectedStore: this.order.selectedStore,
-                  address: {
-                    apartment: this.delivery_apartment,
-                    streetNo: this.delivery_streetno,
-                    street: this.delivery_street,
-                    city: this.cityVal,
-                    state: this.delivery_state,
-                    postal_code: this.postalCode
-                  
-                }
-            }
+        if(orderDetails.type == 'delivery' && orderDetails.delivery_time_type == 'defer') {
+           if(orderDetails.delivery_time == null) {
+            this.showTimeError = 'Please select delivery date/time';
+          }
+        }
 
-            if(orderDetails.type == 'delivery' && orderDetails.delivery_time_type == 'defer') {
-              if(orderDetails.delivery_time == null) {
-                this.showTimeError = 'Please select delivery date/time';
-              }
-            }
+        this.dataService.setLocalStorageData('order-now', JSON.stringify(orderDetails));
 
-            this.dataService.setLocalStorageData('order-now', JSON.stringify(orderDetails));
+        if (this.fromObj != null && this.fromObj != undefined && this.fromObj.modCount != undefined) {
 
-            if (this.fromObj != null && this.fromObj != undefined && this.fromObj.modCount != undefined) {
+          if (this.fromObj.modCount > 0) {
 
-              if (this.fromObj.modCount > 0) {
+            this.close();
 
-                this.close();
-
-                if (this.fromObj.isDeal != undefined) {
-                  this.router.navigate(['/item/deal/', this.fromObj.dealId, this.fromObj.comboUniqueId, this.fromObj.selectedDealMenuCatIndex, this.fromObj.slug]); 
-                } else {
-                  this.router.navigate(['/item', this.fromObj.slug]); 
-                }
-                
-
-              } else {
-
-                this.dataService.getItemData(this.fromObj.slug, this.fromObj.menuCountry)
-                .subscribe(data => {
-                    
-                      data.originalItemCost = data.Product.price;
-                      data.totalItemCost = data.Product.price;
-
-                      if (this.fromObj.dealId != undefined) {
-                        data.Product.dealId = this.fromObj.dealId;
-                        data.Product.comboUniqueId = this.fromObj.comboUniqueId;
-                        data.Product.position = this.fromObj.selectedDealMenuCatIndex;
-                      }
-
-
-                      let temp = this.dataService.getLocalStorageData('allItems');
-                      
-                      if(temp == null || temp == 'null') {
-      
-                        let allItems = [];  
-                        allItems.push(data);
-                        this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-      
-                      }else{
-      
-                        let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
-                        let isExist = false;
-                        for(var i=0; i<allItems.length; i++) {
-                          if(allItems[i].Product.id == data.Product.id) {
-                            allItems[i].Product.qty += 1;
-                            allItems[i].totalItemCost = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
-                            isExist = true;
-                            break;
-                          }
-                        }         
-                        
-                        if(!isExist) {
-                          allItems.splice(0,0,data);
-                        }
-                          
-                        this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
-      
-                      }
-                      
-                      this.result = true;
-                      this.close();
-                      
-                      
-                });
-            
-              }
-
+            if (this.fromObj.isDeal != undefined) {
+              this.router.navigate(['/item/deal/', this.fromObj.dealId, this.fromObj.comboUniqueId, this.fromObj.selectedDealMenuCatIndex, this.fromObj.slug]); 
             } else {
-              this.close();
-              this.router.navigate(['/menu']);
+              this.router.navigate(['/item', this.fromObj.slug]); 
             }
             
-            //window.location.reload();
-          
-        }
 
+          } else {
+
+            this.dataService.getItemData(this.fromObj.slug, this.fromObj.menuCountry)
+            .subscribe(data => {
+                 
+                  data.originalItemCost = data.Product.price;
+                  data.totalItemCost = data.Product.price;
+
+                  if (this.fromObj.dealId != undefined) {
+                    data.Product.dealId = this.fromObj.dealId;
+                    data.Product.comboUniqueId = this.fromObj.comboUniqueId;
+                    data.Product.position = this.fromObj.selectedDealMenuCatIndex;
+                  }
+
+
+                  let temp = this.dataService.getLocalStorageData('allItems');
+                  
+                  if(temp == null || temp == 'null') {
+  
+                    let allItems = [];  
+                    allItems.push(data);
+                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+  
+                  }else{
+  
+                    let allItems = JSON.parse(this.dataService.getLocalStorageData('allItems')); 
+                    let isExist = false;
+                    for(var i=0; i<allItems.length; i++) {
+                      if(allItems[i].Product.id == data.Product.id) {
+                        allItems[i].Product.qty += 1;
+                        allItems[i].totalItemCost = parseFloat(allItems[i].Product.price)*allItems[i].Product.qty;
+                        isExist = true;
+                        break;
+                      }
+                    }         
+                    
+                    if(!isExist) {
+                      allItems.splice(0,0,data);
+                    }
+                      
+                    this.dataService.setLocalStorageData('allItems', JSON.stringify(allItems)); 
+  
+                  }
+                  
+                  this.result = true;
+                  this.close();
+                  
+                  
+            });
         
+          }
+
+        } else {
+          this.close();
+          this.router.navigate(['/menu']);
+        }
+        
+        //window.location.reload();
+      
        
 
     }else{
