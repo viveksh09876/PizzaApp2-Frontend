@@ -59,7 +59,6 @@ export class MenuComponent implements OnInit {
     if(this.orderNowDetails == null || this.orderNowDetails == 'null') {
       this.updateStoreAndTime('location');
      }
-     
     
     
     
@@ -605,29 +604,20 @@ export class MenuComponent implements OnInit {
        
 
  }
-/*
+
     validateDeal(allowDays,allowType){
       var currentDay= (new Date()).getDay()+1;
       var currentType='';
-      if(this.orderNowDetails == null || this.orderNowDetails == 'null' || this.orderNowDetails.type==null) {
-       // this.updateStoreAndTime('location');
-       console.log('type not found');
-      }else{
+      if(!(this.orderNowDetails == null || this.orderNowDetails == 'null' || this.orderNowDetails.type == null)) {
         currentType=this.orderNowDetails.type;
       }
-      if((allowType==currentType || allowType==0) && (allowDays==0 || allowDays.search(currentDay)!=-1)){
-        console.log('trueuuuuuuu'+allowDays+'___________'+allowType);
-        //return true;undefined
-      }else{
-        console.log('not match'+allowDays+'___________'+allowType);
-      }
-      //return false;
 
-      console.log(this.orderNowDetails.type);
-      var currentType='';
-      console.log('currentdays',currentDay);
+      if((allowType==currentType || allowType==0 || allowType==null) && (allowDays==0 ||allowDays==null || allowDays.search(currentDay)!=-1)){
+        return true;
+      }
+      return false;
     }
-*/
+
     parseFloatCustome(price,price1,action){
         switch(action){
           case 'add':
