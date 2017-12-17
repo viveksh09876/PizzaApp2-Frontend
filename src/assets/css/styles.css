@@ -3792,6 +3792,7 @@ color:#fff
 .menulist-items .btn{ color: #fff; display: block; text-align: center; border-bottom: 2px solid #5a3e41; font-size: 14px; line-height: 22px; padding: 5px; font-family: 'bureaueaglebookregular';}
 .menulist-items .btn.btn-green{ background: #7a9c49;}
 .menulist-items .btn.btn-red{ background: #911c28;}
+.menulist-items .btn.btn-red.disableDeal{background: #5a5955;}
 
 .viewcart_sec{ background: #ffffff; /*max-height: 76vh;*/ min-height: 56vh; width:100%; display: block; /*margin: 0px !important;*/}
 .viewcart_sec.fixedsticky{position: fixed;top: 153px; width: 22%;}
