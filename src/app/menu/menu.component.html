@@ -210,7 +210,7 @@
                                             <a class="btn btn-red" (click)="goToDeal(prod.id)">make the deal</a>
                                            </ng-container>
                                            <ng-container *ngIf="!validateDeal(prod.allow_days,prod.allow_order_type)">    
-                                                <a class="btn btn-red disableDeal">This deal not for today</a>
+                                                <a class="btn btn-red disableDeal">deal not valid with current selection</a>
                                                </ng-container>
                                         </div>
                                   </div>

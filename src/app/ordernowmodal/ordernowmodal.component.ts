@@ -125,6 +125,11 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     if(orderNowDetails!=null && orderNowDetails!='null'){
       this.postalCode=orderNowDetails.address.postal_code;
       this.storeList = JSON.parse(this.dataService.getLocalStorageData('storeList')); 
+      if(this.storeList==null){
+        this.getStoresFromPostalCode(this.postalCode);
+      }
+
+
       if(this.storeList != null){
       this.selectedStore.val=orderNowDetails.selectedStore.Store.id;
       this.setSelectedStore(this.selectedStore.val);
@@ -293,8 +298,8 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
       for(var i=0; i<stores.length; i++) {
          if(stores[i].Store.id == id) {
            this.selectedStore.info = stores[i];
-
-           if (stores[i].StoreTime != undefined) {
+           /*if (stores[i].StoreTime != undefined) {
+             console.log('storetimerange',this.utilService.getAllDateRange(stores[i].StoreTime,time));
               for (var j=0; j < stores[i].StoreTime.length; j++) {
                   if (stores[i].StoreTime[j].from_day == cDay) {
                     storeTime = stores[i].StoreTime[j];
@@ -303,13 +308,13 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
               storeFromTime = storeTime.from_time + ":" + storeTime.from_minutes;
               storeFromTime = moment(storeFromTime, 'HH:mm').format('hh:mm a');
-
+              
               storeToTime = storeTime.to_time + ":" + storeTime.to_minutes;
               storeToTime = moment(storeToTime, 'HH:mm').format('hh:mm a');
               
               this.storeTimeObj.fromTime = storeFromTime;
               this.storeTimeObj.toTime = storeToTime;
-           }
+           }*/
            
 
            //inTimeRange = this.utilService.inTimeRange(cTime, storeFromTime, storeToTime);
@@ -329,16 +334,16 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
   checkTimeRange(delivery_time) {
     
-      let inTimeRange = true;
+     /* let inTimeRange = true;
       
       let cTime = moment(delivery_time, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
       
       if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined) {
           inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
           this.isInTimeRange = inTimeRange;
-      }
-
-      return inTimeRange;
+      }*/
+      this.isInTimeRange=this.utilService.getAllDateRange(this.selectedStore.info.StoreTime,delivery_time);
+      return this.isInTimeRange;
   }
 
 
@@ -384,21 +389,17 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     }
   }
 
+  goToMenuPage(){
+    this.close();
+    this.router.navigate(['/menu']);
+  }
+
   goToMenu(checkValidation) {
     if(this.selectedStore.info != '') {
         this.delivery_time = $("#DateTimeDel").val();
-
-        let cTime = moment(this.delivery_time, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
+        this.isInTimeRange = this.checkTimeRange(this.delivery_time);
         
-        //let cTime = moment().format('hh:mm a');
-        let inTimeRange  = true;
-  
-        if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined && checkValidation == 1) {
-            inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
-            this.isInTimeRange = inTimeRange;
-        }
-
-        if (inTimeRange) {
+        if (this.isInTimeRange) {
           
             let orderDetails = {
                   type: this.order.orderType,
@@ -504,6 +505,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     }else{
       this.showOutletError = true;
     }
+    
     
   }
   

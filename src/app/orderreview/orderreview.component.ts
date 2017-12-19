@@ -102,7 +102,7 @@ export class OrderreviewComponent implements OnInit {
                 'cancelLabel': 'Close'
             }
       };
-
+    StoreTime=[];
     isValidPostalFlag = true;  
     defaultAddress = null;
     useDefaultAddress = false;
@@ -167,7 +167,8 @@ export class OrderreviewComponent implements OnInit {
         let storeToTime = null; 
 
         if (orderDetails.selectedStore.StoreTime != undefined) {
-          for (var j=0; j < orderDetails.selectedStore.StoreTime.length; j++) {
+          this.StoreTime=orderDetails.selectedStore.StoreTime;
+        /*  for (var j=0; j < orderDetails.selectedStore.StoreTime.length; j++) {
               if (orderDetails.selectedStore.StoreTime[j].from_day == cDay) {
                 storeTime = orderDetails.selectedStore.StoreTime[j];
               }
@@ -180,7 +181,7 @@ export class OrderreviewComponent implements OnInit {
           storeToTime = moment(storeToTime, 'HH:mm').format('hh:mm a');
           
           this.storeTimeObj.fromTime = storeFromTime;
-          this.storeTimeObj.toTime = storeToTime;
+          this.storeTimeObj.toTime = storeToTime;*/
         }
 
         if (orderDetails.selectedStore != undefined && orderDetails.selectedStore.Store.id != undefined) {
@@ -477,16 +478,16 @@ export class OrderreviewComponent implements OnInit {
       goFlag = false;
     }
     this.order.delivery_time = $("#DateTimeDel").val();
-    tVal = this.order.delivery_time;
+    //tVal = this.order.delivery_time;
     //console.log('orderstart', this.order);
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
-    let cTime = moment(tVal, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
+    //let cTime = moment(tVal, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
     
-    let inTimeRange = true;
-    if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined) {
-        inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
-    }
-
+    //let inTimeRange = true;
+    //if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined) {
+    //    inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
+   // }
+    let inTimeRange=this.utilService.getAllDateRange(this.StoreTime,this.order.delivery_time);
     if (inTimeRange) {
       if (goFlag) {
 

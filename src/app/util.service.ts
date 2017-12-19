@@ -294,7 +294,6 @@ export class UtilService {
     adate   = today.date();
     amonth  = String(amonth).length < 2 ? "0" + amonth : amonth;
     adate   = String(adate).length < 2 ? "0" + adate : adate;
-    
     //Create moment objects
     var moment1, moment2;
     var temp = endTime.split(" ");
@@ -328,7 +327,6 @@ export class UtilService {
         moment1 = moment(moment1String,       "YYYY-MM-DD HH:mm A");
         moment2 = moment(moment2String,       "YYYY-MM-DD HH:mm A");
     }
-    
     //Run check
     var start = moment1.toDate();
     var end   = moment2.toDate();
@@ -350,6 +348,63 @@ export class UtilService {
   }
 
   
+  getAllDateRange(storeTimeList,selectedTime) {
+     
+    if(storeTimeList==null || storeTimeList=='undefined' ||storeTimeList.length<1){
+        return true;
+    }
+     
+     var today =  moment(selectedTime, "YYYY-MM-DD HH:mm A");
+     let todayDay=today.days();
+     var ayear   = today.year();
+     let amonth = null;
+     let adate = null;
+     amonth  = today.month() + 1;  // 0 to 11
+     adate   = today.date();
+     amonth  = String(amonth).length < 2 ? "0" + amonth : amonth;
+     adate   = String(adate).length < 2 ? "0" + adate : adate;
+     var moment1,moment2;
+     var returndata=false;
+
+     storeTimeList.forEach(function(element) {
+      if(element.from_day==todayDay || element.to_day==todayDay){
+      var storeFromTime = element.from_time + ":" + element.from_minutes;
+      storeFromTime = moment(storeFromTime, 'HH:mm').format('hh:mm a');
+      storeFromTime=ayear + "-" + amonth + "-" + adate + " " + storeFromTime;
+    
+      var storeToTime = element.to_time + ":" + element.to_minutes;
+      storeToTime = moment(storeToTime, 'HH:mm').format('hh:mm a');
+      storeToTime=ayear + "-" + amonth + "-" + adate + " " + storeToTime;
+    
+      if(element.from_day==todayDay){
+        if(element.from_day!=element.to_day){
+          var days=parseInt(element.to_day)-parseInt(element.from_day);
+          if(days>0 || (element.from_day==6 && element.to_day==0)){
+           storeToTime=moment(storeToTime, "YYYY-MM-DD HH:mm A").add(1,'days').format('YYYY-MM-DD HH:mm A');
+          }         
+         }
+      }else if(element.to_day==todayDay){
+        if(element.from_day!=element.to_day){
+          var days=parseInt(element.to_day)-parseInt(element.from_day);
+          if(days>0 || (element.from_day==6 && element.to_day==0)){
+            storeFromTime=moment(storeFromTime, "YYYY-MM-DD HH:mm A").add(-1,'days').format('YYYY-MM-DD HH:mm A');
+          }         
+         }
+      }
+      moment1=moment(storeFromTime, "YYYY-MM-DD HH:mm A");
+      moment2=moment(storeToTime, "YYYY-MM-DD HH:mm A");
+      var fromtime =(moment1.toDate()).getTime();
+      var toTime=(moment2.toDate()).getTime();
+      var currentDate=(today.toDate()).getTime();
+      if(currentDate>=fromtime && currentDate<=toTime){
+        returndata=true;
+        return;
+      }
+    }
+  });    
+   return returndata; 
+  }
+
   generateUniqueId() {
 	 
 	 let length = 8;
