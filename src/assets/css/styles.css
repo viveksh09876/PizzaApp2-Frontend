@@ -1365,7 +1365,7 @@ header.navigation{z-index: 9999;}
 	width: 100%;
 	border-spacing: 0
 }
-.two-column-wrapper .viewcart_sec .inside-column-container {
+.two-column-wrapper .viewcart_sec .inside-column-container,.two-column-wrapper .inside-column-container {
 	display: table-cell;
 	vertical-align: top;
 	overflow: hidden;
@@ -2053,6 +2053,7 @@ width:100%; vertical-align: middle; color: #fff; font: 1.625em "bureaueaglebookr
 	margin: 0 -15px;
 	max-height: calc(100vh - 34vh);
 }
+.two-column-wrapper.franchising .inside-column-container.aside-wrapper .content-wrapper{min-height: calc(100vh - 34vh); max-height: none;}
 .two-column-wrapper .inside-column-container.aside-wrapper .content-wrapper .content-container {
 	padding: 2em 15px
 }
