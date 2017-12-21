@@ -773,6 +773,7 @@ export class OrderreviewComponent implements OnInit {
                     this.order.coupon = this.couponCode;
                     this.order.couponDiscount = this.couponDiscount;
                     this.totalCost = this.totalCost - this.couponDiscount;
+                    this.totalCost = Number(this.totalCost.toFixed(2));
                   }
 
                   setTimeout(function(){
@@ -845,6 +846,7 @@ export class OrderreviewComponent implements OnInit {
       this.order.coupon = '';
       this.isDiscountApply = false;
       this.totalCost = this.totalCost + this.couponDiscount;
+      this.totalCost = Number(this.totalCost.toFixed(2));
       this.couponMsg = 'Coupon removed successfully.';
       setTimeout(function(){
         this.couponMsg = '';
