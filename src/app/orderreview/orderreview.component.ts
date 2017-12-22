@@ -364,11 +364,12 @@ export class OrderreviewComponent implements OnInit {
     ////console.log('validate', this.order);
     if(isValid) {
       if(isDelivery=='delivery'){
+        this.validatePostalCode(postal_code);
         if(street==''){
           alert('Street name is required.');
         }else if(city==''){
           alert('City is required.');
-        }else{
+        }else if(this.isValidPostalFlag){
           this.placeFinalOrder();
         }
       }else{

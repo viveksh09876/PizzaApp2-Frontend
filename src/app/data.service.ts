@@ -408,11 +408,13 @@ export class DataService {
       'EH130',
       'EH139',
       'EH141',
+      'EH166',
+      'EH112',
       '110074'
     ];
     let flag = false;
-
-    if (code.length > 3 && code.charAt(2) == '9') { 
+    code=code.replace(/\s+/, "");
+    /*if (code.length > 3 && code.charAt(2) == '9') { 
 
       if (code.charAt(3) == '1' || code.charAt(3) == '2' || code.charAt(3) == '3') {
         flag = true;
@@ -421,19 +423,25 @@ export class DataService {
     } else if (code.length >= 3 && code.charAt(2) == '3' && code.charAt(0) == 'E' && code.charAt(3) == '9'){
       flag = true;
     } else {
-      
+
       if (code.length > 4) {
         code = code.slice(0,4);
       }
-
+console.log(code);
       validCodes.forEach(function(a){
-        
+
         if (a.indexOf(code) > -1) {
           flag = true;
+          console.log(flag);
         } 
       });
-    }
-
+    }*/
+    validCodes.forEach(function(a){
+    var tmpcode=code.slice(0,a.length);
+     if (a.indexOf(tmpcode)===0) {
+        flag = true;
+      } 
+    });
     return flag;   
   }
 

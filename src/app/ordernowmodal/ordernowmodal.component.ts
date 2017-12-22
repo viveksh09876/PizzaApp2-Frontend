@@ -157,6 +157,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     }else if(type == 'delivery') {
       this.timeModalText = 'What time would you like your order to be delivered?';
     }
+    this.validatePostalCode(this.postalCode);
   }
 
   selectCity(city) {
@@ -334,14 +335,6 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
   checkTimeRange(delivery_time) {
     
-     /* let inTimeRange = true;
-      
-      let cTime = moment(delivery_time, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
-      
-      if (this.storeTimeObj.fromTime != undefined && this.storeTimeObj.toTime != undefined) {
-          inTimeRange = this.utilService.inTimeRange(cTime, this.storeTimeObj.fromTime, this.storeTimeObj.toTime);
-          this.isInTimeRange = inTimeRange;
-      }*/
       this.isInTimeRange=this.utilService.getAllDateRange(this.selectedStore.info.StoreTime,delivery_time);
       return this.isInTimeRange;
   }
