@@ -479,7 +479,7 @@ export class OrderreviewComponent implements OnInit {
       goFlag = false;
     }
     this.order.delivery_time = $("#DateTimeDel").val();
-    //tVal = this.order.delivery_time;
+    tVal = this.order.delivery_time;
     //console.log('orderstart', this.order);
     this.dataService.setLocalStorageData('allItems', JSON.stringify(this.items));
     //let cTime = moment(tVal, 'YYYY-MM-DD HH:mm A').format('hh:mm a');
@@ -523,15 +523,13 @@ export class OrderreviewComponent implements OnInit {
           } 
           
           if (this.order.delivery_time_type == 'defer') {
-
             let rTime = new Date(tVal);
             let pTime = this.utilService.subtractTime(rTime, 20);
-
-            orderData.defer = {
+             orderData.defer = {
               print_time: pTime.toString(),
               required_time: rTime.toString()
             }
-            
+            console.log(orderData.defer);
             orderData.defer.print_time = this.utilService.toISOString(orderData.defer.print_time);
             orderData.defer.required_time = this.utilService.toISOString(orderData.defer.required_time);
 
