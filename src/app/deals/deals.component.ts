@@ -498,8 +498,7 @@ export class DealsComponent implements OnInit {
 
         let getOICost = Number(parseFloat(this.items[i].originalItemCost).toFixed(2));
         total = getOICost * this.items[i].Product.qty;
-        this.items[i].totalItemCost = total;
-
+        this.items[i].totalItemCost = Number(total.toFixed(2));
         break;
       }
     }

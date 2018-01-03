@@ -1,0 +1,73 @@
+
+
+/*=========  Location page responsive  =========*/
+.locationpage{ position:relative; }
+.locationpage .mapimg{ min-height: 690px;}
+.locationpage #mapcanvas{ min-height: 690px;}
+.locationpage .tabsbox{ background: #fff; padding: 15px 20px;  border-radius: 5px 5px 0 0;}
+.locationpage .nav-tabs{ color: #646569; font-size: 18px; border: 1px solid #ccc; border-radius: 5px; display: flex;margin-bottom: 0px;}
+.locationpage .nav-tabs li{ border-right: 1px solid #ccc; margin: 0 !important; flex: 1 0 0;background-color:transparent !important}
+.locationpage .nav-tabs li.active{ background: #7a9c49;color: #fff;}
+.locationpage .nav-tabs li.active a{ background: #7a9c49; color: #fff;}
+
+.locationpage .nav-tabs li:last-child{ border: none;}
+.locationpage .nav-tabs li:first-child a{ border-radius: 5px 0 0 5px;}
+.locationpage .nav-tabs li:last-child a{ border-radius: 0 5px 5px 0;}
+.locationpage .nav-tabs li a{font-family: 'bureaueaglebookregular'; margin: 0 !important; color: #646569; border: none!important; text-align: center; border-radius: 0;}
+
+.locationpage .left_panel{ width:400px; max-width:100%; position: absolute; top:40px; left:60px; z-index: 9;}
+.locationtab_content .city_locations h4{ font-size:18px; line-height: 22px; color:#646569; font-family: 'bureaueaglebookregular';}
+
+.city_locations{ padding:20px; background: #fff; border-radius: 0 0 5px 5px;}
+.locationlist{ max-height: 300px; overflow-y: auto}
+.city_locations .box{background: url(../../assets/images/seprator.jpg) repeat-x bottom left !important; padding: 15px 0 !important;}
+.city_locations .box:last-child{ background: none; padding-bottom: 0;}
+.city_locations ul{ /*display: inline-block;*/ vertical-align: middle; list-style: none; margin: 0; padding: 0; /*width: calc(100% - 125px);*/ font-size: 15px; line-height: 20px; color: #646569; font-family: 'proxima_nova_ltlight';}
+.city_locations ul li{ padding: 2px 0; }
+.city_locations ul li img{ width: 15px;}
+.city_locations ul li i{ color: #7a9c49; width: 15px;}
+.city_locations ul li span{ width: calc(100% - 20px); display: inline-block; vertical-align: top;}
+
+.city_locations .menu-btn{display: inline-block; vertical-align: middle; width: 120px; background: #911c28; color: #fff; font-size: 16px; font-family: 'bureaueaglebookregular'; text-align: center; line-height: 25px; padding: 5px; border-radius: 5px; border-bottom: 2px solid #5a3e41;}
+
+.search_location{ border-bottom: 1px solid #ddd; border-top: 1px solid #ddd; background: #eeefef; padding:10px 20px 15px;}
+.search_location h4{ font-size: 16px; color: #646569; line-height: 22px; font-family: 'bureaueaglebookregular'; margin: 0 0 5px;}
+.search_location input[type="text"]{ width: calc(100% - 120px); border: 1px solid #ccc; height: 37px; vertical-align: top; display: inline-block; border-radius: 5px; color: #646569; font-size: 15px;  font-family: 'proxima_nova_ltlight'; padding: 5px; margin-right: 5px;}
+.search_location input[type="submit"]{display: inline-block; vertical-align: top; width: 110px; background: #646569; border: none; color: #fff; font-size: 16px; font-family: 'bureaueaglebookregular'; text-align: center; line-height: 25px; padding: 5px; border-radius: 5px; border-bottom: 2px solid #5a3e41;}
+
+.country_box{ padding:0 20px 20px; background: #fff;}
+.country_box label{ font-size: 16px; color: #646569; font-family: 'bureaueaglebookregular'; text-transform: capitalize; font-weight: normal}
+.country_box select{ font-family: 'proxima_nova_ltsemibold'; font-size: 16px; padding: 5px 8px; appearance:none; -webkit-appearance:none; -moz-appearance:none; background: url(../../assets/images/arrow-down.png) no-repeat 98% center}
+
+
+
+
+@media only screen and (max-width:767px){
+    
+.locationpage .left_panel{ max-width: 90%; left: 5%; top: 20px;}
+.city_locations{ margin: 160px 0 0; border-radius: 5px;}
+.locationlist{ max-height: 170px; }
+.city_locations .menu-btn{ font-size: 14px; line-height: 20px; width: 100px;}
+.city_locations ul{ /*width: calc(100% - 105px);*/ font-size: 14px; line-height: 18px;}
+    
+a.custom-button {font-size: 1.5em;border-width: 5px;}
+a.custom-button span {padding: 0.5rem 1rem;}
+
+
+}
+
+@media only screen and (min-width:481px) and (max-width:767px){
+
+.menulist-items .columnsdivider .col-lg-4{
+	float: left; width: 50%; min-height: 392px;
+}
+
+}
+
+@media (max-width: 480px) {
+.secondary_menu .dropdown_rightmenu li a{font-size:12px; }
+.menulist-items .columnsdivider .col-lg-4{float: none; text-align: center;}
+}
+@media (max-width: 360px) {
+.secondary_menu .dropdown_rightmenu li a{font-size:10px; }
+}

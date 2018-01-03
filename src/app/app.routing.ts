@@ -16,6 +16,7 @@ import { BahrainComponent } from './bahrain/bahrain.component';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { DealsComponent } from './deals/deals.component';
+import { LocationsComponent } from './locations/locations.component';
 
 const appRoutes: Routes = [ 
     { path: '', component: HomeComponent },
@@ -36,7 +37,9 @@ const appRoutes: Routes = [
     { path: 'bahrain-order', component: BahrainComponent },
     { path: 'privacy', component: PrivacyComponent },
     { path: 'terms', component: TermsComponent },
-    { path: 'deals/:dealId/:comboUniqueId', component: DealsComponent }
+    { path: 'deals/:dealId/:comboUniqueId', component: DealsComponent },
+     { path: 'locations', component: LocationsComponent }
+
 ]; 
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes,{ useHash: true });

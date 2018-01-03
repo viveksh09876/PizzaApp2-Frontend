@@ -45,6 +45,7 @@ import { ResetComponent } from './reset/reset.component';
 import { SuggestionmodalComponent } from './suggestionmodal/suggestionmodal.component';
 import { DealsComponent } from './deals/deals.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { LocationsComponent } from './locations/locations.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ForgotComponent,
     ResetComponent,
     SuggestionmodalComponent,
-    DealsComponent
+    DealsComponent,
+    LocationsComponent
   ],
   imports: [
     BrowserModule,
