@@ -352,7 +352,7 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
 
   goTotimeModal() {
-    //this.getCurrentDateTime();
+    this.getCurrentDateTime();
     if(this.selectedStore.val == '') {
       this.showOutletError = true;
     }else{
@@ -378,7 +378,8 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
     this.time.hour = '01';
     this.isInTimeRange = this.checkTimeRange(this.delivery_time);
     if (type == 'asap') {
-      this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(35));
+      let timeInMinutes= this.order!=null && this.order.orderType=='pickup'?15:25;
+      this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(timeInMinutes));
     }
   }
 
@@ -525,7 +526,21 @@ export class OrdernowmodalComponent extends DialogComponent<OrdernowModal, boole
 
   getCurrentDateTime() {
     let now = new Date();
-    now.setMinutes(now.getMinutes() + 30);
+    if(this.order !=null && this.order.delivery_time_type=='asap'){
+     if(this.order!=null && this.order.orderType=='pickup'){
+      this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(15));
+     }else{
+      this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(25));
+     } 
+    }else{
+      let orderNowDetails = JSON.parse(this.dataService.getLocalStorageData('order-now')); 
+      if(orderNowDetails!=null){
+        this.delivery_time=orderNowDetails.delivery_time;
+      }else{
+        this.delivery_time = this.utilService.formatDate(this.utilService.getNowDateTime(25));
+      }
+
+    }
   }
 
   validatePostalCode(val) {

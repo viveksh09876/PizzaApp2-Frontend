@@ -2,7 +2,6 @@
     <div class="row locationpage">
 	<div id="mapcanvas" class="map-canvas">
 	</div>
-	
         <div class="left_panel">
              <div class="tabsbox">
                 <ul class="nav nav-tabs" role="tablist">
@@ -12,18 +11,12 @@
                  </ul>
               </div>
               <div class="tab-content locationtab_content">
-                <div role="tabpanel" class="tab-pane" id="current">
-                    
-                </div>
-                <div role="tabpanel" class="tab-pane" id="upcoming">
-                	
-                </div>
                 <div role="tabpanel" class="tab-pane active" id="all">
 				
                 	<div class="country_box" *ngIf="hascount">
                         <label>select country</label>
                         <select class="form-control" [(ngModel)]="selectedCountry"  (ngModelChange)="changeCountry($event)" *ngIf="hasAllCountry">
-							<option [ngValue]="''">Select country</option>
+							<option [ngValue]="''">select country</option>
                             <option [ngValue]="count" *ngFor=" let count of allCountry;">{{count}}</option>
                         </select>
 						<select class="form-control" [(ngModel)]="selectedUpCountry"  (ngModelChange)="changeUpCountry($event)" *ngIf="hasUpCountry">
@@ -32,7 +25,7 @@
                         </select>
                     </div>
                     <div class="search_location" *ngIf="hascount">
-                        <h4>Find your local store in all</h4>
+                        <h4>find your local store</h4>
                         <input type="text" placeholder="Enter your area name / postal code" [(ngModel)]="searchTxt">
                         <input type="submit" value="find store" (click)="storeSearch();">
                     </div>
@@ -44,35 +37,42 @@
                                     <li (click)="storeLoc(store);" style="cursor:pointer;">
                                         <img src="assets/images/map-marker.png" alt="">
                                         <span>NKD Pizza {{store.Store.store_name}} <br>
-                                        {{store.Store.store_address}}, {{store.Store.city}}, {{store.Store.country}}</span>
+                                        {{store.Store.store_address}}, {{store.Store.country}}</span>
                                     </li>
                                     <li *ngIf="store.Store.store_phone">
                                         <i class="fa fa-phone"></i>
                                         <span>{{store.Store.store_phone}}</span>
                                     </li>
-									<li>
+								<!--<li *ngIf="showEmail">
                                         <i class="fa fa-envelope-o"></i>
                                         <span>{{store.Store.store_email}}</span>
-                                    </li>
-                                    <li>
+                                    </li>-->
+									
+                                    <li *ngIf="store.StoreTime[currDay] else elseBlock">
                                         <i class="fa fa-clock-o"></i>
-                                        <span>Open now:  10:30AM–2AM</span>
+                                        <span> {{timeFormate(store.StoreTime[this.currDay].from_time,store.StoreTime[this.currDay].from_minutes,store.StoreTime[this.currDay].to_time,store.StoreTime[this.currDay].to_minutes)}}</span>
                                     </li>
+									<ng-template #elseBlock>
+										<li>
+											<i class="fa fa-clock-o"></i>
+											<span>Store closed</span>
+										</li>
+									</ng-template>
                                 </ul>
 								<div *ngIf="store.Store.store_status!='Upcoming'">
                                <span *ngIf="store.Store.link==''"> 
-							   <a *ngIf="store.Store.country!='UK'"  href="#/menu" class="menu-btn">Check Menu</a>
-							   <a *ngIf="store.Store.country=='UK'"  href="https://nkdpizza.com/uk/#/menu" class="menu-btn">Check Menu</a>
+							   <a *ngIf="store.Store.country!='United Kingdom'"  href="https://nkdpizza.com/#/menu" class="menu-btn">check menu</a>
+							   <a *ngIf="store.Store.country=='UK' || store.Store.country=='United Kingdom'"  href="https://nkdpizza.com/uk/#/menu" class="menu-btn">check menu</a>
 							   </span>
 							   
 							   <span *ngIf="store.Store.link">
-							   <a href="{{store.Store.link}}" class="menu-btn">Check Menu</a>
+							   <a href="{{store.Store.link}}" class="menu-btn">check menu</a>
 							   </span>
 							</div>	
 							</div>
                            
                         </div>
-						<div *ngIf="storeList==''">No Store in Current Location.</div>
+						<div *ngIf="storeList==''">no store in current location.</div>
                     </div>
                 </div>
               </div>
