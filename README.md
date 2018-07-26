@@ -1,4 +1,4 @@
-# NkdWeb
+# PizzaApp2-Frontend
 
 ## Build Commands
 npm install angular-cli  
